@@ -1,0 +1,367 @@
+[
+  {
+    "id": "raider_ambush_cross_bronx",
+    "schema_version": "1.0",
+    "location": "Cross-Bronx Expressway",
+    "combat_register": "human",
+    "enemies": [
+      {"template_id": "human_scavenger_raider", "instance_id": "raider_1"},
+      {"template_id": "human_scavenger_raider", "instance_id": "raider_2"},
+      {"template_id": "human_scavenger_raider", "instance_id": "raider_3"}
+    ],
+    "terrain_zones": [
+      {"id": "plaza", "name": "Exposed Plaza", "properties": ["exposed"], "description": "Cracked asphalt under open sky."},
+      {"id": "wrecked_cars", "name": "Wrecked Cars", "properties": ["cover_partial"], "description": "Rusted sedans piled against the median."},
+      {"id": "alley", "name": "Side Alley", "properties": ["cover_partial"], "description": "Narrow gap between buildings."},
+      {"id": "overpass", "name": "Overpass", "properties": ["elevated"], "description": "Crumbling concrete ramp with sightlines."}
+    ],
+    "stakes": "Survival + resource (courier pouch)",
+    "win_conditions": [
+      {"type": "defeat_all", "parameters": {"targets": ["raider_1", "raider_2", "raider_3"]}},
+      {"type": "break_contact", "parameters": {"zones_from_start": 2}}
+    ],
+    "loss_conditions": [
+      {"type": "defeat_specific", "parameters": {"target": "player"}}
+    ],
+    "escape_conditions": [
+      {"type": "break_contact", "parameters": {"zones_from_start": 2}}
+    ],
+    "parley_available": true,
+    "opening_situation": "Two figures stepped out of the cars. A third moved in the shadow of the overpass."
+  },
+  {
+    "id": "hunter_pair_catskills",
+    "schema_version": "1.0",
+    "location": "Catskills Perimeter",
+    "combat_register": "creature",
+    "enemies": [
+      {"template_id": "creature_ambush_predator", "instance_id": "hunter_a"},
+      {"template_id": "creature_ambush_predator", "instance_id": "hunter_b"}
+    ],
+    "terrain_zones": [
+      {"id": "forest", "name": "Concealed Forest", "properties": ["concealed"], "description": "Dense old-growth, low visibility."},
+      {"id": "trail", "name": "Trail Clearing", "properties": ["cover_partial"], "description": "Packed earth path with scattered rocks."},
+      {"id": "slope", "name": "Hazardous Slope", "properties": ["hazardous"], "description": "Loose scree and fallen timber."},
+      {"id": "objective", "name": "Trail Junction", "properties": ["objective"], "description": "Where the path splits toward safety."}
+    ],
+    "stakes": "Survival + territory",
+    "win_conditions": [
+      {"type": "defeat_all", "parameters": {"targets": ["hunter_a", "hunter_b"]}},
+      {"type": "break_contact", "parameters": {"zones_from_start": 2}}
+    ],
+    "loss_conditions": [
+      {"type": "defeat_specific", "parameters": {"target": "player"}}
+    ],
+    "escape_conditions": [
+      {"type": "break_contact", "parameters": {"zones_from_start": 2}}
+    ],
+    "parley_available": false,
+    "opening_situation": "Nothing had moved on the trail for three minutes. She noticed that."
+  },
+  {
+    "id": "wretch_pack_pine_barrens",
+    "schema_version": "1.0",
+    "location": "Pine Barrens Edge",
+    "combat_register": "creature",
+    "enemies": [
+      {"template_id": "creature_hive_drone", "instance_id": "wretch_1"},
+      {"template_id": "creature_hive_drone", "instance_id": "wretch_2"},
+      {"template_id": "creature_hive_drone", "instance_id": "wretch_3"},
+      {"template_id": "creature_hive_drone", "instance_id": "wretch_4"},
+      {"template_id": "creature_hive_drone", "instance_id": "wretch_5"},
+      {"template_id": "creature_hive_drone", "instance_id": "wretch_6"}
+    ],
+    "terrain_zones": [
+      {"id": "pine_a", "name": "Pine Concealment", "properties": ["concealed"], "description": "Thick pine, needle carpet, bad footing."},
+      {"id": "pine_b", "name": "Pine Thicket", "properties": ["concealed"], "description": "Denser growth, branches at face height."},
+      {"id": "road", "name": "Exposed Road", "properties": ["exposed"], "description": "Cracked two-lane, open in both directions."},
+      {"id": "corrupted", "name": "Corrupted Zone", "properties": ["corrupted"], "description": "The trees here grow wrong. The ground is warm."}
+    ],
+    "stakes": "Clock pressure (attention)",
+    "win_conditions": [
+      {"type": "defeat_all", "parameters": {"targets": ["wretch_1","wretch_2","wretch_3","wretch_4","wretch_5","wretch_6"]}},
+      {"type": "break_contact", "parameters": {"zones_from_start": 2}}
+    ],
+    "loss_conditions": [
+      {"type": "defeat_specific", "parameters": {"target": "player"}},
+      {"type": "survive_rounds", "parameters": {"rounds": 6, "fail_on_exceed": true}}
+    ],
+    "escape_conditions": [
+      {"type": "break_contact", "parameters": {"zones_from_start": 2}}
+    ],
+    "parley_available": false,
+    "opening_situation": "Something coughed in the brush. Twice. From different places."
+  },
+  {
+    "id": "iron_crown_patrol_jersey",
+    "schema_version": "1.0",
+    "location": "Jersey Road",
+    "combat_register": "human",
+    "enemies": [
+      {"template_id": "human_warlord_lieutenant", "instance_id": "lieutenant_1"},
+      {"template_id": "human_militia_soldier", "instance_id": "soldier_1"},
+      {"template_id": "human_militia_soldier", "instance_id": "soldier_2"}
+    ],
+    "terrain_zones": [
+      {"id": "road", "name": "Road", "properties": ["exposed"], "description": "Open Jersey two-lane."},
+      {"id": "field", "name": "Field", "properties": ["exposed"], "description": "Flat farmland, no cover."},
+      {"id": "ditch", "name": "Ditch", "properties": ["cover_partial"], "description": "Irrigation channel, waist-deep."},
+      {"id": "farm", "name": "Farmhouse", "properties": ["objective"], "description": "Stone foundation, boarded windows."}
+    ],
+    "stakes": "Territory + relationship (witness)",
+    "win_conditions": [
+      {"type": "defeat_all", "parameters": {"targets": ["lieutenant_1", "soldier_1", "soldier_2"]}},
+      {"type": "convince_parley", "parameters": {"target": "lieutenant_1"}}
+    ],
+    "loss_conditions": [
+      {"type": "defeat_specific", "parameters": {"target": "player"}}
+    ],
+    "escape_conditions": [
+      {"type": "break_contact", "parameters": {"zones_from_start": 2}}
+    ],
+    "parley_available": true,
+    "opening_situation": "Three men on the road. The lieutenant stepped forward. He had questions."
+  },
+  {
+    "id": "listening_messenger_township",
+    "schema_version": "1.0",
+    "location": "Township Entry",
+    "combat_register": "eldritch",
+    "enemies": [
+      {"template_id": "eldritch_lesser_corruption", "instance_id": "messenger"},
+      {"template_id": "human_fanatic", "instance_id": "fanatic_1"},
+      {"template_id": "human_fanatic", "instance_id": "fanatic_2"}
+    ],
+    "terrain_zones": [
+      {"id": "plaza", "name": "Plaza", "properties": ["exposed"], "description": "Town square, cracked fountain."},
+      {"id": "market", "name": "Market Stalls", "properties": ["cover_partial"], "description": "Abandoned stalls, canvas and timber."},
+      {"id": "chapel", "name": "Chapel", "properties": ["elevated"], "description": "Stone steps, wooden doors."},
+      {"id": "corrupted", "name": "Back Plaza", "properties": ["corrupted"], "description": "The air here tastes of copper."}
+    ],
+    "stakes": "Knowledge + clock (township faith)",
+    "win_conditions": [
+      {"type": "defeat_specific", "parameters": {"target": "messenger"}},
+      {"type": "convince_parley", "parameters": {"target": "messenger"}}
+    ],
+    "loss_conditions": [
+      {"type": "defeat_specific", "parameters": {"target": "player"}}
+    ],
+    "escape_conditions": [
+      {"type": "break_contact", "parameters": {"zones_from_start": 2}}
+    ],
+    "parley_available": true,
+    "opening_situation": "The man in the back spoke first. His words were not in any language the town knew. The fanatics translated."
+  },
+  {
+    "id": "bear_house_guardsmen_pass",
+    "schema_version": "1.0",
+    "location": "Mountain Pass Bridge",
+    "combat_register": "human",
+    "enemies": [
+      {"template_id": "human_faction_patrol_leader", "instance_id": "patrol_leader"},
+      {"template_id": "human_militia_soldier", "instance_id": "guard_1"},
+      {"template_id": "human_militia_soldier", "instance_id": "guard_2"},
+      {"template_id": "human_militia_soldier", "instance_id": "guard_3"}
+    ],
+    "terrain_zones": [
+      {"id": "bridge", "name": "Bridge", "properties": ["cover_partial"], "description": "Stone bridge, low walls."},
+      {"id": "road", "name": "Road Approach", "properties": ["elevated"], "description": "Uphill approach with sightlines."},
+      {"id": "ravine", "name": "Ravine", "properties": ["hazardous"], "description": "Steep drop, loose rocks."},
+      {"id": "exit", "name": "Far Exit", "properties": ["objective"], "description": "The road continues past the bridge."}
+    ],
+    "stakes": "Territory",
+    "win_conditions": [
+      {"type": "convince_parley", "parameters": {"target": "patrol_leader"}},
+      {"type": "break_contact", "parameters": {"zones_from_start": 2}},
+      {"type": "defeat_all", "parameters": {"targets": ["patrol_leader", "guard_1", "guard_2", "guard_3"]}}
+    ],
+    "loss_conditions": [
+      {"type": "defeat_specific", "parameters": {"target": "player"}}
+    ],
+    "escape_conditions": [
+      {"type": "break_contact", "parameters": {"zones_from_start": 2}}
+    ],
+    "parley_available": true,
+    "opening_situation": "They had been on this bridge since first light. Their relief was not coming for two hours."
+  },
+  {
+    "id": "grandfather_silt_wake",
+    "schema_version": "1.0",
+    "location": "Chesapeake Shore",
+    "combat_register": "eldritch",
+    "enemies": [
+      {"template_id": "creature_aquatic_horror", "instance_id": "horror_1"},
+      {"template_id": "creature_aquatic_horror", "instance_id": "horror_2"}
+    ],
+    "terrain_zones": [
+      {"id": "water", "name": "Shallow Water", "properties": ["water"], "description": "Knee-deep brackish water."},
+      {"id": "pier", "name": "Broken Pier", "properties": ["cover_partial"], "description": "Rotted planks, half-submerged."},
+      {"id": "deck", "name": "Boat Deck", "properties": ["exposed"], "description": "Listing fishing vessel, open."},
+      {"id": "hold", "name": "Ship Hold", "properties": ["concealed"], "description": "Dark, cramped, cargo scattered."}
+    ],
+    "stakes": "Survival + clock (Silt notices)",
+    "win_conditions": [
+      {"type": "break_contact", "parameters": {"zones_from_start": 2}}
+    ],
+    "loss_conditions": [
+      {"type": "defeat_specific", "parameters": {"target": "player"}}
+    ],
+    "escape_conditions": [
+      {"type": "break_contact", "parameters": {"zones_from_start": 2}}
+    ],
+    "parley_available": false,
+    "opening_situation": "The water had been calm. The water was not calm now."
+  },
+  {
+    "id": "fed_continuity_checkpoint_potomac",
+    "schema_version": "1.0",
+    "location": "Potomac Checkpoint",
+    "combat_register": "human",
+    "enemies": [
+      {"template_id": "human_militia_soldier", "instance_id": "officer"},
+      {"template_id": "human_militia_soldier", "instance_id": "fed_1"},
+      {"template_id": "human_militia_soldier", "instance_id": "fed_2"},
+      {"template_id": "human_militia_soldier", "instance_id": "fed_3"},
+      {"template_id": "human_militia_soldier", "instance_id": "fed_4"}
+    ],
+    "terrain_zones": [
+      {"id": "checkpoint", "name": "Checkpoint", "properties": ["exposed"], "description": "Sandbags and a folding table."},
+      {"id": "barrier", "name": "Barrier", "properties": ["cover_partial"], "description": "Concrete jersey barriers."},
+      {"id": "bunker", "name": "Bunker", "properties": ["cover_full"], "description": "Reinforced guard post."},
+      {"id": "road", "name": "Road", "properties": ["objective"], "description": "The road south."}
+    ],
+    "stakes": "Relationship + clock (Fed erosion)",
+    "win_conditions": [
+      {"type": "convince_parley", "parameters": {"target": "officer"}},
+      {"type": "defeat_all", "parameters": {"targets": ["officer", "fed_1", "fed_2", "fed_3", "fed_4"]}},
+      {"type": "break_contact", "parameters": {"zones_from_start": 2}}
+    ],
+    "loss_conditions": [
+      {"type": "defeat_specific", "parameters": {"target": "player"}}
+    ],
+    "escape_conditions": [
+      {"type": "break_contact", "parameters": {"zones_from_start": 2}}
+    ],
+    "parley_available": true,
+    "opening_situation": "Scrip was still an insult here. Copper was better. He asked for papers anyway."
+  },
+  {
+    "id": "camden_salvage_three_way",
+    "schema_version": "1.0",
+    "location": "Camden Warehouse",
+    "combat_register": "human",
+    "enemies": [
+      {"template_id": "human_scavenger_raider", "instance_id": "scav_1"},
+      {"template_id": "human_scavenger_raider", "instance_id": "scav_2"},
+      {"template_id": "human_rogue_surgeon", "instance_id": "surgeon"},
+      {"template_id": "creature_blood_bonded_swarm", "instance_id": "rats"}
+    ],
+    "terrain_zones": [
+      {"id": "interior", "name": "Warehouse Interior", "properties": ["cover_partial"], "description": "Shelving units, dust, broken glass."},
+      {"id": "back_room", "name": "Back Room", "properties": ["cover_full"], "description": "Locked storage, one door."},
+      {"id": "structural", "name": "Damaged Section", "properties": ["hazardous"], "description": "Collapsed ceiling section."},
+      {"id": "crate", "name": "Target Crate", "properties": ["objective"], "description": "Medical supplies, sealed."}
+    ],
+    "stakes": "Resource + third party",
+    "win_conditions": [
+      {"type": "reach_zone", "parameters": {"zone_id": "crate"}}
+    ],
+    "loss_conditions": [
+      {"type": "defeat_specific", "parameters": {"target": "player"}}
+    ],
+    "escape_conditions": [
+      {"type": "break_contact", "parameters": {"zones_from_start": 2}}
+    ],
+    "parley_available": true,
+    "opening_situation": "Two factions in the same building, looking for the same box. And then the rats."
+  },
+  {
+    "id": "warped_territory_five_sisters",
+    "schema_version": "1.0",
+    "location": "Five Sisters Territory",
+    "combat_register": "creature",
+    "enemies": [
+      {"template_id": "creature_transformed_predator_alpha", "instance_id": "council_member"},
+      {"template_id": "creature_transformed_predator_alpha", "instance_id": "subordinate_1"},
+      {"template_id": "creature_transformed_predator_alpha", "instance_id": "subordinate_2"},
+      {"template_id": "creature_transformed_predator_alpha", "instance_id": "subordinate_3"}
+    ],
+    "terrain_zones": [
+      {"id": "clearing", "name": "Clearing", "properties": ["exposed"], "description": "Open ground between old trees."},
+      {"id": "forest", "name": "Forest Edge", "properties": ["concealed"], "description": "Dense underbrush, limited visibility."},
+      {"id": "cave", "name": "Cave Mouth", "properties": ["cover_full"], "description": "Natural stone overhang."},
+      {"id": "overlook", "name": "Elevated Overlook", "properties": ["elevated"], "description": "Rocky outcrop above the clearing."}
+    ],
+    "stakes": "Territory + relationship (parley-capable)",
+    "win_conditions": [
+      {"type": "convince_parley", "parameters": {"target": "council_member"}},
+      {"type": "break_contact", "parameters": {"zones_from_start": 2}}
+    ],
+    "loss_conditions": [
+      {"type": "defeat_specific", "parameters": {"target": "player"}}
+    ],
+    "escape_conditions": [
+      {"type": "break_contact", "parameters": {"zones_from_start": 2}}
+    ],
+    "parley_available": true,
+    "opening_situation": "She sat on the stone and waited for them to come close enough to speak."
+  },
+  {
+    "id": "echo_perimeter_manhattan",
+    "schema_version": "1.0",
+    "location": "Manhattan Financial District",
+    "combat_register": "eldritch",
+    "enemies": [],
+    "terrain_zones": [
+      {"id": "street", "name": "Corrupted Street", "properties": ["corrupted"], "description": "The shadows here do not match the buildings."},
+      {"id": "lobby", "name": "Tower Lobby", "properties": ["cover_partial"], "description": "Marble floor, shattered glass wall."},
+      {"id": "deep_zone", "name": "Deep Corruption Zone", "properties": ["corrupted"], "description": "Time disagrees here."},
+      {"id": "exit", "name": "Way Out", "properties": ["objective"], "description": "The alley that leads back to normal geography."}
+    ],
+    "stakes": "Clock (corruption accrual) + knowledge",
+    "win_conditions": [
+      {"type": "reach_zone", "parameters": {"zone_id": "exit"}},
+      {"type": "survive_rounds", "parameters": {"rounds": 3}}
+    ],
+    "loss_conditions": [
+      {"type": "defeat_specific", "parameters": {"target": "player"}}
+    ],
+    "escape_conditions": [
+      {"type": "reach_zone", "parameters": {"zone_id": "exit"}}
+    ],
+    "parley_available": false,
+    "opening_situation": "She checked her watch. The watch said the wrong thing. She checked it again. It said the same wrong thing."
+  },
+  {
+    "id": "preston_retinue_catskill",
+    "schema_version": "1.0",
+    "location": "Catskill Approach",
+    "combat_register": "human",
+    "enemies": [
+      {"template_id": "human_warlord_lieutenant", "instance_id": "elite_lt"},
+      {"template_id": "human_militia_soldier", "instance_id": "retinue_1"},
+      {"template_id": "human_militia_soldier", "instance_id": "retinue_2"},
+      {"template_id": "human_militia_soldier", "instance_id": "retinue_3"},
+      {"template_id": "human_militia_soldier", "instance_id": "retinue_4"}
+    ],
+    "terrain_zones": [
+      {"id": "mountain_road", "name": "Mountain Road", "properties": ["elevated"], "description": "Switchback road, narrow."},
+      {"id": "rocks", "name": "Rock Cover", "properties": ["cover_partial"], "description": "Boulders along the road edge."},
+      {"id": "approach", "name": "Open Approach", "properties": ["exposed"], "description": "The last stretch before the pass."},
+      {"id": "bunker", "name": "Guard Bunker", "properties": ["cover_full"], "description": "Reinforced stone position."}
+    ],
+    "stakes": "Relationship (Preston watches) + survival",
+    "win_conditions": [
+      {"type": "convince_parley", "parameters": {"target": "elite_lt"}},
+      {"type": "defeat_all", "parameters": {"targets": ["elite_lt", "retinue_1", "retinue_2", "retinue_3", "retinue_4"]}}
+    ],
+    "loss_conditions": [
+      {"type": "defeat_specific", "parameters": {"target": "player"}}
+    ],
+    "escape_conditions": [
+      {"type": "break_contact", "parameters": {"zones_from_start": 2}}
+    ],
+    "parley_available": true,
+    "opening_situation": "The road was empty. Then it was not. Then it was clear what the road had been waiting for."
+  }
+]
