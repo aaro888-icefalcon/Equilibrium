@@ -68,3 +68,41 @@ emergence/
 **Issues resolved:**
 - DQ-001/DQ-002: Missing sim-architecture.md and sim-content-integration.md — will construct from available specs
 - Fixed VALID_SPECIES in validation.py to match setting bible (hollow_boned, deep_voiced, etc.) rather than incorrect placeholder values
+
+## Entry 2: Phase 2 — Combat Engine
+
+**Date:** Phase 2 complete
+
+**Deliverables:**
+- `engine/combat/resolution.py` — roll_check, classify_result, tier_gap_modifier, compute_defense_value, compute_mental_defense, roll_initiative
+- `engine/combat/damage.py` — resolve_damage, allocate_to_tracks, compute_exposure_fill, DamageType, 7 AFFINITY_PROFILES
+- `engine/combat/statuses.py` — StatusEngine (7 statuses: bleeding, stunned, shaken, burning, exposed, marked, corrupted), tick_start/end_of_round, modifier queries
+- `engine/combat/ai.py` — AiDecisionEngine (5 profiles: aggressive, defensive, tactical, opportunist, pack), weighted feature scoring, retreat triggers
+- `engine/combat/verbs.py` — CombatState, CombatantRecord, VerbResult, 8 verb resolvers (Attack, Power, Assess, Maneuver, Parley, Disengage, Finisher, Defend)
+- `engine/combat/encounter_runner.py` — EncounterRunner: builds state, rolls initiative, runs round loop, dispatches verbs, checks win/loss/escape, builds CombatOutcome; register-specific mechanics (human heat, creature ecological clock, eldritch corruption offers)
+- `engine/combat/data_loader.py` — load_powers, load_enemies, load_encounters
+- `engine/combat/__init__.py` — Public API re-exports
+
+**Data files:**
+- `data/powers/*.json` — 48 powers across 7 categories (7 files)
+- `data/enemies/*.json` — 30 enemy templates: 12 human, 12 creature, 6 eldritch (3 files)
+- `data/encounters/sample_encounters.json` — 12 encounters across all 3 registers
+
+**Schema fixes:**
+- Added "auratic" to VALID_POWER_CATEGORIES in validation.py
+- Added `tier` and `condition_track_max` fields to EnemyTemplate in content.py
+
+**Tests:** 248 total (246 pass, 2 skipped)
+- `test_resolution.py` — 18 tests (dice, classify_result, tier gap, monte carlo)
+- `test_damage.py` — 25 tests (affinity, armor, exposure fill, track allocation, profiles)
+- `test_statuses.py` — 20 tests (all 7 statuses, ticks, modifiers, scene clear)
+- `test_ai.py` — 13 tests (5 profiles, retreat, pack degradation, target picking)
+- `test_verbs.py` — 15 tests (all 8 resolvers with deterministic seeds)
+- `test_data_loader.py` — 13 tests (48 powers, 30 enemies, 12 encounters)
+- `test_combat_scenarios.py` — 6 integration tests (human, creature, eldritch registers)
+
+**Exit criteria verified:**
+1. `from emergence.engine.combat import EncounterRunner` imports cleanly
+2. 48 powers, 30 enemies, 12 encounters load via data_loader
+3. Seeded encounters produce deterministic, serializable CombatOutcome
+4. All 248 tests pass

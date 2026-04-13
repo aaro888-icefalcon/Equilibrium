@@ -9,3 +9,7 @@ Step 8a: EncounterRunner skeleton OK
 Step 8b: turn resolution + win/loss OK
 Step 8c: register mechanics OK
 Step 9: __init__.py OK
+Step 10a: test_resolution + test_damage OK (43 pass)
+Step 10b: test_statuses + test_ai OK (33 pass)
+Step 11: test_verbs + test_data_loader OK (29 pass)
+Step 12: integration tests OK (6 pass, all 3 registers)
