@@ -275,3 +275,56 @@ emergence/
 4. Multiple sessions on same character work (progression persists through save/load)
 5. All progression state is JSON-serializable and round-trips correctly
 6. All 898 tests pass
+
+## Entry 7: Phase 7 — Polish, Documentation, and Handoff
+
+**Date:** Phase 7 complete
+
+**Deliverables:**
+- `emergence/PLAY.md` (264 lines) — Complete player-facing documentation: quick start, subcommands, global options, session zero walkthrough, game modes (framing/sim/combat/game over), in-game commands, progression systems (powers, breakthroughs, skills, relationships, factions, resources, aging, family, corruption), save management, tips, troubleshooting, exit codes
+- `emergence/HANDOFF.md` (746 lines) — Comprehensive technical handoff: architecture overview (7 layers), directory structure, full module reference for all 58 engine files across 8 packages (schemas, combat, sim, character creation, narrator, persistence, progression, runtime), test coverage summary (898 tests across 50 files), known issues and limitations, design questions resolved, extension guide (add power, enemy, faction, NPC, location, progression mechanic, scene, combat verb), key design patterns
+- `emergence/README.md` — Updated with current build state (all 7 phases complete), quick start, documentation links, test runner command
+- Docstrings added to content loader functions (6) and all 10 session zero scene classes
+
+**Tests:** 898 total (895 pass, 3 skipped) — unchanged from Phase 6
+
+**Exit criteria verified:**
+1. PLAY.md is complete and accurate — covers all subcommands, meta commands, game modes, progression systems
+2. HANDOFF.md is comprehensive — every engine module documented with purpose, key classes, key functions
+3. All known issues documented (narrator integration, CLI polish, additional powers, balance tuning)
+4. Game runs cleanly per PLAY.md instructions: `python -m emergence play` launches, `--help` works, `list`/`inspect`/`migrate` subcommands functional
+
+## Build Summary — All 7 Phases
+
+| Phase | Engine Files | Test Files | Other | Tests | Lines (engine) |
+|-------|-------------|------------|-------|-------|---------------|
+| 1 — Schemas | 8 | 2 | — | 137 | ~2,600 |
+| 2 — Combat | 7 | 7 | 11 data | 275 | ~3,000 |
+| 3 — Simulation | 16 | 11 | 1 helper | 462 | ~4,500 |
+| 4 — Content + CharCreate | 8 | 8 | — | 598 | ~2,400 |
+| 5 — Runtime + Narrator | 14 | 7 | 8 prompts | 737 | ~1,700 |
+| 6 — Progression | 10 | 12 | — | 898 | ~1,900 |
+| 7 — Polish | — | — | 3 docs | 898 | — |
+| **Total** | **58** (+ 5 __init__) | **50** | **23** | **898** | **~14,900** |
+
+**Final line counts:**
+- Engine code: ~14,900 lines across 58 modules
+- Test code: ~9,900 lines across 50 test files
+- Documentation: PLAY.md (264), HANDOFF.md (746), build-log.md (~350)
+- Data: 48 powers, 30 enemies, 12 encounters (11 JSON files)
+- Prompts: 8 template files
+
+**Key achievements:**
+- Zero external dependencies — stdlib only, including a custom YAML parser
+- Deterministic replay via injected `random.Random` throughout
+- Atomic save/load with leaves-first ordering and save-complete markers
+- Protocol-based I/O abstraction (InputSource, NarrationChannel) for testability
+- 5-year extended smoke test validates all systems working together
+- Aging to death with descendant continuation
+- 10 progression systems (tactical, breakthrough, skills, relationships, factions, resources, aging, family, corruption, arcs)
+
+**Known limitations:**
+- Live narrator integration not wired (mock mode works; FileNarrationQueue protocol ready)
+- Combat AI uses 5 profiles but doesn't adapt mid-encounter to changing tactics
+- Power data covers 48 of potentially more powers described in the setting bible
+- Balance tuning beyond automated smoke tests not performed
