@@ -25,6 +25,7 @@ from emergence.engine.sim.npc_generator import generate_npc
 # ---------------------------------------------------------------------------
 
 class OpeningScene(Scene):
+    """Scene 0: Opening Framing — establish name and age at the Onset."""
     scene_id = "sz_0"
 
     def get_framing(self, state: CreationState) -> str:
@@ -167,6 +168,7 @@ OCCUPATIONS = [
 
 
 class OccupationScene(Scene):
+    """Scene 1: Pre-Onset Occupation — 12 options with attribute/skill/resource deltas."""
     scene_id = "sz_1"
 
     def get_framing(self, state: CreationState) -> str:
@@ -240,6 +242,7 @@ _GOAL_BY_STATUS = {
 
 
 class RelationshipScene(Scene):
+    """Scene 2: Pre-Onset Relationships — 6 archetypes with NPC generation."""
     scene_id = "sz_2"
 
     def get_framing(self, state: CreationState) -> str:
@@ -398,6 +401,7 @@ _CIRCUMSTANCE_IDS = ["A", "B", "C", "D", "E", "F", "G", "H"]
 
 
 class LocationScene(Scene):
+    """Scene 3: Location and Circumstance — 8 regions x 8 circumstances."""
     scene_id = "sz_3"
 
     def get_framing(self, state: CreationState) -> str:
@@ -497,6 +501,7 @@ CONCERNS = [
 
 
 class ConcernScene(Scene):
+    """Scene 4: Immediate Concern — 8 pre-onset worries with goals and NPCs."""
     scene_id = "sz_4"
 
     def get_framing(self, state: CreationState) -> str:

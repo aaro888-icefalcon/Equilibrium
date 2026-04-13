@@ -151,6 +151,7 @@ def _select_powers(category: str, tier: int, rng: _random.Random) -> List[Dict[s
 
 
 class ManifestationScene(Scene):
+    """Scene 5: Manifestation — circumstance-weighted power category and tier rolls."""
     scene_id = "sz_5"
     register = "intimate"
 

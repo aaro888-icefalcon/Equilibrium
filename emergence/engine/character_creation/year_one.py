@@ -55,6 +55,7 @@ _FIRST_WEEKS = [
 
 
 class FirstWeeksScene(Scene):
+    """Scene 6: First Weeks — 4 survival strategies post-Onset."""
     scene_id = "sz_6"
 
     def get_framing(self, state: CreationState) -> str:
@@ -171,6 +172,7 @@ _FACTION_SKILL_BONUS = {
 
 
 class FactionEncounterScene(Scene):
+    """Scene 7: Faction Encounter — 4 responses to the local faction."""
     scene_id = "sz_7"
 
     def get_framing(self, state: CreationState) -> str:
@@ -313,6 +315,7 @@ _INCIDENT_C_CHOICES = [
 
 
 class CriticalIncidentScene(Scene):
+    """Scene 8: Critical Incident — 3 branches (Hungry Thing/Reckoning/Loss) x 4 options."""
     scene_id = "sz_8"
 
     def get_framing(self, state: CreationState) -> str:
@@ -473,6 +476,7 @@ _SETTLING_CHOICES = [
 
 
 class SettlingScene(Scene):
+    """Scene 9: Settling Into Place — 5 lifestyle options, starting inventory, final goal."""
     scene_id = "sz_9"
 
     def get_framing(self, state: CreationState) -> str:

@@ -1,4 +1,47 @@
-# Emergence — Build Orchestration
+# Emergence
+
+A solo AI-narrated tactical RPG and life simulation set one year after the Onset -- a catastrophic event that killed most of humanity and left survivors with supernatural abilities.
+
+## Current State
+
+**All 7 build phases complete. 898 tests passing (895 pass, 3 skipped).**
+
+| Phase | Description | Tests |
+|-------|-------------|-------|
+| 1 | Schema scaffolding + validation | 137 |
+| 2 | Combat engine (48 powers, 30 enemies) | 275 |
+| 3 | Simulation engine (tick, factions, NPCs, clocks) | 462 |
+| 4 | Content integration + character creation | 598 |
+| 5 | Runtime, narrator, persistence | 737 |
+| 6 | Progression (10 systems) + extended smoke test | 898 |
+| 7 | Documentation + polish | 898 |
+
+## Quick Start
+
+```bash
+python -m emergence play        # Start or resume
+python -m emergence new         # New character
+python -m emergence list        # List saves
+python -m emergence --help      # All options
+```
+
+Requires Python 3.10+. No external dependencies.
+
+## Documentation
+
+- **[PLAY.md](PLAY.md)** -- Player-facing instructions, commands, and tips
+- **[HANDOFF.md](HANDOFF.md)** -- Technical architecture, module reference, extension guide
+- **[notes/build-log.md](notes/build-log.md)** -- Complete build history
+
+## Running Tests
+
+```bash
+python -m unittest discover -s emergence/tests -v
+```
+
+---
+
+# Build Orchestration (Original Prompt)
 
 You are Claude Code. You will build a complete, playable, AAA-quality vertical slice of Emergence — a solo AI-narrated tactical RPG and life simulation set in a post-collapse Earth where most of humanity manifested supernatural abilities one year ago.
 

@@ -178,6 +178,7 @@ class ContentLoader:
     # ── Factions ──────────────────────────────────────────────────────
 
     def load_factions(self) -> Dict[str, Faction]:
+        """Load all factions from factions.yaml into Faction schema objects."""
         data = self._read_yaml("factions.yaml")
         raw_list = data.get("factions", [])
         result: Dict[str, Faction] = {}
@@ -227,6 +228,7 @@ class ContentLoader:
     # ── NPCs ──────────────────────────────────────────────────────────
 
     def load_npcs(self) -> Dict[str, NPC]:
+        """Load all NPCs from npcs.yaml into NPC schema objects."""
         data = self._read_yaml("npcs.yaml")
         raw_list = data.get("npcs", [])
         result: Dict[str, NPC] = {}
@@ -284,6 +286,7 @@ class ContentLoader:
     # ── Locations ─────────────────────────────────────────────────────
 
     def load_locations(self) -> Dict[str, Location]:
+        """Load all locations from locations.yaml into Location schema objects."""
         data = self._read_yaml("locations.yaml")
         raw_list = data.get("locations", [])
         result: Dict[str, Location] = {}
@@ -338,6 +341,7 @@ class ContentLoader:
     # ── Clocks ────────────────────────────────────────────────────────
 
     def load_clocks(self) -> Dict[str, Clock]:
+        """Load all clocks from clocks.yaml into Clock schema objects."""
         data = self._read_yaml("clocks.yaml")
         raw_list = data.get("clocks", [])
         result: Dict[str, Clock] = {}
@@ -375,11 +379,13 @@ class ContentLoader:
     # ── Constants ─────────────────────────────────────────────────────
 
     def load_constants(self) -> Dict[str, Any]:
+        """Load world constants from constants.yaml as raw dict."""
         return self._read_yaml("constants.yaml")
 
     # ── Timeline ──────────────────────────────────────────────────────
 
     def load_timeline(self) -> List[Dict[str, Any]]:
+        """Load timeline events from timeline.yaml."""
         data = self._read_yaml("timeline.yaml")
         return data.get("timeline", [])
 
