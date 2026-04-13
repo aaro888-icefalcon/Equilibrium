@@ -1,0 +1,1068 @@
+# EMERGENCE — Major Factions (22)
+# One entry per named major faction. IDs are stable across documents.
+
+factions:
+
+  - id: fed-continuity
+    display_name: Federal Continuity Command
+    type: residual-state-authority
+    current_leader: npc-alcott
+    territory: DC / Arlington / Bethesda corridor + scattered Districts into northern Virginia
+    population: 1_900_000
+    power_profile:
+      - ~15_000 trained personnel (military + retained civilian)
+      - ~200 T5+ power users (institutional)
+      - pre-Onset small arms functional; ammunition reloaded via matter-manipulation
+      - heavy weapons non-operational; logistics on horse-cart
+    economic_base:
+      - Continuity scrip (fiat, pre-Onset Treasury reserves claimed)
+      - labor extraction from absorbed refugees
+      - taxation of District populations
+      - pre-Onset federal stockpiles (dwindling)
+    goals:
+      - maintain institutional claim over former US territory
+      - extract healer-levies from Species I kin networks (covert negotiation ongoing)
+      - pull in frontier districts to reduce span of control
+      - prevent Reeve's open usurpation
+    current_schemes:
+      - formal territorial recognition offered to Species I in exchange for skilled-practitioner levies
+      - covert arbitrage of scrip against Bourse copper via House Beltran
+      - internal counter-intelligence against Reeve sympathizers
+    internal_tensions:
+      - Reeve's Potomac Irregulars are nominally loyal but operationally independent
+      - civilian shadow-government resents military dominance
+      - district commanders have significant autonomy
+    external_relationships:
+      - courts Species I (needs healers, translators)
+      - hostile to Crabclaw Confederation (clock at 3/6)
+      - distrusts Iron Crown
+      - transactional with Philadelphia Bourse
+      - absorbs refugees from collapsing smaller polities
+    standing_with_player_default: neutral-transactional
+    known_information:
+      - largest organized polity by population
+      - issues Continuity scrip
+      - claims legitimate US succession
+      - retains Pentagon, Andrews, Quantico triangle
+    secret_information:
+      - GM-only: Reeve has quietly assessed loyalty among flag officers; 60% would follow him openly
+      - GM-only: Alcott has indirect evidence of Reeve's preparations but lacks authority to purge him
+      - GM-only: scrip arbitrage is a stopgap; without Bourse cooperation, scrip would collapse within months
+      - GM-only: Fed Continuity has unopened hard intelligence about anomalous entity patterns from pre-Onset classified sources
+    narrative_voice: >
+      The institution speaks in memoranda and chain-of-command. Orders come down
+      through channels that still use pre-Onset forms — date stamps, classification
+      markings, signature blocks. The fiction of continuity is maintained not because
+      anyone believes the war is ongoing but because the forms are the only thing
+      holding the structure together. Alcott reads every significant cable. Reeve
+      reads the same cables and smiles. The Pentagon smells of kerosene and horse
+      sweat.
+
+  - id: potomac-irregulars
+    display_name: The Potomac Irregulars
+    type: warlord-sovereign-nominal-loyalist
+    current_leader: npc-reeve
+    territory: northern Virginia suburbs (Fairfax, Arlington exurbs, Loudoun)
+    population: 620_000
+    power_profile:
+      - T8 kinetic commander (Reeve) + Auratic-T4 command-presence secondary
+      - ~4_000 personnel, mostly former Fed Continuity regulars
+      - significant pre-Onset firearms stockpile
+      - Reeve himself is a battlefield multiplier; his presence stabilizes his units
+    economic_base:
+      - extraction from Virginia District tributary townships
+      - scavenged pre-Onset military stockpiles at Quantico periphery
+      - smuggling into DC market (against Fed Continuity embargo)
+    goals:
+      - replace Alcott as the voice of institutional legitimacy
+      - absorb Fed Continuity military command; keep civilian shell as propaganda
+      - contain Species I polity ambitions
+      - expand southward (unopposed territory)
+    current_schemes:
+      - quiet loyalty-assessment of Fed Continuity flag officers (60% favorable)
+      - waiting for Alcott political misstep or health failure
+      - small-scale raids on Species I border settlements (plausible deniability)
+    internal_tensions:
+      - Reeve's kinetic depth is strong but he has fewer T6+ subordinates than Alcott
+      - some Irregular captains prefer independence over absorption
+    external_relationships:
+      - nominal vassalage to Fed Continuity (fictional)
+      - hostile to Species I
+      - cool toward Bourse (Bourse would not support a military coup)
+      - no formal relationship with Catskill Throne
+    standing_with_player_default: guarded-hostile
+    known_information:
+      - nominally loyal to Fed Continuity
+      - holds Virginia suburbs
+      - Reeve is T8 kinetic, former Marine colonel
+    secret_information:
+      - GM-only: Reeve has prepared detailed plans for Pentagon seizure; awaits trigger
+      - GM-only: Species I border incidents are deliberately provocative, seeking Species I overreaction to justify escalation
+    narrative_voice: >
+      Reeve's men still salute. The salutes are correct. They were trained correctly
+      before the Onset and they have not forgotten. What they have forgotten, or
+      have chosen to ignore, is which direction the orders travel. Reeve speaks
+      quietly when he addresses his officers. He does not need to raise his voice.
+      The Auratic field around him does the raising.
+
+  - id: bear-house
+    display_name: The Bear-House of Peekskill
+    type: warlord-sovereign
+    current_leader: npc-kostas
+    territory: Peekskill, Cortlandt, and surrounding Hudson Valley towns; ~90,000 initial, expanded to ~420,000 by T+1
+    population: 420_000
+    power_profile:
+      - T8 matter-energy founder (Kostas) with Physical-T5 and Perceptual-T3 secondaries
+      - 3 other T6+ matter-manipulators retained
+      - ~1_500 militia-grade personnel
+      - controls only functional electrical grid in mid-Atlantic (~10,000 household equivalents)
+    economic_base:
+      - Peekskill reactor electrical output (limited but unique)
+      - matter-manipulation-fabricated precision goods
+      - tribute extracted from northern Westchester demesnes
+    goals:
+      - maintain reactor containment indefinitely
+      - expand demesne north and south of Peekskill
+      - develop a succession protocol (Kostas has no heir)
+      - convert Catskill Throne tribute into something more like alliance
+    current_schemes:
+      - quiet research into replacement matter-specialists for post-Kostas era
+      - negotiating formal trade agreements with Yonkers Compact
+      - fortifying reactor perimeter against unspecified threat (possibly Tower Lords or northward Iron Crown expansion)
+    internal_tensions:
+      - Kostas is austere and methodical; popular but not warm
+      - his mineralization is advancing; subordinates discuss his longevity
+      - reactor crew has internal disagreements about safe operational margins
+    external_relationships:
+      - tributary to Catskill Throne (strained but honored)
+      - commercial partner of Yonkers Compact
+      - wary toward Bourse (sells them electricity but does not trust them)
+      - hostile to Tower Lords (salvage disputes over Bronx ruins)
+    standing_with_player_default: cool-transactional
+    known_information:
+      - reactor is functional; produces electricity
+      - Kostas is T8 matter-energy; former structural engineer
+      - expansionist northward
+    secret_information:
+      - GM-only: reactor operates on narrower safety margins than Kostas admits publicly
+      - GM-only: Kostas's mineralization is terminal; probable lifespan 10-15 more years at current rate
+      - GM-only: Kostas has privately named "The Measurer" (npc-measurer) as provisional successor but has not announced it
+    narrative_voice: >
+      The walls of the compound were laid by Kostas personally. The mineralization
+      was not yet on his face when he built them, only his forearm. The walls
+      remember the shape of his hand. Inside the compound, the reactor hums at
+      a frequency that settles into the bones of everyone who lives there. Children
+      born in the Bear-House can feel when the reactor's output changes. They
+      learn to read it before they learn to read words.
+
+  - id: yonkers-compact
+    display_name: The Yonkers Compact
+    type: mutual-aid-commune
+    current_leader: npc-three-judges
+    territory: Yonkers and adjacent Lower Westchester townships
+    population: 340_000
+    power_profile:
+      - rotating assembly under three biokinetic healers (Obi, Rubinstein, Villanueva)
+      - ~200 T5+ biokinetic practitioners
+      - militia-grade general defense only (~500 trained personnel)
+      - biokinetic agricultural capacity among the highest per-capita in region
+    economic_base:
+      - biokinetic agriculture (surplus producer)
+      - biokinetic healing services (sold to neighbors)
+      - modest salvage from southern Westchester ruins
+    goals:
+      - preserve horizontal commune structure
+      - maintain strategic neutrality
+      - resist Catskill Throne's vassalage conversion
+      - train next generation of biokinetic practitioners
+    current_schemes:
+      - negotiating special-status arrangement with Catskill Throne short of formal vassalage
+      - expanding apprenticeship intake to prepare for Three Judges succession
+      - quietly supporting Species I diaspora through healer deployments to Philadelphia
+    internal_tensions:
+      - three Judges council has one contested seat (Villanueva is privately contemplating retirement)
+      - younger Compact members want a more formal constitution
+      - tension between neutrality doctrine and moral obligation to intervene in Pine Barrens
+    external_relationships:
+      - tributary to Catskill Throne (grudging)
+      - commercial partner of Bear-House
+      - friendly with Philadelphia Bourse (Bourse retains Compact healers for high-value patients)
+      - friendly with Central Jersey League
+      - courted by all major factions for biokinetic services
+    standing_with_player_default: friendly-neutral
+    known_information:
+      - rules by rotating biokinetic council
+      - the richest biokinetic agriculture in Hudson Valley
+      - neutral in all major conflicts
+    secret_information:
+      - GM-only: the Three Judges have privately discussed whether neutrality is sustainable if Pine Barrens Expansion fires
+      - GM-only: Abel the T7 collie Warped (npc-abel) is a formal non-voting advisor; his presence is not widely known
+    narrative_voice: >
+      The Compact speaks in meetings. Most mornings in Yonkers begin with a
+      community gathering — the Three Judges available for arbitration, the
+      daily agricultural rota announced, any disputes heard before the day's
+      work. Nothing in the Compact's architecture prevents a warlord. Its
+      resistance is cultural. People are used to the meetings. They expect
+      to be heard. A warlord would have to break several generations of
+      expectation to impose himself.
+
+  - id: catskill-throne
+    display_name: The Catskill Throne
+    type: warlord-sovereign
+    current_leader: npc-preston
+    territory: Catskill passes + tributary Hudson Valley polities
+    population: 180_000 (direct); tributary reach ~940_000 across Hudson Valley polities
+    power_profile:
+      - T9 kinetic specialist (Preston) — most formidable individual in region
+      - ~160 T5+ retinue (predominantly Physical primaries)
+      - Marshal Whelan (T7), "The Shadow" (T6 temporal-spatial), Beatrice Amar (T6 auratic), Dr. Huang (T5 biological)
+      - strategic control of Hudson passes
+    economic_base:
+      - tribute from all Hudson Valley polities (~5% of agricultural surplus)
+      - tolls on Hudson pass traffic
+      - modest direct mountain agriculture
+    goals:
+      - convert tribute into formal vassalage (clock advancing)
+      - maintain personal reclusiveness to preserve mystique
+      - resolve succession question (unresolved)
+      - eliminate Hollow Choir threat to eastern Catskills
+    current_schemes:
+      - ritualizing tribute collection to normalize subordination
+      - negotiating with Warped leaders (Grey-on-Grey wolf, Grey Walker bear)
+      - monitoring Bear-House for signs of independence
+    internal_tensions:
+      - no named successor; retinue speculates about Whelan
+      - Preston's reclusiveness creates information vacuum
+      - his breakthrough cost (loss of fear) isolates him
+    external_relationships:
+      - sovereign over Hudson Valley tributaries (Bear-House, Yonkers Compact, several smaller)
+      - cool toward Fed Continuity (formally unrelated; informally suspicious)
+      - no direct relations with southern factions
+      - formal neutrality toward Warped where possible (meetings with Grey Walker, Old Stone)
+    standing_with_player_default: distant-cautious
+    known_information:
+      - Preston is T9 kinetic; the most dangerous person in the region
+      - seat at Mount Tremper
+      - collects tribute throughout Hudson Valley
+      - reclusive
+    secret_information:
+      - GM-only: Preston has met Grey Walker (T9 warped bear) at least twice; he takes the Prior Cycles Theory seriously
+      - GM-only: Preston's loss of fear extends to loss of self-preservation instinct; he could die from overextension
+      - GM-only: The Shadow is actually a pair of individuals sharing the title; Preston knows this
+    narrative_voice: >
+      The Throne receives tribute at the winter and summer gates. Preston does
+      not usually appear. When he does, he stands very still and speaks briefly.
+      The hall is a matter-manipulated addition to a federal bunker — walls
+      rebuilt by a Species C artisan to Preston's specifications, seamless and
+      sound-deadening. Beatrice Amar's truth-field is noticeable within seven
+      meters of her. Whelan conducts most business. Preston watches.
+
+  - id: tower-lords-brooklyn
+    display_name: The Tower Lords of Brooklyn
+    type: warlord-sovereign-plural
+    current_leader: npc-tenno-marcus-and-peers
+    territory: Brooklyn districts (Bay Ridge, Flatbush, Crown Heights, etc.)
+    population: 1_100_000
+    power_profile:
+      - 5-6 T7 warlords, each holding a district
+      - Ronen "Crown" Marcus (T7 kinetic, Crown Heights)
+      - Marius Tenno (T7 kinetic, Flatbush)
+      - "Elena" (T6 matter-manipulator, Bay Ridge)
+      - plus 2-3 others, details vary by succession churn
+      - heavy kinetic corruption in district cores
+    economic_base:
+      - Manhattan salvage (primary)
+      - intra-Brooklyn trade
+      - protection rackets on merchant traffic
+    goals:
+      - maintain district sovereignty
+      - prevent any single Tower Lord from dominating
+      - protect salvage revenue streams
+      - avoid direct conflict with Iron Crown or Staten Citadel
+    current_schemes:
+      - shifting alliances among the 5-6 Lords (perpetual)
+      - quiet succession jockeying (38% 5-year leadership-change probability per Lord)
+      - Manhattan salvage extraction at increasing depth
+    internal_tensions:
+      - no stable coordinating mechanism; peer conflicts are constant
+      - individual succession crises are frequent
+      - district loyalty is often weak
+    external_relationships:
+      - cooperative-competitive with Iron Crown (salvage partners and rivals)
+      - pay toll to Staten Citadel for harbor access
+      - distant toward Bourse, Yonkers, other non-adjacent factions
+      - hostile to Queens Commonage at Cross-Queens Line
+    standing_with_player_default: opportunistic-dangerous
+    known_information:
+      - plural warlord system; 5-6 Lords
+      - most heavily corrupted terrain in mid-Atlantic
+      - salvage-dependent economy
+    secret_information:
+      - GM-only: the number of Tower Lords has varied from 4 to 7 in the past year; formal count is unreliable
+      - GM-only: at least one Tower Lord is conducting illicit tier-advancement experiments with a Camden contact (possibly npc-doctor-pale)
+      - GM-only: the Chain-King (npc-chain-king) operates within Tower Lord territory with informal tolerance
+    narrative_voice: >
+      The Lords do not speak to each other often. They speak through intermediaries,
+      messages, arranged meetings at neutral locations in Flatbush or along the
+      waterfront. A salvage crew passing between districts pays each Lord in turn.
+      The crews know the customs. The kinetic corruption has made streets strange
+      — walls sag in directions that would require force-vector analysis to predict.
+      Children born in Crown Heights this year will grow up on streets that are not
+      quite the streets their parents knew.
+
+  - id: queens-commonage
+    display_name: The Queens Commonage
+    type: mutual-aid-commune
+    current_leader: npc-kenji-lee
+    territory: central Queens neighborhoods (Flushing excluded — Species C cluster)
+    population: 480_000
+    power_profile:
+      - T6 perceptual coordinator (Lee) + Auratic-T4 secondary
+      - ~30 T5+ perceptual organizers ("Voices") coordinating across districts without radio
+      - defensive militia only (~400 trained)
+      - notable alliance with Father Marcus Rhodes' outer Queens community
+    economic_base:
+      - urban agriculture (biokinetic-assisted rooftop and lot farming)
+      - tooling and crafts from Species C adjacent production
+      - Jamaica Bay fishery (contested)
+    goals:
+      - maintain horizontal governance
+      - defend Cross-Queens Line against Tower Lord encroachment
+      - coordinate with Species C Twelve Hands
+      - absorb refugees from Tower Lord territory where possible
+    current_schemes:
+      - quiet extension of biokinetic agriculture into former Tower Lord-adjacent lots
+      - formalizing alliance with Flushing-Edison Cluster
+      - negotiating cross-bay trade with Species I Philadelphia kin
+    internal_tensions:
+      - Voice network coordination requires perceptual-primary individuals; recruitment is slow
+      - some districts favor a more militant posture
+    external_relationships:
+      - allied with Flushing-Edison Cluster
+      - friendly with Father Marcus Rhodes' community
+      - hostile to Tower Lords
+      - distant from Iron Crown (Cross-Queens Line is bridge-and-tunnel boundary)
+      - transactional with Bourse
+    standing_with_player_default: friendly-cautious
+    known_information:
+      - horizontal federation
+      - coordinates via Voices (perceptual telepathy)
+      - defensive posture
+    secret_information:
+      - GM-only: the Voice network has been compromised once (month 8 of Year 1) by Tower Lord infiltrator; full security audit ongoing
+      - GM-only: Jamaica Bay fishery is contested between Commonage and a minor Tower Lord; conflict may escalate
+    narrative_voice: >
+      The Voices do not speak aloud when they are coordinating. It looks, to an
+      outsider, like neighbors standing too still. In the markets, it looks like
+      one merchant walking past another without acknowledgment. What has passed
+      between them is an update, a warning, or a confirmation. The Commonage runs
+      on this invisible current. It is more fragile than it appears, because
+      perceptual-primary individuals are not common. Every one they lose is not
+      easily replaced.
+
+  - id: staten-citadel
+    display_name: The Staten Citadel
+    type: warlord-sovereign
+    current_leader: npc-viktor-chen
+    territory: Staten Island entire + Brooklyn Navy Yard sub-claim
+    population: 260_000
+    power_profile:
+      - T7 temporal-spatial founder (Chen) with Perceptual-T4 secondary
+      - ~15 T5+ temporal-spatial subordinates (rare specialty; difficult to recruit)
+      - harbor-guard militia (~800)
+      - short-range teleportation enables harbor logistics without bridges
+    economic_base:
+      - Manhattan salvage export (primary)
+      - harbor tolls (Iron Crown, Tower Lords, occasional Bourse)
+      - the Brooklyn Navy Yard facility (partial operation)
+    goals:
+      - maintain harbor monopoly
+      - survive Iron Crown aggression
+      - expand temporal-spatial specialist recruitment
+      - develop formal commercial relationship with Bourse
+    current_schemes:
+      - preparing for Iron Crown war (clock at 3/6)
+      - discreet recruitment of temporal-spatial manifesters from other polities
+      - fortification of harbor approaches
+    internal_tensions:
+      - Chen's succession is unclear (no named heir)
+      - "The Bridgemaster" (npc-bridgemaster) is ambitious
+      - economic dependency on Manhattan salvage creates anomalous-entity risk exposure
+    external_relationships:
+      - hostile to Iron Crown (clock 3/6 for open war)
+      - commercial with Tower Lords (salvage partners)
+      - transactional with Bourse (mediation, not alliance)
+      - no formal relationship with northern factions
+    standing_with_player_default: transactional
+    known_information:
+      - Chen controls harbor via spatial teleportation
+      - extracts tolls from all harbor traffic
+      - preparing for war with Iron Crown
+    secret_information:
+      - GM-only: Chen has privately assessed that he will win an open war with Volk within 60 days if it starts
+      - GM-only: the Brooklyn Navy Yard sub-claim is contested by one Tower Lord; current arrangement is informal and fragile
+    narrative_voice: >
+      The harbor at Staten is quiet in a way that makes newcomers uneasy. There
+      is no bridge traffic. Goods appear at the docks without the usual human
+      commotion. Chen's temporal-spatial crew works invisibly — crates arrive
+      from Manhattan already on the Staten side, dropped into place by operators
+      who do not need to speak. The fortifications on the eastern shore face
+      Newark. Every week they are a little more substantial. Chen is preparing.
+
+  - id: iron-crown
+    display_name: The Iron Crown of Newark
+    type: warlord-sovereign
+    current_leader: npc-volk
+    territory: Port Newark + Jersey City + Elizabeth
+    population: 740_000
+    power_profile:
+      - T8 physical primary (Volk) with Auratic dread-field secondary and Biological-T3 tertiary
+      - ~30 T5-T7 captains (Brick, Razorgrin, The Butcher, Silent Henry)
+      - ~1_200 armed retinue
+      - Iron Crown chit currency (fiat, enforced only within territory)
+    economic_base:
+      - Port Newark (deep-water harbor, functional)
+      - pre-Onset industrial salvage
+      - extraction from district captains' territories
+      - Manhattan salvage partnership with Tower Lords
+    goals:
+      - establish dominance over Staten Citadel in Manhattan salvage
+      - expand into northern New Jersey (Paterson, Union)
+      - eliminate perceived Species H threat after T+4-month incident
+      - maintain personal rule
+    current_schemes:
+      - positioning for Iron Crown-Staten war (clock 3/6)
+      - intimidation campaigns against Species I Herrera-kin (Camden)
+      - tightening captain loyalty through selected executions
+    internal_tensions:
+      - Volk's personal rule has no succession mechanism
+      - multiple captains have quiet external contacts
+      - Razorgrin (Species H) is anomaly in retinue; loyalty unclear
+    external_relationships:
+      - hostile to Staten Citadel
+      - cool-transactional with Tower Lords
+      - hostile to Species H enclaves (cross-enclave courier boycott imposed)
+      - hostile to Species I
+      - distant from Bourse (Bourse will not arbitrate for Iron Crown)
+      - not recognized by Catskill Throne
+    standing_with_player_default: hostile
+    known_information:
+      - Volk is T8 kinetic + dread-field; former longshoreman
+      - rules by personal violence
+      - Iron Crown chit currency is worthless outside territory
+    secret_information:
+      - GM-only: Brick Stepanski has been approached by Tower Lords for potential alliance; has not yet responded
+      - GM-only: The Butcher (Petra Voss) has access to unique biological interrogation techniques; Silent Henry trades with her reluctantly
+      - GM-only: Silent Henry is Volk's de-facto intelligence chief but is also the single best-informed Iron Crown figure about external risks
+    narrative_voice: >
+      Volk's compound at Port Newark smells of harbor tar and iron. The dread
+      extends about thirty meters from him at rest. Visitors pass through it
+      involuntarily, feel their stomach drop, and then stand before him reporting
+      whatever they were sent to report. He listens carefully and speaks briefly.
+      His captains are heavy men with scars who were already heavy men with
+      scars before the Onset. The Iron Crown rules by fear, and fear is a
+      technology that works.
+
+  - id: philadelphia-bourse
+    display_name: The Philadelphia Bourse
+    type: mercantile-consortium
+    current_leader: npc-beltran
+    territory: Philadelphia Old Market + Delaware wharves + trade networks region-wide
+    population: 2_520_000 (metro, Bourse-influenced rather than governed)
+    power_profile:
+      - 31 merchant houses; Council of Thirty-One
+      - rotating Factor-General (Beltran, T6 perceptual, Species I Herrera-kin)
+      - no standing military; contracts with South Philly Holding (Marcus Dreng, T7 kinetic) for enforcement
+      - Bourse library, printing press, copper coinage operation
+    economic_base:
+      - trade arbitrage (grain, salvage, coal, fine goods)
+      - currency issuance (Bourse copper, silver, gold stamps)
+      - arbitration fees and commercial dispute services
+      - warehousing and custody services
+    goals:
+      - complete Currency Stability clock (copper as formal regional standard)
+      - maintain trade neutrality
+      - expand Species I commercial cooperation
+      - contain Hive (burn-crew contracts funded by Grove-coin levy)
+    current_schemes:
+      - final push to complete Currency Stability (clock 5/6)
+      - covert backing of Central Jersey League, Species I Reyes-kin, Delmarva Harvest Lords
+      - mediation of Iron Crown-Staten tensions (two failed attempts)
+      - quiet arbitrage of Continuity scrip against copper (House Beltran)
+    internal_tensions:
+      - house competition is constant though usually non-violent
+      - South Philly Holding's loyalty is contractual; Marcus Dreng could defect
+      - Factor-General rotation generates succession jockeying every 2 years
+    external_relationships:
+      - friendly with Central Jersey League
+      - friendly with Species I (Factor-General is kin)
+      - transactional with Fed Continuity (scrip arbitrage)
+      - transactional with Delmarva Harvest Lords
+      - mediator (unsuccessful) between Iron Crown and Staten
+      - does not recognize Iron Crown chit
+    standing_with_player_default: transactional-friendly
+    known_information:
+      - 31 merchant houses, rotating Factor-General
+      - Bourse copper is the most trusted regional currency
+      - backed by South Philly Holding for enforcement
+    secret_information:
+      - GM-only: the Currency Stability clock completion is a deliberate multi-year strategy coordinated by House Okonkwo
+      - GM-only: Bourse library (npc-pilar-reyes) holds pre-Onset intelligence documents smuggled from Federal archives; very sensitive
+      - GM-only: House Pereira (Camden operations) has unofficial contact with The Broker eldritch entity; exchange of pre-Onset mechanical objects for information
+    narrative_voice: >
+      The Bourse operates in daylight. Its operations are legible to anyone
+      who cares to read the ledgers. This is a deliberate posture — the Bourse's
+      neutrality is maintained by being obviously profitable for everyone. A
+      merchant house that tried to cheat the arbitration would lose business
+      within a year. The Council of Thirty-One meets weekly in the Old Market's
+      upper gallery. Most business is routine. What is not routine is handled
+      in private meetings between house principals that nobody documents.
+
+  - id: south-philly-holding
+    display_name: The South Philly Holding
+    type: warlord-sovereign-subcontractor
+    current_leader: npc-marcus-dreng
+    territory: South Philadelphia + Navy Yard
+    population: 180_000
+    power_profile:
+      - T7 kinetic (Dreng)
+      - ~300 armed personnel
+      - navy yard salvage operation
+    economic_base:
+      - 8% of Bourse trade revenue (contractual)
+      - salvage operation at Philadelphia Navy Yard
+      - protection rackets (constrained by Bourse contract)
+    goals:
+      - maintain Bourse contract (lucrative)
+      - expand Navy Yard capacity
+      - avoid entanglement in faction wars beyond Philadelphia
+    current_schemes:
+      - quiet negotiation with Bourse for expanded enforcement mandate
+      - fortifying Navy Yard perimeter
+    internal_tensions:
+      - Dreng's captains question Bourse subordination
+      - navy yard salvage is declining; replacement revenue uncertain
+    external_relationships:
+      - contracted to Bourse
+      - hostile to Iron Crown (territorial rival across Delaware)
+      - neutral with Delmarva Lords
+    standing_with_player_default: transactional
+    known_information:
+      - Dreng is T7 kinetic
+      - contracted enforcer for Bourse
+      - Navy Yard operations
+    secret_information:
+      - GM-only: Dreng has been offered a larger sum by the Crabclaw Confederation to relocate; is considering but has not accepted
+      - GM-only: Navy Yard salvage runs have produced two anomalous objects in the past year; one was quietly given to Bourse, one disappeared
+    narrative_voice: >
+      Dreng is comfortable with Bourse subordination because Bourse pays and
+      because Bourse does not meddle. His men patrol the Delaware wharves, guard
+      Bourse shipments, and break heads when told to break heads. The Navy Yard
+      operation is quieter. Dreng does not like anomalous objects. He prefers
+      to move them up the chain quickly.
+
+  - id: central-jersey-league
+    display_name: Central Jersey League
+    type: federation-of-townships
+    current_leader: npc-okafor
+    territory: 15 townships from Princeton to Brick, population ~780,000
+    population: 780_000
+    power_profile:
+      - T7 Biological+Perceptual+Auratic (Okafor) as coordinator
+      - 120 T5+ power users across member militias
+      - ~4_000 combined militia
+      - significant biokinetic agricultural capacity
+      - Rutgers-Princeton biokinetic training center
+    economic_base:
+      - biokinetic agricultural exports
+      - Rutgers-Princeton training fees
+      - Bourse-denominated trade
+    goals:
+      - maintain Accord integrity under stress
+      - expand through voluntary township accession
+      - counterbalance warlord states through soft power
+      - resist Species I pressure on southern townships (or integrate via alliance)
+    current_schemes:
+      - quiet absorption of peripheral townships from collapsing Fed Continuity districts
+      - formal Warped diplomacy (Warped relations subcommittee; White Horse of Princeton treaty)
+      - biokinetic training program expansion
+    internal_tensions:
+      - Okafor is aging; successor unclear
+      - northern townships (closer to Iron Crown) favor harder line
+      - Accord Council consensus-model is slow under crisis
+    external_relationships:
+      - allied with Bourse
+      - allied with Species I (multiple kin networks)
+      - transactional with Lehigh Principalities
+      - hostile to Iron Crown (proximity and ideology)
+      - formal treaty with White Horse of Princeton (Warped, npc-white-horse-princeton)
+    standing_with_player_default: friendly
+    known_information:
+      - federation of 15 townships
+      - Accord Council governance
+      - biokinetic agriculture + training center
+    secret_information:
+      - GM-only: Okafor's health is declining; she has been privately treated by Yonkers Three Judges twice in past year
+      - GM-only: the Warped subcommittee has documented at least 7 verified T6+ Warped contacts in the region (most not publicly known)
+      - GM-only: Princeton University library holds pre-Onset federal classified materials Okafor has not disclosed to Accord
+    narrative_voice: >
+      The League is slow. It is slow by design. The Accord Council meets quarterly;
+      contentious matters take several meetings to resolve. Okafor is the reason it
+      works — her Auratic field is a calming presence, her Perceptual reads the
+      room, her Biological gifts give her concrete gifts to offer townships that
+      align. When she is gone the League will either find another coordinator
+      or it will fragment. The younger practitioners at Rutgers know this.
+
+  - id: lehigh-principalities
+    display_name: Lehigh Principalities
+    type: warlord-sovereign-plural-agrarian
+    current_leader: distributed across ~12 T6-T7 lords
+    territory: Lehigh Valley coal towns + surrounding Pennsylvania
+    population: 990_000
+    power_profile:
+      - ~12 Principality lords, T6-T7 each
+      - matter-manipulator-supported coal mining (only functional mid-Atlantic coal)
+      - Species G cluster presence (~168k) integrated as advisors/specialists
+      - Councilor Anna Veldt (Species G) agricultural coordination
+      - modest combined militia
+    economic_base:
+      - coal production (biokinetic-supplemented)
+      - industrial carbon exports
+      - Species G agricultural contributions
+      - Bethlehem steelworks ruin salvage
+    goals:
+      - maintain coal production (critical revenue)
+      - preserve Principality autonomy within loose coordination
+      - integrate Species G further (currently smooth)
+      - resist Hive expansion from Susquehanna Crown
+    current_schemes:
+      - seeking Bourse burn-crew contract for Susquehanna Crown containment
+      - quiet arrangement with Old Badger (T8 warped, npc-old-badger) for territorial boundary
+      - expanding Anna Veldt's inter-Principality coordination
+    internal_tensions:
+      - Principality lords occasionally feud over coal rights
+      - Species G integration works but is one generation deep
+    external_relationships:
+      - commercial with Bourse
+      - allied with Central Jersey League
+      - transactional with Catskill Throne (minor tribute)
+      - distant from southern factions
+    standing_with_player_default: transactional-friendly
+    known_information:
+      - 12 Principality lords in coal country
+      - only functional regional coal
+      - Species G integration (Veldt coordinator)
+    secret_information:
+      - GM-only: Carbon County coal operation is compromised by undetected Hive root intrusion; discovery may cause a containment crisis
+      - GM-only: the Old Badger treaty is one of the most stable Warped agreements in region; Veldt manages it personally
+    narrative_voice: >
+      The valleys smell of coal and turned earth. A lord's estate is a manor house,
+      a mine, a biokinetic garden, a stable, a small retinue. Twelve of these, more
+      or less; they coordinate through Allentown but do not obey any central
+      authority. Species G councilors walk the fields with the lords; sometimes
+      they are heard before the lords. Veldt travels between estates most weeks.
+      The industry of this region is the reason it functions. The reason it works
+      is she.
+
+  - id: crabclaw-confederation
+    display_name: The Crabclaw Confederation
+    type: warlord-sovereign-plural
+    current_leader: 3 T7 warlords (Inner Harbor, Dundalk, Towson)
+    territory: Baltimore metro
+    population: 440_000
+    power_profile:
+      - 3 T7 warlords, cooperative but not unified
+      - ~1_000 combined militia
+      - biokinetic-altered Chesapeake fishery (quarters regional food supply)
+      - pre-Onset Baltimore industrial salvage
+    economic_base:
+      - Chesapeake fishery (major)
+      - pre-Onset industrial salvage
+      - Bay trade (Delmarva, Philadelphia)
+    goals:
+      - defend independence from Fed Continuity
+      - expand fishery territory
+      - unify (or at least not fragment)
+      - manage Hive threat (Chesapeake Bog peripheral)
+    current_schemes:
+      - preparing for Fed Continuity war (clock 3/6)
+      - Inner Harbor lord courting Dundalk to prevent Towson alliance
+      - fishing fleet expansion
+    internal_tensions:
+      - three lords are uneasy peers; no dominant figure
+      - Fort McHenry defensive line is stretched
+    external_relationships:
+      - hostile to Fed Continuity
+      - commercial with Delmarva Harvest Lords
+      - transactional with Bourse
+      - no direct relations with further-north factions
+    standing_with_player_default: transactional
+    known_information:
+      - 3-warlord confederation
+      - Baltimore territory
+      - biokinetic fishery
+    secret_information:
+      - GM-only: Inner Harbor lord is the most ambitious; has sought alliances against his peers
+      - GM-only: Fed Continuity intelligence (Sternberg's operation) has multiple informants in the Inner Harbor court
+    narrative_voice: >
+      Baltimore kept its harbor. The Chesapeake fishery is the reason. The three
+      lords preside over what was once the inner harbor promenade, now a trading
+      quay with biokinetic-altered catch offloaded daily. They rarely meet. When
+      they meet, it is at Fort McHenry, which is a ruin but a neutral ruin.
+      None of them trusts the other two. All three of them know that trust is
+      not what keeps their confederation standing.
+
+  - id: delmarva-harvest-lords
+    display_name: The Delmarva Harvest Lords
+    type: warlord-sovereign-plural-agrarian
+    current_leader: distributed (6 major lords + ~12 minor)
+    territory: Delmarva peninsula
+    population: 1_150_000
+    power_profile:
+      - 6 major lords (T5-T7 biokinetic) + ~12 minor
+      - no unified command
+      - biokinetic agricultural production most efficient in region
+      - regional food-export dominance
+    economic_base:
+      - grain, dairy, vegetables, fisheries
+      - Lord Marsden's altered-cattle dairy (2x yield)
+      - Lord Chen's seed bank
+      - Lord Finch's coastal fisheries
+      - Brother Tam's monastic demesne
+    goals:
+      - maintain individual autonomy (Unification clock very slow)
+      - defend against northward threats (Irregulars, Iron Crown)
+      - expand biokinetic ag techniques
+      - export surplus for maximum leverage
+    current_schemes:
+      - informal Harvest Council as needed
+      - Bourse relationship management
+      - Lord Velasquez (Species I) coordinates with Species I diaspora
+    internal_tensions:
+      - no lord will accept subordination to another
+      - Lord Archer's auratic calm-zone moderates conflict but cannot prevent it
+      - Brother Tam's monastic labor-absorption is politically novel
+    external_relationships:
+      - commercial with Bourse (primary market)
+      - commercial with Central Jersey League
+      - commercial with Fed Continuity (scrip discount)
+      - commercial with Crabclaw
+      - Lord Velasquez is kin-contact with Philadelphia Species I
+    standing_with_player_default: transactional-friendly (by lord)
+    known_information:
+      - 6 major biokinetic lords + ~12 minor
+      - richest food-exporting region
+      - no unified command
+    secret_information:
+      - GM-only: Lord Marsden's altered-cattle are producing inconsistent offspring; three calves this year were non-viable; may indicate biokinetic breeding limit
+      - GM-only: Brother Tam's monastery has taken in several orphaned eldritch-adjacent children; result unknown
+    narrative_voice: >
+      The peninsula is green. That is what a visitor from Newark would notice
+      first. Fields stretch to horizons unbroken by ruins. The lords' estates
+      are modest by pre-Onset standards but substantial by current ones. Six
+      lords, six courts, six sets of retainers. A Harvest Council happens when
+      something threatens all six at once. In the interim each lord governs his
+      demesne like a small principality. Lord Archer's lands feel, specifically,
+      different. The calm is noticeable within an hour of arriving.
+
+  - id: species-i-diaspora
+    display_name: Species I Diaspora
+    type: species-nascent-polity-informal
+    current_leader: distributed; Elder Flores senior, Tomás Reyes ascendant
+    territory: distributed; major concentrations in western Philadelphia, DC/PG County, Wilmington
+    population: 2_170_000
+    power_profile:
+      - 6 major kin networks + smaller family groups
+      - species-typical perceptual boost in all members
+      - Tomás Reyes (T6 perceptual/auratic), Elder Flores (T4 perceptual)
+      - ~400 T5+ perceptual manifesters across kin networks
+      - no standing military
+    economic_base:
+      - kin-network labor (healers, translators, craftspeople)
+      - Bourse commercial backing (covert)
+      - Species I Flores-kin agriculture in PG County
+    goals:
+      - decide formal polity question (clock at 2/8)
+      - protect kin networks from hostile factions
+      - expand economic integration with friendly polities
+      - prepare for potential Pine Barrens breach (Herrera-kin is proximate)
+    current_schemes:
+      - quarterly assemblies processing Reyes' consolidation arguments
+      - negotiating with Fed Continuity for formal territorial recognition
+      - Bourse commercial agreements
+      - kin-to-kin coordination channels
+    internal_tensions:
+      - Elder Flores (conservative) vs. Tomás Reyes (pro-consolidation)
+      - Herrera-kin faces Iron Crown pressure and favors consolidation
+      - Diaz-kin (DC) fears Irregular retaliation if consolidation occurs
+    external_relationships:
+      - courted by Fed Continuity
+      - covertly backed by Bourse (Beltran is Herrera-kin)
+      - friendly with Central Jersey League
+      - hostile with Iron Crown
+      - hostile with Potomac Irregulars
+      - Lord Velasquez (Delmarva, Species I) is cross-tie
+    standing_with_player_default: cautious-friendly
+    known_information:
+      - largest metahuman presence in mid-Atlantic
+      - informal kin-governance
+      - considering formal polity
+    secret_information:
+      - GM-only: Tomás Reyes' kin-polling puts consolidation support at 55% among reproductive-age adults; Elder Flores' generation is 30% support
+      - GM-only: if Fed Continuity falls to Reeve, Species I Diaz-kin has contingency plans to evacuate DC inner city en masse within weeks
+    narrative_voice: >
+      Species I does not meet in one room because there is no one room it could
+      meet in. The quarterly assemblies are held in Philadelphia, then PG County,
+      then Camden, then Wilmington, rotating. Decisions are reported back to
+      kin-networks through couriers and through the species-typical long-distance
+      recognition. A kin member in Camden knows, within a day, what has been
+      decided in Philadelphia. This works. It also prevents the speed of action
+      that a polity would need. The clock measures how long that limitation
+      remains tolerable.
+
+  - id: flushing-edison-cluster
+    display_name: The Flushing-Edison Cluster (Species C)
+    type: species-community-township-scale
+    current_leader: npc-iwo-kuan  # Twelve Hands senior
+    territory: Flushing (Queens) + Sunset Park (Brooklyn) + Edison township (NJ)
+    population: 178_000
+    power_profile:
+      - Twelve Hands rotating council
+      - Master Iwo Kuan (T5 matter-manipulation)
+      - Master Saburo Tanaka (T5) at Bourse
+      - ~40 T4+ matter-specialists
+      - ~200 armed community defenders
+    economic_base:
+      - fine-craft production (tools, precision components, salvage restoration)
+      - Bourse commercial contracts
+      - regional premier watchmaking, mechanism repair
+    goals:
+      - maintain township autonomy
+      - preserve craft traditions
+      - grow Twelve Hands apprentice pool
+      - coordinate with Queens Commonage defensively
+    current_schemes:
+      - expanding apprentice intake (post-Onset-born cohort)
+      - formalizing Bourse commercial relationship
+      - cross-cluster coordination with Species C in other US regions (courier relay)
+    internal_tensions:
+      - Edison township Species C is less traditional than Flushing/Sunset Park
+      - some members want to migrate toward stronger polities
+    external_relationships:
+      - allied with Queens Commonage
+      - allied with Central Jersey League (Edison is Accord member)
+      - commercial partner of Bourse
+      - wary of Tower Lords
+      - neutral toward other factions
+    standing_with_player_default: transactional-friendly
+    known_information:
+      - Species C craft specialty
+      - Twelve Hands council
+      - workshops in Flushing, Sunset Park, Edison
+    secret_information:
+      - GM-only: Iwo Kuan has restored one pre-Onset anomalous object (mechanism of unclear function) and stores it privately
+      - GM-only: the Twelve Hands have been approached by Fed Continuity Reeve faction for weapons-production capability; refused
+    narrative_voice: >
+      Master Kuan's workshop is above the Flushing central market. Customers
+      climb a narrow stair and wait in a small anteroom. When he is working,
+      he does not speak; his hands are silvered to the wrist and move with a
+      precision that is not quite craft, not quite manifestation, something
+      between. His apprentices sit in the next room working their own pieces.
+      A pre-Onset wristwatch, restored by him, is worth a month of a retinue
+      soldier's wages.
+
+  - id: north-jersey-hs
+    display_name: The North Jersey Hs (Species H)
+    type: species-community-dispersed
+    current_leader: distributed (Cortese, Montes, regional coordinators)
+    territory: Paterson + Passaic + Union + Bucks County + outer Queens
+    population: 174_000
+    power_profile:
+      - 20-30 township-level concentrations
+      - cross-enclave courier network (the Sparrow network)
+      - species-typical regeneration across all members
+      - Sofia "the Sparrow" Cortese (T2 biological) coordinator
+      - Rafael Montes (T4 biological) Bucks County coordinator
+      - ~300 armed community defenders (distributed)
+    economic_base:
+      - commercial courier service (discreet, premium pricing)
+      - small-business operation across enclaves
+      - cross-enclave resource pooling
+    goals:
+      - maintain courier network integrity
+      - defend enclaves from Iron Crown aggression
+      - rebuild relations with Iron Crown post-boycott
+      - coordinate with Species H primary cluster (limited)
+    current_schemes:
+      - courier network optimization across 20+ enclaves
+      - quiet arms accumulation
+      - Bourse commercial relationship expansion
+    internal_tensions:
+      - decentralized consensus model is slow under crisis
+      - some enclaves favor more aggressive posture toward Iron Crown
+      - Razorgrin (in Iron Crown service) is a community embarrassment
+    external_relationships:
+      - hostile with Iron Crown (T+4-month incident)
+      - commercial with Bourse (premium courier service)
+      - friendly with Central Jersey League
+      - friendly with Species I (cross-species courier cooperation)
+      - neutral with Tower Lords
+    standing_with_player_default: cautious-friendly
+    known_information:
+      - dispersed enclaves
+      - courier network known to major factions
+      - quietly well-armed
+    secret_information:
+      - GM-only: the Sparrow network has compiled surveillance profiles on all major factions; Bourse pays premium for selected excerpts
+      - GM-only: Rafael Montes has been contacted by Old Black (T8 crow warped) for informal information exchange
+    narrative_voice: >
+      The Hs do not gather in large numbers often. They prefer the township
+      scale. A courier runs the routes week after week, timed to pass through
+      each enclave on predictable days. The coordination happens in these
+      passes — a conversation on a porch, a meal shared, information handed
+      off. The network is invisible to casual observers. This is by design.
+      The Iron Crown learned about it when they tried to seize a workshop and
+      discovered, suddenly, that every enclave in the region had simultaneously
+      cut their medical services.
+
+  - id: lehigh-jersey-gs
+    display_name: The Lehigh-Jersey Gs (Species G)
+    type: species-community-regional-cluster
+    current_leader: npc-anna-veldt (functionally, though not formally polity leader)
+    territory: central NJ (Princeton-New Brunswick) + Lehigh Valley
+    population: 168_000
+    power_profile:
+      - integrated into Lehigh Principalities and Central Jersey League
+      - Councilor Anna Veldt (T3 biological, Species G)
+      - Weaver Sarah Halbrecht (T2, Lehigh coordinator)
+      - species-typical plant-affinity in all members
+      - ~150 T4+ biokinetic specialists
+    economic_base:
+      - agricultural specialization within host polities
+      - seed-development work
+      - soil-rehabilitation contracts
+    goals:
+      - maintain integration without polity-formation
+      - expand agricultural influence
+      - preserve Species G cultural practices (heathen-adjacent revivals)
+    current_schemes:
+      - seed exchange expansion
+      - Lehigh-CJL agricultural coordination
+      - Brother Tam monastery collaboration (non-Species-G but similar ethos)
+    internal_tensions:
+      - integration is generationally deep but not unanimous
+      - some G members want formal community organization
+    external_relationships:
+      - fully integrated with Lehigh Principalities (Veldt coordinator)
+      - integrated with Central Jersey League (Rutgers biokinetic program)
+      - friendly with Species H
+      - friendly with Bourse
+      - neutral otherwise
+    standing_with_player_default: friendly-integrated
+    known_information:
+      - most institutionally integrated of the cluster species
+      - Species G biokinetic agricultural specialization
+      - Anna Veldt coordinator
+    secret_information:
+      - GM-only: the G community has been testing seed varieties that show unusual biokinetic response; several are not yet released
+      - GM-only: some G members privately practice heathen-revival religion (distinct from Seven-Day Saints); not publicly acknowledged
+    narrative_voice: >
+      Councilor Veldt travels between Principality estates most weeks. Her manner
+      is measured. She is consulted on seed, on soil, on livestock, on planting
+      schedules, on the arrangement of hedgerows. The Species G community does
+      not meet formally at regional scale; it meets in the fields. Harvest
+      ceremonies in the Lehigh Valley have quietly incorporated older forms —
+      a practice that Lord Meisner of Jim Thorpe has neither encouraged nor
+      discouraged.
+
+  - id: the-listening
+    display_name: The Listening (Cult)
+    type: eldritch-aligned-cult
+    current_leader: "The One Who Waits" (eldritch sovereign) + human cult hierarchy
+    territory: Pine Barrens interior + expanding periphery
+    population: 35_000 (T+1 cult members, growing to projected ~79,000 by T+10)
+    power_profile:
+      - One Who Waits (eldritch sovereign, tier equivalents unclear)
+      - Batsto Cluster (~350 hive-bodies, cluster entity)
+      - Batsto Sprawl / Deep-Root (plant organism, ~50,000 tons)
+      - human cult hierarchy with progressive transformation
+      - ~200 fully transformed members (eldritch-equivalent combat)
+    economic_base:
+      - transformation-gifts (agricultural yields, protective presence)
+      - scavenging abandoned townships at perimeter
+      - ritualized exchange with Pine Barrens resources
+    goals:
+      - expand cult membership (SIS-model growth)
+      - expand territorial footprint (Sprawl)
+      - breach Delaware line (Pine Barrens Expansion clock at 3/12)
+      - maintain alliance with One Who Waits
+    current_schemes:
+      - proselytization through transformed messengers
+      - quiet recruitment in southern NJ townships
+      - territorial incremental expansion
+      - coordination with Sprawl and Cluster
+    internal_tensions:
+      - transformed members progress at different rates
+      - cult hierarchy depends on One Who Waits' direction
+    external_relationships:
+      - hostile to all organized human factions (though low-intensity)
+      - aligned with Batsto Cluster and Sprawl
+      - symbolic significance to other eldritch entities (unclear if coordinated)
+    standing_with_player_default: hostile
+    known_information:
+      - Pine Barrens cult centered on One Who Waits
+      - members undergo progressive transformation
+      - aligned with Sprawl and Cluster
+      - growing
+    secret_information:
+      - GM-only: One Who Waits has knowledge of pre-Onset events it should not have; one of the anomalous-subset eldritch entities
+      - GM-only: cult members at later transformation stages cannot return to baseline form; early-stage defectors are possible
+      - GM-only: the Lost Thing (T10 warped, npc-lost-thing) is treated with deference by The Listening — possibly allied, possibly controlled, possibly neither
+    narrative_voice: >
+      The Listening does not speak for itself often. It speaks through messengers.
+      The messengers are visibly wrong. They arrive at a town's edge, deliver a
+      phrase or a demand, and leave. Afterwards the townspeople discover that one
+      or two of them are contemplating joining. The recruitment is patient. It
+      is not coercive in the ordinary sense. It is offered. What is offered is
+      also real — the cult's members do live longer in the Sprawl's shadow, do
+      eat, do have some form of community. The price is the slow unmaking of what
+      they were.
+
+  - id: the-three-judges-yonkers
+    display_name: The Three Judges (Yonkers governing council)
+    type: governing-council-embedded
+    current_leader: "collective — Obi, Rubinstein, Villanueva"
+    territory: same as Yonkers Compact
+    population: (subset of Yonkers Compact)
+    power_profile:
+      - Olamide Obi (T6 Biological/Auratic)
+      - Natasha Rubinstein (T5 Biological/Perceptual)
+      - Sonia Villanueva (T6 Biological/Temporal — rarest combination, sees where healing is needed before injury)
+    economic_base: (same as Yonkers Compact)
+    goals:
+      - preserve Compact horizontal governance
+      - train successor cohort for council
+      - negotiate Catskill Throne relationship
+      - balance biokinetic service provision across Compact and external clients
+    current_schemes:
+      - Villanueva retirement deliberation
+      - apprentice expansion
+      - diplomatic outreach to Preston
+    internal_tensions:
+      - Villanueva's temporal-sensitivity makes her uniquely valuable; retirement creates succession gap
+      - Obi and Rubinstein privately disagree on external relations strategy
+    external_relationships: (as Yonkers Compact; the Judges are the voice of Compact external relations)
+    standing_with_player_default: friendly-cautious
+    known_information:
+      - three T5-T6 biokinetic healers
+      - rotating-but-stable governing role
+    secret_information:
+      - GM-only: Villanueva has foreseen her own death in ~4 years; this is affecting her governance decisions
+      - GM-only: Obi has privately trained Abel (T7 collie warped) as advisor; his status is semi-formalized
+    narrative_voice: >
+      The Judges preside in the Compact's council chamber each morning. Citizens
+      bring disputes. The Judges listen. They speak little and carefully. What
+      they do is mostly heal — their tier means their presence makes people
+      physically better. A tense negotiation, held in the Judges' chamber, softens
+      on its own. Not because the Judges override the parties but because their
+      presence removes one layer of unnecessary resistance.

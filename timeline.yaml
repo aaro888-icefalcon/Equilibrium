@@ -1,0 +1,394 @@
+# EMERGENCE — Chronological Timeline
+# Resolution: Y1 weekly; T+1 to T+5 monthly; T+5 to T+15 quarterly; T+15 to T+30 annual/era.
+# T-notation: T+Xwk, T+Xmo, T+Xyr. Game start is T+1yr.
+
+timeline:
+
+  # ═══ YEAR ONE — WEEKLY ═══
+
+  - date: T+0 (Onset Day, late May, 14:23 UTC)
+    category: event
+    scale: regional
+    event: The Onset
+    description: >
+      Every operating electronic device in the mid-Atlantic stops functioning. Approximately
+      48 million people manifest powers. Approximately 4.8 million undergo species-level
+      transformation; approximately 480,000 transform into eldritch entities.
+    consequences:
+      - ~900,000-1,400,000 regional deaths in first 24 hours
+      - 45,000 transportation-related deaths in first 90 minutes
+      - 25,000 Manhattan manifestation-accident deaths in first 3 hours
+      - 55,000 subway-related deaths in first 24 hours
+      - 45,000 immediate medical-dependent deaths over 72 hours
+    references: [bible Part IV Week 0]
+
+  - date: T+1wk
+    category: event
+    scale: regional
+    event: First-week collapse
+    description: >
+      Water distribution fails in Manhattan by day 3, Brooklyn within a week. Fed Continuity
+      begins assembling at Andrews. First coordinated biokinetic healing station at Philadelphia's
+      Inner Harbor Church. Antonín Volk begins consolidation of Port Newark by day 5.
+    consequences:
+      - Fed Continuity assembly begins (~3,000 military + ~8,000 civilian)
+      - Volk's first consolidation kills ~300 by day 7
+      - First cholera cases appear in Queens by day 6
+    references: [bible Part IV Week 1]
+
+  - date: T+2wk
+    category: event
+    scale: regional
+    event: Urban exodus begins; Peekskill reactor crisis
+    description: >
+      Manhattan apartment food runs out. Exodus attempts. Goethals Bridge becomes a killing
+      ground (~8,000 deaths across 4 days). Peekskill reactor approaches criticality. Dmitri
+      Kostas arrives day 10; 40 hours of continuous containment work. T6 → T8 through Depth
+      and Breadth breakthroughs. Reactor stabilized at cost of permanent mineralization.
+    consequences:
+      - Bear-House founding event
+      - Kostas ends Month 1 at T8 Matter/Energy + Physical-T5 + Perceptual-T3
+      - Fed Continuity establishes first secure perimeter (Pentagon/Andrews/Quantico)
+    references: [bible Part IV Week 2]
+
+  - date: T+3wk
+    category: event
+    scale: regional
+    event: Water-borne epidemic peak
+    description: >
+      Cholera and typhoid widespread across region. NYC metro loses ~2.5% of pre-Onset
+      population in this week alone. Queens Commonage biokinetic healers save estimated
+      120,000. The Listening's founding contact event occurs near Batsto — 7 survivors
+      from Camden encounter One Who Waits; 5 remain, cult founded.
+    consequences:
+      - The Listening founded
+      - Pine Barrens becomes recognized eldritch zone
+    references: [bible Part IV Week 3]
+
+  - date: T+4wk
+    category: event
+    scale: regional
+    event: First warlord consolidations
+    description: >
+      ~20-25% of pre-Onset NYC metro already dead. Volk consolidates Port Newark
+      (T8 kinetic fully apparent). Tower Lord candidates compete in Brooklyn
+      (Ronen Marcus, Marius Tenno, "Elena", others). Fed Continuity formalizes under
+      General Sarah Alcott with 20 regional deputies.
+    consequences:
+      - Iron Crown structure established (Volk + ~20 T5-T7 subordinates)
+      - Tower Lords five-faction structure emerges
+      - Fed Continuity institutional structure formalized
+    references: [bible Part IV Week 4]
+
+  - date: T+5wk to T+6wk
+    category: faction-formation
+    scale: regional
+    event: Hudson Valley coalesces
+    description: >
+      Kostas expands outward from Peekskill. Demesne reaches ~90,000 by end of Month 2.
+      Colonel James Preston manifests at T9 in the Catskills through three crisis
+      breakthroughs (defending refugees T6→T7; stopping landslide T7→T8; Hunter pack
+      confrontation T8→T9; all Depth). Issues regional call for T6+ kinetic users; 40+ respond.
+      Catskill Throne founded.
+    consequences:
+      - Preston emerges as most formidable individual in mid-Atlantic
+      - Catskill Throne structure established
+    references: [bible Part IV Week 5-6]
+
+  - date: T+7wk to T+8wk
+    category: event
+    scale: regional
+    event: Exodus peak and starvation peak
+    description: >
+      Highway violence peaks. Total exodus death estimated 800,000+. Peak starvation:
+      urban food distribution completely failed. Manhattan remainder (~300,000) hunts,
+      salvages, cannibalizes. Lower Manhattan depopulates; Financial District becomes
+      nearly empty.
+    consequences:
+      - Financial District vacant, setting conditions for Echo's later emergence
+      - Manhattan reduced to salvage-frontier character
+    references: [bible Part IV Week 7-8]
+
+  - date: T+9wk to T+12wk (Month 3)
+    category: faction-formation
+    scale: regional
+    event: Faction structure stabilizes
+    description: >
+      Catskill Throne, Bear-House, Iron Crown established. CJL forms under Dr. Maya Okafor
+      at Rutgers. Fed Continuity operating. Delmarva biokinetic lords forming demesnes.
+      Tower Lords forming. Staten Citadel under Viktor Chen. Philadelphia Bourse forming.
+      Yonkers Compact forming under biokinetic healing council. Species I first inter-kin
+      coordination protocol established by Elder Josefina Flores on day 52.
+    consequences:
+      - Starvation deaths decline as biokinetic agriculture begins producing
+      - Delmarva's first large-scale harvests (October; biokinetic-accelerated corn, potatoes, winter wheat)
+      - Species I informal kin-governance established
+    references: [bible Part IV Month 3]
+
+  - date: T+4mo to T+6mo (Months 4-6)
+    category: era-transition
+    scale: regional
+    event: Winter test and consolidation; Iron Crown moves on Manhattan
+    description: >
+      Winter mortality ~12% of remaining regional population. Bear-House and Yonkers Compact
+      solidify. CJL barely holds. Listening grows. At T+5mo Iron Crown conducts first major
+      Manhattan salvage expedition through Staten ferry route, establishing Iron Crown-Staten
+      tension. At T+6mo Collapse Spiral ends (R1 burned through); R2 Warlord Consolidation
+      dominant. Population stabilized at ~17-18M.
+    consequences:
+      - Iron Crown-Staten conflict pattern established
+      - First winter survived through biokinetic agriculture
+      - Regional population stabilized (further attrition slower)
+    references: [bible Part IV Month 4-6]
+
+  - date: T+7mo to T+9mo
+    category: diffusion
+    scale: regional
+    event: Biokinetic agriculture diffusion inflection; Bourse copper launch
+    description: >
+      Month 8: Biokinetic ag technique diffusion crosses inflection point. By end of Month 9,
+      ~60% of regional biokinetic practitioners using saturation-yield techniques. Month 8:
+      Philadelphia Bourse issues first stamped copper coinage — 50,000 coins in three
+      denominations. Adoption rapid (6 weeks across Philadelphia metro, Delmarva, DC).
+      Month 9: Iron Crown attempts to bypass Staten's toll; Staten seizes 3 boats;
+      Bourse mediation. Iron Crown-Staten clock 3/6.
+    consequences:
+      - Regional food surplus beginning
+      - Bourse copper becomes dominant regional currency
+      - Iron Crown-Staten conflict locked at 3/6
+    references: [bible Part IV Month 7-9]
+
+  - date: T+10mo to T+12mo
+    category: approach-to-game-start
+    scale: regional
+    event: Species I quarterly assembly; Fed Continuity erosion visible; Listening claim
+    description: >
+      Month 10: Species I fourth quarterly assembly. Tomás Reyes argues for formal polity;
+      majority (led by Flores) favors informal coordination. Species I Consolidation clock 2/8.
+      Month 11: Fed Continuity fails to re-establish Baltimore authority. Crabclaw resists
+      successfully. Alcott's credibility damaged. Erosion clock 4/8. Month 12: The Listening
+      issues first formal territorial claim through transformed messenger delivered
+      simultaneously to Bourse, CJL, Iron Crown. Pine Barrens Expansion clock 3/12.
+    consequences:
+      - Species I Consolidation clock 2/8
+      - Fed Continuity Erosion 4/8
+      - Pine Barrens Expansion 3/12
+      - All regional clocks at game-start values
+    references: [bible Part IV Month 10-12]
+
+  - date: T+1yr (GAME START)
+    category: game-start
+    scale: regional
+    event: Canonical world state
+    description: >
+      Population 15.94M. 22 named major factions. All clocks at documented values.
+      First post-Onset-born children not yet manifested. Regional economy stabilizing
+      around Bourse copper. Biokinetic agriculture providing food security in Delmarva,
+      Central NJ, Yonkers corridor.
+    consequences: [game-start state]
+    references: [bible Part 1 canonical output]
+
+  # ═══ T+1 TO T+5 — MONTHLY ═══
+
+  - date: T+1yr-3mo (T+15mo, approx)
+    category: clock-completion
+    scale: regional
+    event: Bourse Currency Stability clock likely completes
+    description: >
+      Continued Bourse copper acceptance; arbitration of inter-faction commercial
+      disputes; Lehigh Principalities sign multi-year grain-for-coal contract
+      denominated in copper. Copper becomes formal regional standard.
+    consequences:
+      - Copper formal regional standard
+      - Continuity scrip begins devaluing in measurable steps
+      - Contract law tied to Bourse arbitration expands
+    references: [clocks.yaml — bourse-currency-stability]
+
+  - date: T+2yr to T+3yr
+    category: clock-completion
+    scale: regional
+    event: Biokinetic Ag Saturation clock likely completes
+    description: >
+      Diffusion completes through remaining biokinetic practitioners. Training
+      programs established in new regions. Harvest-over-harvest yield stability.
+      Regional food surplus becomes permanent.
+    consequences:
+      - Regional food surplus permanent
+      - Famine risk ends (except in faction-collapse scenarios)
+      - Delmarva Harvest Lords relatively more powerful
+    references: [clocks.yaml — biokinetic-ag-saturation]
+
+  - date: T+3yr to T+5yr
+    category: clock-completion
+    scale: regional
+    event: Iron Crown vs Staten open war; Crabclaw-Fed war
+    description: >
+      Iron Crown-Staten conflict fires. Newark-Staten Island harbor combat zone.
+      Likely Staten victory (spatial-teleportation advantage). Volk may survive
+      as diminished or may die; Iron Crown fragments in succession case.
+      Separately, Crabclaw-Fed Continuity clock fires; Fed Continuity unable to
+      re-impose authority over Baltimore; likely Fed Continuity withdrawal.
+    consequences:
+      - Iron Crown diminished or fragmented
+      - Crabclaw Confederation affirmed as regional power
+      - Fed Continuity Erosion accelerated
+    references: [clocks.yaml — iron-crown-vs-staten; crabclaw-fed-war]
+
+  - date: T+3yr-6yr (post-game-start years 2-5)
+    category: generational
+    scale: regional
+    event: First post-Onset-born manifestations
+    description: >
+      Earliest post-Onset-born children reach puberty (T+6-8 yr roughly; first
+      cohort small). Manifestation rate ~99% — higher than Onset-generation rate.
+      Parental-domain heritability visible but weak.
+    consequences:
+      - First post-Onset-born cohort of manifesters
+      - Heritability patterns studied (weak but real)
+    references: [bible Part XII — generational]
+
+  # ═══ T+5 TO T+15 — QUARTERLY ═══
+
+  - date: T+5yr to T+7yr
+    category: era-transition
+    scale: regional
+    event: Mid-term equilibrium emergence
+    description: >
+      Population roughly stable at ~15M. Fertility recovery (TFR ~2.5). Regional
+      attrition from faction violence and disease roughly balancing births.
+      Demography shifting from refugee-crisis to pre-industrial steady-state.
+    consequences:
+      - Population plateau
+      - Demographic normalization (by post-Onset standards)
+    references: [trajectory.md T+5 to T+10 era]
+
+  - date: T+8yr to T+11yr
+    category: clock-completion
+    scale: regional
+    event: Fed Continuity Erosion clock completes
+    description: >
+      Colonel Reeve formalizes Potomac Irregular independence. Alcott deposed,
+      assassinated, or reduced to ceremonial authority. Continuity scrip collapses.
+      Multiple Virginia districts consolidate under Reeve. Fed Continuity
+      reduces to DC/Mall/Pentagon enclave.
+    consequences:
+      - Reeve's Irregulars become independent polity
+      - Scrip holders face catastrophic losses
+      - Alcott's institutional legitimacy gone
+    references: [clocks.yaml — fed-continuity-erosion]
+
+  - date: T+8yr to T+10yr
+    category: succession-arc
+    scale: regional
+    event: Tower Lord multi-succession events
+    description: >
+      38% 5-year leadership-change probability per Tower Lord compounds. By T+10 probably
+      three of the original five-to-six Tower Lords have been replaced, some violently.
+      Borough territorial lines rearrange; salvage economy continues.
+    consequences:
+      - Tower Lord generational turnover
+      - Continued salvage economy dependency
+    references: [trajectory.md]
+
+  - date: T+8yr to T+10yr [SPECULATIVE]
+    category: faction-health
+    scale: regional
+    event: Dr. Okafor's health becomes regional concern
+    description: >
+      CJL coordinator's declining health raises succession question; no evident successor.
+    consequences:
+      - CJL succession uncertainty
+    references: [factions.yaml — central-jersey-league; trajectory.md]
+
+  - date: T+10yr to T+20yr
+    category: clock-completion
+    scale: regional
+    event: Species I Consolidation clock fires
+    description: >
+      Most likely T+15-T+20. Tomás Reyes declares formal polity. Territorial claim:
+      western Philadelphia corridor, PG County, scattered kin concentrations. Baseline-human
+      factions respond variably.
+    consequences:
+      - Species I Polity declared
+      - Regional political reset
+      - Alliance structures reorganize
+    references: [clocks.yaml — species-i-consolidation]
+
+  # ═══ T+15 TO T+30 — ANNUAL/ERA ═══
+
+  - date: T+15yr to T+20yr [SPECULATIVE]
+    category: succession
+    scale: regional
+    event: Preston's Catskill Throne succession question acute
+    description: >
+      Preston in his sixties. Retinue loyal but no named heir. Marshal Whelan is
+      most obvious claimant but without Preston's tier. Preston may designate, may
+      leave ambiguity; either with consequences.
+    consequences:
+      - Catskill Throne succession uncertainty
+    references: [trajectory.md T+10-20 era]
+
+  - date: T+10yr to T+25yr [SPECULATIVE]
+    category: external-threat
+    scale: regional
+    event: First faction-led strike against Listening territory
+    description: >
+      Central Jersey League or coalition attempts coordinated strike. Probably
+      unsuccessful. Pine Barrens Expansion clock may partially reset but is not
+      definitively contained.
+    consequences:
+      - Demonstration that Listening territory is not easily contained
+      - Coalition-building implications
+    references: [trajectory.md T+10-20 era]
+
+  - date: T+10yr to T+20yr
+    category: clock-progression
+    scale: regional
+    event: Manhattan Eldritch Breach advances
+    description: >
+      Clock advances to 5/8 or 6/8. Second anomalous entity likely appears. Tower
+      Lords reduce salvage operations; Manhattan economy contracts. Some Tower
+      Lord districts fail.
+    consequences:
+      - Manhattan salvage economy further reduced
+      - Tower Lords structurally weaker
+    references: [clocks.yaml — manhattan-eldritch-breach]
+
+  - date: T+20yr to T+30yr
+    category: era-transition
+    scale: regional
+    event: Long equilibrium settling
+    description: >
+      Population declines from ~13M to canonical 12.42M. Settled zones stable;
+      fringes lose population to salvage-zone attrition, Pine Barrens perimeter
+      conflict, contested borderlands. Post-Onset-born now dominate young-adult
+      population and have entirely different political framework.
+    consequences:
+      - Generational political shift
+      - Regional power structure T+30 mapping consolidated
+    references: [trajectory.md T+20-30 era]
+
+  - date: T+25yr to T+30yr [SPECULATIVE]
+    category: succession
+    scale: regional
+    event: Preston's death (most likely window)
+    description: >
+      The single most likely disruptive event of the late era. Throne either survives
+      as continuing institution or fragments.
+    consequences:
+      - Catskill Throne institutional fate determined
+      - Hudson Valley political realignment
+    references: [trajectory.md]
+
+  - date: T+30yr
+    category: projection-endpoint
+    scale: regional
+    event: Canonical Y30 state
+    description: >
+      Population 12.42M. Regional great powers (canonical): Catskill Throne, Central
+      Jersey League (expanded), Species I Polity (formalized for ~decade+), Delmarva
+      Harvest Lords, Fed Continuity remnant. Tower Lords reduced or dissolved. Iron
+      Crown gone or shadow. Bourse as commercial institution across polities. Eldritch
+      frontier has moved but specifics of breach status LOW confidence.
+    consequences: [projection endpoint]
+    references: [bible Part 1 long-run great powers]
