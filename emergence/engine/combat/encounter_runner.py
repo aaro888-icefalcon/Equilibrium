@@ -293,11 +293,11 @@ class EncounterRunner:
         if verb == "Attack":
             result = resolve_attack(actor_id, target_id or "", state, rng)
         elif verb == "Power":
-            result = resolve_power(actor_id, target_id or "", power_id or "", state, rng)
+            result = resolve_power(actor_id, target_id or "", state, rng)
         elif verb == "Assess":
             result = resolve_assess(actor_id, target_id or "", state, rng)
         elif verb == "Maneuver":
-            result = resolve_maneuver(actor_id, target_id or "", state, rng)
+            result = resolve_maneuver(actor_id, state, rng, target_id=target_id)
         elif verb == "Parley":
             result = resolve_parley(actor_id, target_id or "", state, rng)
         elif verb == "Disengage":
@@ -305,7 +305,7 @@ class EncounterRunner:
         elif verb == "Finisher":
             result = resolve_finisher(actor_id, target_id or "", state, rng)
         elif verb == "Defend":
-            result = resolve_defend(actor_id, state, rng)
+            result = resolve_defend(actor_id, "", 0, "full", state, rng)
         else:
             result = VerbResult(
                 verb=verb, actor_id=actor_id, target_id=target_id,
