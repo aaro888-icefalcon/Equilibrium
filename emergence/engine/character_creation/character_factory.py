@@ -255,8 +255,8 @@ class CharacterFactory:
             inventory.append(InventoryItem(
                 id=item.get("id", ""),
                 name=item.get("name", ""),
-                weight=item.get("weight", 1),
-                value=item.get("value", 0),
+                description=item.get("description", ""),
+                quantity=item.get("quantity", 1),
             ))
 
         # Build history
@@ -302,6 +302,12 @@ class CharacterFactory:
 
         return sheet
 
+    # Valid die sizes for attributes
+    _VALID_DICE = [4, 6, 8, 10, 12]
+
     def _clamp_attr(self, value: int) -> int:
-        """Clamp attribute to valid die range (d4=4 .. d10=10)."""
-        return max(4, min(self.MAX_SESSION_ZERO_ATTRIBUTE, value))
+        """Snap attribute to nearest valid die size (d4/d6/d8/d10), capped at d10."""
+        clamped = max(4, min(self.MAX_SESSION_ZERO_ATTRIBUTE, value))
+        # Snap to nearest valid die size
+        valid = [d for d in self._VALID_DICE if d <= self.MAX_SESSION_ZERO_ATTRIBUTE]
+        return min(valid, key=lambda d: abs(d - clamped))
