@@ -1,6 +1,19 @@
 # Workflow State — Emergence Build
 
-## Current Phase: 6 — Progression and Extended Smoke Test (next)
+## Current Phase: 7 — Polish, Documentation, and Handoff (next)
+
+## Phase 6 Progress — COMPLETE
+
+| Step | Description | Status |
+|------|-------------|--------|
+| 6.1 | Tactical Progression | done |
+| 6.2 | Breakthrough Mechanics | done |
+| 6.3 | Skills + Relationships | done |
+| 6.4 | Factions + Resources | done |
+| 6.5 | Aging + Family + Corruption | done |
+| 6.6 | Narrative Arcs | done |
+| 6.7 | Extended Smoke Test | done |
+| 6.8 | Build Log Update | done |
 
 ## Phase 5 Progress — COMPLETE
 
@@ -51,15 +64,17 @@
 - Phase 3: Simulation engine core (462 tests — 11 engine files, 10 test files, 1 helper)
 - Phase 4: Content integration + character creation (598 tests — 8 engine files, 8 test files)
 - Phase 5: Runtime integration + narrator (737 tests — 14 engine files, 7 test files, 8 prompt files)
+- Phase 6: Progression + extended smoke test (898 tests — 10 engine files, 12 test files)
 
 ## Test Summary
 
-- Total: 737 tests (734 pass, 3 skipped)
+- Total: 898 tests (895 pass, 3 skipped)
 - Phase 1 tests: test_schemas (21), test_validation (116)
 - Phase 2 tests: test_resolution (18), test_damage (25), test_statuses (20), test_ai (13), test_verbs (15), test_data_loader (13), test_combat_scenarios (6), test_combat_fixes (26)
 - Phase 3 tests: test_yaml_parser (41), test_clocks (30), test_faction_logic (11), test_npc_behavior (18), test_location_dynamics (13), test_tick_engine (8), test_situations (16), test_abstract_combat (8), test_encounter_generator (11), test_player_actions (18), test_world_tick (7), test_encounter_generation (3), test_sim_combat_handoff (3)
 - Phase 4 tests: test_content_loading (27), test_initial_state (12), test_npc_generator (22), test_session_zero_scenes (26), test_manifestation (11), test_year_one (20), test_session_zero (15), test_content_sim_integration (3)
 - Phase 5 tests: test_runtime_config (19), test_narrator (21), test_input_handler (24), test_modes (17), test_save_load (28), test_full_session (18), test_mode_transitions (12)
+- Phase 6 tests: test_tactical_progression (15), test_breakthrough (28), test_skills (14), test_relationships (20), test_faction_progression (10), test_resources (13), test_aging (14), test_family (10), test_corruption (15), test_arcs (12), test_long_game (4), test_progression (6)
 
 ## Runtime Modules
 
@@ -119,6 +134,21 @@
 | manifestation | Scene 5: circumstance-weighted power category and tier rolls |
 | year_one | Scenes 6-9 (first weeks, faction encounter, critical incident, settling) |
 
+## Progression Modules
+
+| Module | Purpose |
+|--------|---------|
+| tactical | Power use tracking, strengthening marks (5 thresholds) |
+| breakthrough | 8 trigger conditions, resolution, 24 marks |
+| skills | 32 skills, 10 proficiency levels, synergies, prerequisites |
+| relationships | Standing -3..+3, trust 0-5, state machine, decay |
+| factions | Faction standing/reach/heat, yearly decay |
+| resources | 7 types, wealth decay, follower/holding upkeep |
+| aging | 7 age categories, attribute degradation, death roll |
+| family | Fertility, child manifestation, descendant creation |
+| corruption | 0-6 scale, segment effects, transformation, reversal |
+| arcs | Goal/relationship/faction/corruption/tier milestones |
+
 ## Last Commit Context
 
-Phase 5 complete. Full runtime integration: CLI entry point, session loop, mode dispatch, narrator queue, persistence layer, multi-character support. 737 tests passing.
+Phase 6 complete. All progression mechanics implemented and tested. 898 tests passing. Extended smoke test: 5-year simulation, aging to death + descendant continuation.
