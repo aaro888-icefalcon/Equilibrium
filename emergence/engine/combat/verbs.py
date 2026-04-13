@@ -577,3 +577,283 @@ def resolve_maneuver(
         "tier": check.tier,
     })
     return result
+
+
+# ---------------------------------------------------------------------------
+# §4.5 Parley
+# ---------------------------------------------------------------------------
+
+def resolve_parley(
+    actor_id: str,
+    target_id: str,
+    state: CombatState,
+    rng: random.Random,
+    parley_attr: str = "will",     # "will" (force) or "insight" (read)
+    combat_register: str = "human",
+) -> VerbResult:
+    """Resolve a Parley verb per spec §4.5."""
+    actor = state.combatants[actor_id]
+    target = state.combatants[target_id]
+
+    p_die = _get_attr(actor, parley_attr)
+    s_die = _get_attr(actor, "insight" if parley_attr == "will" else "perception")
+
+    tn = compute_mental_defense(target.will, 0)
+
+    mods = [state.status_engine.get_check_modifiers(actor_id, "Parley")]
+    check = roll_check(p_die, s_die, mods, tn, rng)
+    tier = SuccessTier(check.tier)
+
+    result = VerbResult(
+        verb="Parley",
+        actor_id=actor_id,
+        target_id=target_id,
+        check=check,
+        success_tier=check.tier,
+    )
+
+    if tier == SuccessTier.CRITICAL:
+        result.narrative_data["terms"] = "accepted"
+        result.narrative_data["group_cascade"] = True
+        state.heat_deltas["general"] = state.heat_deltas.get("general", 0) - 1
+        state.player_parleyed_recently = True
+    elif tier == SuccessTier.FULL:
+        result.narrative_data["terms"] = "willing"
+        state.player_parleyed_recently = True
+    elif tier == SuccessTier.MARGINAL:
+        result.narrative_data["terms"] = "pause"
+        state.player_parleyed_recently = True
+    elif tier == SuccessTier.PARTIAL_FAILURE:
+        result.narrative_data["terms"] = "none"
+    elif tier == SuccessTier.FAILURE:
+        state.clamp_momentum(actor_id, -1)
+        result.momentum_delta[actor_id] = -1
+        result.narrative_data["terms"] = "none"
+    elif tier == SuccessTier.FUMBLE:
+        result.self_damage = 1
+        result.self_damage_track = "social"
+        state.apply_damage(actor_id, 1, "social")
+        _apply_status(state, actor_id, StatusName.SHAKEN, -1, result)
+        result.narrative_data["terms"] = "none"
+
+    state.action_log.append({
+        "round": state.round_number,
+        "verb": "Parley",
+        "actor": actor_id,
+        "target": target_id,
+        "tier": check.tier,
+        "terms": result.narrative_data.get("terms"),
+    })
+    return result
+
+
+# ---------------------------------------------------------------------------
+# §4.6 Disengage
+# ---------------------------------------------------------------------------
+
+def resolve_disengage(
+    actor_id: str,
+    state: CombatState,
+    rng: random.Random,
+    adjacent_enemies: int = 0,
+) -> VerbResult:
+    """Resolve a Disengage verb per spec §4.6."""
+    actor = state.combatants[actor_id]
+
+    p_die = _get_attr(actor, "agility")
+    s_die = _get_attr(actor, "insight")
+
+    # TN based on adjacent enemies
+    if adjacent_enemies == 0:
+        tn = 10
+    elif adjacent_enemies == 1:
+        tn = 13
+    else:
+        tn = 16
+
+    mods = [state.status_engine.get_check_modifiers(actor_id, "Disengage")]
+    check = roll_check(p_die, s_die, mods, tn, rng)
+    tier = SuccessTier(check.tier)
+
+    result = VerbResult(
+        verb="Disengage",
+        actor_id=actor_id,
+        target_id=None,
+        check=check,
+        success_tier=check.tier,
+    )
+
+    if tier == SuccessTier.CRITICAL:
+        result.narrative_data["escape"] = "immediate"
+        result.narrative_data["no_opp_attacks"] = True
+    elif tier == SuccessTier.FULL:
+        result.narrative_data["escape"] = "end_of_round"
+        result.narrative_data["no_opp_attacks"] = True
+    elif tier == SuccessTier.MARGINAL:
+        result.narrative_data["escape"] = "end_of_round"
+        result.narrative_data["opp_attack_first"] = True
+    elif tier in (SuccessTier.PARTIAL_FAILURE, SuccessTier.FAILURE):
+        result.narrative_data["escape"] = "failed"
+        if adjacent_enemies > 0:
+            result.narrative_data["opp_attacks"] = adjacent_enemies
+    elif tier == SuccessTier.FUMBLE:
+        result.narrative_data["escape"] = "failed"
+        result.narrative_data["prone"] = True
+        result.narrative_data["opp_attacks_bonus"] = 2
+
+    state.action_log.append({
+        "round": state.round_number,
+        "verb": "Disengage",
+        "actor": actor_id,
+        "tier": check.tier,
+        "escape": result.narrative_data.get("escape"),
+    })
+    return result
+
+
+# ---------------------------------------------------------------------------
+# §4.7 Finisher
+# ---------------------------------------------------------------------------
+
+def resolve_finisher(
+    actor_id: str,
+    target_id: str,
+    state: CombatState,
+    rng: random.Random,
+    finisher_id: str = "fin_break_spine",
+    momentum_cost: int = 5,
+    p_attr: str = "might",
+    s_attr: str = "strength",
+    corruption_cost: int = 0,
+) -> VerbResult:
+    """Resolve a Finisher verb per spec §4.7."""
+    actor = state.combatants[actor_id]
+    target = state.combatants[target_id]
+
+    p_die = _get_attr(actor, p_attr)
+    s_die = _get_attr(actor, s_attr)
+    tn = 10  # Finisher TN is fixed at 10
+
+    # Pay momentum cost
+    state.clamp_momentum(actor_id, -momentum_cost)
+    result_momentum = -momentum_cost
+
+    # Pay corruption cost if applicable
+    if corruption_cost > 0:
+        actor.corruption += corruption_cost
+
+    mods = [state.status_engine.get_check_modifiers(actor_id, "Finisher")]
+    if state.status_engine.has_status(target_id, StatusName.MARKED):
+        mods.append(2)
+
+    check = roll_check(p_die, s_die, mods, tn, rng)
+    tier = SuccessTier(check.tier)
+
+    result = VerbResult(
+        verb="Finisher",
+        actor_id=actor_id,
+        target_id=target_id,
+        check=check,
+        success_tier=check.tier,
+    )
+    result.momentum_delta[actor_id] = result_momentum
+
+    if tier in (SuccessTier.FULL, SuccessTier.CRITICAL):
+        result.narrative_data["effect"] = "full"
+        result.narrative_data["finisher_id"] = finisher_id
+        # Incapacitate or effect per finisher — engine applies full track fill
+        state.apply_damage(target_id, 5, "physical")
+        result.damage_dealt = 5
+        target.active = False
+    elif tier == SuccessTier.MARGINAL:
+        result.narrative_data["effect"] = "partial"
+        state.apply_damage(target_id, 3, "physical")
+        result.damage_dealt = 3
+    elif tier == SuccessTier.FUMBLE:
+        # Exposed clears on fumble
+        state.status_engine.remove_status(target_id, StatusName.EXPOSED)
+        target.exposure = max(0, target.exposure_max - 1)
+        result.narrative_data["effect"] = "fumble_miss"
+
+    state.action_log.append({
+        "round": state.round_number,
+        "verb": "Finisher",
+        "actor": actor_id,
+        "target": target_id,
+        "finisher_id": finisher_id,
+        "tier": check.tier,
+    })
+    return result
+
+
+# ---------------------------------------------------------------------------
+# §4.8 Defend (reaction)
+# ---------------------------------------------------------------------------
+
+def resolve_defend(
+    actor_id: str,
+    incoming_actor_id: str,
+    incoming_damage: int,
+    incoming_tier: str,
+    state: CombatState,
+    rng: random.Random,
+    incoming_status: str = "",
+) -> VerbResult:
+    """Resolve a Defend reaction per spec §4.8."""
+    actor = state.combatants[actor_id]
+    attacker = state.combatants.get(incoming_actor_id)
+
+    p_die = _get_attr(actor, "agility")
+    s_die = _get_attr(actor, "might")
+
+    # Opposed: use attacker's total as TN (passed via incoming context)
+    # For simplicity, use the actor's defense roll vs the incoming total
+    tn = _get_attr(actor, "agility") + actor.armor  # approximate
+
+    mods = [state.status_engine.get_check_modifiers(actor_id, "Defend")]
+    check = roll_check(p_die, s_die, mods, tn, rng)
+    tier = SuccessTier(check.tier)
+
+    result = VerbResult(
+        verb="Defend",
+        actor_id=actor_id,
+        target_id=incoming_actor_id,
+        check=check,
+        success_tier=check.tier,
+    )
+
+    if tier == SuccessTier.CRITICAL:
+        result.narrative_data["damage_taken"] = 0
+        result.narrative_data["free_attack"] = True
+        state.clamp_momentum(actor_id, +1)
+        result.momentum_delta[actor_id] = 1
+    elif tier == SuccessTier.FULL:
+        result.narrative_data["damage_taken"] = 0
+    elif tier == SuccessTier.MARGINAL:
+        reduced = max(0, incoming_damage - 2)
+        result.narrative_data["damage_taken"] = reduced
+        state.apply_damage(actor_id, reduced, "physical")
+    elif tier == SuccessTier.PARTIAL_FAILURE:
+        result.narrative_data["damage_taken"] = incoming_damage
+        state.apply_damage(actor_id, incoming_damage, "physical")
+    elif tier == SuccessTier.FAILURE:
+        extra = incoming_damage + 1
+        result.narrative_data["damage_taken"] = extra
+        state.apply_damage(actor_id, extra, "physical")
+        if attacker:
+            state.clamp_momentum(incoming_actor_id, +1)
+    elif tier == SuccessTier.FUMBLE:
+        extra = incoming_damage + 2
+        result.narrative_data["damage_taken"] = extra
+        state.apply_damage(actor_id, extra, "physical")
+        if incoming_status:
+            _apply_status(state, actor_id, incoming_status, 3, result)
+
+    state.action_log.append({
+        "round": state.round_number,
+        "verb": "Defend",
+        "actor": actor_id,
+        "attacker": incoming_actor_id,
+        "tier": check.tier,
+    })
+    return result
