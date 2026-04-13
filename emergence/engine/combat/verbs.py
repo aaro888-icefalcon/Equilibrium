@@ -798,17 +798,23 @@ def resolve_defend(
     state: CombatState,
     rng: random.Random,
     incoming_status: str = "",
+    incoming_total: int = 0,
+    incoming_track: str = "physical",
 ) -> VerbResult:
-    """Resolve a Defend reaction per spec §4.8."""
+    """Resolve a Defend reaction per spec §4.8.
+
+    Per spec §1.3, Defend is an opposed check: defender rolls agi+mig
+    vs the attacker's check total as TN. If incoming_total is 0 (no
+    attacker context), use TN 10 as baseline.
+    """
     actor = state.combatants[actor_id]
     attacker = state.combatants.get(incoming_actor_id)
 
     p_die = _get_attr(actor, "agility")
     s_die = _get_attr(actor, "might")
 
-    # Opposed: use attacker's total as TN (passed via incoming context)
-    # For simplicity, use the actor's defense roll vs the incoming total
-    tn = _get_attr(actor, "agility") + actor.armor  # approximate
+    # Opposed check: attacker's total is the TN; fallback to 10
+    tn = incoming_total if incoming_total > 0 else 10
 
     mods = [state.status_engine.get_check_modifiers(actor_id, "Defend")]
     check = roll_check(p_die, s_die, mods, tn, rng)
@@ -832,20 +838,20 @@ def resolve_defend(
     elif tier == SuccessTier.MARGINAL:
         reduced = max(0, incoming_damage - 2)
         result.narrative_data["damage_taken"] = reduced
-        state.apply_damage(actor_id, reduced, "physical")
+        state.apply_damage(actor_id, reduced, incoming_track)
     elif tier == SuccessTier.PARTIAL_FAILURE:
         result.narrative_data["damage_taken"] = incoming_damage
-        state.apply_damage(actor_id, incoming_damage, "physical")
+        state.apply_damage(actor_id, incoming_damage, incoming_track)
     elif tier == SuccessTier.FAILURE:
         extra = incoming_damage + 1
         result.narrative_data["damage_taken"] = extra
-        state.apply_damage(actor_id, extra, "physical")
+        state.apply_damage(actor_id, extra, incoming_track)
         if attacker:
             state.clamp_momentum(incoming_actor_id, +1)
     elif tier == SuccessTier.FUMBLE:
         extra = incoming_damage + 2
         result.narrative_data["damage_taken"] = extra
-        state.apply_damage(actor_id, extra, "physical")
+        state.apply_damage(actor_id, extra, incoming_track)
         if incoming_status:
             _apply_status(state, actor_id, incoming_status, 3, result)
 

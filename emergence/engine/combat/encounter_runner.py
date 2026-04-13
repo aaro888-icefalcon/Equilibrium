@@ -349,6 +349,8 @@ class EncounterRunner:
         """Execute the player's turn with a simple auto-strategy."""
         enemies = state.get_enemies_of("player")
         if not enemies:
+            if can_major:
+                self._dispatch_action(cid, "Defend", None, None, state, rng)
             return
 
         # Minor action: Assess first enemy
@@ -558,7 +560,7 @@ class EncounterRunner:
         # --- Human register: heat tracking ---
         if state.combat_register == "human":
             target = state.combatants.get(result.target_id or "")
-            if target and target.side == "enemy" and target.is_incapacitated():
+            if target and target.side == "enemy" and target.is_incapacitated() and result.damage_dealt > 0:
                 state.heat_deltas["kill"] = state.heat_deltas.get("kill", 0) + 1
             if result.verb == "Parley" and result.success_tier in ("critical", "full"):
                 state.heat_deltas["spare"] = state.heat_deltas.get("spare", 0) + 1

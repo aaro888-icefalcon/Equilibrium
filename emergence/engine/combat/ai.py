@@ -273,6 +273,9 @@ class AiDecisionEngine:
             if e.is_exposed and actor.momentum >= 5:
                 actions.append(CombatAction(action_type="Finisher", target_id=e.id))
 
+        # Defend is always available
+        actions.append(CombatAction(action_type="Defend"))
+
         return actions
 
     def _score_action(
