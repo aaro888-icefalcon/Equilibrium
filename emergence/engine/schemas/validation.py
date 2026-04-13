@@ -24,7 +24,7 @@ VALID_SPECIES = {
 }
 VALID_POWER_CATEGORIES = {
     "physical_kinetic", "perceptual_mental", "matter_energy",
-    "biological_vital", "temporal_spatial", "eldritch_corruptive",
+    "biological_vital", "auratic", "temporal_spatial", "eldritch_corruptive",
 }
 VALID_CONDITION_TRACKS = {"physical", "mental", "social"}
 VALID_STATUS_NAMES = {

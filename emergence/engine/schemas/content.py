@@ -135,6 +135,10 @@ class EnemyTemplate:
         default_factory=lambda: {"physical": 0, "mental": 0, "social": 0}
     )
     affinity_table: Dict[str, str] = field(default_factory=dict)
+    tier: int = 1
+    condition_track_max: Dict[str, int] = field(
+        default_factory=lambda: {"physical": 5, "mental": 5, "social": 5}
+    )
     ai_profile: str = "aggressive"
     exposure_max: int = 6
     abilities: List[str] = field(default_factory=list)
@@ -150,8 +154,10 @@ class EnemyTemplate:
             "schema_version": self.schema_version,
             "display_name": self.display_name,
             "register": self.register,
+            "tier": self.tier,
             "attribute_defaults": dict(self.attribute_defaults),
             "condition_track_defaults": dict(self.condition_track_defaults),
+            "condition_track_max": dict(self.condition_track_max),
             "affinity_table": dict(self.affinity_table),
             "ai_profile": self.ai_profile,
             "exposure_max": self.exposure_max,
@@ -170,6 +176,7 @@ class EnemyTemplate:
             schema_version=data.get("schema_version", "1.0"),
             display_name=data.get("display_name", ""),
             register=data.get("register", "human"),
+            tier=data.get("tier", 1),
             attribute_defaults=data.get(
                 "attribute_defaults",
                 {
@@ -184,6 +191,10 @@ class EnemyTemplate:
             condition_track_defaults=data.get(
                 "condition_track_defaults",
                 {"physical": 0, "mental": 0, "social": 0},
+            ),
+            condition_track_max=data.get(
+                "condition_track_max",
+                {"physical": 5, "mental": 5, "social": 5},
             ),
             affinity_table=data.get("affinity_table", {}),
             ai_profile=data.get("ai_profile", "aggressive"),
