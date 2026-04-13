@@ -184,6 +184,13 @@ class EncounterRunner:
                 else:
                     self._enemy_turn(cid, state, rng, can_major, can_minor)
 
+                # End-of-turn status ticks (Bleeding/Burning per spec §6.1)
+                turn_effects = state.status_engine.tick_after_turn(cid)
+                for eff in turn_effects:
+                    if eff["type"] == "damage":
+                        track = eff.get("track", "physical")
+                        state.apply_damage(cid, eff["amount"], track)
+
             # Phase 5: end-of-round tick
             self._tick_end(state)
 

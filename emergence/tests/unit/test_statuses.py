@@ -64,22 +64,20 @@ class TestTickBehavior(unittest.TestCase):
     def setUp(self):
         self.engine = StatusEngine()
 
-    def test_burning_deals_damage(self):
+    def test_burning_deals_damage_after_turn(self):
         self.engine.apply_status("p1", ActiveStatus(
             name=StatusName.BURNING, duration=3, source="fire",
         ))
-        rng = random.Random(1)
-        effects = self.engine.tick_start_of_round("p1", rng)
+        effects = self.engine.tick_after_turn("p1")
         damage_effects = [e for e in effects if e["type"] == "damage"]
         self.assertEqual(len(damage_effects), 1)
         self.assertEqual(damage_effects[0]["amount"], 1)
 
-    def test_bleeding_deals_damage(self):
+    def test_bleeding_deals_damage_after_turn(self):
         self.engine.apply_status("p1", ActiveStatus(
             name=StatusName.BLEEDING, duration=3, source="slash",
         ))
-        rng = random.Random(1)
-        effects = self.engine.tick_start_of_round("p1", rng)
+        effects = self.engine.tick_after_turn("p1")
         damage_effects = [e for e in effects if e["type"] == "damage"]
         self.assertEqual(len(damage_effects), 1)
         self.assertEqual(damage_effects[0]["source"], "bleeding")

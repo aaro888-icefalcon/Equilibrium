@@ -80,8 +80,35 @@ class StatusEngine:
     ) -> List[dict]:
         """Process start-of-round ticks.  Returns list of effect dicts.
 
-        Burning and Bleeding deal 1 physical each.
         Corrupted rolls a d6 for random scene-level cost.
+        Burning/Bleeding now handled by tick_after_turn (per spec: end of turn).
+        """
+        effects: List[dict] = []
+
+        if self.has_status(combatant_id, StatusName.CORRUPTED):
+            roll = rng.randint(1, 6)
+            if roll == 1:
+                effects.append({"type": "narrative", "detail": "hallucination", "source": "corrupted"})
+            elif roll == 2:
+                effects.append({"type": "apply_status", "status": "shaken", "source": "corrupted"})
+            elif roll == 5:
+                effects.append({"type": "corruption_gain", "amount": 1, "source": "corrupted"})
+            elif roll == 6:
+                effects.append({
+                    "type": "damage",
+                    "track": "mental",
+                    "amount": 1,
+                    "damage_type": "eldritch_corruptive",
+                    "source": "corrupted_sovereign_perception",
+                })
+
+        return effects
+
+    def tick_after_turn(self, combatant_id: str) -> List[dict]:
+        """Process end-of-turn ticks for a single combatant.
+
+        Burning and Bleeding deal 1 damage each at end of the
+        afflicted combatant's turn (spec §6.1).
         """
         effects: List[dict] = []
 
@@ -102,23 +129,6 @@ class StatusEngine:
                 "damage_type": "physical_kinetic",
                 "source": "bleeding",
             })
-
-        if self.has_status(combatant_id, StatusName.CORRUPTED):
-            roll = rng.randint(1, 6)
-            if roll == 1:
-                effects.append({"type": "narrative", "detail": "hallucination", "source": "corrupted"})
-            elif roll == 2:
-                effects.append({"type": "apply_status", "status": "shaken", "source": "corrupted"})
-            elif roll == 5:
-                effects.append({"type": "corruption_gain", "amount": 1, "source": "corrupted"})
-            elif roll == 6:
-                effects.append({
-                    "type": "damage",
-                    "track": "mental",
-                    "amount": 1,
-                    "damage_type": "eldritch_corruptive",
-                    "source": "corrupted_sovereign_perception",
-                })
 
         return effects
 
