@@ -1,0 +1,8 @@
+Phase 7 Batch 7.2: HANDOFF.md
+================================
+Step 1: Header + architecture overview + directory tree — done
+Step 2: Schema + combat module maps — done
+Step 3: Simulation + character creation module maps — done
+Step 4: Runtime + narrator + persistence + progression module maps — done
+Step 5: Test summary + known issues + deferred + design questions — done
+Step 6: Extension guide + commit + push — done

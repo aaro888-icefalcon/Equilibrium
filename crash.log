@@ -1,0 +1,63 @@
+
+============================================================
+Error type: ValueError
+Message: test
+NoneType: None
+============================================================
+
+============================================================
+Error type: FatalError
+Message: test
+NoneType: None
+============================================================
+
+============================================================
+Error type: ImportError
+Message: cannot import name 'StdinInputSource' from 'emergence.engine.character_creation.session_zero' (/home/user/Equilibrium/emergence/engine/character_creation/session_zero.py)
+Traceback (most recent call last):
+  File "/home/user/Equilibrium/emergence/engine/runtime/main.py", line 171, in launch
+    exit_code = main_session_loop(state)
+                ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/Equilibrium/emergence/engine/runtime/main.py", line 217, in main_session_loop
+    next_mode = _run_session_zero(state, narrator)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/Equilibrium/emergence/engine/runtime/main.py", line 243, in _run_session_zero
+    from emergence.engine.character_creation.session_zero import (
+ImportError: cannot import name 'StdinInputSource' from 'emergence.engine.character_creation.session_zero' (/home/user/Equilibrium/emergence/engine/character_creation/session_zero.py)
+============================================================
+
+============================================================
+Error type: ValueError
+Message: test
+NoneType: None
+============================================================
+
+============================================================
+Error type: FatalError
+Message: test
+NoneType: None
+============================================================
+
+============================================================
+Error type: ValueError
+Message: test
+NoneType: None
+============================================================
+
+============================================================
+Error type: FatalError
+Message: test
+NoneType: None
+============================================================
+
+============================================================
+Error type: ValueError
+Message: test
+NoneType: None
+============================================================
+
+============================================================
+Error type: FatalError
+Message: test
+NoneType: None
+============================================================

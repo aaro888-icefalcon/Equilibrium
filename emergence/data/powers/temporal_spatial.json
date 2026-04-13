@@ -1,0 +1,138 @@
+[
+  {
+    "id": "blink",
+    "name": "Blink",
+    "category": "temporal_spatial",
+    "tier": 2,
+    "cost": {"condition": {"mental": 1}, "heat": {}, "corruption": 0},
+    "effect": {
+      "type": "movement",
+      "parameters": {
+        "teleport_zones": 1,
+        "avoids_opportunity_attacks": true,
+        "disengage_component": true,
+        "primary_attr": "insight",
+        "secondary_attr": "perception",
+        "tactical_role": "mobility"
+      }
+    },
+    "damage_type": "",
+    "description": "He was there. Then he was not.",
+    "prerequisite": null,
+    "usage_scope": "combat",
+    "visibility": "visible"
+  },
+  {
+    "id": "fold_inventory",
+    "name": "Fold Inventory",
+    "category": "temporal_spatial",
+    "tier": 2,
+    "cost": {"condition": {}, "heat": {}, "corruption": 0},
+    "effect": {
+      "type": "utility",
+      "parameters": {
+        "passive": true,
+        "storage_slots": 3,
+        "draw_action": "minor",
+        "primary_attr": "insight",
+        "secondary_attr": "perception",
+        "tactical_role": "utility"
+      }
+    },
+    "damage_type": "",
+    "description": "She reached into nothing and took out the knife.",
+    "prerequisite": null,
+    "usage_scope": "both",
+    "visibility": "subtle"
+  },
+  {
+    "id": "echo_sight",
+    "name": "Echo Sight",
+    "category": "temporal_spatial",
+    "tier": 3,
+    "cost": {"condition": {"mental": 1}, "heat": {}, "corruption": 0},
+    "effect": {
+      "type": "utility",
+      "parameters": {
+        "perceive_past": true,
+        "lookback_minutes": 10,
+        "assess_bonus": 2,
+        "primary_attr": "insight",
+        "secondary_attr": "perception",
+        "tactical_role": "info"
+      }
+    },
+    "damage_type": "",
+    "description": "She saw the room as it had been before the fight.",
+    "prerequisite": null,
+    "usage_scope": "both",
+    "visibility": "subtle"
+  },
+  {
+    "id": "accelerate",
+    "name": "Personal Acceleration",
+    "category": "temporal_spatial",
+    "tier": 4,
+    "cost": {"condition": {"mental": 2}, "heat": {}, "corruption": 0},
+    "effect": {
+      "type": "utility",
+      "parameters": {
+        "extra_minor": 1,
+        "duration_rounds": 3,
+        "primary_attr": "insight",
+        "secondary_attr": "perception",
+        "tactical_role": "tempo"
+      }
+    },
+    "damage_type": "",
+    "description": "Between his second step and his third he did four things.",
+    "prerequisite": "blink",
+    "usage_scope": "combat",
+    "visibility": "visible"
+  },
+  {
+    "id": "slip_space",
+    "name": "Slip",
+    "category": "temporal_spatial",
+    "tier": 5,
+    "cost": {"condition": {"mental": 2}, "heat": {}, "corruption": 0},
+    "effect": {
+      "type": "movement",
+      "parameters": {
+        "teleport_zones": 3,
+        "bring_ally": 1,
+        "temporal_contamination": "minor",
+        "primary_attr": "insight",
+        "secondary_attr": "perception",
+        "tactical_role": "escape"
+      }
+    },
+    "damage_type": "",
+    "description": "They stepped sideways and were elsewhere.",
+    "prerequisite": "blink,accelerate",
+    "usage_scope": "combat",
+    "visibility": "visible"
+  },
+  {
+    "id": "pause_moment",
+    "name": "Pause Moment",
+    "category": "temporal_spatial",
+    "tier": 7,
+    "cost": {"condition": {"mental": 3}, "heat": {}, "corruption": 1},
+    "effect": {
+      "type": "utility",
+      "parameters": {
+        "extra_major": 1,
+        "time_frozen_for_enemies": true,
+        "primary_attr": "insight",
+        "secondary_attr": "perception",
+        "tactical_role": "decisive"
+      }
+    },
+    "damage_type": "",
+    "description": "She moved once and moved again, and the room had not moved between.",
+    "prerequisite": "slip_space",
+    "usage_scope": "combat",
+    "visibility": "visible"
+  }
+]
