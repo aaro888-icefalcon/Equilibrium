@@ -1,6 +1,18 @@
 # Workflow State — Emergence Build
 
-## Current Phase: 5 — Runtime Integration and Narrator (next)
+## Current Phase: 6 — Progression and Extended Smoke Test (next)
+
+## Phase 5 Progress — COMPLETE
+
+| Step | Description | Status |
+|------|-------------|--------|
+| 5.1 | Configuration + Error Handling | done |
+| 5.2 | Narrator Queue + Payloads | done |
+| 5.3 | Persistence Layer | done |
+| 5.4 | Input Handler + Mode System | done |
+| 5.5 | Entry Point + Session Loop | done |
+| 5.6 | Full Session Integration | done |
+| 5.7 | Refinement + Build Log | done |
 
 ## Phase 4 Progress — COMPLETE
 
@@ -38,14 +50,44 @@
 - Phase 2.5: Combat spec audit fixes (275 tests after fixes)
 - Phase 3: Simulation engine core (462 tests — 11 engine files, 10 test files, 1 helper)
 - Phase 4: Content integration + character creation (598 tests — 8 engine files, 8 test files)
+- Phase 5: Runtime integration + narrator (737 tests — 14 engine files, 7 test files, 8 prompt files)
 
 ## Test Summary
 
-- Total: 598 tests (595 pass, 3 skipped)
+- Total: 737 tests (734 pass, 3 skipped)
 - Phase 1 tests: test_schemas (21), test_validation (116)
 - Phase 2 tests: test_resolution (18), test_damage (25), test_statuses (20), test_ai (13), test_verbs (15), test_data_loader (13), test_combat_scenarios (6), test_combat_fixes (26)
 - Phase 3 tests: test_yaml_parser (41), test_clocks (30), test_faction_logic (11), test_npc_behavior (18), test_location_dynamics (13), test_tick_engine (8), test_situations (16), test_abstract_combat (8), test_encounter_generator (11), test_player_actions (18), test_world_tick (7), test_encounter_generation (3), test_sim_combat_handoff (3)
 - Phase 4 tests: test_content_loading (27), test_initial_state (12), test_npc_generator (22), test_session_zero_scenes (26), test_manifestation (11), test_year_one (20), test_session_zero (15), test_content_sim_integration (3)
+- Phase 5 tests: test_runtime_config (19), test_narrator (21), test_input_handler (24), test_modes (17), test_save_load (28), test_full_session (18), test_mode_transitions (12)
+
+## Runtime Modules
+
+| Module | Purpose |
+|--------|---------|
+| configuration | GameConfig dataclass + load/save |
+| error_handling | Exception hierarchy (5 exit codes) + crash_shutdown |
+| input_handler | Meta commands, choices, freeform → Intent |
+| modes | ModeManager with transition table |
+| main | Launch sequence (11 steps), session loop, mode dispatch |
+
+## Narrator Modules
+
+| Module | Purpose |
+|--------|---------|
+| queue | NarrationChannel protocol, Mock + File queues |
+| payloads | 8 payload builders for all scene types |
+| prompts | Prompt templates + format_prompt |
+| validation | Length bounds, forbidden patterns |
+
+## Persistence Modules
+
+| Module | Purpose |
+|--------|---------|
+| save | Atomic writes, leaves-first, throttle |
+| load | 5-state classification, LoadResult |
+| migration | SaveMigrator with dry-run |
+| multi_character | Archive, list, switch characters |
 
 ## Sim Engine Modules
 
@@ -79,4 +121,4 @@
 
 ## Last Commit Context
 
-Phase 4 complete. All content integration + character creation modules implemented and tested. Full pipeline: bible→sim→character→combat works.
+Phase 5 complete. Full runtime integration: CLI entry point, session loop, mode dispatch, narrator queue, persistence layer, multi-character support. 737 tests passing.

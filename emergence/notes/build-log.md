@@ -198,3 +198,42 @@ emergence/
 4. Generated characters enter combat engine successfully
 5. Full bible world ticks 30 days without errors
 6. All 598 tests pass
+
+## Entry 5: Phase 5 — Runtime Integration and Narrator
+
+**Date:** Phase 5 complete
+
+**Deliverables:**
+- `engine/runtime/configuration.py` (~85 lines) — GameConfig dataclass (12 fields), load_config/save_config from key=value files
+- `engine/runtime/error_handling.py` (~115 lines) — Exception hierarchy: EmergenceError → RecoverableError(1), FatalError(2), SaveIntegrityError(3), NarratorProtocolError(4), EngineInternalError(5). crash_shutdown() with emergency save
+- `engine/runtime/input_handler.py` (~100 lines) — InputHandler: parses meta commands (/save, /quit, /status, /help, /inventory, /map, /character, /history), numeric/letter choices, freeform text → Intent
+- `engine/runtime/modes.py` (~130 lines) — ModeManager with TRANSITION_TABLE: SESSION_ZERO→FRAMING→SIM↔COMBAT, GAME_OVER→SESSION_ZERO. StubModeHandler for testing
+- `engine/runtime/main.py` (~300 lines) — GameState dataclass, 11-step launch sequence, main_session_loop, mode dispatch (session_zero, framing, sim, combat, game_over), LaunchLock, autosave, clean/crash shutdown
+- `emergence/__main__.py` (~170 lines) — CLI entry point: play/new/list/inspect/migrate/help subcommands, --save-root, --config, --log-level, --seed, --dry-run, --no-color
+- `engine/narrator/queue.py` (~90 lines) — NarrationChannel protocol, MockNarrationQueue (immediate), FileNarrationQueue (JSONL + seq)
+- `engine/narrator/payloads.py` (~150 lines) — 8 payload builders: combat_turn, scene_framing, situation, dialogue, character_creation, transition, death, time_skip
+- `engine/narrator/prompts.py` (~120 lines) — PROMPT_TEMPLATES dict (8 templates), get_prompt(), format_prompt()
+- `engine/narrator/validation.py` (~70 lines) — validate_narration(): length bounds per scene type, forbidden patterns, payload constraints
+- `engine/persistence/save.py` (~95 lines) — SaveManager: atomic writes (temp-and-rename), leaves-first (entities before world.json as save-complete marker), 5s throttle, lightweight_save for combat rounds
+- `engine/persistence/load.py` (~140 lines) — LoadManager: classify() (FRESH/PARTIAL/VALID/CORRUPT/VERSION_MISMATCH), load_save() → LoadResult
+- `engine/persistence/migration.py` (~130 lines) — SaveMigrator: needs_migration(), get_save_version(), migrate(dry_run) with atomic file rewrite
+- `engine/persistence/multi_character.py` (~120 lines) — MultiCharacterManager: archive_character(), list_characters(), switch_character()
+- `prompts/*.md` — 8 prompt template reference files
+
+**Tests:** 737 total (734 pass, 3 skipped)
+- `test_runtime_config.py` — 19 unit tests (config load/save, defaults, overrides)
+- `test_narrator.py` — 21 unit tests (queue, payloads, prompts, validation)
+- `test_input_handler.py` — 24 unit tests (meta commands, choices, freeform, aliases)
+- `test_modes.py` — 17 unit tests (transitions, forbidden paths, history, run_cycle)
+- `test_save_load.py` — 28 integration tests (save/load/migration/multi-character)
+- `test_full_session.py` — 18 integration tests (end-to-end, CLI commands, save round-trip)
+- `test_mode_transitions.py` — 12 integration tests (all valid paths, sim↔combat, forbidden)
+
+**Exit criteria verified:**
+1. Full session: launch → session zero → sim → save → quit works in mock mode
+2. Save/load round-trip preserves all state (world, player, factions, NPCs, locations, clocks)
+3. All 5 save classifications detected correctly (FRESH, PARTIAL, VALID, CORRUPT, VERSION_MISMATCH)
+4. Mode transitions enforce valid paths, reject forbidden transitions
+5. CLI subcommands (play, list, inspect, migrate, help) all functional
+6. Character archival and multi-character switch works
+7. All 737 tests pass
