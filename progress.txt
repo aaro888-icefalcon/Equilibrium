@@ -1,15 +1,8 @@
-Step 7a: CombatState + VerbResult + resolve_attack — starting
-Step 7a: CombatState + resolve_attack OK (verbs.py ~230 lines)
-Step 7b: resolve_power + resolve_assess + resolve_maneuver — starting
-Step 7b: resolve_power/assess/maneuver OK
-Step 7c: resolve_parley/disengage/finisher/defend — starting
-Step 7c: resolve_parley/disengage/finisher/defend OK (verbs.py complete)
-Step 8a: EncounterRunner skeleton + initiative + round loop — starting
-Step 8a: EncounterRunner skeleton OK
-Step 8b: turn resolution + win/loss OK
-Step 8c: register mechanics OK
-Step 9: __init__.py OK
-Step 10a: test_resolution + test_damage OK (43 pass)
-Step 10b: test_statuses + test_ai OK (33 pass)
-Step 11: test_verbs + test_data_loader OK (29 pass)
-Step 12: integration tests OK (6 pass, all 3 registers)
+Phase 7 Batch 7.2: HANDOFF.md
+================================
+Step 1: Header + architecture overview + directory tree — done
+Step 2: Schema + combat module maps — done
+Step 3: Simulation + character creation module maps — done
+Step 4: Runtime + narrator + persistence + progression module maps — done
+Step 5: Test summary + known issues + deferred + design questions — done
+Step 6: Extension guide + commit + push — done
