@@ -106,3 +106,63 @@ emergence/
 2. 48 powers, 30 enemies, 12 encounters load via data_loader
 3. Seeded encounters produce deterministic, serializable CombatOutcome
 4. All 248 tests pass
+
+## Entry 2.5: Combat Spec Audit Fixes (Batches 1-7)
+
+**Date:** Between Phase 2 and Phase 3
+
+**Deliverables:**
+- 27 bug fixes across encounter_runner.py, verbs.py, statuses.py, ai.py
+- `tests/regression/test_combat_fixes.py` — 26 regression tests for all fixes
+
+**Key fixes:**
+- Batch 1: Eldritch clock advances each round; defensive AI uses AND (not OR) for retreat
+- Batch 2: Bleeding/Burning tick after turn (not start of round)
+- Batch 3: AI enumerates Defend as candidate action
+- Batch 3B: Status durations match spec §6.1; Defend uses incoming_total for TN; ranged attacks apply armor
+- Batch 5: Ecological clock logs events at 4/6/8 thresholds; corruption offers only on Parley/Power/Assess at P=0.2
+- Batch 6: Heat calculation per spec §15.4 (per-enemy base, witness quotient +1/3 witnesses capped at 3, eldritch flag, parley -2)
+
+**Tests:** 275 total after fixes
+
+## Entry 3: Phase 3 — Simulation Engine Core
+
+**Date:** Phase 3 complete
+
+**Deliverables:**
+- `engine/sim/yaml_parser.py` (~280 lines) — Minimal stdlib-only YAML subset parser: key-value, lists, nested indent, folded strings, comments, numerics, ~N approx values, inline lists, booleans, null, quoted strings
+- `engine/sim/clocks.py` (~230 lines) — ClockEngine: advance evaluation, completion, reset, cross-clock interactions, condition types (always, flag, resource_below, clock_at, faction_conflict)
+- `engine/sim/faction_logic.py` (~290 lines) — FactionDecisionEngine: territorial/diplomatic/scheme/internal/resource/goal actions, weighted selection, ~1 action/week calibration
+- `engine/sim/npc_behavior.py` (~230 lines) — NpcBehaviorEngine: schedule evaluation, goal pursuit, memory decay, relationship drift, displacement, concern response
+- `engine/sim/location_dynamics.py` (~210 lines) — LocationEngine: economic transitions, migration, danger escalation, opportunity generation, NPC sync, controller changes
+- `engine/sim/tick_engine.py` (~130 lines) — TickEngine: daily orchestrator (time→clocks→factions→NPCs→locations→sync), seasonal ticks every 90 days
+- `engine/sim/situation_generator.py` (~170 lines) — SituationGenerator: tension assessment, encounter probability, 3-6 choice generation
+- `engine/sim/abstract_combat.py` (~110 lines) — Off-screen combat: tier+military power, 2d6 variance, casualty scales, territory consequences
+- `engine/sim/encounter_generator.py` (~200 lines) — EncounterGenerator: register determination from world state, enemy selection, terrain, conditions
+- `engine/sim/player_actions.py` (~200 lines) — PlayerActionResolver: dialogue, travel, activity, observation, prepare actions
+- `engine/sim/context_management.py` (~130 lines) — compact_state() for narrator payloads
+- `engine/sim/persistence.py` (~70 lines) — DirtyTracker for incremental saves
+- `tests/helpers/synthetic_world.py` — 3 factions, 5 NPCs, 5 locations, 8 clocks
+
+**Tests:** 462 total (459 pass, 3 skipped)
+- `test_yaml_parser.py` — 41 tests
+- `test_clocks.py` — 30 tests
+- `test_faction_logic.py` — 11 tests
+- `test_npc_behavior.py` — 18 tests
+- `test_location_dynamics.py` — 13 tests
+- `test_tick_engine.py` — 8 tests
+- `test_situations.py` — 16 tests
+- `test_abstract_combat.py` — 8 tests
+- `test_encounter_generator.py` — 11 tests
+- `test_player_actions.py` — 18 tests (includes context_management + persistence)
+- `test_world_tick.py` — 7 integration tests (365-day smoke)
+- `test_encounter_generation.py` — 3 integration tests (situation→encounter)
+- `test_sim_combat_handoff.py` — 3 integration tests (sim→combat pipeline)
+
+**Exit criteria verified:**
+1. Synthetic world (3 factions, 5 NPCs, 5 locations, 8 clocks) ticks 365 days cleanly
+2. Clocks advance, factions act, NPCs move, locations update, seasons cycle
+3. Encounter generation produces valid EncounterSpec with appropriate register
+4. Sim↔combat handoff works via existing EncounterRunner
+5. Deterministic replay verified
+6. All 462 tests pass
