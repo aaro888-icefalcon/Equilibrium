@@ -1,0 +1,8 @@
+Step 7a: CombatState + VerbResult + resolve_attack — starting
+Step 7a: CombatState + resolve_attack OK (verbs.py ~230 lines)
+Step 7b: resolve_power + resolve_assess + resolve_maneuver — starting
+Step 7b: resolve_power/assess/maneuver OK
+Step 7c: resolve_parley/disengage/finisher/defend — starting
+Step 7c: resolve_parley/disengage/finisher/defend OK (verbs.py complete)
+Step 8a: EncounterRunner skeleton + initiative + round loop — starting
+Step 8a: EncounterRunner skeleton OK
