@@ -178,7 +178,7 @@ class AiDecisionEngine:
         elif profile == "defensive":
             phy_thresh = thresh.get("phy_threshold", 3)
             has_allies = self._count_allies(actor, state) > 0
-            return actor.phy_current >= phy_thresh or not has_allies
+            return actor.phy_current >= phy_thresh and not has_allies
 
         elif profile == "tactical":
             phy_thresh = thresh.get("phy_threshold", 4)

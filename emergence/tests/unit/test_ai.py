@@ -67,9 +67,18 @@ class TestAggressiveProfile(unittest.TestCase):
 
 class TestDefensiveProfile(unittest.TestCase):
 
-    def test_retreats_when_no_allies(self):
+    def test_stays_when_healthy_and_solo(self):
+        """Defensive enemy at full health should NOT retreat just because alone."""
         ai = AiDecisionEngine()
         actor = _make_actor(ai_profile="defensive", phy_current=0)
+        player = _make_player()
+        state = _state_with(actor, player)
+        self.assertFalse(ai.should_retreat(actor, state))
+
+    def test_retreats_when_damaged_and_solo(self):
+        """Defensive enemy at high damage AND no allies should retreat."""
+        ai = AiDecisionEngine()
+        actor = _make_actor(ai_profile="defensive", phy_current=3)
         player = _make_player()
         state = _state_with(actor, player)
         self.assertTrue(ai.should_retreat(actor, state))

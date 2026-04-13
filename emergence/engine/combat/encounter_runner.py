@@ -241,7 +241,7 @@ class EncounterRunner:
             # Each round in creature territory: +1 clock
             state.scene_clocks["ecological"] = state.scene_clocks.get("ecological", 0) + 1
         elif state.combat_register == "eldritch":
-            state.scene_clocks["eldritch_attention"] = state.scene_clocks.get("eldritch_attention", 0)
+            state.scene_clocks["eldritch_attention"] = state.scene_clocks.get("eldritch_attention", 0) + 1
 
     # -----------------------------------------------------------------------
     # State conversion for AI

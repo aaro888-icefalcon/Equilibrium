@@ -494,7 +494,7 @@ def resolve_assess(
         truths_revealed = 1
         false_info = True
     elif tier == SuccessTier.FUMBLE:
-        _apply_status(state, actor_id, StatusName.SHAKEN, -1, result)
+        _apply_status(state, actor_id, StatusName.SHAKEN, 3, result)
 
     result.narrative_data.update({
         "truths_revealed": truths_revealed,
@@ -633,7 +633,7 @@ def resolve_parley(
         result.self_damage = 1
         result.self_damage_track = "social"
         state.apply_damage(actor_id, 1, "social")
-        _apply_status(state, actor_id, StatusName.SHAKEN, -1, result)
+        _apply_status(state, actor_id, StatusName.SHAKEN, 3, result)
         result.narrative_data["terms"] = "none"
 
     state.action_log.append({
