@@ -321,6 +321,10 @@ class EncounterRunner:
             "damage": result.damage_dealt,
             "tier": result.success_tier,
         })
+
+        # Register-specific side effects
+        self._apply_register_mechanics(actor_id, result, state, rng)
+
         return result
 
     # -----------------------------------------------------------------------
@@ -531,3 +535,41 @@ class EncounterRunner:
             narrative_log=narrative,
             world_consequences=consequences,
         )
+
+    # -----------------------------------------------------------------------
+    # Register-specific mechanics
+    # -----------------------------------------------------------------------
+
+    def _apply_register_mechanics(
+        self,
+        actor_id: str,
+        result: VerbResult,
+        state: CombatState,
+        rng: random.Random,
+    ) -> None:
+        """Apply register-specific side effects after an action resolves."""
+        # --- Human register: heat tracking ---
+        if state.combat_register == "human":
+            target = state.combatants.get(result.target_id or "")
+            if target and target.side == "enemy" and target.is_incapacitated():
+                state.heat_deltas["kill"] = state.heat_deltas.get("kill", 0) + 1
+            if result.verb == "Parley" and result.success_tier in ("critical", "full"):
+                state.heat_deltas["spare"] = state.heat_deltas.get("spare", 0) + 1
+
+        # --- Eldritch register: attention + corruption offers ---
+        if state.combat_register == "eldritch":
+            actor = state.combatants.get(actor_id)
+            if actor and actor.side == "enemy":
+                attn = state.scene_clocks.get("eldritch_attention", 0) + 1
+                state.scene_clocks["eldritch_attention"] = attn
+                if attn >= 3 and rng.random() < 0.33:
+                    # Corruption offer: apply corrupted to player
+                    for cid, c in state.combatants.items():
+                        if c.side == "player":
+                            state.status_engine.apply_status(cid, ActiveStatus(
+                                name=StatusName.CORRUPTED,
+                                duration=2,
+                                source="eldritch_attention",
+                                applied_round=state.round_number,
+                            ))
+                            break
