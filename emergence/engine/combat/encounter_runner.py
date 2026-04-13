@@ -246,7 +246,15 @@ class EncounterRunner:
         # Advance register clocks
         if state.combat_register == "creature":
             # Each round in creature territory: +1 clock
-            state.scene_clocks["ecological"] = state.scene_clocks.get("ecological", 0) + 1
+            eco = state.scene_clocks.get("ecological", 0) + 1
+            state.scene_clocks["ecological"] = eco
+            # Threshold checks per spec §11.2
+            if eco == 4:
+                state.action_log.append({"round": state.round_number, "event": "ecological_reinforcements"})
+            elif eco == 6:
+                state.action_log.append({"round": state.round_number, "event": "ecological_aberrant_response"})
+            elif eco >= 8:
+                state.action_log.append({"round": state.round_number, "event": "ecological_escalation"})
         elif state.combat_register == "eldritch":
             state.scene_clocks["eldritch_attention"] = state.scene_clocks.get("eldritch_attention", 0) + 1
 
@@ -571,8 +579,8 @@ class EncounterRunner:
             if actor and actor.side == "enemy":
                 attn = state.scene_clocks.get("eldritch_attention", 0) + 1
                 state.scene_clocks["eldritch_attention"] = attn
-                if attn >= 3 and rng.random() < 0.33:
-                    # Corruption offer: apply corrupted to player
+                # Corruption offers on Parley/Power/Assess at P=0.2 per spec §11.3
+                if result.verb in ("Parley", "Power", "Assess") and rng.random() < 0.2:
                     for cid, c in state.combatants.items():
                         if c.side == "player":
                             state.status_engine.apply_status(cid, ActiveStatus(
