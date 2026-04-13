@@ -263,9 +263,9 @@ class CharacterFactory:
         history = []
         for event in state.history:
             history.append(HistoryEvent(
-                timestamp=event.get("timestamp", "T+0"),
+                date=event.get("timestamp", event.get("date", "T+0")),
+                category=event.get("type", event.get("category", "session_zero")),
                 description=event.get("description", ""),
-                type=event.get("type", "session_zero"),
             ))
 
         # Heat object
