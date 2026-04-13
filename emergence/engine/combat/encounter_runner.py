@@ -242,3 +242,292 @@ class EncounterRunner:
             state.scene_clocks["ecological"] = state.scene_clocks.get("ecological", 0) + 1
         elif state.combat_register == "eldritch":
             state.scene_clocks["eldritch_attention"] = state.scene_clocks.get("eldritch_attention", 0)
+
+    # -----------------------------------------------------------------------
+    # State conversion for AI
+    # -----------------------------------------------------------------------
+
+    def _to_battlefield_state(self, state: CombatState) -> BattlefieldState:
+        """Convert CombatState into a BattlefieldState snapshot for the AI."""
+        combatants: Dict[str, CombatantState] = {}
+        for cid, c in state.combatants.items():
+            combatants[cid] = CombatantState(
+                id=cid,
+                side=c.side,
+                ai_profile=c.ai_profile,
+                tier=c.tier,
+                phy_current=c.phy,
+                phy_max=c.phy_max,
+                men_current=c.men,
+                soc_current=c.soc,
+                is_exposed=state.status_engine.has_status(cid, StatusName.EXPOSED),
+                is_marked=state.status_engine.has_status(cid, StatusName.MARKED),
+                is_shaken=state.status_engine.has_status(cid, StatusName.SHAKEN),
+                is_stunned=state.status_engine.has_status(cid, StatusName.STUNNED),
+                is_bleeding=state.status_engine.has_status(cid, StatusName.BLEEDING),
+                momentum=c.momentum,
+                powers=list(c.powers),
+            )
+        return BattlefieldState(
+            combatants=combatants,
+            zones=state.zones,
+            round_number=state.round_number,
+            player_parleyed_recently=state.player_parleyed_recently,
+            pack_target_id=state.pack_target_id,
+        )
+
+    # -----------------------------------------------------------------------
+    # Action dispatch
+    # -----------------------------------------------------------------------
+
+    def _dispatch_action(
+        self,
+        actor_id: str,
+        verb: str,
+        target_id: Optional[str],
+        power_id: Optional[str],
+        state: CombatState,
+        rng: random.Random,
+    ) -> VerbResult:
+        """Route a verb string to the correct resolver and log the result."""
+        if verb == "Attack":
+            result = resolve_attack(actor_id, target_id or "", state, rng)
+        elif verb == "Power":
+            result = resolve_power(actor_id, target_id or "", power_id or "", state, rng)
+        elif verb == "Assess":
+            result = resolve_assess(actor_id, target_id or "", state, rng)
+        elif verb == "Maneuver":
+            result = resolve_maneuver(actor_id, target_id or "", state, rng)
+        elif verb == "Parley":
+            result = resolve_parley(actor_id, target_id or "", state, rng)
+        elif verb == "Disengage":
+            result = resolve_disengage(actor_id, state, rng)
+        elif verb == "Finisher":
+            result = resolve_finisher(actor_id, target_id or "", state, rng)
+        elif verb == "Defend":
+            result = resolve_defend(actor_id, state, rng)
+        else:
+            result = VerbResult(
+                verb=verb, actor_id=actor_id, target_id=target_id,
+                check=None, success_tier="full",
+            )
+
+        # Log to action_log
+        state.action_log.append({
+            "round": state.round_number,
+            "actor": actor_id,
+            "verb": verb,
+            "target": target_id,
+            "damage": result.damage_dealt,
+            "tier": result.success_tier,
+        })
+        return result
+
+    # -----------------------------------------------------------------------
+    # Player turn
+    # -----------------------------------------------------------------------
+
+    def _player_turn(
+        self,
+        cid: str,
+        state: CombatState,
+        rng: random.Random,
+        can_major: bool,
+        can_minor: bool,
+    ) -> None:
+        """Execute the player's turn with a simple auto-strategy."""
+        enemies = state.get_enemies_of("player")
+        if not enemies:
+            return
+
+        # Minor action: Assess first enemy
+        if can_minor:
+            self._dispatch_action(cid, "Assess", enemies[0].id, None, state, rng)
+
+        if not can_major:
+            return
+
+        # Check for Finisher opportunity
+        player = state.combatants[cid]
+        for e in enemies:
+            if (state.status_engine.has_status(e.id, StatusName.EXPOSED)
+                    and player.momentum >= 5):
+                self._dispatch_action(cid, "Finisher", e.id, None, state, rng)
+                return
+
+        # Default: Attack first enemy
+        self._dispatch_action(cid, "Attack", enemies[0].id, None, state, rng)
+
+    # -----------------------------------------------------------------------
+    # Enemy turn
+    # -----------------------------------------------------------------------
+
+    def _enemy_turn(
+        self,
+        cid: str,
+        state: CombatState,
+        rng: random.Random,
+        can_major: bool,
+        can_minor: bool,
+    ) -> None:
+        """Execute an enemy's turn using the AI decision engine."""
+        bf_state = self._to_battlefield_state(state)
+        actor = bf_state.combatants.get(cid)
+        if not actor:
+            return
+
+        # Minor action
+        if can_minor:
+            minor = self._ai.choose_minor(actor, bf_state)
+            if minor:
+                self._dispatch_action(
+                    cid, minor.action_type, minor.target_id,
+                    minor.power_id, state, rng,
+                )
+
+        # Major action
+        if can_major:
+            action = self._ai.choose_action(actor, bf_state)
+            self._dispatch_action(
+                cid, action.action_type, action.target_id,
+                action.power_id, state, rng,
+            )
+
+    # -----------------------------------------------------------------------
+    # Win / loss / escape checks
+    # -----------------------------------------------------------------------
+
+    def _check_conditions(
+        self,
+        state: CombatState,
+        spec: EncounterSpec,
+        round_num: int,
+    ) -> Optional[str]:
+        """Evaluate terminal conditions. Returns resolution string or None."""
+        # Defeat: player incapacitated
+        for c in state.combatants.values():
+            if c.side == "player" and c.is_incapacitated():
+                return "defeat"
+
+        # Victory: all enemies down
+        enemies_alive = [
+            c for c in state.combatants.values()
+            if c.side == "enemy" and c.active and not c.is_incapacitated()
+        ]
+        if not enemies_alive:
+            return "victory"
+
+        # Escape: player successfully disengaged this round
+        disengage_log = [
+            e for e in state.action_log
+            if e.get("round") == round_num
+            and e.get("verb") == "Disengage"
+            and e.get("actor") in [
+                cid for cid, c in state.combatants.items() if c.side == "player"
+            ]
+            and e.get("tier") in ("critical", "full")
+        ]
+        if disengage_log:
+            return "escape"
+
+        # Spec win conditions
+        for wc in spec.win_conditions:
+            wc_type = wc.type if hasattr(wc, "type") else wc.get("type", "")
+            wc_params = wc.parameters if hasattr(wc, "parameters") else wc.get("parameters", {})
+            if wc_type == "survive_rounds":
+                target_rounds = wc_params.get("rounds", 99)
+                if round_num >= target_rounds:
+                    return "victory"
+            elif wc_type == "convince_parley":
+                parley_ok = [
+                    e for e in state.action_log
+                    if e.get("verb") == "Parley"
+                    and e.get("tier") in ("critical", "full")
+                ]
+                if parley_ok:
+                    return "parley"
+
+        return None
+
+    # -----------------------------------------------------------------------
+    # Outcome builder
+    # -----------------------------------------------------------------------
+
+    def _build_outcome(
+        self,
+        state: CombatState,
+        spec: EncounterSpec,
+        resolution: str,
+        rounds_completed: int,
+    ) -> CombatOutcome:
+        """Assemble a CombatOutcome from final state."""
+        from emergence.engine.schemas.encounter import (
+            PlayerStateDelta,
+            NarrativeLogEntry,
+        )
+
+        # Player state delta
+        player = None
+        for c in state.combatants.values():
+            if c.side == "player":
+                player = c
+                break
+
+        player_delta = PlayerStateDelta(
+            condition_changes={
+                "physical": player.phy if player else 0,
+                "mental": player.men if player else 0,
+                "social": player.soc if player else 0,
+            },
+            heat_accrued=dict(state.heat_deltas),
+            corruption_gained=player.corruption if player else 0,
+        )
+
+        # Enemy states
+        enemy_states: List[EnemyState] = []
+        for cid, c in state.combatants.items():
+            if c.side == "enemy":
+                if c.is_incapacitated():
+                    final = "incapacitated"
+                elif not c.active:
+                    final = "fled"
+                else:
+                    final = "alive"
+                enemy_states.append(EnemyState(
+                    enemy_id=cid, final_state=final,
+                ))
+
+        # Narrative log
+        narrative: List[NarrativeLogEntry] = []
+        for entry in state.action_log:
+            narrative.append(NarrativeLogEntry(
+                turn=entry.get("round", 0),
+                actor_id=entry.get("actor", ""),
+                action=entry,
+                payload={"damage": entry.get("damage", 0), "tier": entry.get("tier", "")},
+            ))
+
+        # World consequences
+        consequences: List[WorldConsequence] = []
+        if state.combat_register == "human" and state.witnesses:
+            consequences.append(WorldConsequence(
+                type="witness_recorded",
+                parameters={"witnesses": list(state.witnesses)},
+                scope="local",
+            ))
+        eco_clock = state.scene_clocks.get("ecological", 0)
+        if state.combat_register == "creature" and eco_clock >= 6:
+            consequences.append(WorldConsequence(
+                type="clock_advance",
+                parameters={"clock": "ecological", "value": eco_clock},
+            ))
+
+        return CombatOutcome(
+            encounter_id=spec.id,
+            resolution=resolution,
+            rounds_elapsed=rounds_completed,
+            player_state_delta=player_delta,
+            enemy_states=enemy_states,
+            narrative_log=narrative,
+            world_consequences=consequences,
+        )
