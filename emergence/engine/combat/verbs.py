@@ -184,6 +184,17 @@ _POWER_ATTR_PAIRS: Dict[str, Tuple[str, str]] = {
 }
 
 
+_STATUS_DURATIONS: Dict[str, int] = {
+    StatusName.BLEEDING: -1,   # end of scene
+    StatusName.STUNNED: 1,     # 1 round
+    StatusName.SHAKEN: 3,      # 3 rounds
+    StatusName.BURNING: 3,     # 3 rounds
+    StatusName.CORRUPTED: 3,   # 3 rounds (permanent if corruption >= 3)
+    StatusName.MARKED: -1,     # end of scene
+    StatusName.EXPOSED: -1,    # until exposure decays
+}
+
+
 def _get_attr(c: CombatantRecord, attr: str) -> int:
     return getattr(c, attr, 6)
 
@@ -288,7 +299,7 @@ def resolve_attack(
             attacker_tier=actor.tier,
             damage_type=DamageType.PHYSICAL_KINETIC,
             target_affinity=affinity,
-            armor=target.armor if weapon_type != "ranged" else 0,
+            armor=target.armor,  # armor applies to melee AND ranged per §10.1
             is_crit=check.is_crit,
         )
         result.damage_dealt = dr.final
@@ -296,9 +307,10 @@ def resolve_attack(
         state.apply_damage(target_id, dr.final, "physical")
 
         # Exposure fill
-        fill = compute_exposure_fill(dr.final, affinity)
-        if tier == SuccessTier.CRITICAL:
-            fill += 1  # crit status rider adds to exposure
+        fill = compute_exposure_fill(
+            dr.final, affinity,
+            crit_statuses_applied=1 if check.is_crit else 0,
+        )
         state.apply_exposure_fill(target_id, fill)
         result.exposure_delta[target_id] = fill
 
@@ -310,7 +322,7 @@ def resolve_attack(
             if weapon_status_rider:
                 rider = weapon_status_rider
                 if rider == "bleeding":
-                    _apply_status(state, target_id, StatusName.BLEEDING, 3, result)
+                    _apply_status(state, target_id, StatusName.BLEEDING, -1, result)
                 elif rider in ("stunned", "blunt"):
                     _apply_status(state, target_id, StatusName.STUNNED, 1, result)
                 elif rider == "marked":
@@ -415,7 +427,10 @@ def resolve_power(
         result.damage_track = track
         state.apply_damage(target_id, dr.final, track)
 
-        fill = compute_exposure_fill(dr.final, affinity)
+        fill = compute_exposure_fill(
+            dr.final, affinity,
+            crit_statuses_applied=1 if check.is_crit else 0,
+        )
         state.apply_exposure_fill(target_id, fill)
         result.exposure_delta[target_id] = fill
 
@@ -423,7 +438,8 @@ def resolve_power(
             state.clamp_momentum(actor_id, +1)
             result.momentum_delta[actor_id] = 1
             if power_crit_rider:
-                _apply_status(state, target_id, power_crit_rider, 3, result)
+                dur = _STATUS_DURATIONS.get(power_crit_rider, 3)
+                _apply_status(state, target_id, power_crit_rider, dur, result)
 
     state.action_log.append({
         "round": state.round_number,
