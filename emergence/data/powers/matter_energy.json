@@ -1,0 +1,170 @@
+[
+  {
+    "id": "pyro_spark",
+    "name": "Pyrokinetic Spark",
+    "category": "matter_energy",
+    "tier": 1,
+    "cost": {"condition": {"physical": 1}, "heat": {}, "corruption": 0},
+    "effect": {
+      "type": "damage",
+      "parameters": {
+        "damage_die": 6,
+        "damage_type": "matter_energy",
+        "crit_rider": "burning",
+        "primary_attr": "might",
+        "secondary_attr": "insight",
+        "tactical_role": "direct"
+      }
+    },
+    "damage_type": "matter_energy",
+    "description": "There was fire where her hand opened.",
+    "prerequisite": null,
+    "usage_scope": "combat",
+    "visibility": "visible"
+  },
+  {
+    "id": "metal_edge",
+    "name": "Edge Shaping",
+    "category": "matter_energy",
+    "tier": 1,
+    "cost": {"condition": {}, "heat": {}, "corruption": 0},
+    "effect": {
+      "type": "utility",
+      "parameters": {
+        "is_minor": true,
+        "weapon_quality": "fine",
+        "attack_bonus": 1,
+        "duration": "scene",
+        "primary_attr": "might",
+        "secondary_attr": "insight",
+        "tactical_role": "buff"
+      }
+    },
+    "damage_type": "",
+    "description": "She ran her thumb along the blade. The blade was sharper.",
+    "prerequisite": null,
+    "usage_scope": "combat",
+    "visibility": "subtle"
+  },
+  {
+    "id": "stone_shard",
+    "name": "Stone Shard",
+    "category": "matter_energy",
+    "tier": 1,
+    "cost": {"condition": {"physical": 1}, "heat": {}, "corruption": 0},
+    "effect": {
+      "type": "damage",
+      "parameters": {
+        "damage_die": 6,
+        "damage_type": "matter_energy",
+        "ranged": true,
+        "crit_rider": "bleeding",
+        "primary_attr": "might",
+        "secondary_attr": "insight",
+        "tactical_role": "ranged"
+      }
+    },
+    "damage_type": "matter_energy",
+    "description": "A fragment of the curb took him in the cheek.",
+    "prerequisite": null,
+    "usage_scope": "combat",
+    "visibility": "visible"
+  },
+  {
+    "id": "heat_lash",
+    "name": "Heat Lash",
+    "category": "matter_energy",
+    "tier": 2,
+    "cost": {"condition": {"physical": 1}, "heat": {}, "corruption": 0},
+    "effect": {
+      "type": "damage",
+      "parameters": {
+        "damage_die": 8,
+        "damage_type": "matter_energy",
+        "ignores_leather_armor": true,
+        "burning_on": ["full", "crit"],
+        "primary_attr": "might",
+        "secondary_attr": "insight",
+        "tactical_role": "burst"
+      }
+    },
+    "damage_type": "matter_energy",
+    "description": "The air in front of him bent, and the man was burning.",
+    "prerequisite": "pyro_spark",
+    "usage_scope": "combat",
+    "visibility": "visible"
+  },
+  {
+    "id": "wall",
+    "name": "Raise Wall",
+    "category": "matter_energy",
+    "tier": 3,
+    "cost": {"condition": {"physical": 2}, "heat": {}, "corruption": 0},
+    "effect": {
+      "type": "utility",
+      "parameters": {
+        "zone_divider": true,
+        "duration_rounds": 3,
+        "ranged_penalty": -3,
+        "destroy_threshold": 20,
+        "primary_attr": "might",
+        "secondary_attr": "insight",
+        "tactical_role": "defense"
+      }
+    },
+    "damage_type": "",
+    "description": "The ground rose up slow, then fast. It was a wall.",
+    "prerequisite": "stone_shard",
+    "usage_scope": "combat",
+    "visibility": "visible"
+  },
+  {
+    "id": "lightning_arc",
+    "name": "Lightning Arc",
+    "category": "matter_energy",
+    "tier": 4,
+    "cost": {"condition": {"physical": 2}, "heat": {}, "corruption": 0},
+    "effect": {
+      "type": "damage",
+      "parameters": {
+        "damage_die": 10,
+        "damage_type": "matter_energy",
+        "chain_to_second": true,
+        "chain_damage_penalty": -2,
+        "primary_attr": "might",
+        "secondary_attr": "insight",
+        "tactical_role": "multi"
+      }
+    },
+    "damage_type": "matter_energy",
+    "description": "The arc went through the first. It did not stop.",
+    "prerequisite": "heat_lash",
+    "usage_scope": "combat",
+    "visibility": "visible"
+  },
+  {
+    "id": "district_fire",
+    "name": "District Fire",
+    "category": "matter_energy",
+    "tier": 6,
+    "cost": {"condition": {"physical": 3}, "heat": {"general": 3}, "corruption": 0},
+    "effect": {
+      "type": "damage",
+      "parameters": {
+        "damage_die": 12,
+        "damage_type": "matter_energy",
+        "area": "entire_encounter_zone",
+        "leaves_burning_terrain": true,
+        "burning_duration": "scene",
+        "primary_attr": "might",
+        "secondary_attr": "insight",
+        "tactical_role": "area"
+      }
+    },
+    "damage_type": "matter_energy",
+    "description": "He set fire to the block and did not put it out.",
+    "prerequisite": "lightning_arc",
+    "usage_scope": "combat",
+    "visibility": "visible"
+  }
+]
