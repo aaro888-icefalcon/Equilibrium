@@ -494,18 +494,9 @@ class EncounterRunner:
                 player = c
                 break
 
-        player_delta = PlayerStateDelta(
-            condition_changes={
-                "physical": player.phy if player else 0,
-                "mental": player.men if player else 0,
-                "social": player.soc if player else 0,
-            },
-            heat_accrued=dict(state.heat_deltas),
-            corruption_gained=player.corruption if player else 0,
-        )
-
-        # Enemy states
+        # Enemy states + heat computation per spec §15.4
         enemy_states: List[EnemyState] = []
+        heat_total = 0
         for cid, c in state.combatants.items():
             if c.side == "enemy":
                 if c.is_incapacitated():
@@ -517,6 +508,33 @@ class EncounterRunner:
                 enemy_states.append(EnemyState(
                     enemy_id=cid, final_state=final,
                 ))
+                # Per-enemy heat base
+                if final == "dead":
+                    heat_total += 2
+                elif final in ("incapacitated", "fled"):
+                    heat_total += 1
+
+        # Witness quotient: +1 per 3 witnesses, max +3
+        if state.witnesses:
+            heat_total += min(3, -(-len(state.witnesses) // 3))  # ceil div
+
+        # Eldritch power usage flag
+        if player and player.corruption > 0:
+            heat_total += 1
+
+        # Parley modifier: -2 if resolution was via parley
+        if resolution == "parley":
+            heat_total = max(0, heat_total - 2)
+
+        player_delta = PlayerStateDelta(
+            condition_changes={
+                "physical": player.phy if player else 0,
+                "mental": player.men if player else 0,
+                "social": player.soc if player else 0,
+            },
+            heat_accrued={"total": heat_total},
+            corruption_gained=player.corruption if player else 0,
+        )
 
         # Narrative log
         narrative: List[NarrativeLogEntry] = []
