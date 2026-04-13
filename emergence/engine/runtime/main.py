@@ -242,34 +242,24 @@ def _run_session_zero(state: GameState, narrator: Any) -> Optional[str]:
     """Run session zero mode. Returns next mode or None."""
     from emergence.engine.character_creation.session_zero import (
         SessionZero,
-        StdinInputSource,
+        FixedInputSource,
+        MockNarratorSink,
     )
 
     if state.narrator_mode == "mock":
-        # In mock mode, use fixed inputs for testing
-        from emergence.engine.character_creation.session_zero import FixedInputSource
-        inputs = FixedInputSource([
-            ("name", "Elena"),
-            ("age", "28"),
-            ("choice", 1),
-            ("choice", 1),
-            ("choice", 1),
-            ("choice", 1),
-            ("choice", 1),
-            ("choice", 1),
-            ("choice", 1),
-            ("choice", 1),
-        ])
+        inputs = FixedInputSource(
+            texts={"name": "Elena", "age": "28"},
+            default_choice=0,
+        )
     else:
-        inputs = StdinInputSource()
+        # Live mode: stdin input source
+        inputs = _StdinInputSource()
 
-    class NarratorSinkAdapter:
-        def emit(self, payload: dict) -> str:
-            return narrator.emit(payload)
+    sink = MockNarratorSink()
 
     sz = SessionZero()
     try:
-        character = sz.run(inputs, NarratorSinkAdapter(), state.rng)
+        character = sz.run(inputs, sink, state.rng)
         if hasattr(character, "to_dict"):
             state.player = character.to_dict()
         elif isinstance(character, dict):
@@ -281,6 +271,28 @@ def _run_session_zero(state: GameState, narrator: Any) -> Optional[str]:
         print(f"Session zero error: {e}")
         state.session_should_end = True
         return None
+
+
+class _StdinInputSource:
+    """Live input source reading from stdin."""
+
+    def get_text(self, prompt: str) -> str:
+        print(prompt)
+        return input("> ").strip()
+
+    def get_choice(self, prompt: str, options: list) -> int:
+        print(prompt)
+        for i, opt in enumerate(options):
+            print(f"  {i + 1}. {opt}")
+        while True:
+            raw = input("> ").strip()
+            try:
+                idx = int(raw) - 1
+                if 0 <= idx < len(options):
+                    return idx
+            except ValueError:
+                pass
+            print(f"Enter a number 1-{len(options)}.")
 
 
 def _run_framing(state: GameState, narrator: Any) -> Optional[str]:
