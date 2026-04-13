@@ -6,3 +6,6 @@ Step 7c: resolve_parley/disengage/finisher/defend — starting
 Step 7c: resolve_parley/disengage/finisher/defend OK (verbs.py complete)
 Step 8a: EncounterRunner skeleton + initiative + round loop — starting
 Step 8a: EncounterRunner skeleton OK
+Step 8b: turn resolution + win/loss OK
+Step 8c: register mechanics OK
+Step 9: __init__.py OK
