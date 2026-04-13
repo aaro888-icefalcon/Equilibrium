@@ -1,6 +1,19 @@
 # Workflow State — Emergence Build
 
-## Current Phase: 4 — Content Integration and Character Creation (next)
+## Current Phase: 5 — Runtime Integration and Narrator (next)
+
+## Phase 4 Progress — COMPLETE
+
+| Step | Description | Status |
+|------|-------------|--------|
+| 4.1 | Content Loader | done |
+| 4.2 | Initial World State | done |
+| 4.3 | NPC Generator | done |
+| 4.4 | Character Creation Core | done |
+| 4.5 | Scenes 0-4 (Pre-Onset) | done |
+| 4.6 | Scenes 5-9 (Manifestation + Year One) | done |
+| 4.7 | Session Zero Integration | done |
+| 4.8 | Refinement + Build Log | done |
 
 ## Phase 3 Progress — COMPLETE
 
@@ -24,13 +37,15 @@
 - Phase 2: Combat engine (248 tests, 48 powers, 30 enemies, 12 encounters)
 - Phase 2.5: Combat spec audit fixes (275 tests after fixes)
 - Phase 3: Simulation engine core (462 tests — 11 engine files, 10 test files, 1 helper)
+- Phase 4: Content integration + character creation (598 tests — 8 engine files, 8 test files)
 
 ## Test Summary
 
-- Total: 462 tests (459 pass, 3 skipped)
+- Total: 598 tests (595 pass, 3 skipped)
 - Phase 1 tests: test_schemas (21), test_validation (116)
 - Phase 2 tests: test_resolution (18), test_damage (25), test_statuses (20), test_ai (13), test_verbs (15), test_data_loader (13), test_combat_scenarios (6), test_combat_fixes (26)
 - Phase 3 tests: test_yaml_parser (41), test_clocks (30), test_faction_logic (11), test_npc_behavior (18), test_location_dynamics (13), test_tick_engine (8), test_situations (16), test_abstract_combat (8), test_encounter_generator (11), test_player_actions (18), test_world_tick (7), test_encounter_generation (3), test_sim_combat_handoff (3)
+- Phase 4 tests: test_content_loading (27), test_initial_state (12), test_npc_generator (22), test_session_zero_scenes (26), test_manifestation (11), test_year_one (20), test_session_zero (15), test_content_sim_integration (3)
 
 ## Sim Engine Modules
 
@@ -49,6 +64,19 @@
 | context_management | Compact state for narrator |
 | persistence | Dirty-flag tracker |
 
+## Character Creation Modules
+
+| Module | Purpose |
+|--------|---------|
+| content_loader | Loads setting bible YAML into schema objects |
+| initial_state | Builds T+1 world state from loaded content |
+| npc_generator | Procedural NPC generation with species/tier distributions |
+| character_factory | Accumulates scene deltas, finalizes CharacterSheet |
+| session_zero | 10-scene orchestrator with InputSource/NarratorSink protocols |
+| scenes | Pre-onset scenes 0-4 (opening, occupation, relationships, location, concern) |
+| manifestation | Scene 5: circumstance-weighted power category and tier rolls |
+| year_one | Scenes 6-9 (first weeks, faction encounter, critical incident, settling) |
+
 ## Last Commit Context
 
-Phase 3 complete. All simulation modules implemented and tested. 365-day smoke test passes.
+Phase 4 complete. All content integration + character creation modules implemented and tested. Full pipeline: bible→sim→character→combat works.

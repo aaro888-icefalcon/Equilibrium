@@ -166,3 +166,35 @@ emergence/
 4. Sim↔combat handoff works via existing EncounterRunner
 5. Deterministic replay verified
 6. All 462 tests pass
+
+## Entry 4: Phase 4 — Content Integration and Character Creation
+
+**Date:** Phase 4 complete
+
+**Deliverables:**
+- `engine/sim/content_loader.py` (~425 lines) — ContentLoader: loads factions.yaml, npcs.yaml, locations.yaml, clocks.yaml, constants.yaml, timeline.yaml. Handles informal values (~N, "very high", "T9 Physical/kinetic", "neutral-transactional", parenthetical faction qualifiers)
+- `engine/sim/initial_state.py` (~150 lines) — build_initial_world(): assembles T+1 year state from all bible content. Wires bidirectional faction relationships, syncs NPC locations. validate_initial_state() checks cross-references
+- `engine/sim/npc_generator.py` (~250 lines) — Procedural NPC generation: 30+30 name pool, 11 species with mid-Atlantic population weights (81% human, 19% metahuman), tier pyramid (T1-T10), 7 domain fractions, personality traits, voice templates. Batch generation with uniqueness enforcement
+- `engine/character_creation/character_factory.py` (~230 lines) — CreationState dataclass (accumulates 10 scenes of deltas), CharacterFactory (applies scene results, finalizes to CharacterSheet with die-size snapping)
+- `engine/character_creation/session_zero.py` (~190 lines) — SessionZero orchestrator with InputSource/NarratorSink protocols. FixedInputSource + MockNarratorSink for testing
+- `engine/character_creation/scenes.py` (~420 lines) — Scenes 0-4: Opening (name+age), Occupation (12 options per spec §3.1), Relationships (6 archetypes with NPC generation), Location (8 regions × 8 circumstances), Concern (8 options)
+- `engine/character_creation/manifestation.py` (~240 lines) — Scene 5: circumstance-weighted category draw (8 tilts × 7 categories), session-zero tier pyramid (T1-T4), background modifiers, secondary category (55%), 42 starter power templates
+- `engine/character_creation/year_one.py` (~340 lines) — Scenes 6-9: First Weeks (4 options), Faction Encounter (8 region→faction mappings, 4 response types), Critical Incident (3 branches × 4 options, state-driven selection), Settling (5 options, species-filtered)
+
+**Tests:** 598 total (595 pass, 3 skipped)
+- `test_content_loading.py` — 27 integration tests (all bible content loads, cross-references validate)
+- `test_initial_state.py` — 12 integration tests (world state, validation, 30-day tick)
+- `test_npc_generator.py` — 22 unit tests (species/tier distribution, constraints, determinism)
+- `test_session_zero_scenes.py` — 26 unit tests (scenes 0-4, eligibility, deltas, full sequence)
+- `test_manifestation.py` — 11 unit tests (category/tier rolls, circumstance tilts, powers)
+- `test_year_one.py` — 20 unit tests (scenes 6-9, incident type selection, faction encounters)
+- `test_session_zero.py` — 15 integration tests (5 seeds → 5 characters, choices recorded, attributes valid)
+- `test_content_sim_integration.py` — 3 integration tests (bible→sim→combat pipeline)
+
+**Exit criteria verified:**
+1. All 22 factions, 64 NPCs, 40+ locations, 8+ clocks load from YAML
+2. Cross-references validate within tolerance (NPC factions, NPC locations)
+3. 5 session zeros produce varied characters (different categories, tiers)
+4. Generated characters enter combat engine successfully
+5. Full bible world ticks 30 days without errors
+6. All 598 tests pass
