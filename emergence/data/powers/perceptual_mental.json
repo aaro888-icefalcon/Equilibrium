@@ -1,0 +1,170 @@
+[
+  {
+    "id": "read_intent",
+    "name": "Read Intent",
+    "category": "perceptual_mental",
+    "tier": 1,
+    "cost": {"condition": {"mental": 1}, "heat": {}, "corruption": 0},
+    "effect": {
+      "type": "utility",
+      "parameters": {
+        "free_assess": true,
+        "assess_bonus": 2,
+        "reveal_truths": 1,
+        "passive_predeclare": true,
+        "primary_attr": "will",
+        "secondary_attr": "perception",
+        "tactical_role": "info"
+      }
+    },
+    "damage_type": "",
+    "description": "She watched him speak and knew he was about to reach for the knife.",
+    "prerequisite": null,
+    "usage_scope": "both",
+    "visibility": "subtle"
+  },
+  {
+    "id": "suggest",
+    "name": "Suggestion",
+    "category": "perceptual_mental",
+    "tier": 2,
+    "cost": {"condition": {"mental": 1}, "heat": {}, "corruption": 0},
+    "effect": {
+      "type": "damage",
+      "parameters": {
+        "damage_type": "perceptual_mental",
+        "target_save_attr": "will",
+        "on_fail_status": "shaken",
+        "on_fail_forced_defend": true,
+        "duration_rounds": 1,
+        "primary_attr": "will",
+        "secondary_attr": "perception",
+        "tactical_role": "control"
+      }
+    },
+    "damage_type": "perceptual_mental",
+    "description": "He said to the guard, 'You could sit down,' and the guard sat down.",
+    "prerequisite": null,
+    "usage_scope": "combat",
+    "visibility": "subtle"
+  },
+  {
+    "id": "illusion",
+    "name": "Minor Illusion",
+    "category": "perceptual_mental",
+    "tier": 2,
+    "cost": {"condition": {"mental": 1}, "heat": {}, "corruption": 0},
+    "effect": {
+      "type": "utility",
+      "parameters": {
+        "false_sensory": true,
+        "duration": "scene",
+        "maneuver_bonus": 2,
+        "concealment": true,
+        "primary_attr": "will",
+        "secondary_attr": "perception",
+        "tactical_role": "utility"
+      }
+    },
+    "damage_type": "perceptual_mental",
+    "description": "There were three of them. There were not three of them.",
+    "prerequisite": null,
+    "usage_scope": "both",
+    "visibility": "subtle"
+  },
+  {
+    "id": "telepathy",
+    "name": "Telepathic Contact",
+    "category": "perceptual_mental",
+    "tier": 3,
+    "cost": {"condition": {"mental": 1}, "heat": {}, "corruption": 0},
+    "effect": {
+      "type": "utility",
+      "parameters": {
+        "silent_speech": true,
+        "share_assess": true,
+        "primary_attr": "will",
+        "secondary_attr": "perception",
+        "tactical_role": "coordination"
+      }
+    },
+    "damage_type": "",
+    "description": "She did not speak. He heard her.",
+    "prerequisite": "read_intent",
+    "usage_scope": "both",
+    "visibility": "subtle"
+  },
+  {
+    "id": "psychic_lance",
+    "name": "Psychic Lance",
+    "category": "perceptual_mental",
+    "tier": 4,
+    "cost": {"condition": {"mental": 2}, "heat": {}, "corruption": 0},
+    "effect": {
+      "type": "damage",
+      "parameters": {
+        "damage_die": 8,
+        "damage_type": "perceptual_mental",
+        "ignores_physical_armor": true,
+        "crit_rider": "shaken",
+        "primary_attr": "will",
+        "secondary_attr": "perception",
+        "tactical_role": "direct"
+      }
+    },
+    "damage_type": "perceptual_mental",
+    "description": "He blinked. Something had happened inside his head.",
+    "prerequisite": "suggest",
+    "usage_scope": "combat",
+    "visibility": "subtle"
+  },
+  {
+    "id": "mass_influence",
+    "name": "Mass Influence",
+    "category": "perceptual_mental",
+    "tier": 5,
+    "cost": {"condition": {"mental": 3}, "heat": {}, "corruption": 0},
+    "effect": {
+      "type": "damage",
+      "parameters": {
+        "damage_type": "perceptual_mental",
+        "area": "zone",
+        "target_save_attr": "will",
+        "save_tn": 13,
+        "on_fail_forced_defend": true,
+        "duration_rounds": 1,
+        "primary_attr": "will",
+        "secondary_attr": "perception",
+        "tactical_role": "control"
+      }
+    },
+    "damage_type": "perceptual_mental",
+    "description": "She spoke once and eight people reconsidered.",
+    "prerequisite": "suggest,telepathy",
+    "usage_scope": "combat",
+    "visibility": "visible"
+  },
+  {
+    "id": "memory_edit",
+    "name": "Memory Edit",
+    "category": "perceptual_mental",
+    "tier": 6,
+    "cost": {"condition": {"mental": 3, "social": 1}, "heat": {}, "corruption": 0},
+    "effect": {
+      "type": "utility",
+      "parameters": {
+        "forget_scene": true,
+        "requires_crit": true,
+        "out_of_combat": true,
+        "primary_attr": "will",
+        "secondary_attr": "perception",
+        "tactical_role": "consequence_removal"
+      }
+    },
+    "damage_type": "",
+    "description": "He would not remember her face.",
+    "prerequisite": "psychic_lance",
+    "usage_scope": "sim",
+    "visibility": "subtle"
+  }
+]

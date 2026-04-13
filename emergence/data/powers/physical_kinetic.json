@@ -1,0 +1,215 @@
+[
+  {
+    "id": "kin_push",
+    "name": "Kinetic Push",
+    "category": "physical_kinetic",
+    "tier": 1,
+    "cost": {"condition": {"physical": 1}, "heat": {}, "corruption": 0},
+    "effect": {
+      "type": "damage",
+      "parameters": {
+        "damage_die": 6,
+        "damage_type": "physical_kinetic",
+        "push_zones": 1,
+        "primary_attr": "might",
+        "secondary_attr": "strength",
+        "crit_rider": null,
+        "tactical_role": "area_control"
+      }
+    },
+    "damage_type": "physical_kinetic",
+    "description": "The air between her hand and the man shifted once. He went back two steps, then three, then off the edge.",
+    "prerequisite": null,
+    "usage_scope": "combat",
+    "visibility": "visible"
+  },
+  {
+    "id": "hard_skin",
+    "name": "Hardened Skin",
+    "category": "physical_kinetic",
+    "tier": 1,
+    "cost": {"condition": {"physical": 1}, "heat": {}, "corruption": 0},
+    "effect": {
+      "type": "utility",
+      "parameters": {
+        "self_buff": true,
+        "damage_reduction": 2,
+        "trigger": "on_first_hit",
+        "primary_attr": "might",
+        "secondary_attr": "strength",
+        "tactical_role": "defensive"
+      }
+    },
+    "damage_type": "",
+    "description": "The knife struck and slid. Her skin did not open.",
+    "prerequisite": null,
+    "usage_scope": "combat",
+    "visibility": "visible"
+  },
+  {
+    "id": "leap",
+    "name": "Leap",
+    "category": "physical_kinetic",
+    "tier": 1,
+    "cost": {"condition": {"physical": 1}, "heat": {}, "corruption": 0},
+    "effect": {
+      "type": "movement",
+      "parameters": {
+        "zones": 2,
+        "vertical": true,
+        "primary_attr": "might",
+        "secondary_attr": "strength",
+        "tactical_role": "mobility"
+      }
+    },
+    "damage_type": "",
+    "description": "He jumped the collapsed car like it was nothing and landed running.",
+    "prerequisite": null,
+    "usage_scope": "combat",
+    "visibility": "visible"
+  },
+  {
+    "id": "kin_strike",
+    "name": "Kinetic Strike",
+    "category": "physical_kinetic",
+    "tier": 2,
+    "cost": {"condition": {"physical": 1}, "heat": {}, "corruption": 0},
+    "effect": {
+      "type": "damage",
+      "parameters": {
+        "damage_die": 8,
+        "damage_type": "physical_kinetic",
+        "crit_rider": "stunned",
+        "primary_attr": "might",
+        "secondary_attr": "strength",
+        "tactical_role": "burst"
+      }
+    },
+    "damage_type": "physical_kinetic",
+    "description": "She set her feet. The punch went through the plank and the man behind it.",
+    "prerequisite": "kin_push",
+    "usage_scope": "combat",
+    "visibility": "visible"
+  },
+  {
+    "id": "redirect",
+    "name": "Redirect Force",
+    "category": "physical_kinetic",
+    "tier": 2,
+    "cost": {"condition": {"physical": 1}, "heat": {}, "corruption": 0},
+    "effect": {
+      "type": "combined",
+      "parameters": {
+        "is_reaction": true,
+        "trigger": "on_attacked",
+        "defend_roll": true,
+        "return_damage_die": 6,
+        "return_on": ["full", "crit"],
+        "primary_attr": "might",
+        "secondary_attr": "strength",
+        "tactical_role": "counter"
+      }
+    },
+    "damage_type": "physical_kinetic",
+    "description": "The blow arrived and came back faster.",
+    "prerequisite": null,
+    "usage_scope": "combat",
+    "visibility": "visible"
+  },
+  {
+    "id": "run",
+    "name": "Sustained Run",
+    "category": "physical_kinetic",
+    "tier": 3,
+    "cost": {"condition": {"physical": 1}, "heat": {}, "corruption": 0},
+    "effect": {
+      "type": "utility",
+      "parameters": {
+        "out_of_combat_speed": 3,
+        "disengage_bonus": 1,
+        "flank_maneuver_bonus": 1,
+        "primary_attr": "might",
+        "secondary_attr": "strength",
+        "tactical_role": "mobility"
+      }
+    },
+    "damage_type": "",
+    "description": "He covered the distance before they finished aiming.",
+    "prerequisite": "leap",
+    "usage_scope": "both",
+    "visibility": "visible"
+  },
+  {
+    "id": "throw_car",
+    "name": "Throw Massive Object",
+    "category": "physical_kinetic",
+    "tier": 4,
+    "cost": {"condition": {"physical": 2}, "heat": {}, "corruption": 0},
+    "effect": {
+      "type": "damage",
+      "parameters": {
+        "damage_die": 10,
+        "damage_type": "physical_kinetic",
+        "area": "zone",
+        "crit_rider": "stunned",
+        "crit_rider_area": true,
+        "primary_attr": "might",
+        "secondary_attr": "strength",
+        "tactical_role": "area"
+      }
+    },
+    "damage_type": "physical_kinetic",
+    "description": "He took the bumper in both hands. Then the whole car was moving.",
+    "prerequisite": "kin_strike",
+    "usage_scope": "combat",
+    "visibility": "visible"
+  },
+  {
+    "id": "flight",
+    "name": "Self-Propelled Flight",
+    "category": "physical_kinetic",
+    "tier": 5,
+    "cost": {"condition": {"physical": 2}, "heat": {}, "corruption": 0},
+    "effect": {
+      "type": "utility",
+      "parameters": {
+        "three_dimensional": true,
+        "ranged_attack_penalty": -2,
+        "opportunity_attacks_invalid": true,
+        "duration": "scene",
+        "primary_attr": "might",
+        "secondary_attr": "strength",
+        "tactical_role": "mobility_escape"
+      }
+    },
+    "damage_type": "",
+    "description": "He did not jump. He went up.",
+    "prerequisite": "leap,run",
+    "usage_scope": "both",
+    "visibility": "visible"
+  },
+  {
+    "id": "district_break",
+    "name": "District-Breaking Strike",
+    "category": "physical_kinetic",
+    "tier": 6,
+    "cost": {"condition": {"physical": 3}, "heat": {"general": 2}, "corruption": 0},
+    "effect": {
+      "type": "damage",
+      "parameters": {
+        "damage_die": 12,
+        "damage_type": "physical_kinetic",
+        "area": "two_zones",
+        "destroys_terrain": true,
+        "primary_attr": "might",
+        "secondary_attr": "strength",
+        "tactical_role": "nuclear"
+      }
+    },
+    "damage_type": "physical_kinetic",
+    "description": "The ground after was lower than the ground before.",
+    "prerequisite": "throw_car",
+    "usage_scope": "combat",
+    "visibility": "visible"
+  }
+]
