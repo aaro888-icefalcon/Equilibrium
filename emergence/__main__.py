@@ -2,12 +2,13 @@
 
 Usage: python -m emergence [subcommand] [options]
 
-Subcommands: play (default), new, list, inspect, migrate, help.
+Subcommands: play (default), new, list, inspect, migrate, step, help.
 """
 
 from __future__ import annotations
 
 import argparse
+import json
 import os
 import sys
 from typing import List, Optional
@@ -85,6 +86,54 @@ def build_parser() -> argparse.ArgumentParser:
     # migrate
     sub.add_parser("migrate", help="Run migrations on save directory")
 
+    # step — discrete commands for Claude Code orchestration
+    step = sub.add_parser("step", help="Step-mode commands for Claude Code")
+    step_sub = step.add_subparsers(dest="step_action", help="Step action")
+
+    # step init
+    step_init = step_sub.add_parser("init", help="Initialize a new game world")
+    step_init.add_argument("--force", action="store_true", help="Overwrite existing save")
+
+    # step status
+    step_sub.add_parser("status", help="Show current game state")
+
+    # step scene
+    step_scene = step_sub.add_parser("scene", help="Get session zero scene setup")
+    step_scene.add_argument("--index", type=int, required=True, help="Scene index (0-9)")
+
+    # step scene-apply
+    step_apply = step_sub.add_parser("scene-apply", help="Apply choice to session zero scene")
+    step_apply.add_argument("--index", type=int, required=True, help="Scene index (0-9)")
+    step_apply.add_argument("--input-choice", type=int, default=None, help="Choice index (0-based)")
+    step_apply.add_argument("--input-text", action="append", default=None,
+                            help="Text input as key=value (repeatable)")
+
+    # step scene-finalize
+    step_sub.add_parser("scene-finalize", help="Finalize character from session zero")
+
+    # step tick
+    step_tick = step_sub.add_parser("tick", help="Advance world simulation")
+    step_tick.add_argument("--days", type=int, default=1, help="Days to advance (default: 1)")
+
+    # step situation
+    step_sub.add_parser("situation", help="Generate current player situation")
+
+    # step resolve
+    step_resolve = step_sub.add_parser("resolve", help="Resolve player choice")
+    step_resolve.add_argument("--choice-id", required=True, help="ID of chosen action")
+
+    # step combat-start
+    step_sub.add_parser("combat-start", help="Start a combat encounter")
+
+    # step combat-round
+    step_round = step_sub.add_parser("combat-round", help="Process one combat round")
+    step_round.add_argument("--verb", required=True, help="Combat verb")
+    step_round.add_argument("--target", default=None, help="Target ID")
+    step_round.add_argument("--power", default=None, help="Power ID")
+
+    # step save
+    step_sub.add_parser("save", help="Manual save")
+
     # help
     sub.add_parser("help", help="Print usage and exit")
 
@@ -109,6 +158,9 @@ def main(argv: Optional[List[str]] = None) -> int:
     if args.log_file is None:
         args.log_file = os.path.join(save_root, "logs", "runtime.log")
 
+    if command == "step":
+        return _cmd_step(args, save_root)
+
     if command == "list":
         return _cmd_list(save_root)
 
@@ -123,6 +175,19 @@ def main(argv: Optional[List[str]] = None) -> int:
 
     parser.print_help()
     return 1
+
+
+def _cmd_step(args: argparse.Namespace, save_root: str) -> int:
+    """Run a step command and output JSON."""
+    from emergence.engine.runtime.step_cli import dispatch_step
+
+    if not getattr(args, "step_action", None):
+        print(json.dumps({"status": "error", "message": "No step action specified. Use --help."}))
+        return 1
+
+    result = dispatch_step(args, save_root)
+    print(json.dumps(result, indent=2, default=str))
+    return 0 if result.get("status") == "ok" else 1
 
 
 def _cmd_list(save_root: str) -> int:
