@@ -1,0 +1,32 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python3 -m emergence *)",
+      "Bash(python -m emergence *)",
+      "Bash(python3 -m pytest *)",
+      "Bash(python3 -m unittest *)"
+    ]
+  },
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "startup|resume",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 -m emergence --save-root ./saves/default step status 2>/dev/null || echo 'No game in progress. Type /play to start.'"
+          }
+        ]
+      },
+      {
+        "matcher": "compact",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo 'REMINDER: You are the narrator for Emergence. Use step commands to interact with the engine. Follow CLAUDE.md hard limits.'"
+          }
+        ]
+      }
+    ]
+  }
+}

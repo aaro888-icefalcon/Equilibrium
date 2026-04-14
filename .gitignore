@@ -5,3 +5,9 @@ __pycache__/
 *.egg-info/
 dist/
 build/
+saves/
+*.log
+.lock
+session_zero_state.json
+combat_state.json
+current_situation.json

@@ -1,0 +1,8 @@
+# Emergence game configuration
+# Used when running inside Claude Code sessions
+
+narrator_mode = claude
+autosave_interval = 300
+log_level = info
+color_output = false
+tick_speed = normal

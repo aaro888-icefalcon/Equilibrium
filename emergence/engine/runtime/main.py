@@ -238,6 +238,36 @@ def main_session_loop(state: GameState) -> int:
     return 0
 
 
+def _make_all_scenes() -> list:
+    """Assemble the 10 session zero scenes in order."""
+    from emergence.engine.character_creation.scenes import (
+        OpeningScene,
+        OccupationScene,
+        RelationshipScene,
+        LocationScene,
+        ConcernScene,
+    )
+    from emergence.engine.character_creation.manifestation import ManifestationScene
+    from emergence.engine.character_creation.year_one import (
+        FirstWeeksScene,
+        FactionEncounterScene,
+        CriticalIncidentScene,
+        SettlingScene,
+    )
+    return [
+        OpeningScene(),
+        OccupationScene(),
+        RelationshipScene(),
+        LocationScene(),
+        ConcernScene(),
+        ManifestationScene(),
+        FirstWeeksScene(),
+        FactionEncounterScene(),
+        CriticalIncidentScene(),
+        SettlingScene(),
+    ]
+
+
 def _run_session_zero(state: GameState, narrator: Any) -> Optional[str]:
     """Run session zero mode. Returns next mode or None."""
     from emergence.engine.character_creation.session_zero import (
@@ -257,7 +287,8 @@ def _run_session_zero(state: GameState, narrator: Any) -> Optional[str]:
 
     sink = MockNarratorSink()
 
-    sz = SessionZero()
+    scenes = _make_all_scenes()
+    sz = SessionZero(scenes=scenes)
     try:
         character = sz.run(inputs, sink, state.rng)
         if hasattr(character, "to_dict"):
