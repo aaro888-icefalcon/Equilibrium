@@ -21,11 +21,11 @@ All game operations use step commands. Global option `--save-root` goes BEFORE `
 python3 -m emergence --save-root ./saves/default step <action> [options]
 ```
 
-Key commands: `step init`, `step status`, `step scene`, `step scene-apply`, `step scene-finalize`, `step tick`, `step situation`, `step resolve`, `step combat-start`, `step combat-round`, `step save`.
+Key commands: `step init`, `step status`, `step scene`, `step scene-apply`, `step scene-finalize`, `step preamble`, `step tick`, `step situation`, `step resolve`, `step combat-start`, `step combat-round`, `step save`.
 
 ## Game Flow
 
-- **New game**: `step init` -> session zero (scenes 0-9) -> `step scene-finalize` -> `step tick` -> sim loop
+- **New game**: `step init` -> session zero (scenes 0-7) -> `step scene-finalize` -> `step preamble` -> `step tick` -> sim loop
 - **Resume**: `step status` -> continue from current mode (SIM, COMBAT, SESSION_ZERO)
 - **Sim loop**: `step tick` -> `step situation` -> narrate scene -> player chooses -> `step resolve` -> repeat
 - **Combat**: `step combat-start` -> each round: present verbs/targets -> `step combat-round` -> narrate -> repeat until combat_over
@@ -38,6 +38,31 @@ Read the `narrator_payload` from each engine command's JSON output. Generate pro
 - The `scene_type`: combat_turn, scene_framing, situation_description, dialogue, character_creation_beat, transition, death_narration, time_skip
 
 For full style guide and examples, the narrate skill loads automatically when relevant.
+
+## Narrator Format Contracts
+
+Each `scene_type` has a word count envelope and output format. The `output_target` field in every narrator payload specifies these explicitly.
+
+| scene_type | words | format | notes |
+|---|---|---|---|
+| combat_turn | 25-60 | prose | No menu, no choices. Damage/status rendered by runtime. |
+| scene_framing | 60-150 | prose | Sensory detail. No unlisted characters. |
+| situation_description | 30-80 | mixed | Prose first, then numbered choices from payload verbatim. |
+| dialogue | 20-100 | dialogue | NPC's voice only. No invented intent. No speaking for player. |
+| character_creation_beat | 80-200 | mixed | Scene framing, then choices exactly as listed. |
+| transition | 40-100 | prose | Journey through terrain, weather, senses. |
+| death_narration | 60-150 | prose | Legacy, not gore. No heroic framing. No consolation. |
+| time_skip | 50-150 | prose | Concrete changes, not mechanical event lists. |
+| preamble (scene_framing) | 150-300 | prose | Recap character, set scene, end in media res. |
+
+### Anti-patterns
+
+- Do not adjudicate mechanics. The engine resolves; you narrate.
+- Do not reveal stats, numbers, or internal game state in prose.
+- Do not editorialize player choices (no "wisely" or "foolishly").
+- Do not add choices beyond those in the payload.
+- Do not frame violence heroically or sentimentally.
+- Do not use meta-gaming language (hit points, XP, level up, dice, RNG).
 
 ## References
 
