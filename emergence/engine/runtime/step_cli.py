@@ -346,11 +346,15 @@ def step_scene_apply(args: Any, save_root: str) -> Dict[str, Any]:
         "applied": True,
         "next_scene": next_scene if next_scene < len(scenes) else None,
         "creation_summary": {
-            "name": getattr(creation_state, "name", None),
-            "age": getattr(creation_state, "age", None),
-            "occupation": getattr(creation_state, "occupation", None),
-            "region": getattr(creation_state, "region", None),
-            "power_category": getattr(creation_state, "power_category", None),
+            "name": creation_state.name or None,
+            "age": creation_state.age_at_onset,
+            "region": creation_state.region or None,
+            "tier": creation_state.tier,
+            "power_category_primary": creation_state.power_category_primary or None,
+            "power_category_secondary": creation_state.power_category_secondary,
+            "powers": [p.get("name") for p in creation_state.powers],
+            "skills": dict(creation_state.skills) if creation_state.skills else {},
+            "goals": [g.get("description") for g in creation_state.goals],
         },
     }
 
@@ -395,6 +399,12 @@ def step_scene_finalize(args: Any, save_root: str) -> Dict[str, Any]:
             state["player"] = sheet
         else:
             state["player"] = {"name": getattr(sheet, "name", "Unknown")}
+
+    # Ensure current_location is set (step_situation looks for this key)
+    if "location" in state["player"] and "current_location" not in state["player"]:
+        state["player"]["current_location"] = state["player"]["location"]
+    if "region" not in state["player"] or not state["player"].get("region"):
+        state["player"]["home_region"] = state["player"].get("current_location", "")
 
     _save_full_state(save_root, state)
 

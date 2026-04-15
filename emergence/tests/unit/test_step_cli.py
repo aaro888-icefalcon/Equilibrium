@@ -101,10 +101,7 @@ class TestStepSceneApply(unittest.TestCase):
             self.assertEqual(result["status"], "ok")
             self.assertTrue(result["applied"])
             self.assertEqual(result["creation_summary"]["name"], "Test Runner")
-            # Note: creation_summary["age"] reads getattr(state, "age") which
-            # is None because CreationState stores the field as age_at_onset.
-            # This is expected behavior of the step CLI layer.
-            self.assertIsNone(result["creation_summary"]["age"])
+            self.assertEqual(result["creation_summary"]["age"], 30)
             self.assertEqual(result["next_scene"], 1)
 
     def test_apply_choice_scene_1(self):
