@@ -71,6 +71,20 @@ class CombatantRecord:
     corruption: int = 0
     # Whether this combatant is still active
     active: bool = True
+    # Rev 4: Posture system
+    current_posture: str = "parry"      # parry, block, dodge, aggressive
+    # Rev 4: Armed posture riders (max 2)
+    armed_posture_riders: List[Dict[str, Any]] = field(default_factory=list)
+    # Rev 4: Binary flags
+    hidden: bool = False
+    grappled: bool = False
+    # Rev 4: Pool mechanics
+    pool: int = 0                       # current pool
+    pool_max: int = 6                   # effective pool max (base - armed count)
+    base_pool_max: int = 6              # 3 + tier
+    brace_uses: int = 3                 # resets to 3 at combat start
+    # Rev 4: Scene mode tracking
+    scene_mode_uses: List[str] = field(default_factory=list)
 
     def get_affinity(self, damage_type: str) -> str:
         return self.affinities.get(damage_type, "neutral")
