@@ -25,12 +25,24 @@ class Species(str, Enum):
 
 
 class PowerCategory(str, Enum):
-    PHYSICAL_KINETIC = "physical_kinetic"
-    PERCEPTUAL_MENTAL = "perceptual_mental"
-    MATTER_ENERGY = "matter_energy"
-    BIOLOGICAL_VITAL = "biological_vital"
-    TEMPORAL_SPATIAL = "temporal_spatial"
-    ELDRITCH_CORRUPTIVE = "eldritch_corruptive"
+    SOMATIC = "somatic"
+    COGNITIVE = "cognitive"
+    MATERIAL = "material"
+    KINETIC = "kinetic"
+    SPATIAL = "spatial"
+    PARADOXIC = "paradoxic"
+
+
+# Migration mapping from v1 categories to v2 broads
+CATEGORY_MAP_V1_TO_V2 = {
+    "physical_kinetic": "kinetic",
+    "perceptual_mental": "cognitive",
+    "matter_energy": "material",
+    "biological_vital": "somatic",
+    "temporal_spatial": "spatial",
+    "eldritch_corruptive": "paradoxic",
+    "auratic": "cognitive",  # merged into cognitive
+}
 
 
 class ConditionTrack(str, Enum):

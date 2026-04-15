@@ -79,13 +79,13 @@ class SuccessTier(str, Enum):
 
 @dataclass(frozen=True)
 class CheckResult:
-    """Immutable result of a resolved check.
+    """Immutable result of a resolved check (Rev 4: dual-die sum).
 
     Attributes:
         d1:        Raw value of the first (primary attribute) die.
         d2:        Raw value of the second (secondary attribute) die.
-        high:      max(d1, d2) -- the base value before modifiers.
-        total:     high + clamped sum of modifiers.
+        high:      max(d1, d2) -- kept for backward compat, but total now uses sum.
+        total:     d1 + d2 + clamped modifiers.
         tn:        Target Number the check was rolled against.
         margin:    total - tn.
         tier:      The classified SuccessTier value (as a string for
@@ -138,44 +138,41 @@ def roll_die(size: int, rng: random.Random) -> int:
 # Success-tier classification
 # ---------------------------------------------------------------------------
 
-def classify_result(d1: int, d2: int, high: int, total: int, tn: int) -> SuccessTier:
-    """Classify a resolved check into a :class:`SuccessTier`.
+def classify_result(d1: int, d2: int, total: int, tn: int,
+                    die1_max: int = 0, die2_max: int = 0) -> SuccessTier:
+    """Classify a resolved check into a :class:`SuccessTier` (Rev 4).
 
     The classification rules (applied in priority order):
 
-    1. **Fumble** -- both dice show 1 regardless of total, *or*
-       total < TN - 5.
-    2. **Critical** -- both dice show the same value, that value >= 6,
-       *and* total >= TN.
-    3. **Full Success** -- total >= TN + 3.
-    4. **Marginal Success** -- TN <= total < TN + 3.
-    5. **Partial Failure** -- TN - 3 <= total < TN.
-    6. **Failure** -- TN - 5 <= total < TN - 3.
-    7. **Fumble** (fallthrough) -- total < TN - 5.
+    1. **Fumble** -- both dice show 1 (regardless of total).
+    2. **Auto-Critical** -- both dice show their max face value.
+    3. **Critical** -- total >= TN + 5.
+    4. **Full Success** -- TN < total < TN + 5 (i.e., TN+1 to TN+4).
+    5. **Marginal** -- total == TN.
+    6. **Partial Failure** -- total == TN - 1.
+    7. **Failure** -- total < TN - 1.
 
-    Note: the double-1 fumble check takes priority even over what would
-    otherwise be a higher tier.  The critical doubles check takes priority
-    over Full/Marginal but *not* over the double-1 fumble.
+    Note: double-1 fumble takes priority over everything.
+    Auto-critical (both max) takes priority over band classification.
     """
     # Priority 1: double-ones is always a fumble.
     if d1 == 1 and d2 == 1:
         return SuccessTier.FUMBLE
 
-    # Priority 2: critical doubles (both dice same, value >= 6, total >= TN).
-    if d1 == d2 and d1 >= 6 and total >= tn:
+    # Priority 2: both dice at max face value → auto-critical.
+    if die1_max > 0 and die2_max > 0 and d1 == die1_max and d2 == die2_max:
         return SuccessTier.CRITICAL
 
-    # Standard band classification.
-    margin = total - tn
-    if margin >= 3:
+    # Standard band classification per Rev 4 §3.2.
+    if total >= tn + 5:
+        return SuccessTier.CRITICAL
+    if total > tn:
         return SuccessTier.FULL
-    if margin >= 0:
+    if total == tn:
         return SuccessTier.MARGINAL
-    if margin >= -3:
+    if total == tn - 1:
         return SuccessTier.PARTIAL_FAILURE
-    if margin >= -5:
-        return SuccessTier.FAILURE
-    return SuccessTier.FUMBLE
+    return SuccessTier.FAILURE
 
 
 # ---------------------------------------------------------------------------
@@ -189,19 +186,19 @@ def roll_check(
     tn: int,
     rng: random.Random,
 ) -> CheckResult:
-    """Roll a full check and return a :class:`CheckResult`.
+    """Roll a full check and return a :class:`CheckResult` (Rev 4: dual-die sum).
 
     Mechanics:
         1. Roll both attribute dice.
-        2. Take the higher value as ``high``.
+        2. Sum both dice: ``dice_sum = d1 + d2``.
         3. Sum all *modifiers* and clamp the total modifier to [-6, +6].
-        4. ``total = high + clamped_modifier``.
+        4. ``total = dice_sum + clamped_modifier``.
         5. Classify the result into a success tier.
 
     Args:
         primary_die:   Die size for the primary attribute (e.g. 8 for d8).
         secondary_die: Die size for the secondary attribute.
-        modifiers:     Sequence of signed integers applied to ``high``.
+        modifiers:     Sequence of signed integers applied to dice sum.
         tn:            Target Number.
         rng:           Deterministic random source.
 
@@ -210,15 +207,17 @@ def roll_check(
     """
     d1 = roll_die(primary_die, rng)
     d2 = roll_die(secondary_die, rng)
-    high = max(d1, d2)
+    high = max(d1, d2)  # kept for backward compat
 
     # Clamp total modifier.
     raw_mod = sum(modifiers)
     clamped_mod = max(MODIFIER_CLAMP_MIN, min(MODIFIER_CLAMP_MAX, raw_mod))
 
-    total = high + clamped_mod
+    # Rev 4: total = d1 + d2 + mods (was: max(d1,d2) + mods)
+    total = d1 + d2 + clamped_mod
     margin = total - tn
-    tier = classify_result(d1, d2, high, total, tn)
+    tier = classify_result(d1, d2, total, tn,
+                           die1_max=primary_die, die2_max=secondary_die)
 
     return CheckResult(
         d1=d1,

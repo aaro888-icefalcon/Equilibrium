@@ -1,0 +1,18 @@
+COMBAT MIGRATION + POWER LIBRARY — Progress Tracker
+====================================================
+Baseline: 911 tests pass, 3 skipped. Branch: claude/combat-migration-power-library-Z45WO
+
+STATUS: COMPLETE — All 12 commits done. 981 tests pass. 200 powers imported.
+
+COMPLETED:
+- [x] Commit 1: MIGRATION_NOTES.md + schema enums
+- [x] Commit 2: PowerV2 dataclasses
+- [x] Commit 3: DamageType 7→6 broads + affinities
+- [x] Commit 4: CombatantRecord augmented + dual-die sum resolution
+- [x] Commit 5: postures.py + pool.py with unit tests
+- [x] Commit 6-7: Verb overhaul + posture riders + rider combination
+- [x] Commit 8: AI profile updates
+- [x] Commit 9: Statblock parser + 200-power JSON library
+- [x] Commit 10: Narrator payloads
+- [x] Commit 11: All test fixes (981 pass)
+- [x] Commit 12: Run-test transcript + MIGRATION_NOTES finalized + pushed

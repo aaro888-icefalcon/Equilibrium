@@ -15,6 +15,13 @@ def build_combat_turn_payload(
     enemies_remaining: int = 0,
     player_condition: Dict[str, Any] | None = None,
     register: str = "action",
+    # Rev 4 additions
+    current_postures: Dict[str, str] | None = None,
+    armed_posture_riders: Dict[str, List[Dict[str, str]]] | None = None,
+    hidden_combatants: List[str] | None = None,
+    declared_action: Dict[str, Any] | None = None,
+    passive_effects_triggered: List[Dict[str, Any]] | None = None,
+    pool_state: Dict[str, Dict[str, int]] | None = None,
 ) -> Dict[str, Any]:
     return {
         "scene_type": "combat_turn",
@@ -27,6 +34,13 @@ def build_combat_turn_payload(
         "status_applied": status_applied,
         "enemies_remaining": enemies_remaining,
         "player_condition": player_condition or {},
+        # Rev 4 fields
+        "current_postures": current_postures or {},
+        "armed_posture_riders": armed_posture_riders or {},
+        "hidden_combatants": hidden_combatants or [],
+        "declared_action": declared_action or {},
+        "passive_effects_triggered": passive_effects_triggered or [],
+        "pool_state": pool_state or {},
     }
 
 

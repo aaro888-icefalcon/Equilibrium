@@ -1,4 +1,4 @@
-"""Unit tests for emergence.engine.combat.resolution."""
+"""Unit tests for emergence.engine.combat.resolution (Rev 4: dual-die sum)."""
 
 import random
 import unittest
@@ -46,45 +46,71 @@ class TestRollDie(unittest.TestCase):
 
 
 class TestClassifyResult(unittest.TestCase):
-    """Tests for classify_result()."""
+    """Tests for classify_result() — Rev 4 bands."""
 
     def test_double_ones_is_fumble(self):
-        tier = classify_result(1, 1, 1, 20, 10)
+        # Both dice = 1, regardless of total
+        tier = classify_result(1, 1, 2, 10)
         self.assertEqual(tier, SuccessTier.FUMBLE)
 
-    def test_critical_doubles(self):
-        # Both dice 8, total 8 >= TN 8
-        tier = classify_result(8, 8, 8, 8, 8)
+    def test_auto_crit_both_max(self):
+        # Both dice at max (d6: 6+6=12 vs TN 10)
+        tier = classify_result(6, 6, 12, 10, die1_max=6, die2_max=6)
+        self.assertEqual(tier, SuccessTier.CRITICAL)
+
+    def test_auto_crit_both_max_even_if_below_tn(self):
+        # Both dice at max (d4: 4+4=8 vs TN 10) — auto-crit overrides band
+        tier = classify_result(4, 4, 8, 10, die1_max=4, die2_max=4)
+        self.assertEqual(tier, SuccessTier.CRITICAL)
+
+    def test_critical_by_margin(self):
+        # total >= TN + 5: 15 vs TN 10
+        tier = classify_result(8, 7, 15, 10)
         self.assertEqual(tier, SuccessTier.CRITICAL)
 
     def test_full_success(self):
-        # total 15, TN 10 → margin +5 → Full
-        tier = classify_result(10, 5, 10, 15, 10)
+        # TN < total < TN+5: 13 vs TN 10
+        tier = classify_result(7, 6, 13, 10)
         self.assertEqual(tier, SuccessTier.FULL)
 
-    def test_marginal_success(self):
-        # total 11, TN 10 → margin +1 → Marginal
-        tier = classify_result(6, 5, 6, 11, 10)
+    def test_full_at_tn_plus_1(self):
+        # total = TN+1 → Full
+        tier = classify_result(6, 5, 11, 10)
+        self.assertEqual(tier, SuccessTier.FULL)
+
+    def test_full_at_tn_plus_4(self):
+        # total = TN+4 → Full (just under crit threshold)
+        tier = classify_result(8, 6, 14, 10)
+        self.assertEqual(tier, SuccessTier.FULL)
+
+    def test_marginal_at_tn(self):
+        # total == TN → Marginal
+        tier = classify_result(5, 5, 10, 10)
         self.assertEqual(tier, SuccessTier.MARGINAL)
 
-    def test_partial_failure(self):
-        # total 8, TN 10 → margin -2 → Partial Failure
-        tier = classify_result(5, 3, 5, 8, 10)
+    def test_partial_failure_at_tn_minus_1(self):
+        # total == TN-1 → Partial Failure
+        tier = classify_result(5, 4, 9, 10)
         self.assertEqual(tier, SuccessTier.PARTIAL_FAILURE)
 
-    def test_failure(self):
-        # total 6, TN 10 → margin -4 → Failure
-        tier = classify_result(4, 2, 4, 6, 10)
+    def test_failure_below_tn_minus_1(self):
+        # total < TN-1 → Failure
+        tier = classify_result(4, 3, 7, 10)
         self.assertEqual(tier, SuccessTier.FAILURE)
 
-    def test_deep_fumble(self):
-        # total 3, TN 10 → margin -7 → Fumble
-        tier = classify_result(2, 3, 3, 3, 10)
+    def test_deep_failure(self):
+        # total = 3, TN = 10 → Failure (not fumble — needs double-1s for that)
+        tier = classify_result(2, 1, 3, 10)
+        self.assertEqual(tier, SuccessTier.FAILURE)
+
+    def test_double_ones_trumps_everything(self):
+        # Even if somehow total >= TN, double-1s is still fumble
+        tier = classify_result(1, 1, 12, 10)  # hypothetical with mods
         self.assertEqual(tier, SuccessTier.FUMBLE)
 
 
 class TestRollCheck(unittest.TestCase):
-    """Tests for roll_check()."""
+    """Tests for roll_check() — Rev 4 dual-die sum."""
 
     def test_basic_check_returns_check_result(self):
         rng = random.Random(42)
@@ -93,17 +119,23 @@ class TestRollCheck(unittest.TestCase):
         self.assertEqual(result.tn, 10)
         self.assertEqual(result.margin, result.total - result.tn)
 
+    def test_total_is_sum_not_high(self):
+        """Verify total = d1 + d2 + mods, not max(d1,d2) + mods."""
+        rng = random.Random(42)
+        result = roll_check(8, 6, [0], 10, rng)
+        self.assertEqual(result.total, result.d1 + result.d2)
+
     def test_modifier_clamping(self):
         rng = random.Random(1)
         result = roll_check(6, 6, [10, 10], 10, rng)
-        # Max mod is +6, so total = high + 6
+        # Max mod is +6, so total = d1 + d2 + 6; max d1+d2 = 12
         self.assertLessEqual(result.total, 12 + 6)
 
     def test_negative_modifier_clamping(self):
         rng = random.Random(1)
         result = roll_check(6, 6, [-10, -10], 10, rng)
-        # Min mod is -6, so total = high - 6
-        self.assertGreaterEqual(result.total, 1 - 6)
+        # Min mod is -6, so total = d1 + d2 - 6; min d1+d2 = 2
+        self.assertGreaterEqual(result.total, 2 - 6)
 
     def test_deterministic(self):
         r1 = roll_check(8, 6, [1], 10, random.Random(77))
@@ -111,15 +143,16 @@ class TestRollCheck(unittest.TestCase):
         self.assertEqual(r1, r2)
 
     def test_monte_carlo_distribution(self):
-        """d8+d6 with +3 mod vs TN10: success rate should be roughly 20-70%."""
+        """d8+d6 with +3 mod vs TN10: success rate should be roughly 40-90%
+        (higher than old take-higher because sum gives higher totals)."""
         rng = random.Random(12345)
         successes = sum(
             1 for _ in range(10000)
             if roll_check(8, 6, [3], 10, rng).margin >= 0
         )
         rate = successes / 10000
-        self.assertGreater(rate, 0.15)
-        self.assertLess(rate, 0.75)
+        self.assertGreater(rate, 0.30)
+        self.assertLess(rate, 0.95)
 
 
 class TestTierGapModifier(unittest.TestCase):
