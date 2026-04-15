@@ -111,6 +111,9 @@ def build_parser() -> argparse.ArgumentParser:
     # step scene-finalize
     step_sub.add_parser("scene-finalize", help="Finalize character from session zero")
 
+    # step preamble
+    step_sub.add_parser("preamble", help="Generate opening narration after character creation")
+
     # step tick
     step_tick = step_sub.add_parser("tick", help="Advance world simulation")
     step_tick.add_argument("--days", type=int, default=1, help="Days to advance (default: 1)")

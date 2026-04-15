@@ -27,6 +27,7 @@ def dispatch_step(args: Any, save_root: str) -> Dict[str, Any]:
         "scene": step_scene,
         "scene-apply": step_scene_apply,
         "scene-finalize": step_scene_finalize,
+        "preamble": step_preamble,
         "tick": step_tick,
         "situation": step_situation,
         "resolve": step_resolve,
@@ -417,9 +418,68 @@ def step_scene_finalize(args: Any, save_root: str) -> Dict[str, Any]:
     return {
         "status": "ok",
         "mode": "SIM",
-        "message": "Character created. Entering simulation.",
+        "message": "Character created. Run 'step preamble' for opening narration.",
         "player": _player_summary(state["player"]),
         "character_sheet": state["player"],
+    }
+
+
+def step_preamble(args: Any, save_root: str) -> Dict[str, Any]:
+    """Generate the opening preamble narration after character creation."""
+    from emergence.engine.narrator.payloads import build_preamble_payload
+    from emergence.engine.schemas.world import Location, NPC
+
+    state = _load_full_state(save_root)
+
+    if not state["player"].get("name"):
+        return {"status": "error", "message": "No active character. Complete session zero first."}
+
+    # Find player location (same pattern as step_situation)
+    player_location_id = state["player"].get("current_location") or state["player"].get("home_region", "")
+
+    locations = {k: Location.from_dict(v) for k, v in state["locations"].items()}
+    npcs = {k: NPC.from_dict(v) for k, v in state["npcs"].items()}
+
+    location = locations.get(player_location_id)
+    if location is None and locations:
+        player_location_id = next(iter(locations))
+        location = locations[player_location_id]
+
+    location_name = getattr(location, "display_name", player_location_id) if location else "Unknown"
+    location_details = location.to_dict() if location else {}
+
+    # NPCs at player's location
+    npcs_present = [
+        getattr(npc, "name", npc_id)
+        for npc_id, npc in npcs.items()
+        if getattr(npc, "current_location", None) == player_location_id
+    ][:5]
+
+    # Faction standings from player data
+    faction_standings = state["player"].get("faction_standings", {})
+    if not faction_standings:
+        # Build from factions dict if player doesn't have standings yet
+        faction_standings = {
+            fid: fdata.get("player_standing", 0)
+            for fid, fdata in state["factions"].items()
+            if fdata.get("player_standing", 0) != 0
+        }
+
+    recent_events = []
+
+    payload = build_preamble_payload(
+        player=state["player"],
+        location_name=location_name,
+        location_details=location_details,
+        npcs_present=npcs_present,
+        faction_standings=faction_standings,
+        recent_events=recent_events,
+    )
+
+    return {
+        "status": "ok",
+        "mode": "SIM",
+        "narrator_payload": payload,
     }
 
 
