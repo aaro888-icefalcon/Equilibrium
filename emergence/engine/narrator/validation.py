@@ -61,13 +61,13 @@ def validate_narration(
 def _get_length_bounds(scene_type: str) -> tuple:
     """Return (min_words, max_words) for a scene type."""
     bounds = {
-        "combat_turn": (20, 120),
-        "scene_framing": (40, 180),
-        "situation_description": (50, 200),
-        "dialogue": (20, 150),
-        "character_creation_beat": (40, 180),
-        "transition": (20, 120),
-        "death_narration": (50, 200),
-        "time_skip": (40, 180),
+        "combat_turn": (25, 60),
+        "scene_framing": (60, 150),
+        "situation_description": (30, 80),
+        "dialogue": (20, 100),
+        "character_creation_beat": (80, 200),
+        "transition": (40, 100),
+        "death_narration": (60, 150),
+        "time_skip": (50, 150),
     }
     return bounds.get(scene_type, (20, 200))

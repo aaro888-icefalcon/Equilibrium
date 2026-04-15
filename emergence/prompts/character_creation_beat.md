@@ -5,5 +5,8 @@ Scene: {scene_id}
 Framing: {framing_text}
 Choices: {choices}
 
+## Format Contract
+80-200 words. Scene framing as prose, then choices exactly as listed.
+
 ## Instructions
-Present this scene in 60-120 words. Do not add choices beyond those listed.
+Do not add choices beyond those listed. Do not editorialize or rank the choices.

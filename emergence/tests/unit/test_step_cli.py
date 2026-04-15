@@ -101,10 +101,7 @@ class TestStepSceneApply(unittest.TestCase):
             self.assertEqual(result["status"], "ok")
             self.assertTrue(result["applied"])
             self.assertEqual(result["creation_summary"]["name"], "Test Runner")
-            # Note: creation_summary["age"] reads getattr(state, "age") which
-            # is None because CreationState stores the field as age_at_onset.
-            # This is expected behavior of the step CLI layer.
-            self.assertIsNone(result["creation_summary"]["age"])
+            self.assertEqual(result["creation_summary"]["age"], 30)
             self.assertEqual(result["next_scene"], 1)
 
     def test_apply_choice_scene_1(self):
@@ -144,7 +141,7 @@ class TestStepSceneFinalize(unittest.TestCase):
     def test_finalize_produces_character(self):
         with tempfile.TemporaryDirectory() as tmp:
             dispatch_step(_ns(step_action="init", force=False, seed=42), tmp)
-            # Walk through all 10 scenes
+            # Walk through all 8 scenes
             _apply_all_scenes(tmp)
             # Finalize
             result = dispatch_step(_ns(step_action="scene-finalize"), tmp)
@@ -156,7 +153,7 @@ class TestStepSceneFinalize(unittest.TestCase):
 
 
 class TestFullSessionZeroWalkthrough(unittest.TestCase):
-    """Full init -> 10 scenes -> finalize integration test."""
+    """Full init -> 8 scenes -> finalize integration test."""
 
     def test_walkthrough(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -166,7 +163,7 @@ class TestFullSessionZeroWalkthrough(unittest.TestCase):
             )
             self.assertEqual(init_result["status"], "ok")
 
-            # 2. Walk all 10 scenes
+            # 2. Walk all 8 scenes
             _apply_all_scenes(tmp)
 
             # 3. Finalize
@@ -207,6 +204,29 @@ class TestStepSave(unittest.TestCase):
             self.assertEqual(result["status"], "error")
 
 
+class TestStepPreamble(unittest.TestCase):
+    """step preamble generates opening narration payload."""
+
+    def test_preamble_after_finalize(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            dispatch_step(_ns(step_action="init", force=False, seed=42), tmp)
+            _apply_all_scenes(tmp)
+            dispatch_step(_ns(step_action="scene-finalize"), tmp)
+            result = dispatch_step(_ns(step_action="preamble"), tmp)
+            self.assertEqual(result["status"], "ok")
+            self.assertEqual(result["mode"], "SIM")
+            payload = result["narrator_payload"]
+            self.assertEqual(payload["scene_type"], "scene_framing")
+            self.assertTrue(payload["preamble"])
+            self.assertIn("character_identity", payload)
+            self.assertTrue(len(payload["character_identity"]["name"]) > 0)
+
+    def test_preamble_without_character_errors(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            result = dispatch_step(_ns(step_action="preamble"), tmp)
+            self.assertEqual(result["status"], "error")
+
+
 class TestDispatchUnknownAction(unittest.TestCase):
     """dispatch_step handles unknown step actions gracefully."""
 
@@ -222,7 +242,7 @@ class TestDispatchUnknownAction(unittest.TestCase):
 # ---------------------------------------------------------------------------
 
 def _apply_all_scenes(save_root: str) -> None:
-    """Walk through all 10 session zero scenes with deterministic inputs."""
+    """Walk through all 8 v2 session zero scenes with deterministic inputs."""
     # Scene 0: text input (name + age)
     dispatch_step(
         _ns(
@@ -234,8 +254,8 @@ def _apply_all_scenes(save_root: str) -> None:
         ),
         save_root,
     )
-    # Scenes 1-9: choice-based, always pick index 0
-    for i in range(1, 10):
+    # Scenes 1-7: choice-based, always pick index 0
+    for i in range(1, 8):
         dispatch_step(
             _ns(
                 step_action="scene-apply",

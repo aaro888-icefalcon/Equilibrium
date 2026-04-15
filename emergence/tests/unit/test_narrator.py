@@ -14,6 +14,7 @@ from emergence.engine.narrator.payloads import (
     build_character_creation_payload,
     build_death_payload,
     build_dialogue_payload,
+    build_preamble_payload,
     build_scene_framing_payload,
     build_situation_payload,
     build_time_skip_payload,
@@ -136,6 +137,45 @@ class TestPayloadBuilders(unittest.TestCase):
             world_changes=["Bourse expanded"],
         )
         self.assertEqual(p["scene_type"], "time_skip")
+
+    def test_preamble_payload(self):
+        player = {
+            "name": "Marisol Reyes", "age": 30, "species": "human",
+            "tier": 2, "powers": [{"id": "kinetic_push"}],
+            "skills": {"first_aid": 3}, "relationships": [],
+            "goals": ["Find my brother"],
+        }
+        p = build_preamble_payload(
+            player=player,
+            location_name="Yonkers",
+            location_details={"type": "settlement"},
+            npcs_present=["Obi"],
+            faction_standings={"yonkers_compact": 1},
+            recent_events=["Wretch sighting"],
+        )
+        self.assertEqual(p["scene_type"], "scene_framing")
+        self.assertTrue(p["preamble"])
+        self.assertEqual(p["character_identity"]["name"], "Marisol Reyes")
+        self.assertIn("output_target", p)
+        self.assertIn("constraints", p)
+        self.assertIn("format_instructions", p)
+        self.assertEqual(p["output_target"]["min_words"], 150)
+
+    def test_all_payloads_have_output_target(self):
+        """Every payload builder should include output_target and constraints."""
+        payloads = [
+            build_combat_turn_payload(1, "A", "Attack", "hit"),
+            build_scene_framing_payload("s1", "Loc", "dawn", [], []),
+            build_situation_payload("sit1", "desc", [], "calm", "Loc"),
+            build_dialogue_payload("NPC", "voice", "topic", 0, []),
+            build_character_creation_payload("sz0", "text", []),
+            build_transition_payload("A", "B", "1 day", []),
+            build_death_payload("X", "age", "Home", 70, []),
+            build_time_skip_payload("1 month", [], []),
+        ]
+        for p in payloads:
+            self.assertIn("output_target", p, f"Missing output_target in {p['scene_type']}")
+            self.assertIn("constraints", p, f"Missing constraints in {p['scene_type']}")
 
 
 class TestPrompts(unittest.TestCase):

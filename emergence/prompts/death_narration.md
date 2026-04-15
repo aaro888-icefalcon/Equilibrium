@@ -5,5 +5,8 @@ Character: {character_name}, age {age}.
 Cause: {cause}. Location: {location}.
 Legacy: {legacy}
 
+## Format Contract
+60-150 words. Prose only. Focus on legacy, not gore. No heroic framing. No consolation.
+
 ## Instructions
-Write a death narration in 80-150 words. Be respectful. Focus on what they meant, not how they ended.
+Focus on who they were and what they left behind. What happened, happened.

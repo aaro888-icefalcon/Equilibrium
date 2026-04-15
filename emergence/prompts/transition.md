@@ -5,5 +5,8 @@ From: {from_location}. To: {to_location}.
 Travel time: {travel_time}.
 Hazards: {hazards}
 
+## Format Contract
+40-100 words. Prose only. Sensory detail — terrain, weather, what the character sees and hears.
+
 ## Instructions
-Narrate the journey in 40-80 words.
+Do not invent encounters not in the hazards list.

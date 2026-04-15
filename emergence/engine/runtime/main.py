@@ -239,7 +239,13 @@ def main_session_loop(state: GameState) -> int:
 
 
 def _make_all_scenes() -> list:
-    """Assemble the 10 session zero scenes in order."""
+    """Assemble the 8 v2 session zero scenarios."""
+    from emergence.engine.character_creation.scenarios import make_v2_scenes
+    return make_v2_scenes()
+
+
+def _make_v1_scenes() -> list:
+    """Assemble the original 10 session zero scenes (v1, for test compat)."""
     from emergence.engine.character_creation.scenes import (
         OpeningScene,
         OccupationScene,

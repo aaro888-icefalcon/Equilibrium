@@ -5,5 +5,8 @@ Duration: {duration}.
 Events: {events_summary}
 World changes: {world_changes}
 
+## Format Contract
+50-150 words. Prose only. Concrete changes, not mechanical lists.
+
 ## Instructions
-Summarize the passage of time in 60-120 words.
+Summarize through what shifted, what remained, what the character noticed.

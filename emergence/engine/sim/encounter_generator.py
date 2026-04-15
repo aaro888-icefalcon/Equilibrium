@@ -25,6 +25,22 @@ from emergence.engine.schemas.encounter import (
 )
 
 
+def _extract_player_heat(player: Dict[str, Any]) -> int:
+    """Extract a numeric heat value from the player dict.
+
+    Handles multiple heat dict formats:
+      - int/float: returned directly
+      - {"current": N, "faction_modifiers": {...}}  (character factory)
+      - {"total": N}  (combat outcome)
+      - {"total": N, "permanent": N, "decayable": N}  (merged)
+    """
+    heat_raw = player.get("heat", 0)
+    if isinstance(heat_raw, dict):
+        val = heat_raw.get("current", heat_raw.get("total", 0))
+        return val if isinstance(val, (int, float)) else 0
+    return heat_raw if isinstance(heat_raw, (int, float)) else 0
+
+
 # ---------------------------------------------------------------------------
 # Enemy templates by register
 # ---------------------------------------------------------------------------
@@ -116,7 +132,7 @@ class EncounterGenerator:
         }
         world_ctx = WorldContext(
             recent_events=situation.recent_events[:5],
-            heat_levels={"player": player.get("heat", 0)},
+            heat_levels={"player": _extract_player_heat(player)},
             clock_states=clock_states,
         )
 
