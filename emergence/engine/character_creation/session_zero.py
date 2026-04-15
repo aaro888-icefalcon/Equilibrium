@@ -99,6 +99,13 @@ class Scene:
     scene_id: str = ""
     register: str = "standard"
 
+    def prepare(self, state: CreationState, rng: _random.Random) -> None:
+        """Pre-compute scene data (NPC generation, template filling).
+
+        Called before get_framing() and get_choices() so that generated
+        names can appear in framing text and choice descriptions.
+        """
+
     def get_framing(self, state: CreationState) -> str:
         """Return the narrator framing text."""
         return ""
@@ -154,6 +161,9 @@ class SessionZero:
         state = CreationState(seed=rng.getrandbits(64))
 
         for scene in self.scenes:
+            # Pre-compute scene data (NPC generation, template filling)
+            scene.prepare(state, rng)
+
             # Narrate framing
             framing = scene.get_framing(state)
             if framing:
@@ -167,10 +177,10 @@ class SessionZero:
             # Handle text input if needed
             if scene.needs_text_input():
                 text_inputs = {}
-                if "opening" in scene.scene_id.lower() or scene.scene_id == "sz_0":
+                if "opening" in scene.scene_id.lower() or scene.scene_id in ("sz_0", "sz_v2_identity"):
                     name = input_source.get_text("Tell me your name.")
                     age_str = input_source.get_text(
-                        "Tell me how old you were on the day everything stopped."
+                        "Tell me your age on the day everything stopped."
                     )
                     text_inputs["name"] = name
                     text_inputs["age"] = age_str

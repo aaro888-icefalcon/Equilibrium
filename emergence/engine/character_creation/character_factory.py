@@ -90,12 +90,20 @@ class CreationState:
     # Narrative tags
     narrative_tags: List[str] = dataclasses.field(default_factory=list)
 
+    # Pre-onset context
+    onset_circumstance: str = ""
+    temperament: str = ""
+
+    # NPCs generated during session zero scenes
+    generated_npcs: List[Dict[str, Any]] = dataclasses.field(default_factory=list)
+
 
 class CharacterFactory:
     """Applies scene results and finalizes the character sheet."""
 
     BASE_ATTRIBUTE = 6  # d6 default
     MAX_SESSION_ZERO_ATTRIBUTE = 10  # d10 cap during session zero
+    MAX_SESSION_ZERO_SKILL = 6  # cap per skill during session zero
 
     def apply_scene_result(
         self,
@@ -117,9 +125,12 @@ class CharacterFactory:
         for attr, delta in choice_data.get("attribute_deltas", {}).items():
             state.attribute_deltas[attr] = state.attribute_deltas.get(attr, 0) + delta
 
-        # Skills
+        # Skills (additive across scenes, capped)
         for skill, level in choice_data.get("skills", {}).items():
-            state.skills[skill] = max(state.skills.get(skill, 0), level)
+            state.skills[skill] = min(
+                self.MAX_SESSION_ZERO_SKILL,
+                state.skills.get(skill, 0) + level,
+            )
 
         # Resources
         for resource, amount in choice_data.get("resources", {}).items():
@@ -190,6 +201,18 @@ class CharacterFactory:
         for item in choice_data.get("inventory", []):
             state.inventory.append(item)
 
+        # Generated NPCs (from specific year-one scenarios)
+        for npc in choice_data.get("generated_npcs", []):
+            state.generated_npcs.append(npc)
+
+        # Onset circumstance
+        if "onset_circumstance" in choice_data:
+            state.onset_circumstance = choice_data["onset_circumstance"]
+
+        # Temperament
+        if "temperament" in choice_data:
+            state.temperament = choice_data["temperament"]
+
         # Narrative tags
         if "narrative_tag" in choice_data:
             state.narrative_tags.append(choice_data["narrative_tag"])
@@ -230,7 +253,7 @@ class CharacterFactory:
             "social": state.condition_track_maxes.get("social", 5),
         }
 
-        # Build relationships
+        # Build relationships (from both explicit relationships and generated NPCs)
         relationships = {}
         for npc_id, rel_data in state.relationships.items():
             relationships[npc_id] = RelationshipState(
@@ -238,6 +261,16 @@ class CharacterFactory:
                 current_state=rel_data.get("current_state", "neutral"),
                 trust=rel_data.get("trust", 0),
             )
+
+        # Merge generated NPCs into relationships
+        for npc in state.generated_npcs:
+            npc_id = npc.get("npc_id", f"npc-gen-{len(relationships)}")
+            if npc_id not in relationships:
+                relationships[npc_id] = RelationshipState(
+                    standing=npc.get("standing", 0),
+                    current_state=npc.get("state", "alive_present"),
+                    trust=max(0, npc.get("standing", 0)),
+                )
 
         # Build goals
         goals = []

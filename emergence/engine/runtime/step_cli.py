@@ -253,6 +253,9 @@ def step_scene(args: Any, save_root: str) -> Dict[str, Any]:
 
     creation_state = CreationState(**(sz_data.get("creation_state", {})))
 
+    rng = _get_rng(args)
+    scene.prepare(creation_state, rng)
+
     framing = scene.get_framing(creation_state)
     choices = scene.get_choices(creation_state)
     needs_text = scene.needs_text_input()
@@ -315,6 +318,8 @@ def step_scene_apply(args: Any, save_root: str) -> Dict[str, Any]:
     creation_dict = sz_data.get("creation_state", {})
     creation_state = CreationState(**creation_dict)
     factory = CharacterFactory()
+
+    scene.prepare(creation_state, rng)
 
     # Apply text inputs if provided
     if input_texts_raw:
