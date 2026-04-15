@@ -28,9 +28,11 @@ from emergence.engine.combat.verbs import (
     resolve_assess,
     resolve_maneuver,
     resolve_parley,
-    resolve_disengage,
     resolve_finisher,
-    resolve_defend,
+    resolve_brace,
+    resolve_posture_change,
+    resolve_utility,
+    resolve_power_minor,
 )
 from emergence.engine.combat.statuses import StatusEngine, StatusName, ActiveStatus
 from emergence.engine.combat.ai import AiDecisionEngine, CombatantState, BattlefieldState
@@ -303,6 +305,7 @@ class EncounterRunner:
         power_id: Optional[str],
         state: CombatState,
         rng: random.Random,
+        extra_data: Optional[str] = None,
     ) -> VerbResult:
         """Route a verb string to the correct resolver and log the result."""
         if verb == "Attack":
@@ -315,12 +318,16 @@ class EncounterRunner:
             result = resolve_maneuver(actor_id, state, rng, target_id=target_id)
         elif verb == "Parley":
             result = resolve_parley(actor_id, target_id or "", state, rng)
-        elif verb == "Disengage":
-            result = resolve_disengage(actor_id, state, rng)
         elif verb == "Finisher":
             result = resolve_finisher(actor_id, target_id or "", state, rng)
-        elif verb == "Defend":
-            result = resolve_defend(actor_id, "", 0, "full", state, rng)
+        elif verb == "Brace":
+            result = resolve_brace(actor_id, state, rng)
+        elif verb == "Posture_Change":
+            result = resolve_posture_change(actor_id, extra_data or "parry", state, rng)
+        elif verb == "Utility":
+            result = resolve_utility(actor_id, extra_data or "brief_assess", state, rng, target_id=target_id)
+        elif verb == "Power_Minor":
+            result = resolve_power_minor(actor_id, target_id or "", extra_data or "", "cast_1", state, rng)
         else:
             result = VerbResult(
                 verb=verb, actor_id=actor_id, target_id=target_id,
@@ -357,8 +364,8 @@ class EncounterRunner:
         """Execute the player's turn with a simple auto-strategy."""
         enemies = state.get_enemies_of("player")
         if not enemies:
-            if can_major:
-                self._dispatch_action(cid, "Defend", None, None, state, rng)
+            if can_minor:
+                self._dispatch_action(cid, "Brace", None, None, state, rng)
             return
 
         # Minor action: Assess first enemy
@@ -438,17 +445,18 @@ class EncounterRunner:
         if not enemies_alive:
             return "victory"
 
-        # Escape: player successfully disengaged this round
-        disengage_log = [
+        # Escape: player successfully repositioned (disengage absorbed into maneuver)
+        escape_log = [
             e for e in state.action_log
             if e.get("round") == round_num
-            and e.get("verb") == "Disengage"
+            and e.get("verb") == "Maneuver"
             and e.get("actor") in [
                 cid for cid, c in state.combatants.items() if c.side == "player"
             ]
             and e.get("tier") in ("critical", "full")
+            and e.get("sub_type") == "reposition"
         ]
-        if disengage_log:
+        if escape_log:
             return "escape"
 
         # Spec win conditions
