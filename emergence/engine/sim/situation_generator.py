@@ -187,7 +187,11 @@ class SituationGenerator:
         tick_ts = world_state.get("tick_timestamp", "")
         heat_raw = player.get("heat", 0)
         if isinstance(heat_raw, dict):
-            player_heat = heat_raw.get("current", 0)
+            # Support multiple heat dict formats:
+            #   {"current": N, "faction_modifiers": {...}}  (character factory)
+            #   {"total": N}  (combat outcome)
+            #   {"total": N, "permanent": N, "decayable": N}  (merged)
+            player_heat = heat_raw.get("current", heat_raw.get("total", 0))
             if not isinstance(player_heat, (int, float)):
                 player_heat = 0
         else:
