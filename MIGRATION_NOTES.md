@@ -1,6 +1,6 @@
 # Emergence Combat Migration Notes — Rev 4
 
-## Status: IN PROGRESS
+## Status: COMPLETE — 981 tests pass, 200 powers imported
 
 ---
 
@@ -92,13 +92,19 @@
 
 ## 5. [NEEDS TUNING]
 
-*(Populated during implementation)*
+- Dual-die sum produces higher totals than take-higher; combat resolves faster. TNs may need upward adjustment.
+- Paradoxic capstone damage values (4-6 range) may be too swingy with new dice.
+- Brace cap of 3 per combat may be too generous with new pool economy.
+- Strike riders at 1 pool + 1 bonus damage may underperform relative to raw attacks.
 
 ---
 
 ## 6. [AMBIGUOUS]
 
-*(Populated during statblock parsing)*
+- Statblock capstone section has 1 authored option per power (spec says 2). Parser duplicates the authored option for both slots.
+- Enhanced rider section has 1 authored variant (spec says 3). Parser duplicates for all 3 slots.
+- Some rider `restriction:` fields reference attack/parley sub-types but parser stores them as raw text in restrictions dict.
+- RIDER_C type inference: when the header line says `strike | restriction: Heavy attacks only | 1p`, the parser correctly identifies type as "strike" but stores restrictions as raw.
 
 ---
 
