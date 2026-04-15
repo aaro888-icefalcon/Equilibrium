@@ -20,8 +20,9 @@ PROMPT_TEMPLATES = {
         "Damage dealt: {damage_dealt}. Status applied: {status_applied}.\n"
         "Enemies remaining: {enemies_remaining}.\n"
         "Player condition: {player_condition}\n\n"
-        "Narrate this combat moment in 40-80 words. "
-        "Do not invent powers not in the payload. "
+        "FORMAT: 25-60 words. Prose only. No menu, no choices. "
+        "Damage and status effects are rendered by the runtime — narrate the "
+        "moment, not the mechanics. Do not invent powers not in the payload. "
         "Do not resolve outcomes the player did not choose."
     ),
 
@@ -32,9 +33,9 @@ PROMPT_TEMPLATES = {
         "NPCs present: {npcs_present}\n"
         "Recent events: {recent_events}\n"
         "Tension: {tension_level}\n\n"
-        "Frame this scene in 60-120 words. "
-        "Ground details in the payload. "
-        "Do not introduce characters not listed."
+        "FORMAT: 60-150 words. Prose only. Ground every detail in the "
+        "payload. Do not introduce characters not listed. Establish place, "
+        "time, and tension through sensory detail, not exposition."
     ),
 
     "situation_description": (
@@ -43,8 +44,9 @@ PROMPT_TEMPLATES = {
         "Location: {location}. Tension: {tension_level}.\n"
         "Description: {description}\n"
         "Choices available: {choices}\n\n"
-        "Describe the situation in 80-150 words. "
-        "Present the choices clearly."
+        "FORMAT: 30-80 words of prose describing the situation, followed by "
+        "the numbered choices exactly as listed in the payload. Do not "
+        "editorialize the choices. Do not add choices beyond those listed."
     ),
 
     "dialogue": (
@@ -53,8 +55,9 @@ PROMPT_TEMPLATES = {
         "NPC: {npc_name}. Voice style: {npc_voice}.\n"
         "Topic: {topic}. Standing with player: {standing}.\n"
         "Player options: {player_options}\n\n"
-        "Write the NPC's dialogue in 40-100 words using their voice style. "
-        "Do not speak for the player."
+        "FORMAT: 20-100 words. The NPC speaks in their voice — match the "
+        "voice style exactly. Do not invent intent or information not in the "
+        "payload. Do not speak for the player character."
     ),
 
     "character_creation_beat": (
@@ -63,8 +66,9 @@ PROMPT_TEMPLATES = {
         "Scene: {scene_id}\n"
         "Framing: {framing_text}\n"
         "Choices: {choices}\n\n"
-        "Present this scene in 60-120 words. "
-        "Do not add choices beyond those listed."
+        "FORMAT: 80-200 words. Present the scene framing as prose, then "
+        "the choices exactly as listed. Do not add choices beyond those "
+        "listed. Do not editorialize or rank the choices."
     ),
 
     "transition": (
@@ -73,7 +77,9 @@ PROMPT_TEMPLATES = {
         "From: {from_location}. To: {to_location}.\n"
         "Travel time: {travel_time}.\n"
         "Hazards: {hazards}\n\n"
-        "Narrate the journey in 40-80 words."
+        "FORMAT: 40-100 words. Prose only. Narrate the journey through "
+        "sensory detail — terrain, weather, what the character sees and "
+        "hears. Do not invent encounters not in the hazards list."
     ),
 
     "death_narration": (
@@ -82,8 +88,9 @@ PROMPT_TEMPLATES = {
         "Character: {character_name}, age {age}.\n"
         "Cause: {cause}. Location: {location}.\n"
         "Legacy: {legacy}\n\n"
-        "Write a death narration in 80-150 words. "
-        "Be respectful. Focus on what they meant, not how they ended."
+        "FORMAT: 60-150 words. Prose only. Focus on who they were and what "
+        "they left behind, not the mechanics of dying. No heroic framing. "
+        "No consolation. What happened, happened."
     ),
 
     "time_skip": (
@@ -92,7 +99,9 @@ PROMPT_TEMPLATES = {
         "Duration: {duration}.\n"
         "Events: {events_summary}\n"
         "World changes: {world_changes}\n\n"
-        "Summarize the passage of time in 60-120 words."
+        "FORMAT: 50-150 words. Prose only. Summarize the passage of time "
+        "through concrete changes — what shifted, what remained, what the "
+        "character noticed. Do not list events mechanically."
     ),
 }
 
