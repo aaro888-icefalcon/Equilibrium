@@ -21,24 +21,34 @@ from emergence.engine.schemas.character import ConditionTrack
 # ---------------------------------------------------------------------------
 
 class DamageType(str, Enum):
-    """Seven damage types, one-to-one with power categories."""
-    PHYSICAL_KINETIC = "physical_kinetic"
-    PERCEPTUAL_MENTAL = "perceptual_mental"
-    MATTER_ENERGY = "matter_energy"
-    BIOLOGICAL_VITAL = "biological_vital"
-    AURATIC = "auratic"
-    TEMPORAL_SPATIAL = "temporal_spatial"
-    ELDRITCH_CORRUPTIVE = "eldritch_corruptive"
+    """Six damage types, one per power broad (Rev 4)."""
+    KINETIC = "kinetic"
+    COGNITIVE = "cognitive"
+    MATERIAL = "material"
+    SOMATIC = "somatic"
+    SPATIAL = "spatial"
+    PARADOXIC = "paradoxic"
 
 
 # Short aliases used in profile definitions.
-PK = DamageType.PHYSICAL_KINETIC
-PM = DamageType.PERCEPTUAL_MENTAL
-ME = DamageType.MATTER_ENERGY
-BV = DamageType.BIOLOGICAL_VITAL
-AU = DamageType.AURATIC
-TS = DamageType.TEMPORAL_SPATIAL
-EC = DamageType.ELDRITCH_CORRUPTIVE
+KI = DamageType.KINETIC
+CO = DamageType.COGNITIVE
+MA = DamageType.MATERIAL
+SO = DamageType.SOMATIC
+SP = DamageType.SPATIAL
+PA = DamageType.PARADOXIC
+
+
+# Migration mapping from v1 damage types to v2
+DAMAGE_TYPE_MAP_V1_TO_V2 = {
+    "physical_kinetic": "kinetic",
+    "perceptual_mental": "cognitive",
+    "matter_energy": "material",
+    "biological_vital": "somatic",
+    "auratic": "cognitive",  # merged
+    "temporal_spatial": "spatial",
+    "eldritch_corruptive": "paradoxic",
+}
 
 
 # ---------------------------------------------------------------------------
@@ -75,52 +85,49 @@ AFFINITY_PROFILES: Dict[str, Dict[str, str]] = {
     "standard_human": _neutral_profile(),
 
     "elite_human": _profile(
-        physical_kinetic=AffinityState.RESISTANT.value,
-        eldritch_corruptive=AffinityState.VULNERABLE.value,
+        kinetic=AffinityState.RESISTANT.value,
+        paradoxic=AffinityState.VULNERABLE.value,
     ),
 
     "wretch": _profile(
-        physical_kinetic=AffinityState.RESISTANT.value,
-        biological_vital=AffinityState.VULNERABLE.value,
-        eldritch_corruptive=AffinityState.VULNERABLE.value,
+        kinetic=AffinityState.RESISTANT.value,
+        somatic=AffinityState.VULNERABLE.value,
+        paradoxic=AffinityState.VULNERABLE.value,
     ),
 
     "hunter": _profile(
-        perceptual_mental=AffinityState.RESISTANT.value,
-        eldritch_corruptive=AffinityState.VULNERABLE.value,
+        cognitive=AffinityState.RESISTANT.value,
+        paradoxic=AffinityState.VULNERABLE.value,
     ),
 
     "aberrant": _profile(
-        physical_kinetic=AffinityState.RESISTANT.value,
-        perceptual_mental=AffinityState.RESISTANT.value,
-        biological_vital=AffinityState.VULNERABLE.value,
-        auratic=AffinityState.RESISTANT.value,
-        temporal_spatial=AffinityState.RESISTANT.value,
+        kinetic=AffinityState.RESISTANT.value,
+        cognitive=AffinityState.RESISTANT.value,
+        somatic=AffinityState.VULNERABLE.value,
+        spatial=AffinityState.RESISTANT.value,
     ),
 
     "shade": _profile(
-        physical_kinetic=AffinityState.IMMUNE.value,
-        perceptual_mental=AffinityState.VULNERABLE.value,
-        matter_energy=AffinityState.RESISTANT.value,
-        biological_vital=AffinityState.IMMUNE.value,
-        auratic=AffinityState.VULNERABLE.value,
-        temporal_spatial=AffinityState.VULNERABLE.value,
+        kinetic=AffinityState.IMMUNE.value,
+        cognitive=AffinityState.VULNERABLE.value,
+        material=AffinityState.RESISTANT.value,
+        somatic=AffinityState.IMMUNE.value,
+        spatial=AffinityState.VULNERABLE.value,
     ),
 
     "sovereign": _profile(
-        physical_kinetic=AffinityState.RESISTANT.value,
-        perceptual_mental=AffinityState.RESISTANT.value,
-        matter_energy=AffinityState.RESISTANT.value,
-        biological_vital=AffinityState.RESISTANT.value,
-        eldritch_corruptive=AffinityState.ABSORB.value,
+        kinetic=AffinityState.RESISTANT.value,
+        cognitive=AffinityState.RESISTANT.value,
+        material=AffinityState.RESISTANT.value,
+        somatic=AffinityState.RESISTANT.value,
+        paradoxic=AffinityState.ABSORB.value,
     ),
 
     "hive_drone": _profile(
-        perceptual_mental=AffinityState.RESISTANT.value,
-        matter_energy=AffinityState.VULNERABLE.value,
-        biological_vital=AffinityState.RESISTANT.value,
-        auratic=AffinityState.RESISTANT.value,
-        eldritch_corruptive=AffinityState.RESISTANT.value,
+        cognitive=AffinityState.RESISTANT.value,
+        material=AffinityState.VULNERABLE.value,
+        somatic=AffinityState.RESISTANT.value,
+        paradoxic=AffinityState.RESISTANT.value,
     ),
 }
 
@@ -134,13 +141,12 @@ AFFINITY_PROFILES: Dict[str, Dict[str, str]] = {
 # None means no overflow routing.
 
 _TRACK_ROUTING: Dict[DamageType, Tuple[str, str | None, int]] = {
-    PK: ("physical", None, 0),
-    ME: ("physical", None, 0),
-    BV: ("physical", None, 0),
-    PM: ("mental", "physical", 2),
-    TS: ("mental", None, 0),
-    AU: ("social", "mental", 2),
-    EC: ("mental", "social", 2),
+    KI: ("physical", None, 0),
+    MA: ("physical", None, 0),
+    SO: ("physical", None, 0),
+    CO: ("mental", "physical", 2),
+    SP: ("mental", None, 0),
+    PA: ("mental", "social", 2),
 }
 
 TRACK_MAX = 5
@@ -239,7 +245,7 @@ def resolve_damage(
     armor:
         Armor reduction value (applied only for physical_kinetic melee/ranged).
     cover:
-        Cover reduction value (applied only for PK, ME, BV projectile attacks).
+        Cover reduction value (applied only for KI, MA, SO projectile attacks).
     is_crit:
         Whether the attack is a critical hit (+1 damage bonus).
     static_mods:
@@ -268,10 +274,10 @@ def resolve_damage(
     else:
         after_affinity = _affinity_damage(raw, target_affinity)
 
-    # -- armor (only for melee/ranged physical_kinetic) --
+    # -- armor (only for melee/ranged kinetic) --
     after_armor = max(0, after_affinity - armor)
 
-    # -- cover (only for PK, ME, BV projectile) --
+    # -- cover (only for KI, MA, SO projectile) --
     after_cover = max(0, after_armor - cover)
 
     final = after_cover
@@ -325,14 +331,14 @@ def allocate_to_tracks(
         Current condition track values, e.g. {"physical": 2, "mental": 0, "social": 1}.
         This dict is NOT mutated; the result contains deltas.
     is_crit:
-        Whether this was a critical hit (relevant for EC corruption).
+        Whether this was a critical hit (relevant for paradoxic corruption).
 
     Returns
     -------
     A dict with:
         "track_changes": Dict[str, int]  -- amount added to each track
         "harm_events": List[Dict]        -- list of harm tier events triggered
-        "corruption": int                -- corruption points gained (EC crit only)
+        "corruption": int                -- corruption points gained (paradoxic crit only)
         "new_tracks": Dict[str, int]     -- resulting track values after allocation
     """
     if isinstance(damage_type, str):
@@ -392,8 +398,8 @@ def allocate_to_tracks(
                 "overflow": secondary_overflow,
             })
 
-    # Eldritch_corruptive: corruption on crit.
-    if damage_type == EC and is_crit:
+    # Paradoxic: corruption on crit.
+    if damage_type == PA and is_crit:
         corruption = 1
 
     return {
