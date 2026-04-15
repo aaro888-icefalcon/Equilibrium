@@ -23,6 +23,10 @@ VALID_SPECIES = {
     "wide_sighted", "stone_silent", "corrupted",
 }
 VALID_POWER_CATEGORIES = {
+    "somatic", "cognitive", "material", "kinetic", "spatial", "paradoxic",
+}
+# Keep v1 categories for migration validation
+VALID_POWER_CATEGORIES_V1 = {
     "physical_kinetic", "perceptual_mental", "matter_energy",
     "biological_vital", "auratic", "temporal_spatial", "eldritch_corruptive",
 }
@@ -34,9 +38,19 @@ VALID_COMBATANT_SIDES = {"enemy", "ally", "neutral"}
 VALID_AI_PROFILES = {"aggressive", "defensive", "tactical", "opportunist", "pack"}
 VALID_COMBAT_REGISTERS = {"human", "creature", "eldritch"}
 VALID_COMBAT_VERBS = {
-    "Attack", "Power", "Assess", "Maneuver", "Parley",
-    "Disengage", "Finisher", "Defend",
+    "Attack", "Power", "Power_Minor", "Assess", "Maneuver", "Parley",
+    "Finisher", "Brace", "Posture_Change", "Utility",
 }
+VALID_EFFECT_FAMILIES = {
+    "damage", "status", "movement", "information", "control", "resource",
+    "defense", "utility", "meta", "cost_shifted", "action_economy",
+    "stat_alteration", "terrain_alteration",
+}
+VALID_POSTURES = {"parry", "block", "dodge", "aggressive"}
+VALID_RIDER_TYPES = {"strike", "posture", "maneuver", "parley", "assess", "finisher"}
+VALID_ATTACK_SUB_TYPES = {"heavy", "quick", "ranged", "grapple"}
+VALID_MANEUVER_SUB_TYPES = {"reposition", "disrupt", "conceal"}
+VALID_PARLEY_SUB_TYPES = {"demand", "taunt", "disorient", "destabilize", "negotiate"}
 VALID_RESOLUTIONS = {
     "victory", "defeat", "parley", "escape", "truce", "stalemate", "other",
 }

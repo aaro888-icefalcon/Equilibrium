@@ -31,12 +31,67 @@ class CombatResolution(str, Enum):
 class CombatVerb(str, Enum):
     ATTACK = "Attack"
     POWER = "Power"
+    POWER_MINOR = "Power_Minor"
     ASSESS = "Assess"
     MANEUVER = "Maneuver"
     PARLEY = "Parley"
-    DISENGAGE = "Disengage"
     FINISHER = "Finisher"
-    DEFEND = "Defend"
+    BRACE = "Brace"
+    POSTURE_CHANGE = "Posture_Change"
+    UTILITY = "Utility"
+
+
+class Posture(str, Enum):
+    PARRY = "parry"
+    BLOCK = "block"
+    DODGE = "dodge"
+    AGGRESSIVE = "aggressive"
+
+
+class RiderType(str, Enum):
+    STRIKE = "strike"
+    POSTURE = "posture"
+    MANEUVER = "maneuver"
+    PARLEY = "parley"
+    ASSESS = "assess"
+    FINISHER = "finisher"
+
+
+class AttackSubType(str, Enum):
+    HEAVY = "heavy"
+    QUICK = "quick"
+    RANGED = "ranged"
+    GRAPPLE = "grapple"
+
+
+class ManeuverSubType(str, Enum):
+    REPOSITION = "reposition"
+    DISRUPT = "disrupt"
+    CONCEAL = "conceal"
+
+
+class ParleySubType(str, Enum):
+    DEMAND = "demand"
+    TAUNT = "taunt"
+    DISORIENT = "disorient"
+    DESTABILIZE = "destabilize"
+    NEGOTIATE = "negotiate"
+
+
+class EffectFamily(str, Enum):
+    DAMAGE = "damage"
+    STATUS = "status"
+    MOVEMENT = "movement"
+    INFORMATION = "information"
+    CONTROL = "control"
+    RESOURCE = "resource"
+    DEFENSE = "defense"
+    UTILITY = "utility"
+    META = "meta"
+    COST_SHIFTED = "cost_shifted"
+    ACTION_ECONOMY = "action_economy"
+    STAT_ALTERATION = "stat_alteration"
+    TERRAIN_ALTERATION = "terrain_alteration"
 
 
 class ConditionType(str, Enum):
