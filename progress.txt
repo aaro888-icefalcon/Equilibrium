@@ -1,0 +1,5 @@
+COMBAT MIGRATION + POWER LIBRARY — Progress Tracker
+====================================================
+Baseline: 911 tests pass, 3 skipped. Branch: claude/combat-migration-power-library-Z45WO
+
+STATUS: Planning phase — rewriting plan with micro-commit structure
