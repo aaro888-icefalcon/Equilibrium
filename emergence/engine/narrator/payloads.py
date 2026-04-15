@@ -4,6 +4,13 @@ from __future__ import annotations
 
 from typing import Any, Dict, List, Optional
 
+from emergence.engine.narrator.validation import _FORBIDDEN_PATTERNS
+
+
+def _constraints() -> Dict[str, List[str]]:
+    """Standard narrator constraints dict."""
+    return {"forbidden": list(_FORBIDDEN_PATTERNS)}
+
 
 def build_combat_turn_payload(
     round_num: int,
@@ -41,6 +48,8 @@ def build_combat_turn_payload(
         "declared_action": declared_action or {},
         "passive_effects_triggered": passive_effects_triggered or [],
         "pool_state": pool_state or {},
+        "output_target": {"min_words": 25, "max_words": 60, "format": "prose"},
+        "constraints": _constraints(),
     }
 
 
@@ -62,6 +71,8 @@ def build_scene_framing_payload(
         "npcs_present": npcs_present,
         "recent_events": recent_events,
         "tension_level": tension_level,
+        "output_target": {"min_words": 60, "max_words": 150, "format": "prose"},
+        "constraints": _constraints(),
     }
 
 
@@ -81,6 +92,8 @@ def build_situation_payload(
         "choices": choices,
         "tension_level": tension_level,
         "location": location_name,
+        "output_target": {"min_words": 30, "max_words": 80, "format": "mixed"},
+        "constraints": _constraints(),
     }
 
 
@@ -100,6 +113,8 @@ def build_dialogue_payload(
         "topic": topic,
         "standing": standing,
         "player_options": player_options,
+        "output_target": {"min_words": 20, "max_words": 100, "format": "dialogue"},
+        "constraints": _constraints(),
     }
 
 
@@ -115,6 +130,8 @@ def build_character_creation_payload(
         "scene_id": scene_id,
         "framing_text": framing_text,
         "choices": choices,
+        "output_target": {"min_words": 80, "max_words": 200, "format": "mixed"},
+        "constraints": _constraints(),
     }
 
 
@@ -132,6 +149,8 @@ def build_transition_payload(
         "to_location": to_location,
         "travel_time": travel_time,
         "hazards": hazards,
+        "output_target": {"min_words": 40, "max_words": 100, "format": "prose"},
+        "constraints": _constraints(),
     }
 
 
@@ -151,6 +170,8 @@ def build_death_payload(
         "location": location,
         "age": age,
         "legacy": legacy,
+        "output_target": {"min_words": 60, "max_words": 150, "format": "prose"},
+        "constraints": _constraints(),
     }
 
 
@@ -166,4 +187,6 @@ def build_time_skip_payload(
         "duration": duration,
         "events_summary": events_summary,
         "world_changes": world_changes,
+        "output_target": {"min_words": 50, "max_words": 150, "format": "prose"},
+        "constraints": _constraints(),
     }
