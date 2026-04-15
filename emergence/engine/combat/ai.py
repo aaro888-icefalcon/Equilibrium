@@ -85,11 +85,12 @@ RETREAT_THRESHOLDS: Dict[str, Dict[str, object]] = {
 @dataclass
 class CombatAction:
     """A candidate action for AI evaluation."""
-    action_type: str   # Attack, Power, Assess, Maneuver, Parley, Disengage, Finisher, Defend
+    action_type: str   # Rev 4: Attack, Power, Power_Minor, Assess, Maneuver, Parley, Finisher, Brace, Posture_Change, Utility
     target_id: Optional[str] = None
     power_id: Optional[str] = None
     zone_id: Optional[str] = None
     is_major: bool = True
+    sub_type: Optional[str] = None  # Rev 4: attack/maneuver/parley sub-type
 
     @property
     def sort_key(self) -> str:
@@ -118,6 +119,12 @@ class CombatantState:
     abilities: List[str] = field(default_factory=list)
     retreat_conditions: List[str] = field(default_factory=list)
     parley_conditions: List[str] = field(default_factory=list)
+    # Rev 4 additions
+    hidden: bool = False
+    current_posture: str = "parry"
+    pool: int = 0
+    pool_max: int = 6
+    armed_rider_count: int = 0
 
 
 @dataclass
@@ -137,32 +144,44 @@ class AiDecisionEngine:
         """Choose the best Major action for this actor."""
         profile = actor.ai_profile
 
-        # Check retreat first
+        # Check retreat first (disengage absorbed into reposition maneuver)
         if self.should_retreat(actor, state):
-            return CombatAction(action_type="Disengage")
+            return CombatAction(action_type="Maneuver", sub_type="reposition")
 
         candidates = self._enumerate_major_actions(actor, state)
         if not candidates:
-            return CombatAction(action_type="Defend")
+            return CombatAction(action_type="Attack", sub_type="heavy")
 
         scored = [(self._score_action(actor, a, state), a.sort_key, a) for a in candidates]
         scored.sort(key=lambda x: (-x[0], x[1]))  # highest score, then lexicographic tie
         return scored[0][2]
 
     def choose_minor(self, actor: CombatantState, state: BattlefieldState) -> Optional[CombatAction]:
-        """Choose best Minor action (Assess, move, etc.)."""
+        """Choose best Minor action (Rev 4: Brace, Assess, Maneuver, etc.)."""
         profile = actor.ai_profile
 
-        # Tactical prefers Assess on round 1
+        # Defensive/tactical: Brace if pool < pool_max and uses remain
+        if profile in ("defensive", "tactical") and actor.pool < actor.pool_max:
+            return CombatAction(action_type="Brace", is_major=False)
+
+        # Tactical prefers Brief Assess on round 1
         if profile == "tactical" and state.round_number == 1:
             target = self.pick_target(actor, state)
             if target:
-                return CombatAction(action_type="Assess", target_id=target, is_major=False)
+                return CombatAction(action_type="Utility", target_id=target, is_major=False, sub_type="brief_assess")
 
-        # Default: Assess highest-threat enemy if not yet assessed
+        # Opportunist: try Conceal if not hidden
+        if profile == "opportunist" and not actor.hidden:
+            return CombatAction(action_type="Maneuver", is_major=False, sub_type="conceal")
+
+        # Default: Brief Assess highest-threat enemy
         target = self.pick_target(actor, state)
         if target:
-            return CombatAction(action_type="Assess", target_id=target, is_major=False)
+            return CombatAction(action_type="Utility", target_id=target, is_major=False, sub_type="brief_assess")
+
+        # Fallback: Brace if pool isn't full
+        if actor.pool < actor.pool_max:
+            return CombatAction(action_type="Brace", is_major=False)
         return None
 
     def should_retreat(self, actor: CombatantState, state: BattlefieldState) -> bool:
@@ -261,20 +280,19 @@ class AiDecisionEngine:
             for e in enemies:
                 actions.append(CombatAction(action_type="Power", target_id=e.id, power_id=pid))
 
-        actions.append(CombatAction(action_type="Maneuver"))
-        actions.append(CombatAction(action_type="Disengage"))
+        # Rev 4: Maneuver sub-types
+        actions.append(CombatAction(action_type="Maneuver", sub_type="reposition"))
+        actions.append(CombatAction(action_type="Maneuver", sub_type="disrupt"))
 
         if actor.parley_conditions:
             for e in enemies:
-                actions.append(CombatAction(action_type="Parley", target_id=e.id))
+                actions.append(CombatAction(action_type="Parley", target_id=e.id, sub_type="demand"))
+                actions.append(CombatAction(action_type="Parley", target_id=e.id, sub_type="taunt"))
 
         # Finisher if target exposed and momentum >= 5
         for e in enemies:
             if e.is_exposed and actor.momentum >= 5:
                 actions.append(CombatAction(action_type="Finisher", target_id=e.id))
-
-        # Defend is always available
-        actions.append(CombatAction(action_type="Defend"))
 
         return actions
 
@@ -340,17 +358,10 @@ class AiDecisionEngine:
             f["parley_signal"] = 1.0 if state.player_parleyed_recently else 0.3
             f["self_risk"] = 0.0
 
-        elif action.action_type == "Disengage":
-            f["self_risk"] = -0.5  # reduces risk
-            f["position_value"] = 0.3
-
         elif action.action_type == "Finisher" and target:
             f["target_damage_expectation"] = 1.0
             f["target_exposure_fill"] = 1.0
             f["tempo"] = 1.0
-
-        elif action.action_type == "Defend":
-            f["self_risk"] = -0.3
 
         # Allies need: check if any ally is exposed or low
         allies = [c for c in state.combatants.values()
