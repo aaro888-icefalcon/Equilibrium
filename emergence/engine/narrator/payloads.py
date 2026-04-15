@@ -190,3 +190,42 @@ def build_time_skip_payload(
         "output_target": {"min_words": 50, "max_words": 150, "format": "prose"},
         "constraints": _constraints(),
     }
+
+
+def build_preamble_payload(
+    player: Dict[str, Any],
+    location_name: str,
+    location_details: Dict[str, Any],
+    npcs_present: List[str],
+    faction_standings: Dict[str, int],
+    recent_events: List[str],
+    register: str = "standard",
+) -> Dict[str, Any]:
+    """Build a preamble payload — narrative bridge after character creation."""
+    return {
+        "scene_type": "scene_framing",
+        "preamble": True,
+        "register_directive": register,
+        "character_identity": {
+            "name": player.get("name", ""),
+            "age": player.get("age", 0),
+            "species": player.get("species", "human"),
+            "tier": player.get("tier", 1),
+            "powers": player.get("powers", []),
+            "skills": player.get("skills", {}),
+        },
+        "relationships": player.get("relationships", []),
+        "goals": player.get("goals", []),
+        "faction_standings": faction_standings,
+        "location": location_name,
+        "location_details": location_details,
+        "npcs_present": npcs_present,
+        "recent_events": recent_events,
+        "format_instructions": (
+            "Recap who the character is — name, background, powers. "
+            "Set the scene at their current location. "
+            "End in media res: a moment of tension or choice."
+        ),
+        "output_target": {"min_words": 150, "max_words": 300, "format": "prose"},
+        "constraints": _constraints(),
+    }
