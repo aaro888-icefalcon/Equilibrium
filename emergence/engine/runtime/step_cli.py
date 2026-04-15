@@ -588,13 +588,13 @@ def step_resolve(args: Any, save_root: str) -> Dict[str, Any]:
 
     # Find the chosen choice
     chosen = None
-    for c in situation.choices:
+    for c in situation.player_choices:
         if c.id == choice_id:
             chosen = c
             break
 
     if chosen is None:
-        valid_ids = [c.id for c in situation.choices]
+        valid_ids = [c.id for c in situation.player_choices]
         return {"status": "error", "message": f"Choice '{choice_id}' not found. Valid: {valid_ids}"}
 
     state = _load_full_state(save_root)
