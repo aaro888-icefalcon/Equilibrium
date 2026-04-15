@@ -116,7 +116,7 @@ class EncounterGenerator:
         }
         world_ctx = WorldContext(
             recent_events=situation.recent_events[:5],
-            heat_levels={"player": player.get("heat", 0)},
+            heat_levels={"player": player.get("heat", {}).get("current", 0) if isinstance(player.get("heat"), dict) else player.get("heat", 0)},
             clock_states=clock_states,
         )
 

@@ -535,28 +535,30 @@ def step_situation(args: Any, save_root: str) -> Dict[str, Any]:
 
     # Build narrator payload
     from emergence.engine.narrator.payloads import build_situation_payload
+    location_name = getattr(location, "display_name", player_location_id)
+    situation_description = f"At {location_name}. Tension: {situation.tension}."
     choices_for_payload = [
         {"id": c.id, "description": c.description, "type": c.type}
-        for c in situation.choices
+        for c in situation.player_choices
     ]
     payload = build_situation_payload(
         situation_id=situation.id,
-        description=situation.description,
+        description=situation_description,
         choices=choices_for_payload,
-        tension_level=situation.tension_level,
-        location_name=getattr(location, "name", player_location_id),
+        tension_level=situation.tension,
+        location_name=location_name,
     )
 
     return {
         "status": "ok",
         "mode": "SIM",
         "situation_id": situation.id,
-        "location": getattr(location, "name", player_location_id),
-        "tension": situation.tension_level,
-        "description": situation.description,
+        "location": location_name,
+        "tension": situation.tension,
+        "description": situation_description,
         "choices": [
             {"id": c.id, "description": c.description, "type": c.type}
-            for c in situation.choices
+            for c in situation.player_choices
         ],
         "npcs_present": [getattr(n, "display_name", n.id) for n in npcs_present],
         "narrator_payload": payload,

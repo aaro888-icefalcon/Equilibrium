@@ -145,7 +145,7 @@ def compact_state(
 
     # 7. Player summary
     result["player"] = {
-        "heat": player.get("heat", 0),
+        "heat": player.get("heat", {}).get("current", 0) if isinstance(player.get("heat"), dict) else player.get("heat", 0),
         "corruption": player.get("corruption", 0),
         "location": current_location.id,
     }
