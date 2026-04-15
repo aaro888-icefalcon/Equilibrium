@@ -185,7 +185,13 @@ class SituationGenerator:
     ) -> Situation:
         """Build a Situation from current state."""
         tick_ts = world_state.get("tick_timestamp", "")
-        player_heat = player.get("heat", 0)
+        heat_raw = player.get("heat", 0)
+        if isinstance(heat_raw, dict):
+            player_heat = heat_raw.get("current", 0)
+            if not isinstance(player_heat, (int, float)):
+                player_heat = 0
+        else:
+            player_heat = heat_raw
 
         # Assess tension
         tension = _assess_tension(location, npcs_present, recent_events, clocks)
