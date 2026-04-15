@@ -8,7 +8,7 @@ import json
 import os
 from typing import Dict, List
 
-from emergence.engine.schemas.content import Power, EnemyTemplate
+from emergence.engine.schemas.content import Power, PowerV2, EnemyTemplate
 from emergence.engine.schemas.encounter import EncounterSpec
 
 
@@ -44,6 +44,23 @@ def load_enemies(directory: str) -> Dict[str, EnemyTemplate]:
             e = EnemyTemplate.from_dict(entry)
             enemies[e.id] = e
     return enemies
+
+
+def load_powers_v2(directory: str) -> Dict[str, PowerV2]:
+    """Load Rev 4 power JSON files from *directory* and return {id: PowerV2}."""
+    powers: Dict[str, PowerV2] = {}
+    if not os.path.isdir(directory):
+        return powers
+    for fname in sorted(os.listdir(directory)):
+        if not fname.endswith(".json"):
+            continue
+        path = os.path.join(directory, fname)
+        with open(path, "r") as f:
+            entries = json.load(f)
+        for entry in entries:
+            p = PowerV2.from_dict(entry)
+            powers[p.id] = p
+    return powers
 
 
 def load_encounters(path: str) -> List[EncounterSpec]:
