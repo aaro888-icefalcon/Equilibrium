@@ -2,4 +2,14 @@ COMBAT MIGRATION + POWER LIBRARY — Progress Tracker
 ====================================================
 Baseline: 911 tests pass, 3 skipped. Branch: claude/combat-migration-power-library-Z45WO
 
-STATUS: Planning phase — rewriting plan with micro-commit structure
+STATUS: Executing — Commits 1-7 done
+
+COMPLETED:
+- [x] Commit 1: MIGRATION_NOTES.md + schema enums
+- [x] Commit 2: PowerV2 dataclasses (CastMode, RiderSpec, CapstoneOption, etc.)
+- [x] Commit 3: DamageType 7→6 broads + affinities
+- [x] Commit 4: CombatantRecord augmented + dual-die sum resolution
+- [x] Commit 5: postures.py + pool.py with unit tests
+- [x] Commit 6-7: Verb overhaul + posture riders + rider combination
+
+NEXT: Commit 8 — AI updates, Commit 9 — Power library

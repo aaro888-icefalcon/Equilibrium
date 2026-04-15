@@ -97,14 +97,15 @@ class TestDefensiveProfile(unittest.TestCase):
 
 class TestTacticalProfile(unittest.TestCase):
 
-    def test_prefers_assess_round_1_minor(self):
+    def test_prefers_brace_or_utility_round_1_minor(self):
         ai = AiDecisionEngine()
         actor = _make_actor(ai_profile="tactical")
         player = _make_player()
         state = _state_with(actor, player, round_number=1)
         minor = ai.choose_minor(actor, state)
         self.assertIsNotNone(minor)
-        self.assertEqual(minor.action_type, "Assess")
+        # Rev 4: Tactical AI prefers Brace (if pool < pool_max) or Utility(brief_assess)
+        self.assertIn(minor.action_type, ("Brace", "Utility"))
 
     def test_targets_exposed_first(self):
         ai = AiDecisionEngine()
@@ -173,14 +174,15 @@ class TestPickTarget(unittest.TestCase):
 
 class TestChooseMinor(unittest.TestCase):
 
-    def test_default_minor_is_assess(self):
+    def test_default_minor_is_utility_or_brace(self):
         ai = AiDecisionEngine()
         actor = _make_actor()
         player = _make_player()
         state = _state_with(actor, player)
         minor = ai.choose_minor(actor, state)
         self.assertIsNotNone(minor)
-        self.assertEqual(minor.action_type, "Assess")
+        # Rev 4: Default minor is Utility(brief_assess) or Brace
+        self.assertIn(minor.action_type, ("Utility", "Brace"))
 
 
 if __name__ == "__main__":

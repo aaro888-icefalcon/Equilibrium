@@ -328,14 +328,14 @@ def resolve_attack(
 
     elif tier in (SuccessTier.MARGINAL, SuccessTier.FULL, SuccessTier.CRITICAL):
         # Compute damage
-        affinity = target.get_affinity("physical_kinetic")
+        affinity = target.get_affinity("kinetic")
         base = weapon_damage_base
         if tier == SuccessTier.MARGINAL:
             base = max(1, base - 1)
         dr = resolve_damage(
             base=base,
             attacker_tier=actor.tier,
-            damage_type=DamageType.PHYSICAL_KINETIC,
+            damage_type=DamageType.KINETIC,
             target_affinity=affinity,
             armor=target.armor,  # armor applies to melee AND ranged per §10.1
             is_crit=check.is_crit,
@@ -389,7 +389,7 @@ def resolve_power(
     target_id: str,
     state: CombatState,
     rng: random.Random,
-    power_category: str = "physical_kinetic",
+    power_category: str = "kinetic",
     power_damage_die: int = 6,
     power_crit_rider: str = "",
     power_cost_phy: int = 0,
@@ -409,7 +409,7 @@ def resolve_power(
     s_die = _get_attr(actor, s_attr)
 
     # TN: mental powers use mental_defense; others use defense_value
-    if is_mental_power or power_category in ("perceptual_mental",):
+    if is_mental_power or power_category in ("cognitive",):
         tn = compute_mental_defense(target.will, 0)
     else:
         tn = compute_defense_value(target.agility, target.armor)
@@ -444,7 +444,7 @@ def resolve_power(
         result.narrative_data["miss"] = True
         if tier == SuccessTier.FUMBLE:
             # Self-Burning if Matter/Energy power
-            if power_category == "matter_energy":
+            if power_category == "material":
                 _apply_status(state, actor_id, StatusName.BURNING, 3, result)
             state.apply_damage(actor_id, 2, "physical")
             result.self_damage = 2

@@ -154,7 +154,7 @@ def _valid_power() -> Power:
     return Power(
         id="pow_kinetic_strike",
         name="Kinetic Strike",
-        category="physical_kinetic",
+        category="kinetic",
         tier=1,
         cost=PowerCost(corruption=0),
         effect=PowerEffect(type="damage", parameters={"base": 4}),
@@ -290,8 +290,7 @@ class TestValidateCharacterSheet(unittest.TestCase):
         self.assertFalse(r.is_valid)
 
     def test_valid_power_categories(self):
-        for cat in ("physical_kinetic", "perceptual_mental", "matter_energy",
-                     "biological_vital", "temporal_spatial", "eldritch_corruptive"):
+        for cat in ("somatic", "cognitive", "material", "kinetic", "spatial", "paradoxic"):
             c = _valid_character()
             c.power_category_primary = cat
             r = validate_character_sheet(c)
@@ -510,8 +509,8 @@ class TestValidateAction(unittest.TestCase):
         self.assertFalse(r.is_valid)
 
     def test_valid_verbs(self):
-        for verb in ("Attack", "Power", "Assess", "Maneuver", "Parley",
-                      "Disengage", "Finisher", "Defend"):
+        for verb in ("Attack", "Power", "Power_Minor", "Assess", "Maneuver",
+                      "Parley", "Finisher", "Brace", "Posture_Change", "Utility"):
             a = _valid_action()
             a.verb = verb
             r = validate_action(a)
@@ -843,8 +842,7 @@ class TestValidatePower(unittest.TestCase):
         self.assertFalse(r.is_valid)
 
     def test_valid_categories(self):
-        for cat in ("physical_kinetic", "perceptual_mental", "matter_energy",
-                     "biological_vital", "temporal_spatial", "eldritch_corruptive"):
+        for cat in ("somatic", "cognitive", "material", "kinetic", "spatial", "paradoxic"):
             p = _valid_power()
             p.category = cat
             r = validate_power(p)

@@ -1,4 +1,4 @@
-"""Unit tests for emergence.engine.combat.verbs — all 8 verb resolvers."""
+"""Unit tests for emergence.engine.combat.verbs — Rev 4 verb resolvers."""
 
 import random
 import unittest
@@ -12,9 +12,7 @@ from emergence.engine.combat.verbs import (
     resolve_assess,
     resolve_maneuver,
     resolve_parley,
-    resolve_disengage,
     resolve_finisher,
-    resolve_defend,
 )
 from emergence.engine.combat.statuses import StatusEngine, StatusName, ActiveStatus
 
@@ -147,16 +145,6 @@ class TestResolveParley(unittest.TestCase):
         self.skipTest("No parley success in 200 seeds")
 
 
-class TestResolveDisengage(unittest.TestCase):
-
-    def test_returns_verb_result(self):
-        state = _state_1v1()
-        result = resolve_disengage("player", state, random.Random(42))
-        self.assertIsInstance(result, VerbResult)
-        self.assertEqual(result.verb, "Disengage")
-        self.assertIn("escape", result.narrative_data)
-
-
 class TestResolveFinisher(unittest.TestCase):
 
     def test_requires_momentum_spend(self):
@@ -180,15 +168,6 @@ class TestResolveFinisher(unittest.TestCase):
                 self.assertFalse(state.combatants["enemy"].active)
                 return
         self.skipTest("No full finisher in 200 seeds")
-
-
-class TestResolveDefend(unittest.TestCase):
-
-    def test_returns_verb_result(self):
-        state = _state_1v1()
-        result = resolve_defend("player", "enemy", 3, "full", state, random.Random(42))
-        self.assertIsInstance(result, VerbResult)
-        self.assertEqual(result.verb, "Defend")
 
 
 if __name__ == "__main__":
