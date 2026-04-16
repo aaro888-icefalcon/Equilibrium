@@ -659,13 +659,13 @@
   "current_location": "loc-port-newark-compound",
   "home_region": "loc-port-newark-compound",
   "harm_dealt": {
-    "mental": 1
+    "social": 1
   },
-  "time_cost_hours": 6,
+  "time_cost_hours": 9,
   "clock_advances": {
-    "manhattan-eldritch-breach": 1
+    "species-i-consolidation": 1
   },
   "resources_lost": {
-    "training_gear": 1
+    "clothes_working": 1
   }
 }

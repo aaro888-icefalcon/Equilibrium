@@ -7,40 +7,25 @@
     "free_text": ""
   },
   "gate_result": "roll",
-  "outcome_tier": "partial_failure",
+  "outcome_tier": "failure",
   "tn": 12,
   "primary_die": 8,
   "secondary_die": 8,
   "modifiers": [],
   "complications": [
     {
-      "move_id": "time_passes",
-      "severity": "medium",
+      "move_id": "capture_seize",
+      "severity": "severe",
       "category": "core",
-      "description": "This took longer than expected. Time slips.",
-      "mechanical_effects": [
-        {
-          "type": "time_cost",
-          "extra_hours": 3
-        },
-        {
-          "type": "clock_advance",
-          "clock_id": "species-i-consolidation",
-          "segments": 1
-        }
-      ],
-      "narrative_seed": "time_cost"
+      "description": "Something is seized from you \u2014 by force or circumstance.",
+      "mechanical_effects": [],
+      "narrative_seed": "capture_seize"
     }
   ],
-  "state_deltas": {
-    "time_cost_hours": 3,
-    "clock_advances": {
-      "species-i-consolidation": 1
-    }
-  },
+  "state_deltas": {},
   "narrative_hints": [
     "Anton\u00edn Volk's patience is exhausted. The interaction ends.",
-    "Anton\u00edn Volk is not convinced."
+    "Anton\u00edn Volk refuses."
   ],
   "time_cost_days": 0,
   "new_location": null,
@@ -55,12 +40,12 @@
     "interaction_ended": true
   },
   "check_result": {
-    "d1": 7,
-    "d2": 4,
-    "total": 11,
+    "d1": 3,
+    "d2": 3,
+    "total": 6,
     "tn": 12,
-    "margin": -1,
-    "tier": "partial_failure",
+    "margin": -6,
+    "tier": "failure",
     "is_crit": false,
     "is_fumble": false
   }

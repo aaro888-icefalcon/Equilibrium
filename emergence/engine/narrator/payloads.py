@@ -97,6 +97,95 @@ def build_situation_payload(
     }
 
 
+# ---------------------------------------------------------------------------
+# Scene-coded payloads (AngryGM-style, replacing situation)
+# ---------------------------------------------------------------------------
+
+def build_scene_opener_payload(
+    scene_code: Dict[str, Any],
+    register: str = "standard",
+) -> Dict[str, Any]:
+    """Scene opener — full establishing beat, 150-300 words."""
+    return {
+        "scene_type": "scene_opener",
+        "register_directive": register,
+        "scene_code": scene_code,
+        "output_target": {"min_words": 150, "max_words": 300, "format": "prose"},
+        "constraints": _constraints(),
+        "format_instructions": (
+            "Establish the scene. Lead with sensory detail. "
+            "Present the dramatic question implicitly through situation. "
+            "End on what invites action. Do NOT list numbered choices."
+        ),
+    }
+
+
+def build_scene_continuation_payload(
+    scene_code: Dict[str, Any],
+    resolution: Dict[str, Any],
+    complications: List[Dict[str, Any]],
+    register: str = "standard",
+) -> Dict[str, Any]:
+    """Continuation — result + invitation, 60-120 words."""
+    return {
+        "scene_type": "scene_continuation",
+        "register_directive": register,
+        "scene_code": scene_code,
+        "resolution": resolution,
+        "complications": complications,
+        "output_target": {"min_words": 60, "max_words": 120, "format": "prose"},
+        "constraints": _constraints(),
+        "format_instructions": (
+            "Narrate what happened (the engine's outcome). "
+            "Describe all applied consequences and complications. "
+            "Do NOT soften outcomes. Do NOT describe cooperation beyond "
+            "disposition bounds. End on what invites the next action."
+        ),
+    }
+
+
+def build_scene_close_payload(
+    scene_code: Dict[str, Any],
+    final_state: Dict[str, Any],
+    transition_hint: str,
+    register: str = "standard",
+) -> Dict[str, Any]:
+    """Close — resolution + forward momentum, 40-80 words."""
+    return {
+        "scene_type": "scene_close",
+        "register_directive": register,
+        "scene_code": scene_code,
+        "final_state": final_state,
+        "transition_hint": transition_hint,
+        "output_target": {"min_words": 40, "max_words": 80, "format": "prose"},
+        "constraints": _constraints(),
+        "format_instructions": (
+            "Summarize the resolution of the dramatic question. "
+            "Introduce forward momentum to the next scene. "
+            "Do not drag past the answer."
+        ),
+    }
+
+
+def build_exposition_payload(
+    revealed_info: List[str],
+    register: str = "standard",
+) -> Dict[str, Any]:
+    """Exposition — free action response, 50-200 words, no roll."""
+    return {
+        "scene_type": "exposition",
+        "register_directive": register,
+        "revealed_info": revealed_info,
+        "output_target": {"min_words": 50, "max_words": 200, "format": "prose"},
+        "constraints": _constraints(),
+        "format_instructions": (
+            "Provide requested information as observational narration. "
+            "This is a free action — no roll, no time cost. "
+            "Do not advance the scene's dramatic question."
+        ),
+    }
+
+
 def build_dialogue_payload(
     npc_name: str,
     npc_voice: str,

@@ -125,6 +125,15 @@ def build_parser() -> argparse.ArgumentParser:
     step_resolve = step_sub.add_parser("resolve", help="Resolve player choice")
     step_resolve.add_argument("--choice-id", required=True, help="ID of chosen action")
 
+    # step scene-open (AngryGM-style scene coding — replaces step situation)
+    step_sub.add_parser("scene-open", help="Open a new scene with scene coding")
+
+    # step scene-continue (mid-scene beat after resolve-action)
+    step_sub.add_parser("scene-continue", help="Continue current scene after an action")
+
+    # step scene-close (when DQ is resolved)
+    step_sub.add_parser("scene-close", help="Close the current scene")
+
     # step resolve-action (new dice-backed resolver)
     step_ra = step_sub.add_parser("resolve-action", help="Resolve a declared action with dice")
     step_ra.add_argument("--type", required=True, dest="action_type",
