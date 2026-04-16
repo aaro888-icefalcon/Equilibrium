@@ -29,3 +29,14 @@ E7 done: test_scenarios_v2.py updated for 12-scene flow
 E7 done: test_scenarios_v2.py updated for 12-scene flow
 E8 done: test_session_zero_v2.py updated; 14/14 pass
 E9 done: test_scenario_pool.py added, 18/18 pass
+CP-E done: test suite updated, 962/962 pass
+F1 done: saves/default wiped
+F2 done: step init complete, mode=SESSION_ZERO
+F3 done: scene 0 applied, description captured
+F4 done: scene 1 applied, primary power committed
+F5 done: scene 2 applied, cross-category secondary
+F6 done: cast1/rider1/cast2/rider2 all applied
+F7 done: survival/location/relationships/faction/vows walked
+F8 done: character.json contains two V2 power IDs
+F9 done: full suite green
+Final: saves/default reset, clean SESSION_ZERO waiting for player
