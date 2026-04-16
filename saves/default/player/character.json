@@ -657,5 +657,8 @@
     }
   },
   "current_location": "loc-port-newark-compound",
-  "home_region": "loc-port-newark-compound"
+  "home_region": "loc-port-newark-compound",
+  "harm_dealt": {
+    "social": 1
+  }
 }

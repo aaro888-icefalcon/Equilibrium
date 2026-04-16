@@ -26,6 +26,10 @@ from emergence.engine.schemas.world import (
     NPC,
     Clock,
 )
+from emergence.engine.sim.complications import (
+    ComplicationContext,
+    generate_complications,
+)
 
 
 # ---------------------------------------------------------------------------
@@ -412,12 +416,110 @@ def resolve_action(
     # 5. Apply outcome-specific effects
     _apply_outcome_effects(resolution, declaration, target_npc, location, rng)
 
-    # 6. Generate complications (stub — replaced in Phase 1b)
-    resolution.complications = _generate_complications_stub(
-        resolution.outcome_tier, rng
+    # 6. Generate complications from PBTA/BITD move pool
+    context = _build_complication_context(
+        declaration, player, location, npcs_present, clocks,
     )
+    comps = generate_complications(resolution.outcome_tier, context, rng)
+    resolution.complications = [c.to_dict() for c in comps]
+
+    # Apply mechanical effects from complications to state_deltas
+    for comp in comps:
+        for effect in comp.mechanical_effects:
+            _apply_complication_effect(effect, resolution)
 
     return resolution
+
+
+def _build_complication_context(
+    declaration: ActionDeclaration,
+    player: Dict[str, Any],
+    location: Location,
+    npcs_present: List[NPC],
+    clocks: Dict[str, Clock],
+) -> ComplicationContext:
+    """Build the ComplicationContext from current world state."""
+    # Slim NPC views
+    npc_views = [
+        {
+            "id": n.id,
+            "name": n.display_name,
+            "disposition": getattr(n, "standing_with_player_default", 0),
+            "has_goals": bool(n.goals),
+            "knowledge_topics": [k.topic for k in n.knowledge[:3]],
+        }
+        for n in npcs_present
+    ]
+    hostile = [v for v in npc_views if v["disposition"] <= -1]
+
+    # Location threat types (inferred from location type/controller)
+    threat_types: List[str] = []
+    if location.controller and location.controller not in ("unclaimed", "contested"):
+        threat_types.append("faction")
+    if location.dangers:
+        threat_types.append("environmental")
+    if location.type in ("ruin", "wilderness", "wasteland"):
+        threat_types.append("landscape")
+
+    # Player resources
+    player_resources = player.get("resources", {})
+    if not isinstance(player_resources, dict):
+        player_resources = {}
+
+    # Active clocks as dicts
+    active_clocks = [
+        {
+            "id": c.id,
+            "name": getattr(c, "display_name", c.id),
+            "current_segment": c.current_segment,
+            "total_segments": c.total_segments,
+        }
+        for c in clocks.values()
+        if c.total_segments > 0 and c.current_segment < c.total_segments
+    ]
+
+    return ComplicationContext(
+        location_id=location.id,
+        location_display=getattr(location, "display_name", location.id),
+        location_dangers=list(location.dangers),
+        location_threat_types=threat_types,
+        npcs_present=npc_views,
+        hostile_npcs=hostile,
+        player_resources=player_resources,
+        player_inventory=list(player.get("inventory", [])),
+        player_condition_tracks=player.get("condition_tracks", {}),
+        player_allies=[],  # Populated later when relationship data is richer
+        player_goals=list(player.get("goals", [])),
+        hidden_elements=[],  # Populated in Phase 1c
+        active_clocks=active_clocks,
+        faction_tensions=[],
+        recent_tick_events=[],
+        action_type=declaration.action_type,
+        action_target=declaration.target_id,
+    )
+
+
+def _apply_complication_effect(
+    effect: Dict[str, Any], resolution: ActionResolution
+) -> None:
+    """Apply a complication's mechanical effect to the resolution state_deltas."""
+    effect_type = effect.get("type", "")
+    if effect_type == "harm_dealt":
+        track = effect.get("track", "physical")
+        amount = effect.get("amount", 1)
+        resolution.state_deltas.setdefault("harm_dealt", {})[track] = amount
+    elif effect_type == "resource_lost":
+        resource = effect.get("resource", "")
+        amount = effect.get("amount", 1)
+        resolution.state_deltas.setdefault("resources_lost", {})[resource] = amount
+    elif effect_type == "time_cost":
+        extra = effect.get("extra_hours", 0)
+        resolution.state_deltas.setdefault("time_cost_hours", 0)
+        resolution.state_deltas["time_cost_hours"] += extra
+    elif effect_type == "clock_advance":
+        clock_id = effect.get("clock_id", "")
+        segments = effect.get("segments", 1)
+        resolution.state_deltas.setdefault("clock_advances", {})[clock_id] = segments
 
 
 # ---------------------------------------------------------------------------
@@ -543,16 +645,3 @@ def _gather_exposition(
     return hints
 
 
-# ---------------------------------------------------------------------------
-# Complication stub (replaced by Phase 1b)
-# ---------------------------------------------------------------------------
-
-def _generate_complications_stub(
-    outcome_tier: str, rng: random.Random
-) -> List[Dict[str, Any]]:
-    """Stub complication generator. Returns empty list.
-
-    Will be replaced by the full PBTA-style complication generator
-    in Phase 1b (complications.py).
-    """
-    return []

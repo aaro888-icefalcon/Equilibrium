@@ -1,30 +1,43 @@
 {
   "declaration": {
-    "action_type": "exposition",
-    "approach": "observe",
-    "target_id": null,
+    "action_type": "social",
+    "approach": "reason",
+    "target_id": "npc-butcher",
     "skill_id": null,
     "free_text": ""
   },
-  "gate_result": "no_roll",
-  "outcome_tier": "FULL",
-  "tn": 0,
-  "primary_die": 0,
-  "secondary_die": 0,
+  "gate_result": "roll",
+  "outcome_tier": "failure",
+  "tn": 12,
+  "primary_die": 8,
+  "secondary_die": 8,
   "modifiers": [],
-  "complications": [],
+  "complications": [
+    {
+      "move_id": "put_in_spot",
+      "severity": "hard",
+      "category": "core",
+      "description": "Someone you care about is now exposed.",
+      "mechanical_effects": [],
+      "narrative_seed": "put_in_spot"
+    }
+  ],
   "state_deltas": {},
   "narrative_hints": [
-    "Known dangers: dread-field, retinue hostility to visitors",
-    "Opportunities: few (Iron Crown pays in chits)",
-    "Location: The compound is a converted port warehouse complex. The main hall contains the iron circlet (Volk's crown, welded from harbor machinery). The dread-field is palpable within thirty meters of Volk. Visitors pass through it and feel their stomach drop; regulars have conditioned themselves against it with mixed success. The compound smells of salt and machine oil.",
-    "Anton\u00edn Volk knows about: topic_0",
-    "Anton\u00edn Volk knows about: topic_1",
-    "\"The Butcher\" (Petra Voss) knows about: topic_0",
-    "\"The Butcher\" (Petra Voss) knows about: topic_1"
+    "\"The Butcher\" (Petra Voss) refuses."
   ],
   "time_cost_days": 0,
   "new_location": null,
   "encounter_triggered": false,
-  "scene_state_changes": {}
+  "scene_state_changes": {},
+  "check_result": {
+    "d1": 1,
+    "d2": 4,
+    "total": 5,
+    "tn": 12,
+    "margin": -7,
+    "tier": "failure",
+    "is_crit": false,
+    "is_fumble": false
+  }
 }
