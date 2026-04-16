@@ -24,20 +24,40 @@ Word counts vary by response type, NOT just scene_type:
 
 | Response type | Words | When |
 |---|---|---|
-| Scene opening | 100-200 | New location, new day, post-travel, post-combat |
-| Scene continuation | 40-80 | Follow-up action in same scene |
-| Scene close | 30-60 | Dramatic question answered, transition out |
+| Scene opener | 150-300 | New scene (step scene-open). Full frozen moment. |
+| Scene continuation | 60-120 | Post-action beat (step scene-continue). Result + invitation. |
+| Scene close | 40-80 | DQ resolved (step scene-close). Resolution + forward. |
+| Exposition | 50-200 | Free action response. No roll, no time cost. |
 | Combat turn | 25-60 | Per round narration |
 | Character creation | 80-200 | Session zero beats |
 | Preamble | 150-300 | Session start, recap + in media res |
 
-## The Narration Pipeline
+## The Narration Pipeline (Declare-Determine-Describe)
 
-Every narrated moment follows Sensation -> Information -> Choice:
+The sim loop follows DDD: player declares intent → engine determines outcome → narrator describes result.
 
+**Scene Opener** (Sensation → Information → Invitation):
 1. **Sensation** -- lead with the sense that matters most. Specific nouns beat abstractions.
-2. **Information** -- what the character infers from the sensation. Weave world events in as environmental detail.
-3. **Choice** -- end on the actionable element. The last thing you say is what players act on.
+2. **Information** -- what the character infers. Seed hidden elements as foreshadowing.
+3. **Invitation** -- end on what invites action. Do NOT list numbered choices.
+
+**Scene Continuation** (Result → Complication → Invitation):
+1. **Result** -- narrate the engine's outcome (the tier is law — do not soften).
+2. **Complication** -- describe any engine-generated complications (PBTA-style GM moves).
+3. **Invitation** -- updated scene state, what invites the next action.
+
+**Scene Close** (Resolution → Forward):
+1. **Resolution** -- answer the dramatic question.
+2. **Forward** -- momentum to the next scene.
+
+## Consequence Enforcement
+
+The engine generates complications on MARGINAL through FUMBLE. The narrator MUST:
+- Describe all complications (do not soften, omit, or contradict)
+- Narrate FAILURE/FUMBLE as failure (not success or silver linings)
+- Reference harm when harm is dealt (injury, pain, condition worsening)
+- End NPC interactions when patience hits 0 (no continued dialogue)
+- Respect disposition bounds (no cooperation beyond NPC disposition cap)
 
 ## Anti-Patterns
 

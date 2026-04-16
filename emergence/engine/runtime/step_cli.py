@@ -33,6 +33,10 @@ def dispatch_step(args: Any, save_root: str) -> Dict[str, Any]:
         "resolve": step_resolve,
         "combat-start": step_combat_start,
         "combat-round": step_combat_round,
+        "resolve-action": step_resolve_action,
+        "scene-open": step_scene_open,
+        "scene-continue": step_scene_continue,
+        "scene-close": step_scene_close,
         "save": step_save,
     }
 
@@ -457,7 +461,7 @@ def step_preamble(args: Any, save_root: str) -> Dict[str, Any]:
     npcs_present = [
         getattr(npc, "name", npc_id)
         for npc_id, npc in npcs.items()
-        if getattr(npc, "current_location", None) == player_location_id
+        if getattr(npc, "location", None) == player_location_id
     ][:5]
 
     # Faction standings from player data
@@ -590,7 +594,7 @@ def step_situation(args: Any, save_root: str) -> Dict[str, Any]:
     # Find NPCs at player's location
     npcs_present = [
         npc for npc in npcs.values()
-        if getattr(npc, "current_location", None) == player_location_id
+        if getattr(npc, "location", None) == player_location_id
     ][:5]  # Cap at 5
 
     generator = SituationGenerator()
@@ -684,7 +688,7 @@ def step_resolve(args: Any, save_root: str) -> Dict[str, Any]:
 
     npcs_present = [
         npc for npc in npcs.values()
-        if getattr(npc, "current_location", None) == player_location_id
+        if getattr(npc, "location", None) == player_location_id
     ][:5]
 
     resolver = PlayerActionResolver()
@@ -735,6 +739,257 @@ def step_resolve(args: Any, save_root: str) -> Dict[str, Any]:
         output["message"] = "Combat encounter triggered! Run 'step combat-start'."
 
     return output
+
+
+def step_resolve_action(args: Any, save_root: str) -> Dict[str, Any]:
+    """Resolve a declared player action using the dice-backed resolver."""
+    rng = _get_rng(args)
+
+    from emergence.engine.sim.action_resolver import (
+        ActionDeclaration, resolve_action,
+    )
+    from emergence.engine.schemas.world import Location, NPC, Clock
+
+    state = _load_full_state(save_root)
+
+    if not state["player"].get("name"):
+        return {"status": "error", "message": "No active character."}
+
+    # Build declaration from CLI args
+    declaration = ActionDeclaration(
+        action_type=getattr(args, "action_type", ""),
+        approach=getattr(args, "approach", ""),
+        target_id=getattr(args, "target", None),
+        skill_id=getattr(args, "skill", None),
+    )
+
+    # Load location and NPCs
+    player_location_id = (
+        state["player"].get("current_location")
+        or state["player"].get("home_region", "")
+    )
+    locations = {k: Location.from_dict(v) for k, v in state["locations"].items()}
+    npcs = {k: NPC.from_dict(v) for k, v in state["npcs"].items()}
+    clocks = {k: Clock.from_dict(v) for k, v in state["clocks"].items()}
+
+    location = locations.get(player_location_id)
+    if location is None and locations:
+        player_location_id = next(iter(locations))
+        location = locations[player_location_id]
+
+    if location is None:
+        return {"status": "error", "message": "No locations found."}
+
+    npcs_present = [
+        npc for npc in npcs.values()
+        if getattr(npc, "location", None) == player_location_id
+    ][:5]
+
+    # Resolve
+    resolution = resolve_action(
+        declaration=declaration,
+        player=state["player"],
+        location=location,
+        npcs_present=npcs_present,
+        clocks=clocks,
+        rng=rng,
+    )
+
+    # Apply state deltas
+    if resolution.state_deltas:
+        for key, delta in resolution.state_deltas.items():
+            if isinstance(delta, (int, float)):
+                state["player"][key] = state["player"].get(key, 0) + delta
+            else:
+                state["player"][key] = delta
+
+    # Handle location change
+    if resolution.new_location:
+        state["player"]["current_location"] = resolution.new_location
+
+    # Sync modified NPCs back to state (social blocks, patience, disposition)
+    for npc in npcs_present:
+        if npc.id in state["npcs"]:
+            state["npcs"][npc.id] = npc.to_dict()
+
+    # Sync modified clocks back to state (task clock advancement)
+    for clock_id, clock in clocks.items():
+        if clock_id in state["clocks"]:
+            state["clocks"][clock_id] = clock.to_dict()
+
+    _save_full_state(save_root, state)
+
+    # Write last_engine_output.json for consequence validator (Phase 4)
+    output_data = resolution.to_dict()
+    _write_json_file(
+        os.path.join(save_root, "last_engine_output.json"),
+        output_data,
+    )
+
+    return {
+        "status": "ok",
+        "mode": "SIM",
+        **output_data,
+    }
+
+
+def step_scene_open(args: Any, save_root: str) -> Dict[str, Any]:
+    """Open a new scene using the AngryGM-style scene coder."""
+    rng = _get_rng(args)
+
+    from emergence.engine.sim.scene_coder import SceneCodeGenerator
+    from emergence.engine.schemas.world import Location, NPC, Clock
+    from emergence.engine.narrator.payloads import build_scene_opener_payload
+
+    state = _load_full_state(save_root)
+
+    if not state["player"].get("name"):
+        return {"status": "error", "message": "No active character."}
+
+    player_location_id = (
+        state["player"].get("current_location")
+        or state["player"].get("home_region", "")
+    )
+    locations = {k: Location.from_dict(v) for k, v in state["locations"].items()}
+    npcs = {k: NPC.from_dict(v) for k, v in state["npcs"].items()}
+    clocks = {k: Clock.from_dict(v) for k, v in state["clocks"].items()}
+
+    location = locations.get(player_location_id)
+    if location is None and locations:
+        player_location_id = next(iter(locations))
+        location = locations[player_location_id]
+    if location is None:
+        return {"status": "error", "message": "No locations found."}
+
+    npcs_present = [
+        npc for npc in npcs.values()
+        if getattr(npc, "location", None) == player_location_id
+    ][:5]
+
+    generator = SceneCodeGenerator()
+    scene = generator.generate_scene(
+        world_state=state["world"],
+        player=state["player"],
+        location=location,
+        npcs_present=npcs_present,
+        recent_events=[],
+        clocks=clocks,
+        factions=state.get("factions", {}),
+        rng=rng,
+    )
+
+    # Save scene for later continuation/close
+    _write_json_file(
+        os.path.join(save_root, "current_scene.json"), scene.to_dict()
+    )
+
+    # Sync modified NPCs (lazy social block seeding during scene gen)
+    for npc in npcs_present:
+        if npc.id in state["npcs"]:
+            state["npcs"][npc.id] = npc.to_dict()
+    _save_full_state(save_root, state)
+
+    payload = build_scene_opener_payload(scene.to_dict())
+
+    return {
+        "status": "ok",
+        "mode": "SIM",
+        "scene": scene.to_dict(),
+        "narrator_payload": payload,
+    }
+
+
+def step_scene_continue(args: Any, save_root: str) -> Dict[str, Any]:
+    """Produce a continuation beat after a resolve-action."""
+    from emergence.engine.sim.scene_coder import SceneCode, check_scene_continues
+    from emergence.engine.narrator.payloads import build_scene_continuation_payload
+
+    scene_path = os.path.join(save_root, "current_scene.json")
+    scene_dict = _read_json_file(scene_path)
+    if scene_dict is None:
+        return {
+            "status": "error",
+            "message": "No active scene. Run 'step scene-open' first.",
+        }
+    scene = SceneCode.from_dict(scene_dict)
+
+    # Read last engine output (from resolve-action)
+    last_output_path = os.path.join(save_root, "last_engine_output.json")
+    last_output = _read_json_file(last_output_path) or {}
+
+    # Check if scene continues
+    continues, reason = check_scene_continues(scene, last_output)
+    scene.scene_continues = continues
+    scene.scene_phase = "continuation" if continues else "close"
+
+    # Save updated scene
+    _write_json_file(scene_path, scene.to_dict())
+
+    payload = build_scene_continuation_payload(
+        scene_code=scene.to_dict(),
+        resolution=last_output,
+        complications=last_output.get("complications", []),
+    )
+    if not continues:
+        payload["scene_end_reason"] = reason
+
+    return {
+        "status": "ok",
+        "mode": "SIM",
+        "scene_continues": continues,
+        "end_reason": reason,
+        "scene": scene.to_dict(),
+        "last_resolution": last_output,
+        "narrator_payload": payload,
+    }
+
+
+def step_scene_close(args: Any, save_root: str) -> Dict[str, Any]:
+    """Close the current scene and generate resolution beat."""
+    from emergence.engine.sim.scene_coder import SceneCode
+    from emergence.engine.narrator.payloads import build_scene_close_payload
+
+    scene_path = os.path.join(save_root, "current_scene.json")
+    scene_dict = _read_json_file(scene_path)
+    if scene_dict is None:
+        return {"status": "error", "message": "No active scene."}
+    scene = SceneCode.from_dict(scene_dict)
+    scene.scene_phase = "close"
+    scene.scene_continues = False
+
+    last_output_path = os.path.join(save_root, "last_engine_output.json")
+    last_output = _read_json_file(last_output_path) or {}
+
+    payload = build_scene_close_payload(
+        scene_code=scene.to_dict(),
+        final_state=last_output,
+        transition_hint=scene.transition_hint,
+    )
+
+    # Reset per-scene NPC state (patience, disposition_shifted) for next scene
+    state = _load_full_state(save_root)
+    from emergence.engine.sim.social import reset_scene_state
+    from emergence.engine.schemas.world import NPC, SocialBlock
+    for npc_id, npc_data in state["npcs"].items():
+        sb_dict = npc_data.get("social_block")
+        if sb_dict:
+            sb = SocialBlock.from_dict(sb_dict)
+            reset_scene_state(sb)
+            npc_data["social_block"] = sb.to_dict()
+    _save_full_state(save_root, state)
+
+    # Clean up current scene file
+    try:
+        os.remove(scene_path)
+    except OSError:
+        pass
+
+    return {
+        "status": "ok",
+        "mode": "SIM",
+        "scene": scene.to_dict(),
+        "narrator_payload": payload,
+    }
 
 
 def step_combat_start(args: Any, save_root: str) -> Dict[str, Any]:
