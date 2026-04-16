@@ -21,7 +21,7 @@ All game operations use step commands. Global option `--save-root` goes BEFORE `
 python3 -m emergence --save-root ./saves/default step <action> [options]
 ```
 
-Key commands: `step init`, `step status`, `step scene`, `step scene-apply`, `step scene-finalize`, `step preamble`, `step tick`, `step situation`, `step resolve`, `step combat-start`, `step combat-round`, `step save`.
+Key commands: `step init`, `step status`, `step scene`, `step scene-apply`, `step scene-finalize`, `step preamble`, `step tick`, `step scene-open`, `step resolve-action`, `step scene-continue`, `step scene-close`, `step combat-start`, `step combat-round`, `step save`.
 
 ## Game Flow
 
@@ -31,65 +31,83 @@ Key commands: `step init`, `step status`, `step scene`, `step scene-apply`, `ste
 - **Combat**: `step combat-start` -> each round: present verbs/targets -> `step combat-round` -> narrate -> repeat until combat_over
 - **Save**: `step save` after combat, session zero completion, or on player request. Commit saves to git periodically.
 
-## Sim Loop Pipeline
+## Sim Loop Pipeline (Declare-Determine-Describe)
 
-Each cycle has three engine steps and three narration beats:
+The sim loop uses the DDD pipeline: player declares intent, engine determines outcome, narrator describes result. No numbered choice menus. Player declares freely.
 
 ```
-1. step resolve --choice <id>    → narrate the RESULT (consequence beat)
-2. step tick --days N             → narrate TIME PASSING (transition beat, skip if time_cost=0)
-3. step situation                → narrate the NEW SCENE (frame beat)
+1. step scene-open                    → narrate OPENING (frozen moment, 150-300 words)
+2. Player declares intent freely
+3. Narrator classifies → step resolve-action --type X --approach Y [--target Z] [--skill W]
+4. step scene-continue                → narrate RESULT (continuation, 60-120 words)
+5. Repeat 2-4 until dramatic question answered
+6. step scene-close                   → narrate CLOSE (resolution, 40-80 words)
+7. step tick --days N                 → narrate TIME PASSING (if applicable)
+8. Go to 1
 ```
 
-### Beat 1: Consequence (after resolve)
-- No narrator_payload from engine. Use `narrative_hints` and `narration_scene_type`.
-- Dialogue: 20-100 words. Travel/transition: 40-100 words. Observation/activity: 30-60 words.
-- Narrate what happened. Introduce one new element (complication, information, relationship shift).
+### Exposition (free action)
+The player can ask for more information at any time without a roll or time cost:
+```
+step resolve-action --type exposition --approach observe
+```
 
-### Beat 2: Transition (after tick)
-- scene_type: time_skip. 50-150 words.
-- Show world changes through sensory detail, not event lists.
-- Filter tick events: surface 1 high-priority + 1-2 medium as environmental detail. Hide the rest.
+### resolve-action
+```
+step resolve-action --type <type> --approach <approach> [--target <npc_id>] [--skill <skill>]
+```
+Types: social, physical, investigate, travel, medical, craft, wait, exposition.
+Approaches: persuade, intimidate, deceive, reason, force, stealth, speed, endurance, observe, search, analyze, ask_around, direct, cautious, fast, treat, diagnose, stabilize, build, repair, improvise.
 
-### Beat 3: Frame (after situation)
-- scene_type: situation_description. Variable length -- see Scene Opening below.
-- Follow the Sensation-Information-Choice pipeline.
-- Present choices from payload. Do not add or rephrase choices.
+The engine resolves via three-gate check → dual-die roll (if needed) → six outcome tiers (CRITICAL, FULL, MARGINAL, PARTIAL_FAILURE, FAILURE, FUMBLE).
+
+### Complications (PBTA-style)
+The engine generates GM-move complications on MARGINAL through FUMBLE:
+- **MARGINAL**: success AND complication (the 7-9 band)
+- **PARTIAL_FAILURE / FAILURE**: complication, weighted harder
+- **FUMBLE**: two complications, weighted severe
+
+Complications are engine-generated. The narrator MUST describe them. Do not soften, omit, or contradict them.
 
 ## Scene Structure
 
-Every scene needs a **Dramatic Question** (what is at stake, phrased as yes/no) and a **Source of Conflict** (what prevents the player from getting what they want easily). When the dramatic question is answered, the scene is over.
+Every scene is coded with an AngryGM-style **Scene Code** from `step scene-open`:
+- **Dramatic Question**: yes/no question defining what's at stake
+- **Source of Conflict**: what prevents easy resolution
+- **Yes Outcome**: what happens if DQ answered favorably
+- **No Outcome**: what happens if DQ answered unfavorably
+- **NPCs with social stat blocks**: disposition, patience, motivation, source of conflict, mood
+- **Hidden elements**: unrevealed info for narrator seeding
+- **Constraints**: obligations, time pressure
+- **Available approaches**: suggestions (not exhaustive)
 
-### Scene Opening (new location, new scene, post-travel)
-100-200 words. This is the full establishing beat. Use the Sensation-Information-Choice pipeline:
+The scene ends when: DQ is answered, NPC patience exhausted, player travels away, or a complication forces escalation.
+
+### Scene Opening (step scene-open)
+150-300 words. The full frozen moment. Use Sensation → Information → Invitation:
 1. **Sensation** -- lead with the sense that matters most. Specific nouns, not abstractions.
-2. **Information** -- what the character infers. Weave in 1-2 medium-priority world events as environmental detail.
-3. **Choice** -- end on the actionable element. The last thing said is the thing players act on.
+2. **Information** -- what the character infers. Seed hidden elements as foreshadowing.
+3. **Invitation** -- end on what invites action. Do NOT list numbered choices.
 
-Then present 2-4 choices with visible stakes. Each choice should preview consequences, not just name an action.
+### Scene Continuation (step scene-continue)
+60-120 words. Narrate the engine's outcome. Describe all complications. Present the updated scene state. End on what invites the next action.
 
-### Scene Continuation (follow-up in same scene)
-40-80 words. The scene is already established. Narrate the consequence of the previous action and present updated choices.
+### Scene Close (step scene-close)
+40-80 words. Resolution of the dramatic question + forward momentum to next scene.
 
-### Scene Close (dramatic question answered)
-30-60 words. Resolution + one new element introduced. Forward momentum to next scene.
+## NPC Social Mechanics (Engine-Enforced)
 
-## Choice Presentation
+NPCs have **social stat blocks** with hard limits the narrator cannot override:
 
-Engine choices are labels. Transform them into miniature scene previews with stakes:
+- **Disposition** (-3 to +3): caps what outcomes are achievable. Disposition -2 means the BEST possible result on a CRITICAL roll is "grudging tolerance." Do not describe cooperation beyond the disposition cap.
+- **Patience** (countdown): decrements per social action. At 0, the interaction ENDS. The NPC walks away, shuts down, or escalates. Do NOT continue dialogue past patience 0.
+- **Motivation**: what the NPC wants. Social actions that align succeed more easily.
+- **Source of Conflict**: why the NPC resists. Must be addressed, not charmed away.
+- **Disposition shifts**: CRITICAL → +1, FUMBLE → -1, capped per scene.
 
-BAD: `1. Travel to Jersey City (Brick's captaincy)`
-GOOD: `1. Jersey City — Brick's territory. He's weighing a Tower Lord alliance and might need a T3 with medical skills.`
-
-Rules:
-- 2-4 visible choices per situation. Never more than 4.
-- Every choice must have a visible stake or consequence preview.
-- Choices are actions, not outcomes. "Tell him the truth" not "Build trust."
-- Freeform player input is always accepted as an alternative.
-
-## NPC Interaction
-
-Every NPC scene needs: a **goal** (what does the PC want?), **NPC disposition + motivation**, and **three possible outcomes** (agree, refuse, compromise). End the scene when the outcome is determined. No infinite negotiation loops.
+Disposition bounds:
+| -3: doesn't attack | -2: grudging tolerance | -1: non-interference | 0: transactional only |
+| +1: willing cooperation | +2: proactive help | +3: sacrifice/loyalty |
 
 ## Event Filtering
 
@@ -105,14 +123,19 @@ One situation = 1 high event + 1-2 medium events + ambient. Everything else stor
 ## Self-Check Before Output
 
 Before delivering narration, verify:
-- Word count within the response type envelope (scene open: 100-200, continuation: 40-80, close: 30-60)
+- Word count within the response type envelope (opener: 150-300, continuation: 60-120, close: 40-80)
 - No characters appear who are not in the payload or TRACKING.md
-- Choices not added or rephrased beyond engine payload
+- No numbered choice lists -- player declares freely
 - No meta-gaming language (XP, HP, dice, level, stat, RNG)
 - No interior monologue for the player character
 - Register directive from narrator_payload followed
 - Dramatic question identifiable for the current scene
-- At least one choice connects to an active player goal
+- All engine-generated complications are described (not softened or omitted)
+- FAILURE/FUMBLE outcomes are narrated as failure -- not success
+- Harm dealt is referenced as injury, pain, or condition worsening
+- NPC disposition bounds respected (no cooperation beyond cap)
+- Interaction_ended means NPC is DONE -- no continued dialogue
+- Hidden elements seeded as atmosphere or foreshadowing where natural
 
 ## Playtest Mode
 
