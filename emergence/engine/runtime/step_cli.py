@@ -812,6 +812,11 @@ def step_resolve_action(args: Any, save_root: str) -> Dict[str, Any]:
         if npc.id in state["npcs"]:
             state["npcs"][npc.id] = npc.to_dict()
 
+    # Sync modified clocks back to state (task clock advancement)
+    for clock_id, clock in clocks.items():
+        if clock_id in state["clocks"]:
+            state["clocks"][clock_id] = clock.to_dict()
+
     _save_full_state(save_root, state)
 
     # Write last_engine_output.json for consequence validator (Phase 4)

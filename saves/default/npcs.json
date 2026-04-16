@@ -1682,7 +1682,7 @@
     "status": "alive",
     "social_block": {
       "disposition": -1,
-      "patience": 2,
+      "patience": 1,
       "patience_max": 2,
       "motivation": "maintain dominance through fear",
       "source_of_conflict": "distrusts outsiders and high-tier operators",

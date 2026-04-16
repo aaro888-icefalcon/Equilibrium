@@ -469,6 +469,13 @@ def resolve_action(
         for effect in comp.mechanical_effects:
             _apply_complication_effect(effect, resolution)
 
+    # 7. Advance task clocks on success
+    clock_advances = advance_task_clocks(
+        clocks, declaration, resolution.outcome_tier,
+    )
+    if clock_advances:
+        resolution.scene_state_changes["clock_advances"] = clock_advances
+
     return resolution
 
 
@@ -570,6 +577,73 @@ def _apply_complication_effect(
         clock_id = effect.get("clock_id", "")
         segments = effect.get("segments", 1)
         resolution.state_deltas.setdefault("clock_advances", {})[clock_id] = segments
+
+
+# ---------------------------------------------------------------------------
+# Task clock advancement
+# ---------------------------------------------------------------------------
+
+# Segments per outcome tier on successful actions
+_TIER_CLOCK_SEGMENTS = {
+    SuccessTier.CRITICAL.value: 3,
+    SuccessTier.FULL.value: 2,
+    SuccessTier.MARGINAL.value: 1,
+}
+
+
+def advance_task_clocks(
+    clocks: Dict[str, Clock],
+    declaration: ActionDeclaration,
+    outcome_tier: str,
+) -> List[Dict[str, Any]]:
+    """Advance task clocks matching the current action on success.
+
+    Returns list of advancement records for the narrator.
+    """
+    segments = _TIER_CLOCK_SEGMENTS.get(outcome_tier, 0)
+    if segments == 0:
+        return []
+
+    advances: List[Dict[str, Any]] = []
+    for clock_id, clock in clocks.items():
+        if clock.clock_type != "task":
+            continue
+        if clock.current_segment >= clock.total_segments:
+            continue
+
+        # Check if this action matches the clock's advance conditions
+        matched = False
+        for cond in clock.advance_conditions:
+            cond_type = cond.get("action_type", "")
+            cond_target = cond.get("target_id", "")
+            if cond_type and cond_type != declaration.action_type:
+                continue
+            if cond_target and cond_target != declaration.target_id:
+                continue
+            matched = True
+            break
+
+        if not matched and not clock.advance_conditions:
+            # Clocks with no conditions advance on any action (generic)
+            matched = True
+
+        if matched:
+            old = clock.current_segment
+            clock.current_segment = min(
+                clock.current_segment + segments,
+                clock.total_segments,
+            )
+            completed = clock.current_segment >= clock.total_segments
+            advances.append({
+                "clock_id": clock_id,
+                "display_name": clock.display_name,
+                "segments_added": segments,
+                "current": clock.current_segment,
+                "total": clock.total_segments,
+                "completed": completed,
+            })
+
+    return advances
 
 
 # ---------------------------------------------------------------------------

@@ -727,6 +727,9 @@ class Clock:
     interactions: List[Dict[str, Any]] = field(default_factory=list)
     narrative_description: str = ""
     last_advancement: Dict[str, Any] = field(default_factory=dict)
+    clock_type: str = "world"          # "world" (tick-driven), "task" (player-action-driven), "counter" (opposition)
+    linked_clock_id: str = ""           # For race conditions (task vs counter)
+    visible_to_player: bool = True
 
     def to_dict(self) -> Dict[str, Any]:
         return asdict(self)
@@ -746,6 +749,9 @@ class Clock:
             interactions=data.get("interactions", []),
             narrative_description=data.get("narrative_description", ""),
             last_advancement=data.get("last_advancement", {}),
+            clock_type=data.get("clock_type", "world"),
+            linked_clock_id=data.get("linked_clock_id", ""),
+            visible_to_player=data.get("visible_to_player", True),
         )
 
 

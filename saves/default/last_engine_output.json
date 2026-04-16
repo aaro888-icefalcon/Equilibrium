@@ -1,50 +1,58 @@
 {
   "declaration": {
     "action_type": "social",
-    "approach": "reason",
-    "target_id": "npc-volk",
+    "approach": "intimidate",
+    "target_id": "npc-butcher",
     "skill_id": null,
     "free_text": ""
   },
   "gate_result": "roll",
   "outcome_tier": "failure",
-  "tn": 12,
+  "tn": 13,
   "primary_die": 8,
-  "secondary_die": 8,
+  "secondary_die": 6,
   "modifiers": [],
   "complications": [
     {
-      "move_id": "capture_seize",
-      "severity": "severe",
+      "move_id": "deal_harm",
+      "severity": "hard",
       "category": "core",
-      "description": "Something is seized from you \u2014 by force or circumstance.",
-      "mechanical_effects": [],
-      "narrative_seed": "capture_seize"
+      "description": "You take social harm.",
+      "mechanical_effects": [
+        {
+          "type": "harm_dealt",
+          "track": "social",
+          "amount": 1
+        }
+      ],
+      "narrative_seed": "harm"
     }
   ],
-  "state_deltas": {},
+  "state_deltas": {
+    "harm_dealt": {
+      "social": 1
+    }
+  },
   "narrative_hints": [
-    "Anton\u00edn Volk's patience is exhausted. The interaction ends.",
-    "Anton\u00edn Volk refuses."
+    "\"The Butcher\" (Petra Voss) refuses."
   ],
   "time_cost_days": 0,
   "new_location": null,
   "encounter_triggered": false,
   "scene_state_changes": {
     "patience": {
-      "patience_before": 1,
-      "patience_after": 0,
-      "patience_max": 3,
-      "interaction_ended": true
-    },
-    "interaction_ended": true
+      "patience_before": 2,
+      "patience_after": 1,
+      "patience_max": 2,
+      "interaction_ended": false
+    }
   },
   "check_result": {
     "d1": 3,
-    "d2": 3,
-    "total": 6,
-    "tn": 12,
-    "margin": -6,
+    "d2": 1,
+    "total": 4,
+    "tn": 13,
+    "margin": -9,
     "tier": "failure",
     "is_crit": false,
     "is_fumble": false
