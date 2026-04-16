@@ -128,6 +128,10 @@ class Scene:
         """Whether this scene needs free-text input before choices."""
         return False
 
+    def text_prompts(self, state: CreationState) -> List[Dict[str, str]]:
+        """Return prompts for freeform text input. Each item: {"key": str, "prompt": str}."""
+        return []
+
     def apply_text(
         self,
         text_inputs: Dict[str, str],

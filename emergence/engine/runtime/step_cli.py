@@ -264,13 +264,9 @@ def step_scene(args: Any, save_root: str) -> Dict[str, Any]:
     choices = scene.get_choices(creation_state)
     needs_text = scene.needs_text_input()
 
-    text_prompts = []
+    text_prompts: List[Dict[str, str]] = []
     if needs_text:
-        if index == 0:  # OpeningScene
-            text_prompts = [
-                {"key": "name", "prompt": "Tell me your name."},
-                {"key": "age", "prompt": "Tell me how old you were on the day everything stopped. (16-65)"},
-            ]
+        text_prompts = list(scene.text_prompts(creation_state))
 
     # Build narrator payload
     from emergence.engine.narrator.payloads import build_character_creation_payload
