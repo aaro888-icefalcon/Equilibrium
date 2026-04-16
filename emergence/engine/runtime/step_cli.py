@@ -33,6 +33,7 @@ def dispatch_step(args: Any, save_root: str) -> Dict[str, Any]:
         "resolve": step_resolve,
         "combat-start": step_combat_start,
         "combat-round": step_combat_round,
+        "resolve-action": step_resolve_action,
         "save": step_save,
     }
 
@@ -735,6 +736,88 @@ def step_resolve(args: Any, save_root: str) -> Dict[str, Any]:
         output["message"] = "Combat encounter triggered! Run 'step combat-start'."
 
     return output
+
+
+def step_resolve_action(args: Any, save_root: str) -> Dict[str, Any]:
+    """Resolve a declared player action using the dice-backed resolver."""
+    rng = _get_rng(args)
+
+    from emergence.engine.sim.action_resolver import (
+        ActionDeclaration, resolve_action,
+    )
+    from emergence.engine.schemas.world import Location, NPC, Clock
+
+    state = _load_full_state(save_root)
+
+    if not state["player"].get("name"):
+        return {"status": "error", "message": "No active character."}
+
+    # Build declaration from CLI args
+    declaration = ActionDeclaration(
+        action_type=getattr(args, "action_type", ""),
+        approach=getattr(args, "approach", ""),
+        target_id=getattr(args, "target", None),
+        skill_id=getattr(args, "skill", None),
+    )
+
+    # Load location and NPCs
+    player_location_id = (
+        state["player"].get("current_location")
+        or state["player"].get("home_region", "")
+    )
+    locations = {k: Location.from_dict(v) for k, v in state["locations"].items()}
+    npcs = {k: NPC.from_dict(v) for k, v in state["npcs"].items()}
+    clocks = {k: Clock.from_dict(v) for k, v in state["clocks"].items()}
+
+    location = locations.get(player_location_id)
+    if location is None and locations:
+        player_location_id = next(iter(locations))
+        location = locations[player_location_id]
+
+    if location is None:
+        return {"status": "error", "message": "No locations found."}
+
+    npcs_present = [
+        npc for npc in npcs.values()
+        if getattr(npc, "location", None) == player_location_id
+    ][:5]
+
+    # Resolve
+    resolution = resolve_action(
+        declaration=declaration,
+        player=state["player"],
+        location=location,
+        npcs_present=npcs_present,
+        clocks=clocks,
+        rng=rng,
+    )
+
+    # Apply state deltas
+    if resolution.state_deltas:
+        for key, delta in resolution.state_deltas.items():
+            if isinstance(delta, (int, float)):
+                state["player"][key] = state["player"].get(key, 0) + delta
+            else:
+                state["player"][key] = delta
+
+    # Handle location change
+    if resolution.new_location:
+        state["player"]["current_location"] = resolution.new_location
+
+    _save_full_state(save_root, state)
+
+    # Write last_engine_output.json for consequence validator (Phase 4)
+    output_data = resolution.to_dict()
+    _write_json_file(
+        os.path.join(save_root, "last_engine_output.json"),
+        output_data,
+    )
+
+    return {
+        "status": "ok",
+        "mode": "SIM",
+        **output_data,
+    }
 
 
 def step_combat_start(args: Any, save_root: str) -> Dict[str, Any]:

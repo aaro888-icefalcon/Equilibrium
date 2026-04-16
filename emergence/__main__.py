@@ -125,6 +125,16 @@ def build_parser() -> argparse.ArgumentParser:
     step_resolve = step_sub.add_parser("resolve", help="Resolve player choice")
     step_resolve.add_argument("--choice-id", required=True, help="ID of chosen action")
 
+    # step resolve-action (new dice-backed resolver)
+    step_ra = step_sub.add_parser("resolve-action", help="Resolve a declared action with dice")
+    step_ra.add_argument("--type", required=True, dest="action_type",
+                         choices=["social", "physical", "investigate", "travel",
+                                  "medical", "craft", "wait", "exposition"],
+                         help="Action type")
+    step_ra.add_argument("--approach", required=True, help="Approach (e.g. persuade, force, observe)")
+    step_ra.add_argument("--target", default=None, help="Target NPC or object ID")
+    step_ra.add_argument("--skill", default=None, help="Skill to use (e.g. negotiation, first_aid)")
+
     # step combat-start
     step_sub.add_parser("combat-start", help="Start a combat encounter")
 
