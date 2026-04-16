@@ -244,36 +244,6 @@ def _make_all_scenes() -> list:
     return make_v2_scenes()
 
 
-def _make_v1_scenes() -> list:
-    """Assemble the original 10 session zero scenes (v1, for test compat)."""
-    from emergence.engine.character_creation.scenes import (
-        OpeningScene,
-        OccupationScene,
-        RelationshipScene,
-        LocationScene,
-        ConcernScene,
-    )
-    from emergence.engine.character_creation.manifestation import ManifestationScene
-    from emergence.engine.character_creation.year_one import (
-        FirstWeeksScene,
-        FactionEncounterScene,
-        CriticalIncidentScene,
-        SettlingScene,
-    )
-    return [
-        OpeningScene(),
-        OccupationScene(),
-        RelationshipScene(),
-        LocationScene(),
-        ConcernScene(),
-        ManifestationScene(),
-        FirstWeeksScene(),
-        FactionEncounterScene(),
-        CriticalIncidentScene(),
-        SettlingScene(),
-    ]
-
-
 def _run_session_zero(state: GameState, narrator: Any) -> Optional[str]:
     """Run session zero mode. Returns next mode or None."""
     from emergence.engine.character_creation.session_zero import (
