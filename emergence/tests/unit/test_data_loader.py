@@ -3,36 +3,9 @@
 import unittest
 
 from emergence.engine.combat.data_loader import (
-    load_powers,
     load_enemies,
     load_encounters,
 )
-
-
-class TestLoadPowers(unittest.TestCase):
-
-    def test_loads_48_powers(self):
-        powers = load_powers("emergence/data/powers")
-        self.assertEqual(len(powers), 48, f"Expected 48 powers, got {len(powers)}")
-
-    def test_all_have_id_and_name(self):
-        powers = load_powers("emergence/data/powers")
-        for pid, p in powers.items():
-            self.assertEqual(pid, p.id)
-            self.assertTrue(len(p.name) > 0, f"Power {pid} missing name")
-
-    def test_all_have_valid_category(self):
-        valid = {
-            "physical_kinetic", "perceptual_mental", "matter_energy",
-            "biological_vital", "auratic", "temporal_spatial", "eldritch_corruptive",
-        }
-        powers = load_powers("emergence/data/powers")
-        for pid, p in powers.items():
-            self.assertIn(p.category, valid, f"Power {pid} has invalid category {p.category}")
-
-    def test_missing_directory_returns_empty(self):
-        powers = load_powers("emergence/data/nonexistent")
-        self.assertEqual(len(powers), 0)
 
 
 class TestLoadEnemies(unittest.TestCase):

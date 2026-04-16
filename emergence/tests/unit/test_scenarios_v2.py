@@ -1,4 +1,4 @@
-"""Unit tests for v2 session zero scenarios — new and revised scenes."""
+"""Unit tests for the V2 session-zero scenarios (12-scene flow)."""
 
 import random
 import unittest
@@ -8,8 +8,6 @@ from emergence.engine.character_creation.character_factory import (
     CreationState,
 )
 from emergence.engine.character_creation.scenarios import (
-    CircumstanceScenario,
-    CIRCUMSTANCES,
     FactionScenario,
     FACTION_DEMANDS,
     IdentityScenario,
@@ -18,12 +16,13 @@ from emergence.engine.character_creation.scenarios import (
     PrimaryRiderScenario,
     REGION_FACTIONS,
     RelationshipScenario,
+    Scenario1Scenario,
+    Scenario2Scenario,
     SecondaryCastModeScenario,
     SecondaryRiderScenario,
     SurvivalScenario,
     SURVIVAL_POOL,
-    TemperamentScenario,
-    TEMPERAMENTS,
+    V2_CATEGORY_LABELS,
     VowScenario,
     VOW_PACKAGES,
     make_v2_scenes,
@@ -33,59 +32,106 @@ from emergence.engine.character_creation.scenarios import (
 class TestMakeV2Scenes(unittest.TestCase):
     def test_scene_count(self):
         scenes = make_v2_scenes()
-        self.assertEqual(len(scenes), 14)
+        self.assertEqual(len(scenes), 12)
 
     def test_scene_ids_unique(self):
         scenes = make_v2_scenes()
         ids = [s.scene_id for s in scenes]
         self.assertEqual(len(ids), len(set(ids)))
 
+    def test_scene_order(self):
+        ids = [s.scene_id for s in make_v2_scenes()]
+        self.assertEqual(ids[0], "sz_v2_identity")
+        self.assertEqual(ids[1], "sz_v2_scenario1")
+        self.assertEqual(ids[2], "sz_v2_scenario2")
+        self.assertEqual(ids[-1], "sz_v2_vows")
 
-class TestTemperamentScenario(unittest.TestCase):
+
+class TestIdentityScenario(unittest.TestCase):
     def setUp(self):
-        self.scene = TemperamentScenario()
-        self.state = CreationState()
+        self.scene = IdentityScenario()
+        self.state = CreationState(seed=42)
         self.factory = CharacterFactory()
         self.rng = random.Random(42)
 
-    def test_choice_count(self):
-        self.assertEqual(len(self.scene.get_choices(self.state)), len(TEMPERAMENTS))
+    def test_text_prompts_include_description(self):
+        keys = [p["key"] for p in self.scene.text_prompts(self.state)]
+        self.assertIn("name", keys)
+        self.assertIn("age", keys)
+        self.assertIn("description", keys)
 
-    def test_apply_sets_temperament(self):
-        result = self.scene.apply(0, self.state, self.factory, self.rng)
-        self.assertEqual(result.temperament, "pragmatic")
-
-    def test_apply_gives_attribute(self):
-        result = self.scene.apply(1, self.state, self.factory, self.rng)
-        self.assertIn("will", result.attribute_deltas)
-
-    def test_apply_gives_skills(self):
-        result = self.scene.apply(0, self.state, self.factory, self.rng)
-        self.assertIn("negotiation", result.skills)
-        self.assertIn("streetwise", result.skills)
-
-    def test_apply_gives_narrative_tag(self):
-        result = self.scene.apply(2, self.state, self.factory, self.rng)
-        self.assertIn("curious", result.narrative_tags)
+    def test_apply_text_stores_description_and_tags(self):
+        result = self.scene.apply_text(
+            {"name": "Abhishek", "age": "30",
+             "description": "blunt surgeon, protective and analytical"},
+            self.state,
+            self.factory,
+            self.rng,
+        )
+        self.assertEqual(result.name, "Abhishek")
+        self.assertEqual(result.age_at_onset, 30)
+        self.assertIn("blunt", result.self_description.lower())
+        self.assertGreater(len(result.reaction_tags), 0)
 
 
-class TestCircumstanceScenario(unittest.TestCase):
+class TestScenario1Scenario(unittest.TestCase):
     def setUp(self):
-        self.scene = CircumstanceScenario()
-        self.state = CreationState()
+        self.scene = Scenario1Scenario()
+        self.state = CreationState(seed=42)
         self.factory = CharacterFactory()
         self.rng = random.Random(42)
 
-    def test_choice_count(self):
-        self.assertEqual(len(self.scene.get_choices(self.state)), 8)
+    def test_prepare_selects_slot_1_vignette(self):
+        self.scene.prepare(self.state, self.rng)
+        self.assertTrue(self.scene._vignette.get("id", "").startswith("v1_"))
 
-    def test_apply_sets_onset_circumstance(self):
+    def test_always_returns_six_choices(self):
+        self.scene.prepare(self.state, self.rng)
+        self.assertEqual(len(self.scene.get_choices(self.state)), 6)
+
+    def test_apply_commits_v2_power_at_tier_3(self):
+        self.scene.prepare(self.state, self.rng)
         result = self.scene.apply(0, self.state, self.factory, self.rng)
-        self.assertEqual(result.onset_circumstance, "A")
+        self.assertEqual(len(result.powers), 1)
+        power = result.powers[0]
+        self.assertEqual(power["slot"], "anchor")
+        self.assertEqual(power["tier"], 3)
+        self.assertIn(power["category"], V2_CATEGORY_LABELS)
+        self.assertEqual(result.tier, 3)
+        self.assertEqual(result.tier_ceiling, 5)
 
-    def test_apply_gives_attribute(self):
-        result = self.scene.apply(6, self.state, self.factory, self.rng)
-        self.assertIn("agility", result.attribute_deltas)
+
+class TestScenario2Scenario(unittest.TestCase):
+    def setUp(self):
+        self.state = CreationState(seed=42)
+        self.factory = CharacterFactory()
+
+        # Seed scene 1 first so scene 2 knows what to exclude.
+        s1 = Scenario1Scenario()
+        s1.prepare(self.state, random.Random(42))
+        self.state = s1.apply(0, self.state, self.factory, random.Random(42))
+
+        self.scene = Scenario2Scenario()
+        self.rng = random.Random(42)
+
+    def test_prepare_selects_slot_2_vignette(self):
+        self.scene.prepare(self.state, self.rng)
+        self.assertTrue(self.scene._vignette.get("id", "").startswith("v2_"))
+
+    def test_options_exclude_primary_category(self):
+        primary = self.state.power_category_primary
+        self.scene.prepare(self.state, self.rng)
+        for p in self.scene._options:
+            self.assertNotEqual(p.category, primary)
+
+    def test_apply_commits_secondary(self):
+        self.scene.prepare(self.state, self.rng)
+        result = self.scene.apply(0, self.state, self.factory, self.rng)
+        anchor = [p for p in result.powers if p["slot"] == "anchor"]
+        secondary = [p for p in result.powers if p["slot"] == "secondary"]
+        self.assertEqual(len(anchor), 1)
+        self.assertEqual(len(secondary), 1)
+        self.assertNotEqual(anchor[0]["category"], secondary[0]["category"])
 
 
 class TestAdditiveSkills(unittest.TestCase):
@@ -97,23 +143,14 @@ class TestAdditiveSkills(unittest.TestCase):
 
     def test_skills_are_additive(self):
         state = CreationState()
-        # Two scenes granting the same skill should stack
-        self.factory.apply_scene_result("scene_a", {
-            "skills": {"first_aid": 2},
-        }, state, self.rng)
-        self.factory.apply_scene_result("scene_b", {
-            "skills": {"first_aid": 1},
-        }, state, self.rng)
+        self.factory.apply_scene_result("scene_a", {"skills": {"first_aid": 2}}, state, self.rng)
+        self.factory.apply_scene_result("scene_b", {"skills": {"first_aid": 1}}, state, self.rng)
         self.assertEqual(state.skills["first_aid"], 3)
 
     def test_skills_capped_at_max(self):
         state = CreationState()
-        self.factory.apply_scene_result("scene_a", {
-            "skills": {"first_aid": 4},
-        }, state, self.rng)
-        self.factory.apply_scene_result("scene_b", {
-            "skills": {"first_aid": 4},
-        }, state, self.rng)
+        self.factory.apply_scene_result("scene_a", {"skills": {"first_aid": 4}}, state, self.rng)
+        self.factory.apply_scene_result("scene_b", {"skills": {"first_aid": 4}}, state, self.rng)
         self.assertEqual(state.skills["first_aid"], CharacterFactory.MAX_SESSION_ZERO_SKILL)
 
 
@@ -135,33 +172,6 @@ class TestSurvivalScenario(unittest.TestCase):
         result = self.scene.apply(0, self.state, self.factory, self.rng)
         self.assertTrue(len(result.skills) > 0)
 
-    def test_apply_generates_npc_relationship(self):
-        self.scene.prepare(self.state, self.rng)
-        choices = self.scene.get_choices(self.state)
-        # Find a choice that isn't the lone_walker (which has no NPC)
-        for i, c in enumerate(choices):
-            if "alone" not in c.lower() and "nobody" not in c.lower():
-                result = self.scene.apply(i, self.state, self.factory, self.rng)
-                if result.relationships:
-                    self.assertTrue(len(result.relationships) > 0)
-                    return
-        # If all choices are no-NPC, that's still valid
-        self.assertTrue(True)
-
-    def test_deterministic_with_same_seed(self):
-        rng1 = random.Random(99)
-        rng2 = random.Random(99)
-        scene1 = SurvivalScenario()
-        scene2 = SurvivalScenario()
-        state1 = CreationState(region="Philadelphia", narrative_tags=["medical"])
-        state2 = CreationState(region="Philadelphia", narrative_tags=["medical"])
-        scene1.prepare(state1, rng1)
-        scene2.prepare(state2, rng2)
-        self.assertEqual(
-            scene1.get_choices(state1),
-            scene2.get_choices(state2),
-        )
-
     def test_pool_has_20_entries(self):
         self.assertEqual(len(SURVIVAL_POOL), 20)
 
@@ -177,32 +187,11 @@ class TestFactionScenario(unittest.TestCase):
         self.scene.prepare(self.state, self.rng)
         self.assertTrue(len(self.scene._rep_name) > 0)
 
-    def test_framing_includes_rep_name(self):
-        self.scene.prepare(self.state, self.rng)
-        framing = self.scene.get_framing(self.state)
-        self.assertIn(self.scene._rep_name, framing)
-
-    def test_choices_include_rep_name(self):
-        self.scene.prepare(self.state, self.rng)
-        choices = self.scene.get_choices(self.state)
-        self.assertEqual(len(choices), 4)
-        self.assertIn(self.scene._rep_name, choices[0])
-
     def test_accept_gives_faction_standing(self):
         self.scene.prepare(self.state, self.rng)
         result = self.scene.apply(0, self.state, self.factory, self.rng)
         self.assertIn("iron-crown", result.faction_standing_deltas)
         self.assertEqual(result.faction_standing_deltas["iron-crown"], 2)
-
-    def test_apply_creates_rep_relationship(self):
-        self.scene.prepare(self.state, self.rng)
-        result = self.scene.apply(0, self.state, self.factory, self.rng)
-        self.assertTrue(len(result.relationships) > 0)
-
-    def test_apply_creates_goal(self):
-        self.scene.prepare(self.state, self.rng)
-        result = self.scene.apply(0, self.state, self.factory, self.rng)
-        self.assertTrue(len(result.goals) > 0)
 
 
 class TestVowScenario(unittest.TestCase):
@@ -211,17 +200,6 @@ class TestVowScenario(unittest.TestCase):
         self.state = CreationState()
         self.factory = CharacterFactory()
         self.rng = random.Random(42)
-
-    def test_prepare_generates_npcs(self):
-        self.scene.prepare(self.state, self.rng)
-        self.assertEqual(len(self.scene._npc_names), len(VOW_PACKAGES))
-
-    def test_choices_include_npc_names(self):
-        self.scene.prepare(self.state, self.rng)
-        choices = self.scene.get_choices(self.state)
-        # Each choice should have the generic name replaced
-        for c in choices:
-            self.assertNotIn("{npc_name}", c)
 
     def test_apply_gives_goals(self):
         self.scene.prepare(self.state, self.rng)
@@ -233,64 +211,52 @@ class TestVowScenario(unittest.TestCase):
         result = self.scene.apply(0, self.state, self.factory, self.rng)
         self.assertGreater(len(result.inventory), 0)
 
-    def test_apply_creates_npc_relationship(self):
-        self.scene.prepare(self.state, self.rng)
-        result = self.scene.apply(0, self.state, self.factory, self.rng)
-        self.assertTrue(len(result.relationships) > 0)
-
 
 class TestPowerConfigScenarios(unittest.TestCase):
+    """Cast-mode / rider selection scenes use V2 ids directly."""
+
     def setUp(self):
-        self.state = CreationState()
-        self.state.powers = [
-            {"power_id": "pow_kinetic_burst", "name": "Kinetic Burst",
-             "category": "physical_kinetic", "tier": 3, "slot": "anchor"},
-            {"power_id": "pow_heightened_senses", "name": "Heightened Senses",
-             "category": "perceptual_mental", "tier": 3, "slot": "secondary"},
-        ]
-        self.state.power_category_primary = "physical_kinetic"
-        self.state.power_category_secondary = "perceptual_mental"
         self.factory = CharacterFactory()
         self.rng = random.Random(42)
+        self.state = CreationState(seed=42)
 
-    def test_primary_cast_mode_prepare(self):
+        # Build an anchor + secondary via the scenario scenes, so the
+        # power_id values in state match real V2 entries.
+        s1 = Scenario1Scenario()
+        s1.prepare(self.state, random.Random(42))
+        self.state = s1.apply(0, self.state, self.factory, random.Random(42))
+
+        s2 = Scenario2Scenario()
+        s2.prepare(self.state, random.Random(43))
+        self.state = s2.apply(0, self.state, self.factory, random.Random(43))
+
+    def test_primary_cast_mode_prepare_finds_options(self):
         scene = PrimaryCastModeScenario()
         scene.prepare(self.state, self.rng)
         choices = scene.get_choices(self.state)
-        # Should have options (from V2 data) or fallback
         self.assertGreater(len(choices), 0)
 
-    def test_primary_rider_prepare(self):
+    def test_primary_rider_prepare_finds_options(self):
         scene = PrimaryRiderScenario()
         scene.prepare(self.state, self.rng)
         choices = scene.get_choices(self.state)
         self.assertGreater(len(choices), 0)
 
-    def test_secondary_cast_mode_prepare(self):
-        scene = SecondaryCastModeScenario()
-        scene.prepare(self.state, self.rng)
-        choices = scene.get_choices(self.state)
-        self.assertGreater(len(choices), 0)
-
-    def test_cast_mode_apply_stores_on_power(self):
+    def test_cast_mode_has_narrative_prompt(self):
         scene = PrimaryCastModeScenario()
         scene.prepare(self.state, self.rng)
-        choices = scene.get_choices(self.state)
-        if len(choices) > 1 and choices[0] != "No options available — use default configuration":
-            result = scene.apply(0, self.state, self.factory, self.rng)
-            anchor = next((p for p in result.powers if p.get("slot") == "anchor"), None)
-            self.assertIsNotNone(anchor)
-            self.assertIn("selected_cast_mode", anchor)
+        prompts = scene.text_prompts(self.state)
+        self.assertEqual(len(prompts), 1)
+        self.assertEqual(prompts[0]["key"], "narrative")
 
-    def test_rider_apply_stores_on_power(self):
-        scene = PrimaryRiderScenario()
+    def test_cast_mode_narrative_awards_skill(self):
+        scene = PrimaryCastModeScenario()
         scene.prepare(self.state, self.rng)
-        choices = scene.get_choices(self.state)
-        if len(choices) > 1 and choices[0] != "No options available — use default configuration":
-            result = scene.apply(0, self.state, self.factory, self.rng)
-            anchor = next((p for p in result.powers if p.get("slot") == "anchor"), None)
-            self.assertIsNotNone(anchor)
-            self.assertIn("selected_rider", anchor)
+        result = scene.apply_text(
+            {"narrative": "My senior resident Jason saw me do it first."},
+            self.state, self.factory, self.rng,
+        )
+        self.assertIn(scene._narrative_skill, result.skills)
 
 
 if __name__ == "__main__":

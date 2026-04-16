@@ -1,5 +1,31 @@
-Phase 1 complete: 985 tests pass, all foundation changes in place
-Phase 2 complete: TemperamentScenario + CircumstanceScenario added, skills rebalanced, 985 tests pass
-Phase 3 complete: V2 power loader, 4 cast/rider config scenarios, 985 tests pass
-Phase 4 complete: 20 survival scenarios, 7 faction demands with named reps, 5 specific vow scenarios, 985 tests pass
-Phase 5 complete: 14-scene flow assembled, 1033 tests pass (985 original + 48 new)
+CP-A in progress: scaffolding
+CP-A done: scaffolding committed (e0c88d1)
+B1 start: scenario_pool.py header + REACTION_KEYWORDS
+B1 done: REACTION_KEYWORDS (~80 entries) + SELF_DESCRIPTION_KEYWORDS (~30 entries)
+B2 done: extract_tags + extract_description_tags helpers
+B3a done: slot-1 vignettes (6 authored)
+B3 done: 12 vignettes, 6 per slot
+B4 done: select_vignette works, exclude_ids honored
+B5 done: pick_six returns 6, category exclusion works
+CP-B done: scenario_pool.py added (12 vignettes, 200-power weighting)
+C1 start: reading + editing scenarios.py preamble
+C2 done: V1 preamble replaced with V2 labels + cache
+C3 done: IdentityScenario expanded with description text prompt + tag extraction
+C4+C5+C6+C7 done: Temperament/Circumstance/old FirstPower/SecondPower replaced by Scenario1/Scenario2
+C8 done: cast/rider scenes extended with narrative prompts + skill grants
+C9+C10 done: make_v2_scenes returns 12 scenes
+CP-C done: scenarios.py rebuilt, 12-scene flow
+D1 done: deleted emergence/data/powers/ (7 JSON files + dir)
+D2 done: load_powers() removed from data_loader.py
+D3 done: CATEGORY_MAP_V1_TO_V2 removed from schemas/character.py
+D4+D5+D6 done: deleted manifestation.py, scenes.py, year_one.py
+D7 done: _make_v1_scenes() removed from runtime/main.py
+D8 flagged: bucket-1 (V1 test files) will be handled in Phase E; bucket-2 (content-tag V1 names in damage/progression/npc) is a separate migration. See scratch/migration_notes.md
+CP-D done: V1 catalog + V1 session-zero modules purged
+E1 done: V1 loader tests trimmed from test_data_loader.py
+E2+E3+E4+E5 done: deleted 4 V1 test files
+E6 done: deleted test_content_sim_integration.py (all V1 imports)
+E7 done: test_scenarios_v2.py updated for 12-scene flow
+E7 done: test_scenarios_v2.py updated for 12-scene flow
+E8 done: test_session_zero_v2.py updated; 14/14 pass
+E9 done: test_scenario_pool.py added, 18/18 pass

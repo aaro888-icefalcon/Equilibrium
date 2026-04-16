@@ -189,8 +189,8 @@ class IdentityScenario(Scene):
     def text_prompts(self, state: CreationState) -> List[Dict[str, str]]:
         return [
             {"key": "name", "prompt": "Tell me your name."},
-            {"key": "age", "prompt": "Tell me how old you were on the day everything stopped. (16-65)"},
-            {"key": "description", "prompt": "In a few sentences, tell me who you were before the Onset."},
+            {"key": "age", "prompt": "Your age on the day everything stopped. (16-65)"},
+            {"key": "description", "prompt": "A short self-description — who you were before the Onset."},
         ]
 
     def get_choices(self, state: CreationState) -> List[str]:
@@ -316,7 +316,7 @@ class _ScenarioBase(Scene):
     def text_prompts(self, state: CreationState) -> List[Dict[str, str]]:
         return [{
             "key": "reaction",
-            "prompt": "In a few sentences, tell me what you do in this moment.",
+            "prompt": "Your reaction in this moment — a few sentences, freeform.",
         }]
 
     # -- state writers ------------------------------------------------------
@@ -548,7 +548,10 @@ class _PowerConfigBase(Scene):
     def text_prompts(self, state: CreationState) -> List[Dict[str, str]]:
         if not self._narrative_prompt:
             return []
-        return [{"key": "narrative", "prompt": self._narrative_prompt}]
+        return [{
+            "key": "narrative",
+            "prompt": f"Narrative beat — {self._narrative_prompt}",
+        }]
 
     def apply_text(
         self,
