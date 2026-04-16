@@ -31,6 +31,12 @@ from emergence.engine.sim.complications import (
     generate_complications,
 )
 from emergence.engine.sim.hidden_elements import gather_hidden_elements
+from emergence.engine.sim.social import (
+    apply_disposition_shift,
+    decrement_patience,
+    enforce_disposition_bounds,
+    ensure_social_block,
+)
 
 
 # ---------------------------------------------------------------------------
@@ -336,11 +342,17 @@ def resolve_action(
     # 2. Compute TN
     npc_disposition = None
     target_npc = None
+    target_social_block = None
     if declaration.target_id:
         for npc in npcs_present:
             if npc.id == declaration.target_id:
                 target_npc = npc
-                npc_disposition = npc.standing_with_player_default
+                # Ensure social block exists (lazy seeding)
+                if declaration.action_type == "social":
+                    target_social_block = ensure_social_block(npc)
+                    npc_disposition = target_social_block.disposition
+                else:
+                    npc_disposition = npc.standing_with_player_default
                 break
 
     skill_uses = 0
@@ -414,7 +426,35 @@ def resolve_action(
         "is_fumble": check.is_fumble,
     }
 
-    # 5. Apply outcome-specific effects
+    # 5a. Enforce disposition bounds for social actions (hard cap on outcomes)
+    if target_social_block is not None:
+        effective_tier, was_capped, cap_reason = enforce_disposition_bounds(
+            target_social_block.disposition, check.tier,
+        )
+        if was_capped:
+            resolution.outcome_tier = effective_tier
+            resolution.scene_state_changes["outcome_capped"] = True
+            resolution.scene_state_changes["cap_reason"] = cap_reason
+            resolution.narrative_hints.append(
+                f"Outcome capped by disposition: {cap_reason}"
+            )
+
+        # 5b. Apply disposition shift (CRITICAL +1 / FUMBLE -1, within scene cap)
+        shift_result = apply_disposition_shift(target_social_block, check.tier)
+        if shift_result["shift"] != 0:
+            resolution.scene_state_changes["disposition_shift"] = shift_result
+
+        # 5c. Decrement patience (hard limit — 0 ends interaction)
+        patience_result = decrement_patience(target_social_block, check.tier)
+        resolution.scene_state_changes["patience"] = patience_result
+        if patience_result["interaction_ended"]:
+            resolution.narrative_hints.append(
+                f"{target_npc.display_name}'s patience is exhausted. "
+                "The interaction ends."
+            )
+            resolution.scene_state_changes["interaction_ended"] = True
+
+    # 5d. Apply outcome-specific effects (using the possibly-capped tier)
     _apply_outcome_effects(resolution, declaration, target_npc, location, rng)
 
     # 6. Generate complications from PBTA/BITD move pool

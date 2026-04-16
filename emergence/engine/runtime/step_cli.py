@@ -804,6 +804,11 @@ def step_resolve_action(args: Any, save_root: str) -> Dict[str, Any]:
     if resolution.new_location:
         state["player"]["current_location"] = resolution.new_location
 
+    # Sync modified NPCs back to state (social blocks, patience, disposition)
+    for npc in npcs_present:
+        if npc.id in state["npcs"]:
+            state["npcs"][npc.id] = npc.to_dict()
+
     _save_full_state(save_root, state)
 
     # Write last_engine_output.json for consequence validator (Phase 4)

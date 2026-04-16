@@ -1,52 +1,66 @@
 {
   "declaration": {
-    "action_type": "investigate",
-    "approach": "analyze",
-    "target_id": null,
+    "action_type": "social",
+    "approach": "reason",
+    "target_id": "npc-volk",
     "skill_id": null,
     "free_text": ""
   },
   "gate_result": "roll",
-  "outcome_tier": "failure",
+  "outcome_tier": "partial_failure",
   "tn": 12,
   "primary_die": 8,
   "secondary_die": 8,
   "modifiers": [],
   "complications": [
     {
-      "move_id": "deal_harm",
-      "severity": "hard",
+      "move_id": "time_passes",
+      "severity": "medium",
       "category": "core",
-      "description": "You take mental harm.",
+      "description": "This took longer than expected. Time slips.",
       "mechanical_effects": [
         {
-          "type": "harm_dealt",
-          "track": "mental",
-          "amount": 1
+          "type": "time_cost",
+          "extra_hours": 3
+        },
+        {
+          "type": "clock_advance",
+          "clock_id": "species-i-consolidation",
+          "segments": 1
         }
       ],
-      "narrative_seed": "harm"
+      "narrative_seed": "time_cost"
     }
   ],
   "state_deltas": {
-    "harm_dealt": {
-      "mental": 1
+    "time_cost_hours": 3,
+    "clock_advances": {
+      "species-i-consolidation": 1
     }
   },
   "narrative_hints": [
-    "Investigation yields nothing."
+    "Anton\u00edn Volk's patience is exhausted. The interaction ends.",
+    "Anton\u00edn Volk is not convinced."
   ],
   "time_cost_days": 0,
   "new_location": null,
   "encounter_triggered": false,
-  "scene_state_changes": {},
+  "scene_state_changes": {
+    "patience": {
+      "patience_before": 1,
+      "patience_after": 0,
+      "patience_max": 3,
+      "interaction_ended": true
+    },
+    "interaction_ended": true
+  },
   "check_result": {
-    "d1": 6,
-    "d2": 3,
-    "total": 9,
+    "d1": 7,
+    "d2": 4,
+    "total": 11,
     "tn": 12,
-    "margin": -3,
-    "tier": "failure",
+    "margin": -1,
+    "tier": "partial_failure",
     "is_crit": false,
     "is_fumble": false
   }

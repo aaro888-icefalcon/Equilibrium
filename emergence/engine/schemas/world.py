@@ -409,6 +409,57 @@ class NpcRelationshipState:
 
 
 # ---------------------------------------------------------------------------
+# Social Stat Block (per-NPC, used in scenes)
+# ---------------------------------------------------------------------------
+
+@dataclass
+class SocialBlock:
+    """Social interaction stat block for an NPC in a scene.
+
+    Hard mechanical limits that the narrator cannot override:
+    - Disposition bounds what outcomes are achievable (even on CRITICAL roll)
+    - Patience decrements per social action; at 0 the interaction ends
+    - Disposition shifts are capped per scene
+    """
+    disposition: int = 0            # -3 to +3
+    patience: int = 3               # current (decrements each social action)
+    patience_max: int = 3           # resets between scenes
+    motivation: str = ""            # what they want
+    source_of_conflict: str = ""    # why they resist
+    mood: str = "neutral"           # calm/wary/angry/amused/fearful/grieving
+    disposition_shift_cap: int = 1  # max ±change per scene
+    disposition_shifted: int = 0    # tracking within-scene shifts
+
+    def to_dict(self) -> Dict[str, Any]:
+        return asdict(self)
+
+    @classmethod
+    def from_dict(cls, data: Dict[str, Any]) -> "SocialBlock":
+        return cls(
+            disposition=data.get("disposition", 0),
+            patience=data.get("patience", 3),
+            patience_max=data.get("patience_max", 3),
+            motivation=data.get("motivation", ""),
+            source_of_conflict=data.get("source_of_conflict", ""),
+            mood=data.get("mood", "neutral"),
+            disposition_shift_cap=data.get("disposition_shift_cap", 1),
+            disposition_shifted=data.get("disposition_shifted", 0),
+        )
+
+
+# Outcome bounds based on disposition. Engine enforces these hard caps.
+DISPOSITION_OUTCOME_BOUNDS: Dict[int, str] = {
+    -3: "doesnt_attack",        # Best: doesn't attack this time
+    -2: "grudging_tolerance",   # Best: walks away, doesn't interfere
+    -1: "non_interference",     # Best: stays out of it
+    0:  "transactional",        # Best: quid pro quo only
+    1:  "willing_cooperation",  # Best: does what you ask
+    2:  "proactive_help",       # Best: volunteers assistance
+    3:  "sacrifice_loyalty",    # Best: would sacrifice for you
+}
+
+
+# ---------------------------------------------------------------------------
 # NPC
 # ---------------------------------------------------------------------------
 
@@ -440,6 +491,7 @@ class NPC:
     voice: str = ""
     hooks: List[str] = field(default_factory=list)
     status: str = "alive"  # alive, dead, missing, transformed, displaced
+    social_block: Optional["SocialBlock"] = None  # Populated lazily for scenes
 
     def to_dict(self) -> Dict[str, Any]:
         return {
@@ -467,6 +519,7 @@ class NPC:
             "voice": self.voice,
             "hooks": list(self.hooks),
             "status": self.status,
+            "social_block": self.social_block.to_dict() if self.social_block else None,
         }
 
     @classmethod
@@ -509,6 +562,11 @@ class NPC:
             voice=data.get("voice", ""),
             hooks=data.get("hooks", []),
             status=data.get("status", "alive"),
+            social_block=(
+                SocialBlock.from_dict(data["social_block"])
+                if data.get("social_block")
+                else None
+            ),
         )
 
 

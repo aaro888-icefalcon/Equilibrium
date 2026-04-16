@@ -575,7 +575,17 @@
       "a captain offers the player employment against Volk's interest",
       "Iron Crown salvage team encounters anomalous entity; player is hired for retrieval"
     ],
-    "status": "alive"
+    "status": "alive",
+    "social_block": {
+      "disposition": 0,
+      "patience": 3,
+      "patience_max": 3,
+      "motivation": "secure Iron Crown dominance in northern NJ",
+      "source_of_conflict": "Iron Crown is tightening ranks for the Staten war",
+      "mood": "wary",
+      "disposition_shift_cap": 1,
+      "disposition_shifted": 0
+    }
   },
   "npc-viktor-chen": {
     "id": "npc-viktor-chen",
@@ -1268,7 +1278,17 @@
       "a courier route has been compromised and the Shadow needs verification",
       "the Shadow requests retrieval of a specific item from a contested zone"
     ],
-    "status": "alive"
+    "status": "alive",
+    "social_block": {
+      "disposition": 0,
+      "patience": 3,
+      "patience_max": 3,
+      "motivation": "protect identity and network",
+      "source_of_conflict": "reveals nothing except under the right conditions",
+      "mood": "neutral",
+      "disposition_shift_cap": 1,
+      "disposition_shifted": 0
+    }
   },
   "npc-amar": {
     "id": "npc-amar",
@@ -1455,7 +1475,17 @@
       "Iron Crown internal dispute spills into Jersey City and requires resolution",
       "Brick warns the player about an Iron Crown operation"
     ],
-    "status": "alive"
+    "status": "alive",
+    "social_block": {
+      "disposition": 1,
+      "patience": 4,
+      "patience_max": 4,
+      "motivation": "decide Tower Lord alliance while protecting his captaincy",
+      "source_of_conflict": "pressured between Volk's rule and Tower Lord opportunity",
+      "mood": "neutral",
+      "disposition_shift_cap": 1,
+      "disposition_shifted": 0
+    }
   },
   "npc-razorgrin": {
     "id": "npc-razorgrin",
@@ -1553,7 +1583,17 @@
       "Volk discovers her route concealment and the player is implicated",
       "Nkomo needs extraction from Iron Crown service"
     ],
-    "status": "alive"
+    "status": "alive",
+    "social_block": {
+      "disposition": 0,
+      "patience": 2,
+      "patience_max": 2,
+      "motivation": "prove value to Iron Crown through aggression",
+      "source_of_conflict": "suspicious of anyone operating independently",
+      "mood": "wary",
+      "disposition_shift_cap": 1,
+      "disposition_shifted": 0
+    }
   },
   "npc-butcher": {
     "id": "npc-butcher",
@@ -1639,7 +1679,17 @@
       "she offers information in exchange for an unspecified favor",
       "a defector identifies Voss as the reason they ran"
     ],
-    "status": "alive"
+    "status": "alive",
+    "social_block": {
+      "disposition": -1,
+      "patience": 2,
+      "patience_max": 2,
+      "motivation": "maintain dominance through fear",
+      "source_of_conflict": "distrusts outsiders and high-tier operators",
+      "mood": "angry",
+      "disposition_shift_cap": 1,
+      "disposition_shifted": 0
+    }
   },
   "npc-silent-henry": {
     "id": "npc-silent-henry",
