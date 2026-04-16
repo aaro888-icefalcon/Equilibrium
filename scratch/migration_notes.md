@@ -6,12 +6,12 @@
 
 Session-zero powers-catalog migration is complete. The V1 category names (`physical_kinetic`, `perceptual_mental`, `matter_energy`, `biological_vital`, `auratic`, `temporal_spatial`, `eldritch_corruptive`) still appear in **combat, progression, sim, schemas**, and **enemy data** — not as catalog references, but as content identifiers used as tags in damage types, breakthrough rules, NPC weighting, and enemy affinity tables.
 
-## Target Shape Question
+## Target Shape (confirmed)
 
 The V2 catalog at `emergence/data/powers_v2/*.json` has:
 
 - **6 broad categories**: `kinetic`, `material`, `paradoxic`, `spatial`, `somatic`, `cognitive`
-- **5 sub-categories each** (30 total family groups): see table below
+- **5 sub-categories each** → **30 family groups total** (confirmed target)
 - **200 powers** distributed across them
 
 | broad      | sub-categories                                        |
@@ -23,7 +23,7 @@ The V2 catalog at `emergence/data/powers_v2/*.json` has:
 | spatial    | gateway, phasing, reach, territorial, translative     |
 | cognitive  | auratic, dominant, perceptive, predictive, telepathic |
 
-User directive referenced "36 v2 categories". The actual current V2 shape is **30 sub-categories** (6 × 5). "36" would require either (a) adding a 6th sub-category per broad, or (b) using a different taxonomy. **Need to resolve this before downstream code is reshaped, because every reference below needs a target taxonomy to migrate to.**
+Restructure targets below assume this taxonomy: 6 broads for coarse references (damage_type, enemy affinity, primary_category), 30 sub-category keys where finer resolution is authored (breakthrough marks can be per-broad at 6 pools or per-sub at 30).
 
 ---
 
@@ -79,19 +79,17 @@ These tests construct fake characters with V1 `primary_category` strings and `da
 
 ## Recommended Restructure Sequence
 
-Before any of this runs, answer: **do we target 30 sub-categories (current V2 data shape) or 36 (6 × 6)?** The answer determines whether `paradoxic` (and each other broad) gets a 6th sub-category added, whether enemy affinity tables stay at broad level or expand, and how `MARK_POOLS` is authored.
-
-Assuming **30 V2 sub-categories** (current data), the safe order is:
+Taxonomy confirmed: **6 V2 broads, 30 sub-category groups**. The safe order:
 
 1. **schemas/validation.py** — add V2 validators alongside V1; keep V1 as `LEGACY` for save compat.
 2. **combat/damage.py + statuses.py** — retarget `damage_type` values to V2 broads; delete `DAMAGE_TYPE_MAP_V1_TO_V2`.
-3. **data/enemies/*.json** — rewrite every `affinity_table` to 6 V2 broads (with a one-off transform script).
-4. **progression/breakthrough.py + corruption.py** — rekey `MARK_POOLS` to V2 broads (decide pool granularity), retarget strings.
-5. **sim/npc_generator.py + sim/content_loader.py** — rekey category weights and content-tag lists.
+3. **data/enemies/*.json** — rewrite every `affinity_table` to 6 V2 broads (one-off transform script).
+4. **progression/breakthrough.py + corruption.py** — rekey `MARK_POOLS` to V2 broads (6 pools, unless sub-category granularity is wanted; defer that choice), retarget string literals.
+5. **sim/npc_generator.py + sim/content_loader.py** — rekey category weights and content-tag lists to 6 V2 broads.
 6. **tests** (all files above) — update fixtures to V2 keys.
-7. **delete** `VALID_POWER_CATEGORIES_V1` / `LEGACY` once save migration is done.
+7. **delete** `VALID_POWER_CATEGORIES_V1` / `LEGACY` once save migration is verified.
 
-Each of the above is independently committable. Full surface ≈ 9 engine files + 3 JSON files + 6 test files.
+Each step is independently committable. Surface ≈ 9 engine files + 3 JSON files + 6 test files.
 
 ## What This Is Not
 
