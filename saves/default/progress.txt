@@ -1,0 +1,9 @@
+Phase: Repo and game loop overview
+Step 1: Top-level structure - DONE
+Step 2: .claude directory - DONE
+Step 3: Engine directory - DONE
+Step 4: Engine modules - DONE
+Step 5: File/line counts - DONE
+Step 6: Saves, data, setting - DONE
+Step 7: CLI entry point - DONE
+Step 8: Writing overview - DONE
