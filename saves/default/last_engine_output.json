@@ -1,0 +1,30 @@
+{
+  "declaration": {
+    "action_type": "exposition",
+    "approach": "observe",
+    "target_id": null,
+    "skill_id": null,
+    "free_text": ""
+  },
+  "gate_result": "no_roll",
+  "outcome_tier": "FULL",
+  "tn": 0,
+  "primary_die": 0,
+  "secondary_die": 0,
+  "modifiers": [],
+  "complications": [],
+  "state_deltas": {},
+  "narrative_hints": [
+    "Known dangers: dread-field, retinue hostility to visitors",
+    "Opportunities: few (Iron Crown pays in chits)",
+    "Location: The compound is a converted port warehouse complex. The main hall contains the iron circlet (Volk's crown, welded from harbor machinery). The dread-field is palpable within thirty meters of Volk. Visitors pass through it and feel their stomach drop; regulars have conditioned themselves against it with mixed success. The compound smells of salt and machine oil.",
+    "Anton\u00edn Volk knows about: topic_0",
+    "Anton\u00edn Volk knows about: topic_1",
+    "\"The Butcher\" (Petra Voss) knows about: topic_0",
+    "\"The Butcher\" (Petra Voss) knows about: topic_1"
+  ],
+  "time_cost_days": 0,
+  "new_location": null,
+  "encounter_triggered": false,
+  "scene_state_changes": {}
+}
