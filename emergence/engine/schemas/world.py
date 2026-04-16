@@ -524,6 +524,7 @@ class LocationConnection:
     travel_mode: str = "foot"
     travel_time: str = ""
     hazards: List[str] = field(default_factory=list)
+    display_label: str = ""  # Human-readable name for the connection
 
     def to_dict(self) -> Dict[str, Any]:
         return asdict(self)
@@ -535,6 +536,7 @@ class LocationConnection:
             travel_mode=data.get("travel_mode", "foot"),
             travel_time=data.get("travel_time", ""),
             hazards=data.get("hazards", []),
+            display_label=data.get("display_label", ""),
         )
 
 

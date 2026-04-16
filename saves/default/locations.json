@@ -34,22 +34,25 @@
     ],
     "connections": [
       {
-        "to_location_id": "Hudson passes (tribute collection routes)",
+        "to_location_id": "loc-rhinebeck",
         "travel_mode": "foot",
         "travel_time": "",
-        "hazards": []
+        "hazards": [],
+        "display_label": "Hudson passes (tribute collection routes)"
       },
       {
-        "to_location_id": "Catskill Throne tributary polities",
+        "to_location_id": "loc-mount-tremper",
         "travel_mode": "foot",
         "travel_time": "",
-        "hazards": []
+        "hazards": [],
+        "display_label": "Catskill Throne tributary polities"
       },
       {
-        "to_location_id": "Grey Walker's wandering range (occasional)",
+        "to_location_id": "loc-southern-catskills-wandering (Grey Walker range)",
         "travel_mode": "foot",
         "travel_time": "",
-        "hazards": []
+        "hazards": [],
+        "display_label": "Grey Walker's wandering range (occasional)"
       }
     ],
     "current_events": [
@@ -111,28 +114,32 @@
     ],
     "connections": [
       {
-        "to_location_id": "Peekskill town (integrated)",
+        "to_location_id": "loc-peekskill-reactor",
         "travel_mode": "foot",
         "travel_time": "",
-        "hazards": []
+        "hazards": [],
+        "display_label": "Peekskill town (integrated)"
       },
       {
-        "to_location_id": "Cortlandt (protected)",
+        "to_location_id": "loc-peekskill-reactor",
         "travel_mode": "foot",
         "travel_time": "",
-        "hazards": []
+        "hazards": [],
+        "display_label": "Cortlandt (protected)"
       },
       {
-        "to_location_id": "Yonkers Compact (commercial partner)",
+        "to_location_id": "loc-yonkers-council-chamber",
         "travel_mode": "foot",
         "travel_time": "",
-        "hazards": []
+        "hazards": [],
+        "display_label": "Yonkers Compact (commercial partner)"
       },
       {
-        "to_location_id": "Catskill Throne (tributary)",
+        "to_location_id": "loc-mount-tremper",
         "travel_mode": "foot",
         "travel_time": "",
-        "hazards": []
+        "hazards": [],
+        "display_label": "Catskill Throne (tributary)"
       }
     ],
     "current_events": [
@@ -192,22 +199,25 @@
     ],
     "connections": [
       {
-        "to_location_id": "Yonkers Compact (whole)",
+        "to_location_id": "loc-yonkers-council-chamber",
         "travel_mode": "foot",
         "travel_time": "",
-        "hazards": []
+        "hazards": [],
+        "display_label": "Yonkers Compact (whole)"
       },
       {
-        "to_location_id": "Bear-House (commercial)",
+        "to_location_id": "loc-kingston-hv",
         "travel_mode": "foot",
         "travel_time": "",
-        "hazards": []
+        "hazards": [],
+        "display_label": "Bear-House (commercial)"
       },
       {
-        "to_location_id": "Catskill Throne (tributary)",
+        "to_location_id": "loc-mount-tremper",
         "travel_mode": "foot",
         "travel_time": "",
-        "hazards": []
+        "hazards": [],
+        "display_label": "Catskill Throne (tributary)"
       }
     ],
     "current_events": [
@@ -266,22 +276,25 @@
     ],
     "connections": [
       {
-        "to_location_id": "Yonkers (commercial)",
+        "to_location_id": "loc-yonkers-council-chamber",
         "travel_mode": "foot",
         "travel_time": "",
-        "hazards": []
+        "hazards": [],
+        "display_label": "Yonkers (commercial)"
       },
       {
-        "to_location_id": "Bear-House (neighbors)",
+        "to_location_id": "loc-kingston-hv",
         "travel_mode": "foot",
         "travel_time": "",
-        "hazards": []
+        "hazards": [],
+        "display_label": "Bear-House (neighbors)"
       },
       {
-        "to_location_id": "Catskill Throne (tributary)",
+        "to_location_id": "loc-mount-tremper",
         "travel_mode": "foot",
         "travel_time": "",
-        "hazards": []
+        "hazards": [],
+        "display_label": "Catskill Throne (tributary)"
       }
     ],
     "current_events": [
@@ -328,10 +341,11 @@
     ],
     "connections": [
       {
-        "to_location_id": "Bear-House, Kingston",
+        "to_location_id": "loc-kingston-hv",
         "travel_mode": "foot",
         "travel_time": "",
-        "hazards": []
+        "hazards": [],
+        "display_label": "Bear-House, Kingston"
       }
     ],
     "current_events": [
@@ -382,10 +396,11 @@
     ],
     "connections": [
       {
-        "to_location_id": "Catskill Throne (reluctant tributary)",
+        "to_location_id": "loc-mount-tremper",
         "travel_mode": "foot",
         "travel_time": "",
-        "hazards": []
+        "hazards": [],
+        "display_label": "Catskill Throne (reluctant tributary)"
       }
     ],
     "current_events": [
@@ -435,16 +450,18 @@
     ],
     "connections": [
       {
-        "to_location_id": "adjacent to loc-kaaterskill-falls",
+        "to_location_id": "loc-kaaterskill-falls",
         "travel_mode": "foot",
         "travel_time": "",
-        "hazards": []
+        "hazards": [],
+        "display_label": "adjacent to loc-kaaterskill-falls"
       },
       {
-        "to_location_id": "adjacent to Catskill Throne tributary polities",
+        "to_location_id": "loc-mount-tremper",
         "travel_mode": "foot",
         "travel_time": "",
-        "hazards": []
+        "hazards": [],
+        "display_label": "adjacent to Catskill Throne tributary polities"
       }
     ],
     "current_events": [
@@ -499,22 +516,25 @@
     ],
     "connections": [
       {
-        "to_location_id": "Tower Lords of Brooklyn (salvage)",
+        "to_location_id": "loc-brooklyn-tower-districts",
         "travel_mode": "foot",
         "travel_time": "",
-        "hazards": []
+        "hazards": [],
+        "display_label": "Tower Lords of Brooklyn (salvage)"
       },
       {
-        "to_location_id": "Staten Citadel (harbor access, toll)",
+        "to_location_id": "loc-staten-citadel",
         "travel_mode": "foot",
         "travel_time": "",
-        "hazards": []
+        "hazards": [],
+        "display_label": "Staten Citadel (harbor access, toll)"
       },
       {
-        "to_location_id": "Iron Crown (salvage partner)",
+        "to_location_id": "loc-susquehanna-crown-border",
         "travel_mode": "foot",
         "travel_time": "",
-        "hazards": []
+        "hazards": [],
+        "display_label": "Iron Crown (salvage partner)"
       }
     ],
     "current_events": [
@@ -570,10 +590,11 @@
     ],
     "connections": [
       {
-        "to_location_id": "42nd Street Line (informal border)",
+        "to_location_id": "loc-susquehanna-crown-border",
         "travel_mode": "foot",
         "travel_time": "",
-        "hazards": []
+        "hazards": [],
+        "display_label": "42nd Street Line (informal border)"
       }
     ],
     "current_events": [
@@ -629,10 +650,11 @@
     ],
     "connections": [
       {
-        "to_location_id": "Midtown Manhattan",
+        "to_location_id": "loc-manhattan-midtown",
         "travel_mode": "foot",
         "travel_time": "",
-        "hazards": []
+        "hazards": [],
+        "display_label": "Midtown Manhattan"
       }
     ],
     "current_events": [
@@ -699,28 +721,32 @@
     ],
     "connections": [
       {
-        "to_location_id": "Manhattan (salvage)",
+        "to_location_id": "loc-elizabeth-salvage-yards",
         "travel_mode": "foot",
         "travel_time": "",
-        "hazards": []
+        "hazards": [],
+        "display_label": "Manhattan (salvage)"
       },
       {
-        "to_location_id": "Staten Citadel (toll)",
+        "to_location_id": "loc-staten-citadel",
         "travel_mode": "foot",
         "travel_time": "",
-        "hazards": []
+        "hazards": [],
+        "display_label": "Staten Citadel (toll)"
       },
       {
-        "to_location_id": "Iron Crown (partner/rival)",
+        "to_location_id": "loc-susquehanna-crown-border",
         "travel_mode": "foot",
         "travel_time": "",
-        "hazards": []
+        "hazards": [],
+        "display_label": "Iron Crown (partner/rival)"
       },
       {
-        "to_location_id": "Queens Commonage (hostile across Cross-Queens Line)",
+        "to_location_id": "loc-queens-commonage",
         "travel_mode": "foot",
         "travel_time": "",
-        "hazards": []
+        "hazards": [],
+        "display_label": "Queens Commonage (hostile across Cross-Queens Line)"
       }
     ],
     "current_events": [
@@ -778,22 +804,25 @@
     ],
     "connections": [
       {
-        "to_location_id": "Species C Twelve Hands network",
+        "to_location_id": "loc-anacostia",
         "travel_mode": "foot",
         "travel_time": "",
-        "hazards": []
+        "hazards": [],
+        "display_label": "Species C Twelve Hands network"
       },
       {
-        "to_location_id": "Philadelphia Bourse (commercial)",
+        "to_location_id": "loc-philadelphia-navy-yard",
         "travel_mode": "foot",
         "travel_time": "",
-        "hazards": []
+        "hazards": [],
+        "display_label": "Philadelphia Bourse (commercial)"
       },
       {
-        "to_location_id": "Queens Commonage (allied)",
+        "to_location_id": "loc-queens-commonage",
         "travel_mode": "foot",
         "travel_time": "",
-        "hazards": []
+        "hazards": [],
+        "display_label": "Queens Commonage (allied)"
       }
     ],
     "current_events": [
@@ -850,22 +879,25 @@
     ],
     "connections": [
       {
-        "to_location_id": "Flushing-Edison Cluster (allied)",
+        "to_location_id": "loc-flushing-workshop",
         "travel_mode": "foot",
         "travel_time": "",
-        "hazards": []
+        "hazards": [],
+        "display_label": "Flushing-Edison Cluster (allied)"
       },
       {
-        "to_location_id": "Father Rhodes's community",
+        "to_location_id": "loc-outer-queens-parish",
         "travel_mode": "foot",
         "travel_time": "",
-        "hazards": []
+        "hazards": [],
+        "display_label": "Father Rhodes's community"
       },
       {
-        "to_location_id": "Philadelphia (cross-bay trade via Species I)",
+        "to_location_id": "loc-philadelphia-navy-yard",
         "travel_mode": "foot",
         "travel_time": "",
-        "hazards": []
+        "hazards": [],
+        "display_label": "Philadelphia (cross-bay trade via Species I)"
       }
     ],
     "current_events": [
@@ -922,28 +954,32 @@
     ],
     "connections": [
       {
-        "to_location_id": "Manhattan (salvage bridge-route)",
+        "to_location_id": "loc-elizabeth-salvage-yards",
         "travel_mode": "foot",
         "travel_time": "",
-        "hazards": []
+        "hazards": [],
+        "display_label": "Manhattan (salvage bridge-route)"
       },
       {
-        "to_location_id": "Tower Lords (commerce)",
+        "to_location_id": "loc-brooklyn-tower-districts",
         "travel_mode": "foot",
         "travel_time": "",
-        "hazards": []
+        "hazards": [],
+        "display_label": "Tower Lords (commerce)"
       },
       {
-        "to_location_id": "Iron Crown (clock 3/6 war)",
+        "to_location_id": "loc-susquehanna-crown-border",
         "travel_mode": "foot",
         "travel_time": "",
-        "hazards": []
+        "hazards": [],
+        "display_label": "Iron Crown (clock 3/6 war)"
       },
       {
-        "to_location_id": "Bourse (mediation)",
+        "to_location_id": "loc-bourse-library",
         "travel_mode": "foot",
         "travel_time": "",
-        "hazards": []
+        "hazards": [],
+        "display_label": "Bourse (mediation)"
       }
     ],
     "current_events": [
@@ -996,16 +1032,18 @@
     ],
     "connections": [
       {
-        "to_location_id": "Queens Commonage",
+        "to_location_id": "loc-queens-commonage",
         "travel_mode": "foot",
         "travel_time": "",
-        "hazards": []
+        "hazards": [],
+        "display_label": "Queens Commonage"
       },
       {
-        "to_location_id": "Tower Lord minor claim",
+        "to_location_id": "loc-brooklyn-tower-districts",
         "travel_mode": "foot",
         "travel_time": "",
-        "hazards": []
+        "hazards": [],
+        "display_label": "Tower Lord minor claim"
       }
     ],
     "current_events": [
@@ -1057,10 +1095,11 @@
     ],
     "connections": [
       {
-        "to_location_id": "adjacent Tower Lord territory (uneasy peace)",
+        "to_location_id": "loc-brooklyn-tower-districts",
         "travel_mode": "foot",
         "travel_time": "",
-        "hazards": []
+        "hazards": [],
+        "display_label": "adjacent Tower Lord territory (uneasy peace)"
       }
     ],
     "current_events": [
@@ -1107,10 +1146,11 @@
     ],
     "connections": [
       {
-        "to_location_id": "Queens Commonage + Tower Lord territory",
+        "to_location_id": "loc-queens-commonage",
         "travel_mode": "foot",
         "travel_time": "",
-        "hazards": []
+        "hazards": [],
+        "display_label": "Queens Commonage + Tower Lord territory"
       }
     ],
     "current_events": [
@@ -1158,10 +1198,11 @@
     ],
     "connections": [
       {
-        "to_location_id": "Queens Commonage (distant)",
+        "to_location_id": "loc-queens-commonage",
         "travel_mode": "foot",
         "travel_time": "",
-        "hazards": []
+        "hazards": [],
+        "display_label": "Queens Commonage (distant)"
       }
     ],
     "current_events": [
@@ -1213,28 +1254,32 @@
     ],
     "connections": [
       {
-        "to_location_id": "Jersey City (Brick's captaincy)",
+        "to_location_id": "loc-jersey-city-waterfront",
         "travel_mode": "foot",
         "travel_time": "",
-        "hazards": []
+        "hazards": [],
+        "display_label": "Jersey City (Brick's captaincy)"
       },
       {
-        "to_location_id": "Elizabeth (Razorgrin's captaincy)",
+        "to_location_id": "loc-elizabeth-salvage-yards",
         "travel_mode": "foot",
         "travel_time": "",
-        "hazards": []
+        "hazards": [],
+        "display_label": "Elizabeth (Razorgrin's captaincy)"
       },
       {
-        "to_location_id": "Tower Lords (commerce)",
+        "to_location_id": "loc-brooklyn-tower-districts",
         "travel_mode": "foot",
         "travel_time": "",
-        "hazards": []
+        "hazards": [],
+        "display_label": "Tower Lords (commerce)"
       },
       {
-        "to_location_id": "Staten (hostile)",
+        "to_location_id": "loc-staten-citadel",
         "travel_mode": "foot",
         "travel_time": "",
-        "hazards": []
+        "hazards": [],
+        "display_label": "Staten (hostile)"
       }
     ],
     "current_events": [
@@ -1286,10 +1331,11 @@
     ],
     "connections": [
       {
-        "to_location_id": "Manhattan (salvage route via Staten toll)",
+        "to_location_id": "loc-delaware-river-mobile",
         "travel_mode": "foot",
         "travel_time": "",
-        "hazards": []
+        "hazards": [],
+        "display_label": "Manhattan (salvage route via Staten toll)"
       }
     ],
     "current_events": [
@@ -1336,10 +1382,11 @@
     ],
     "connections": [
       {
-        "to_location_id": "Iron Crown (command)",
+        "to_location_id": "loc-susquehanna-crown-border",
         "travel_mode": "foot",
         "travel_time": "",
-        "hazards": []
+        "hazards": [],
+        "display_label": "Iron Crown (command)"
       }
     ],
     "current_events": [
@@ -1386,10 +1433,11 @@
     ],
     "connections": [
       {
-        "to_location_id": "Manhattan salvage operations",
+        "to_location_id": "loc-elizabeth-salvage-yards",
         "travel_mode": "foot",
         "travel_time": "",
-        "hazards": []
+        "hazards": [],
+        "display_label": "Manhattan salvage operations"
       }
     ],
     "current_events": [
@@ -1447,22 +1495,25 @@
     ],
     "connections": [
       {
-        "to_location_id": "Delaware wharves (shipping)",
+        "to_location_id": "loc-delaware-wharves",
         "travel_mode": "foot",
         "travel_time": "",
-        "hazards": []
+        "hazards": [],
+        "display_label": "Delaware wharves (shipping)"
       },
       {
-        "to_location_id": "Camden (across the river)",
+        "to_location_id": "loc-camden-nj",
         "travel_mode": "foot",
         "travel_time": "",
-        "hazards": []
+        "hazards": [],
+        "display_label": "Camden (across the river)"
       },
       {
-        "to_location_id": "all trade routes converge",
+        "to_location_id": "loc-old-market-philly",
         "travel_mode": "foot",
         "travel_time": "",
-        "hazards": []
+        "hazards": [],
+        "display_label": "all trade routes converge"
       }
     ],
     "current_events": [
@@ -1522,16 +1573,18 @@
     ],
     "connections": [
       {
-        "to_location_id": "Princeton University Library (correspondence)",
+        "to_location_id": "loc-bourse-library",
         "travel_mode": "foot",
         "travel_time": "",
-        "hazards": []
+        "hazards": [],
+        "display_label": "Princeton University Library (correspondence)"
       },
       {
-        "to_location_id": "Rutgers Ag Archive (correspondence)",
+        "to_location_id": "loc-rutgers-nb",
         "travel_mode": "foot",
         "travel_time": "",
-        "hazards": []
+        "hazards": [],
+        "display_label": "Rutgers Ag Archive (correspondence)"
       }
     ],
     "current_events": [
@@ -1580,10 +1633,11 @@
     ],
     "connections": [
       {
-        "to_location_id": "Delaware River; ocean via Chesapeake; Camden across river",
+        "to_location_id": "loc-delaware-river-mobile",
         "travel_mode": "foot",
         "travel_time": "",
-        "hazards": []
+        "hazards": [],
+        "display_label": "Delaware River; ocean via Chesapeake; Camden across river"
       }
     ],
     "current_events": [
@@ -1631,10 +1685,11 @@
     ],
     "connections": [
       {
-        "to_location_id": "Bourse (contractual)",
+        "to_location_id": "loc-bourse-library",
         "travel_mode": "foot",
         "travel_time": "",
-        "hazards": []
+        "hazards": [],
+        "display_label": "Bourse (contractual)"
       }
     ],
     "current_events": [
@@ -1688,10 +1743,11 @@
     ],
     "connections": [
       {
-        "to_location_id": "Philadelphia metro",
+        "to_location_id": "loc-philadelphia-navy-yard",
         "travel_mode": "foot",
         "travel_time": "",
-        "hazards": []
+        "hazards": [],
+        "display_label": "Philadelphia metro"
       }
     ],
     "current_events": [
@@ -1748,10 +1804,11 @@
     ],
     "connections": [
       {
-        "to_location_id": "Philadelphia (Bourse bridge route); Pine Barrens (distant eldritch)",
+        "to_location_id": "loc-pine-barrens-perimeter (Seer Willem's movement area)",
         "travel_mode": "foot",
         "travel_time": "",
-        "hazards": []
+        "hazards": [],
+        "display_label": "Philadelphia (Bourse bridge route); Pine Barrens (distant eldritch)"
       }
     ],
     "current_events": [
@@ -1809,22 +1866,25 @@
     ],
     "connections": [
       {
-        "to_location_id": "all 15 CJL townships",
+        "to_location_id": "loc-princeton-accord-hall",
         "travel_mode": "foot",
         "travel_time": "",
-        "hazards": []
+        "hazards": [],
+        "display_label": "all 15 CJL townships"
       },
       {
-        "to_location_id": "Bourse (allied)",
+        "to_location_id": "loc-bourse-library",
         "travel_mode": "foot",
         "travel_time": "",
-        "hazards": []
+        "hazards": [],
+        "display_label": "Bourse (allied)"
       },
       {
-        "to_location_id": "Species I kin networks (friendly)",
+        "to_location_id": "loc-anacostia",
         "travel_mode": "foot",
         "travel_time": "",
-        "hazards": []
+        "hazards": [],
+        "display_label": "Species I kin networks (friendly)"
       }
     ],
     "current_events": [
@@ -1884,10 +1944,11 @@
     ],
     "connections": [
       {
-        "to_location_id": "Central Jersey League (primary); Bourse (commercial)",
+        "to_location_id": "loc-central-park-wildland",
         "travel_mode": "foot",
         "travel_time": "",
-        "hazards": []
+        "hazards": [],
+        "display_label": "Central Jersey League (primary); Bourse (commercial)"
       }
     ],
     "current_events": [
@@ -1950,10 +2011,11 @@
     ],
     "connections": [
       {
-        "to_location_id": "Princeton (walking distance); CJL (treaty partner)",
+        "to_location_id": "loc-princeton-accord-hall",
         "travel_mode": "foot",
         "travel_time": "",
-        "hazards": []
+        "hazards": [],
+        "display_label": "Princeton (walking distance); CJL (treaty partner)"
       }
     ],
     "current_events": [
@@ -2000,10 +2062,11 @@
     ],
     "connections": [
       {
-        "to_location_id": "Flushing (cluster); CJL (Accord member)",
+        "to_location_id": "loc-princeton-accord-hall",
         "travel_mode": "foot",
         "travel_time": "",
-        "hazards": []
+        "hazards": [],
+        "display_label": "Flushing (cluster); CJL (Accord member)"
       }
     ],
     "current_events": [
@@ -2050,10 +2113,11 @@
     ],
     "connections": [
       {
-        "to_location_id": "CJL; Pine Barrens (proximate; eldritch risk)",
+        "to_location_id": "loc-pine-barrens-perimeter (Seer Willem's movement area)",
         "travel_mode": "foot",
         "travel_time": "",
-        "hazards": []
+        "hazards": [],
+        "display_label": "CJL; Pine Barrens (proximate; eldritch risk)"
       }
     ],
     "current_events": [
@@ -2102,10 +2166,11 @@
     ],
     "connections": [
       {
-        "to_location_id": "wharton-forest-reserve (core Listening territory)",
+        "to_location_id": "loc-wharton-forest-reserve",
         "travel_mode": "foot",
         "travel_time": "",
-        "hazards": []
+        "hazards": [],
+        "display_label": "wharton-forest-reserve (core Listening territory)"
       }
     ],
     "current_events": [
@@ -2167,10 +2232,11 @@
     ],
     "connections": [
       {
-        "to_location_id": "Batsto (cluster); Jersey Barrens Satellites (Hive network)",
+        "to_location_id": "loc-jersey-city-waterfront",
         "travel_mode": "foot",
         "travel_time": "",
-        "hazards": []
+        "hazards": [],
+        "display_label": "Batsto (cluster); Jersey Barrens Satellites (Hive network)"
       }
     ],
     "current_events": [
@@ -2218,10 +2284,11 @@
     ],
     "connections": [
       {
-        "to_location_id": "Pine Barrens perimeter",
+        "to_location_id": "loc-pine-barrens-perimeter (Seer Willem's movement area)",
         "travel_mode": "foot",
         "travel_time": "",
-        "hazards": []
+        "hazards": [],
+        "display_label": "Pine Barrens perimeter"
       }
     ],
     "current_events": [
@@ -2268,10 +2335,11 @@
     ],
     "connections": [
       {
-        "to_location_id": "CJL southern townships; Pine Barrens interior",
+        "to_location_id": "loc-pine-barrens-perimeter (Seer Willem's movement area)",
         "travel_mode": "foot",
         "travel_time": "",
-        "hazards": []
+        "hazards": [],
+        "display_label": "CJL southern townships; Pine Barrens interior"
       }
     ],
     "current_events": [
@@ -2320,10 +2388,11 @@
     ],
     "connections": [
       {
-        "to_location_id": "all Lehigh Principalities; Bourse (commerce); CJL (alliance)",
+        "to_location_id": "loc-bourse-library",
         "travel_mode": "foot",
         "travel_time": "",
-        "hazards": []
+        "hazards": [],
+        "display_label": "all Lehigh Principalities; Bourse (commerce); CJL (alliance)"
       }
     ],
     "current_events": [
@@ -2372,10 +2441,11 @@
     ],
     "connections": [
       {
-        "to_location_id": "Lehigh Principalities; Bourse (commerce)",
+        "to_location_id": "loc-bourse-library",
         "travel_mode": "foot",
         "travel_time": "",
-        "hazards": []
+        "hazards": [],
+        "display_label": "Lehigh Principalities; Bourse (commerce)"
       }
     ],
     "current_events": [
@@ -2437,10 +2507,11 @@
     ],
     "connections": [
       {
-        "to_location_id": "Lehigh Principalities; Bourse commerce",
+        "to_location_id": "loc-bourse-library",
         "travel_mode": "foot",
         "travel_time": "",
-        "hazards": []
+        "hazards": [],
+        "display_label": "Lehigh Principalities; Bourse commerce"
       }
     ],
     "current_events": [
@@ -2488,10 +2559,11 @@
     ],
     "connections": [
       {
-        "to_location_id": "Lehigh Principalities",
+        "to_location_id": "loc-jim-thorpe",
         "travel_mode": "foot",
         "travel_time": "",
-        "hazards": []
+        "hazards": [],
+        "display_label": "Lehigh Principalities"
       }
     ],
     "current_events": [
@@ -2538,10 +2610,11 @@
     ],
     "connections": [
       {
-        "to_location_id": "Lehigh Principalities (losing)",
+        "to_location_id": "loc-jim-thorpe",
         "travel_mode": "foot",
         "travel_time": "",
-        "hazards": []
+        "hazards": [],
+        "display_label": "Lehigh Principalities (losing)"
       }
     ],
     "current_events": [
@@ -2597,10 +2670,11 @@
     ],
     "connections": [
       {
-        "to_location_id": "Andrews, Quantico, DC core; Species I Diaz-kin in Anacostia",
+        "to_location_id": "loc-anacostia",
         "travel_mode": "foot",
         "travel_time": "",
-        "hazards": []
+        "hazards": [],
+        "display_label": "Andrews, Quantico, DC core; Species I Diaz-kin in Anacostia"
       }
     ],
     "current_events": [
@@ -2653,10 +2727,11 @@
     ],
     "connections": [
       {
-        "to_location_id": "Pentagon",
+        "to_location_id": "loc-pentagon",
         "travel_mode": "foot",
         "travel_time": "",
-        "hazards": []
+        "hazards": [],
+        "display_label": "Pentagon"
       }
     ],
     "current_events": [
@@ -2704,10 +2779,11 @@
     ],
     "connections": [
       {
-        "to_location_id": "Pentagon (nominal); northern Virginia districts",
+        "to_location_id": "loc-brooklyn-tower-districts",
         "travel_mode": "foot",
         "travel_time": "",
-        "hazards": []
+        "hazards": [],
+        "display_label": "Pentagon (nominal); northern Virginia districts"
       }
     ],
     "current_events": [
@@ -2754,10 +2830,11 @@
     ],
     "connections": [
       {
-        "to_location_id": "Bourse library (correspondence); Princeton (correspondence)",
+        "to_location_id": "loc-bourse-library",
         "travel_mode": "foot",
         "travel_time": "",
-        "hazards": []
+        "hazards": [],
+        "display_label": "Bourse library (correspondence); Princeton (correspondence)"
       }
     ],
     "current_events": [
@@ -2804,10 +2881,11 @@
     ],
     "connections": [
       {
-        "to_location_id": "Pentagon; Georgetown",
+        "to_location_id": "loc-pentagon",
         "travel_mode": "foot",
         "travel_time": "",
-        "hazards": []
+        "hazards": [],
+        "display_label": "Pentagon; Georgetown"
       }
     ],
     "current_events": [
@@ -2854,10 +2932,11 @@
     ],
     "connections": [
       {
-        "to_location_id": "Pentagon",
+        "to_location_id": "loc-pentagon",
         "travel_mode": "foot",
         "travel_time": "",
-        "hazards": []
+        "hazards": [],
+        "display_label": "Pentagon"
       }
     ],
     "current_events": [
@@ -2904,10 +2983,11 @@
     ],
     "connections": [
       {
-        "to_location_id": "Species I Diaspora; Fed Continuity (tense)",
+        "to_location_id": "loc-anacostia",
         "travel_mode": "foot",
         "travel_time": "",
-        "hazards": []
+        "hazards": [],
+        "display_label": "Species I Diaspora; Fed Continuity (tense)"
       }
     ],
     "current_events": [
@@ -2955,10 +3035,11 @@
     ],
     "connections": [
       {
-        "to_location_id": "Species I Diaspora; Fed Continuity (negotiating)",
+        "to_location_id": "loc-anacostia",
         "travel_mode": "foot",
         "travel_time": "",
-        "hazards": []
+        "hazards": [],
+        "display_label": "Species I Diaspora; Fed Continuity (negotiating)"
       }
     ],
     "current_events": [
@@ -3007,10 +3088,11 @@
     ],
     "connections": [
       {
-        "to_location_id": "Bourse (primary market); other Harvest Lords",
+        "to_location_id": "loc-bourse-library",
         "travel_mode": "foot",
         "travel_time": "",
-        "hazards": []
+        "hazards": [],
+        "display_label": "Bourse (primary market); other Harvest Lords"
       }
     ],
     "current_events": [
@@ -3060,10 +3142,11 @@
     ],
     "connections": [
       {
-        "to_location_id": "other Harvest Lords; Bourse",
+        "to_location_id": "loc-bourse-library",
         "travel_mode": "foot",
         "travel_time": "",
-        "hazards": []
+        "hazards": [],
+        "display_label": "other Harvest Lords; Bourse"
       }
     ],
     "current_events": [
@@ -3110,10 +3193,11 @@
     ],
     "connections": [
       {
-        "to_location_id": "other Harvest Lords (mediation site)",
+        "to_location_id": "loc-mount-tremper",
         "travel_mode": "foot",
         "travel_time": "",
-        "hazards": []
+        "hazards": [],
+        "display_label": "other Harvest Lords (mediation site)"
       }
     ],
     "current_events": [
@@ -3160,10 +3244,11 @@
     ],
     "connections": [
       {
-        "to_location_id": "Species I Diaspora; other Harvest Lords",
+        "to_location_id": "loc-anacostia",
         "travel_mode": "foot",
         "travel_time": "",
-        "hazards": []
+        "hazards": [],
+        "display_label": "Species I Diaspora; other Harvest Lords"
       }
     ],
     "current_events": [
@@ -3210,10 +3295,11 @@
     ],
     "connections": [
       {
-        "to_location_id": "other Harvest Lords; Bourse (fishery exports)",
+        "to_location_id": "loc-bourse-library",
         "travel_mode": "foot",
         "travel_time": "",
-        "hazards": []
+        "hazards": [],
+        "display_label": "other Harvest Lords; Bourse (fishery exports)"
       }
     ],
     "current_events": [
@@ -3262,10 +3348,11 @@
     ],
     "connections": [
       {
-        "to_location_id": "other Harvest Lords; regional Catholic communities",
+        "to_location_id": "loc-denton-md",
         "travel_mode": "foot",
         "travel_time": "",
-        "hazards": []
+        "hazards": [],
+        "display_label": "other Harvest Lords; regional Catholic communities"
       }
     ],
     "current_events": [
@@ -3312,10 +3399,11 @@
     ],
     "connections": [
       {
-        "to_location_id": "Dundalk; Towson; Bourse; Delmarva; ocean",
+        "to_location_id": "loc-dundalk",
         "travel_mode": "foot",
         "travel_time": "",
-        "hazards": []
+        "hazards": [],
+        "display_label": "Dundalk; Towson; Bourse; Delmarva; ocean"
       }
     ],
     "current_events": [
@@ -3362,10 +3450,11 @@
     ],
     "connections": [
       {
-        "to_location_id": "Inner Harbor; Bourse (commerce)",
+        "to_location_id": "loc-inner-harbor-baltimore",
         "travel_mode": "foot",
         "travel_time": "",
-        "hazards": []
+        "hazards": [],
+        "display_label": "Inner Harbor; Bourse (commerce)"
       }
     ],
     "current_events": [
@@ -3412,10 +3501,11 @@
     ],
     "connections": [
       {
-        "to_location_id": "Inner Harbor Baltimore",
+        "to_location_id": "loc-inner-harbor-baltimore",
         "travel_mode": "foot",
         "travel_time": "",
-        "hazards": []
+        "hazards": [],
+        "display_label": "Inner Harbor Baltimore"
       }
     ],
     "current_events": [
@@ -3459,10 +3549,11 @@
     ],
     "connections": [
       {
-        "to_location_id": "small-town communities along Delaware",
+        "to_location_id": "loc-delaware-wharves",
         "travel_mode": "foot",
         "travel_time": "",
-        "hazards": []
+        "hazards": [],
+        "display_label": "small-town communities along Delaware"
       }
     ],
     "current_events": [
@@ -3509,10 +3600,11 @@
     ],
     "connections": [
       {
-        "to_location_id": "Bronx; Westchester approaches",
+        "to_location_id": "loc-cross-bronx-raider-territory",
         "travel_mode": "foot",
         "travel_time": "",
-        "hazards": []
+        "hazards": [],
+        "display_label": "Bronx; Westchester approaches"
       }
     ],
     "current_events": [
@@ -3559,10 +3651,11 @@
     ],
     "connections": [
       {
-        "to_location_id": "CJL; Philadelphia; Pine Barrens (distant)",
+        "to_location_id": "loc-pine-barrens-perimeter (Seer Willem's movement area)",
         "travel_mode": "foot",
         "travel_time": "",
-        "hazards": []
+        "hazards": [],
+        "display_label": "CJL; Philadelphia; Pine Barrens (distant)"
       }
     ],
     "current_events": [
@@ -3609,10 +3702,11 @@
     ],
     "connections": [
       {
-        "to_location_id": "Species I Diaspora; Delmarva (Lord Velasquez cross-tie)",
+        "to_location_id": "loc-brooklyn-tower-districts",
         "travel_mode": "foot",
         "travel_time": "",
-        "hazards": []
+        "hazards": [],
+        "display_label": "Species I Diaspora; Delmarva (Lord Velasquez cross-tie)"
       }
     ],
     "current_events": [
@@ -3656,10 +3750,11 @@
     ],
     "connections": [
       {
-        "to_location_id": "occasional Kostas correspondence [GM]",
+        "to_location_id": "loc-kaaterskill-falls",
         "travel_mode": "foot",
         "travel_time": "",
-        "hazards": []
+        "hazards": [],
+        "display_label": "occasional Kostas correspondence [GM]"
       }
     ],
     "current_events": [
@@ -3706,10 +3801,11 @@
     ],
     "connections": [
       {
-        "to_location_id": "Queens Commonage (allied); regional Catholic communities",
+        "to_location_id": "loc-queens-commonage",
         "travel_mode": "foot",
         "travel_time": "",
-        "hazards": []
+        "hazards": [],
+        "display_label": "Queens Commonage (allied); regional Catholic communities"
       }
     ],
     "current_events": [
@@ -3756,10 +3852,11 @@
     ],
     "connections": [
       {
-        "to_location_id": "Bourse (informal retainer); npc-montes",
+        "to_location_id": "loc-bourse-library",
         "travel_mode": "foot",
         "travel_time": "",
-        "hazards": []
+        "hazards": [],
+        "display_label": "Bourse (informal retainer); npc-montes"
       }
     ],
     "current_events": [
@@ -3806,10 +3903,11 @@
     ],
     "connections": [
       {
-        "to_location_id": "Lehigh Principalities (treaty)",
+        "to_location_id": "loc-jim-thorpe",
         "travel_mode": "foot",
         "travel_time": "",
-        "hazards": []
+        "hazards": [],
+        "display_label": "Lehigh Principalities (treaty)"
       }
     ],
     "current_events": [
@@ -3856,10 +3954,11 @@
     ],
     "connections": [
       {
-        "to_location_id": "Central Jersey League southern townships; Herrera-kin Camden periphery",
+        "to_location_id": "loc-camden-nj",
         "travel_mode": "foot",
         "travel_time": "",
-        "hazards": []
+        "hazards": [],
+        "display_label": "Central Jersey League southern townships; Herrera-kin Camden periphery"
       }
     ],
     "current_events": [
@@ -3906,10 +4005,11 @@
     ],
     "connections": [
       {
-        "to_location_id": "Crabclaw Confederation; Delmarva (Finch)",
+        "to_location_id": "loc-rehoboth-beach-de",
         "travel_mode": "foot",
         "travel_time": "",
-        "hazards": []
+        "hazards": [],
+        "display_label": "Crabclaw Confederation; Delmarva (Finch)"
       }
     ],
     "current_events": [
@@ -3953,10 +4053,11 @@
     ],
     "connections": [
       {
-        "to_location_id": "The Listening (deference, unclear direction)",
+        "to_location_id": "loc-wharton-forest-reserve",
         "travel_mode": "foot",
         "travel_time": "",
-        "hazards": []
+        "hazards": [],
+        "display_label": "The Listening (deference, unclear direction)"
       }
     ],
     "current_events": [
@@ -4004,10 +4105,11 @@
     ],
     "connections": [
       {
-        "to_location_id": "Catskill Throne (two meetings); Yonkers; Species I",
+        "to_location_id": "loc-yonkers-council-chamber",
         "travel_mode": "foot",
         "travel_time": "",
-        "hazards": []
+        "hazards": [],
+        "display_label": "Catskill Throne (two meetings); Yonkers; Species I"
       }
     ],
     "current_events": [
@@ -4054,10 +4156,11 @@
     ],
     "connections": [
       {
-        "to_location_id": "Quantico; Pentagon (Fed Continuity observation)",
+        "to_location_id": "loc-quantico-periphery",
         "travel_mode": "foot",
         "travel_time": "",
-        "hazards": []
+        "hazards": [],
+        "display_label": "Quantico; Pentagon (Fed Continuity observation)"
       }
     ],
     "current_events": [

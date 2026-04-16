@@ -457,7 +457,7 @@ def step_preamble(args: Any, save_root: str) -> Dict[str, Any]:
     npcs_present = [
         getattr(npc, "name", npc_id)
         for npc_id, npc in npcs.items()
-        if getattr(npc, "current_location", None) == player_location_id
+        if getattr(npc, "location", None) == player_location_id
     ][:5]
 
     # Faction standings from player data
@@ -590,7 +590,7 @@ def step_situation(args: Any, save_root: str) -> Dict[str, Any]:
     # Find NPCs at player's location
     npcs_present = [
         npc for npc in npcs.values()
-        if getattr(npc, "current_location", None) == player_location_id
+        if getattr(npc, "location", None) == player_location_id
     ][:5]  # Cap at 5
 
     generator = SituationGenerator()
@@ -684,7 +684,7 @@ def step_resolve(args: Any, save_root: str) -> Dict[str, Any]:
 
     npcs_present = [
         npc for npc in npcs.values()
-        if getattr(npc, "current_location", None) == player_location_id
+        if getattr(npc, "location", None) == player_location_id
     ][:5]
 
     resolver = PlayerActionResolver()
