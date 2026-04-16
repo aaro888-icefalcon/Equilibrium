@@ -375,20 +375,22 @@
     "narrative_voice": "The walls of the compound were laid by Kostas personally. The mineralization was not yet on his face when he built them, only his forearm. The walls remember the shape of his hand. Inside the compound, the reactor hums at a frequency that settles into the bones of everyone who lives there. Children born in the Bear-House can feel when the reactor's output changes. They learn to read it before they learn to read words.",
     "last_tick_actions": [
       {
-        "tick_timestamp": "T+1y 0m 1d",
+        "tick_timestamp": "T+1y 0m 3d",
         "entity_type": "faction",
         "entity_id": "bear-house",
-        "event_type": "goal_progress",
+        "event_type": "resource_gathered",
         "details": {
-          "goal_id": "goal_2",
-          "progress": 2,
-          "delta": 2
+          "resource": "matter-manipulation-fabricated precision goods",
+          "amount": 8,
+          "new_total": 8
         },
         "consequences": [],
         "visibility": "local"
       }
     ],
-    "resources": {}
+    "resources": {
+      "matter-manipulation-fabricated precision goods": 8
+    }
   },
   "yonkers-compact": {
     "id": "yonkers-compact",
@@ -688,7 +690,7 @@
         "id": "goal_3",
         "description": "avoid direct conflict with Iron Crown or Staten Citadel",
         "weight": 1.0,
-        "progress": 0
+        "progress": 2
       }
     ],
     "current_schemes": [
@@ -752,14 +754,14 @@
     "narrative_voice": "The Lords do not speak to each other often. They speak through intermediaries, messages, arranged meetings at neutral locations in Flatbush or along the waterfront. A salvage crew passing between districts pays each Lord in turn. The crews know the customs. The kinetic corruption has made streets strange \u2014 walls sag in directions that would require force-vector analysis to predict. Children born in Crown Heights this year will grow up on streets that are not quite the streets their parents knew.",
     "last_tick_actions": [
       {
-        "tick_timestamp": "T+1y 0m 2d",
+        "tick_timestamp": "T+1y 0m 3d",
         "entity_type": "faction",
         "entity_id": "tower-lords-brooklyn",
         "event_type": "goal_progress",
         "details": {
-          "goal_id": "goal_2",
-          "progress": 1,
-          "delta": 1
+          "goal_id": "goal_3",
+          "progress": 2,
+          "delta": 2
         },
         "consequences": [],
         "visibility": "local"

@@ -7,8 +7,8 @@
     "season": "spring",
     "tick_count": 0,
     "timestamp": "T+1y 0m 0d",
-    "day_count": 2,
-    "in_world_date": "T+1y 0m 2d"
+    "day_count": 3,
+    "in_world_date": "T+1y 0m 3d"
   },
   "active_scene": null,
   "session_metadata": {

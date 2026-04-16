@@ -3,7 +3,7 @@
     "id": "bourse-currency-stability",
     "schema_version": "1.0",
     "display_name": "Bourse Currency Stability",
-    "current_segment": 5,
+    "current_segment": 6,
     "total_segments": 6,
     "advance_conditions": [
       {
@@ -56,7 +56,9 @@
       }
     ],
     "narrative_description": "The copper coin the merchants stamp is already doing the work of a standard; what remains is the final recognition. Two-thirds of mid-Atlantic trade already settles in Bourse copper. The last segment is the Lehigh Principalities signing a multi-year grain-for-coal contract denominated in copper, not barter. After that, the currency is simply what money is.",
-    "last_advancement": {}
+    "last_advancement": {
+      "timestamp": "T+1y 0m 3d"
+    }
   },
   "biokinetic-ag-saturation": {
     "id": "biokinetic-ag-saturation",
@@ -448,7 +450,7 @@
     "id": "species-i-consolidation",
     "schema_version": "1.0",
     "display_name": "Species I Formal Polity Declaration",
-    "current_segment": 2,
+    "current_segment": 3,
     "total_segments": 8,
     "advance_conditions": [
       {
@@ -508,7 +510,9 @@
       }
     ],
     "narrative_description": "Elder Flores is old. Tom\u00e1s Reyes is not. Between them is the question of whether Species I should be a people or a polity. The kin networks are already the largest coherent population in the mid-Atlantic. What they are not yet is a country. The clock ticks when Reyes wins an assembly argument, when Fed Continuity loses another district, when Iron Crown insults one of their own.",
-    "last_advancement": {}
+    "last_advancement": {
+      "timestamp": "T+1y 0m 3d"
+    }
   },
   "manhattan-eldritch-breach": {
     "id": "manhattan-eldritch-breach",

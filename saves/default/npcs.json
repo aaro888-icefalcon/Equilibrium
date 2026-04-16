@@ -1590,7 +1590,7 @@
       {
         "id": "goal_2",
         "description": "private experimentation in pain limits",
-        "progress": 0
+        "progress": 1
       }
     ],
     "relationships": {
@@ -2317,7 +2317,7 @@
       {
         "id": "goal_1",
         "description": "manage The Broker contact (House Pereira's quiet asset)",
-        "progress": 1
+        "progress": 3
       },
       {
         "id": "goal_2",
@@ -2402,7 +2402,7 @@
       {
         "id": "goal_1",
         "description": "manage Old Badger treaty",
-        "progress": 0
+        "progress": 2
       },
       {
         "id": "goal_2",
@@ -2500,7 +2500,7 @@
       {
         "id": "goal_2",
         "description": "keep restored anomalous object secure",
-        "progress": 0
+        "progress": 1
       }
     ],
     "relationships": {
@@ -3029,7 +3029,7 @@
       {
         "id": "goal_0",
         "description": "perpetuate seed bank",
-        "progress": 0
+        "progress": 2
       },
       {
         "id": "goal_1",
@@ -4048,7 +4048,7 @@
       {
         "id": "goal_1",
         "description": "facilitate cult expansion",
-        "progress": 0
+        "progress": 1
       },
       {
         "id": "goal_2",
@@ -5079,7 +5079,7 @@
       {
         "id": "goal_0",
         "description": "perpetuate broker network",
-        "progress": 0
+        "progress": 1
       },
       {
         "id": "goal_1",

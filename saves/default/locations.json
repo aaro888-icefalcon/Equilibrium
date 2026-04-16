@@ -77,23 +77,7 @@
       "threat_level": 1
     },
     "history": [],
-    "last_tick_updates": [
-      {
-        "tick_timestamp": "T+1y 0m 2d",
-        "entity_type": "location",
-        "entity_id": "loc-mount-tremper",
-        "event_type": "danger_escalation",
-        "details": {
-          "new_threat_level": 1,
-          "dangers": [
-            "Preston's own presence (for those who displease him)",
-            "retinue discipline strict"
-          ]
-        },
-        "consequences": [],
-        "visibility": "local"
-      }
-    ]
+    "last_tick_updates": []
   },
   "loc-peekskill-reactor": {
     "id": "loc-peekskill-reactor",
@@ -424,21 +408,7 @@
       "threat_level": 0
     },
     "history": [],
-    "last_tick_updates": [
-      {
-        "tick_timestamp": "T+1y 0m 2d",
-        "entity_type": "location",
-        "entity_id": "loc-kaaterskill-falls",
-        "event_type": "economic_shift",
-        "details": {
-          "from": "subsistence + modest wild-harvest",
-          "to": "strained",
-          "direction": "worsened"
-        },
-        "consequences": [],
-        "visibility": "regional"
-      }
-    ]
+    "last_tick_updates": []
   },
   "loc-hollow-choir-range": {
     "id": "loc-hollow-choir-range",
@@ -674,7 +644,8 @@
     ],
     "opportunities": [
       "harvester work",
-      "biokinetic material collection"
+      "biokinetic material collection",
+      "abandoned_tech"
     ],
     "description": "The park has become a biokinetically altered ecosystem. Trees grow faster than baseline; undergrowth is thicker; fish in the lakes are larger and stranger. Harvesters work the park for altered material. Most return.",
     "npcs_present": [],
@@ -685,7 +656,19 @@
       "threat_level": 0
     },
     "history": [],
-    "last_tick_updates": []
+    "last_tick_updates": [
+      {
+        "tick_timestamp": "T+1y 0m 3d",
+        "entity_type": "location",
+        "entity_id": "loc-central-park-wildland",
+        "event_type": "opportunity_appeared",
+        "details": {
+          "opportunity": "abandoned_tech"
+        },
+        "consequences": [],
+        "visibility": "local"
+      }
+    ]
   },
   "loc-brooklyn-tower-districts": {
     "id": "loc-brooklyn-tower-districts",
@@ -1730,21 +1713,7 @@
       "threat_level": 0
     },
     "history": [],
-    "last_tick_updates": [
-      {
-        "tick_timestamp": "T+1y 0m 2d",
-        "entity_type": "location",
-        "entity_id": "loc-fairmount-park",
-        "event_type": "economic_shift",
-        "details": {
-          "from": "wild-harvest (biokinetic material) + Hive containment (costly)",
-          "to": "strained",
-          "direction": "worsened"
-        },
-        "consequences": [],
-        "visibility": "regional"
-      }
-    ]
+    "last_tick_updates": []
   },
   "loc-camden-nj": {
     "id": "loc-camden-nj",
@@ -1936,10 +1905,25 @@
       "weather": "clear",
       "time_of_day": "morning",
       "season": "spring",
-      "threat_level": 0
+      "threat_level": 1
     },
     "history": [],
-    "last_tick_updates": []
+    "last_tick_updates": [
+      {
+        "tick_timestamp": "T+1y 0m 3d",
+        "entity_type": "location",
+        "entity_id": "loc-rutgers-nb",
+        "event_type": "danger_escalation",
+        "details": {
+          "new_threat_level": 1,
+          "dangers": [
+            "low"
+          ]
+        },
+        "consequences": [],
+        "visibility": "local"
+      }
+    ]
   },
   "loc-princeton-horse-lands": {
     "id": "loc-princeton-horse-lands",
@@ -2105,7 +2089,7 @@
     "controller": "the-listening",
     "population": 0,
     "defensive_capacity": 5,
-    "economic_state": "none (cult resource-gathering)",
+    "economic_state": "strained",
     "resources": [
       {
         "description": "none accessible"
@@ -2142,7 +2126,21 @@
       "threat_level": 0
     },
     "history": [],
-    "last_tick_updates": []
+    "last_tick_updates": [
+      {
+        "tick_timestamp": "T+1y 0m 3d",
+        "entity_type": "location",
+        "entity_id": "loc-batsto-village",
+        "event_type": "economic_shift",
+        "details": {
+          "from": "none (cult resource-gathering)",
+          "to": "strained",
+          "direction": "worsened"
+        },
+        "consequences": [],
+        "visibility": "regional"
+      }
+    ]
   },
   "loc-wharton-forest-reserve": {
     "id": "loc-wharton-forest-reserve",
@@ -2387,7 +2385,8 @@
       "structural collapse; occasional altered fauna (Night-walker raccoons)"
     ],
     "opportunities": [
-      "salvage contracts"
+      "salvage contracts",
+      "trade_caravan"
     ],
     "description": "The old Bethlehem Steel site. Salvage operations have produced significant metal stocks over four years, but yields are declining as easy material is exhausted. The ruins are strangely picturesque \u2014 enormous rusted structures against the sky.",
     "npcs_present": [],
@@ -2398,7 +2397,19 @@
       "threat_level": 0
     },
     "history": [],
-    "last_tick_updates": []
+    "last_tick_updates": [
+      {
+        "tick_timestamp": "T+1y 0m 3d",
+        "entity_type": "location",
+        "entity_id": "loc-bethlehem-steelworks-ruin",
+        "event_type": "opportunity_appeared",
+        "details": {
+          "opportunity": "trade_caravan"
+        },
+        "consequences": [],
+        "visibility": "local"
+      }
+    ]
   },
   "loc-carbon-county-mine": {
     "id": "loc-carbon-county-mine",
@@ -3719,21 +3730,7 @@
       "threat_level": 0
     },
     "history": [],
-    "last_tick_updates": [
-      {
-        "tick_timestamp": "T+1y 0m 2d",
-        "entity_type": "location",
-        "entity_id": "loc-outer-queens-parish",
-        "event_type": "economic_shift",
-        "details": {
-          "from": "subsistence + community support",
-          "to": "strained",
-          "direction": "worsened"
-        },
-        "consequences": [],
-        "visibility": "regional"
-      }
-    ]
+    "last_tick_updates": []
   },
   "loc-philadelphia-area (Old Black's range)": {
     "id": "loc-philadelphia-area (Old Black's range)",
