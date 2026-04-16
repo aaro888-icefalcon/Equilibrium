@@ -42,3 +42,4 @@ F9 done: full suite green
 Final: saves/default reset, clean SESSION_ZERO waiting for player
 CP-F done: end-to-end walk verified, save reset for player
 CP-G done: pushed
+Audit start: V1 vestigial category-name references
