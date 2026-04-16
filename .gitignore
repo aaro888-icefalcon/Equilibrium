@@ -12,3 +12,5 @@ saves/**/.lock
 session_zero_state.json
 combat_state.json
 current_situation.json
+current_scene.json
+last_engine_output.json

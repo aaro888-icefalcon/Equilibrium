@@ -23,11 +23,20 @@ Start or resume an Emergence game session. $ARGUMENTS
    - Continue from that scene
 
 4. **If VALID with SIM mode:**
-   - Run a tick: `python3 -m emergence --save-root ./saves/default step tick`
-   - Generate situation: `python3 -m emergence --save-root ./saves/default step situation`
-   - Narrate the scene from the `narrator_payload`
-   - Present choices to the player
-   - Wait for input, then resolve: `python3 -m emergence --save-root ./saves/default step resolve --choice-id <id>`
+   - Open scene: `python3 -m emergence --save-root ./saves/default step scene-open`
+   - Narrate the frozen moment from the scene code (150-300 words). No numbered choices.
+   - Wait for player to declare intent freely
+   - Classify declaration → `python3 -m emergence --save-root ./saves/default step resolve-action --type <type> --approach <approach> [--target <id>] [--skill <skill>]`
+   - Continue scene: `python3 -m emergence --save-root ./saves/default step scene-continue`
+   - Narrate the result (60-120 words). Describe all complications.
+   - Repeat until `scene_continues` is false
+   - Close scene: `python3 -m emergence --save-root ./saves/default step scene-close`
+   - Narrate resolution (40-80 words)
+   - Tick if needed: `python3 -m emergence --save-root ./saves/default step tick --days N`
+   - Return to scene-open
+   
+   For exposition (free action, no roll):
+   `python3 -m emergence --save-root ./saves/default step resolve-action --type exposition --approach observe`
 
 5. **If VALID with COMBAT mode:**
    - Present available verbs and targets
