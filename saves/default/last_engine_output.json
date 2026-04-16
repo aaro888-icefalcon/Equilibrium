@@ -1,8 +1,8 @@
 {
   "declaration": {
-    "action_type": "social",
-    "approach": "reason",
-    "target_id": "npc-butcher",
+    "action_type": "investigate",
+    "approach": "analyze",
+    "target_id": null,
     "skill_id": null,
     "free_text": ""
   },
@@ -14,28 +14,38 @@
   "modifiers": [],
   "complications": [
     {
-      "move_id": "put_in_spot",
+      "move_id": "deal_harm",
       "severity": "hard",
       "category": "core",
-      "description": "Someone you care about is now exposed.",
-      "mechanical_effects": [],
-      "narrative_seed": "put_in_spot"
+      "description": "You take mental harm.",
+      "mechanical_effects": [
+        {
+          "type": "harm_dealt",
+          "track": "mental",
+          "amount": 1
+        }
+      ],
+      "narrative_seed": "harm"
     }
   ],
-  "state_deltas": {},
+  "state_deltas": {
+    "harm_dealt": {
+      "mental": 1
+    }
+  },
   "narrative_hints": [
-    "\"The Butcher\" (Petra Voss) refuses."
+    "Investigation yields nothing."
   ],
   "time_cost_days": 0,
   "new_location": null,
   "encounter_triggered": false,
   "scene_state_changes": {},
   "check_result": {
-    "d1": 1,
-    "d2": 4,
-    "total": 5,
+    "d1": 6,
+    "d2": 3,
+    "total": 9,
     "tn": 12,
-    "margin": -7,
+    "margin": -3,
     "tier": "failure",
     "is_crit": false,
     "is_fumble": false

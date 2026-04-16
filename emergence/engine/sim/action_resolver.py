@@ -30,6 +30,7 @@ from emergence.engine.sim.complications import (
     ComplicationContext,
     generate_complications,
 )
+from emergence.engine.sim.hidden_elements import gather_hidden_elements
 
 
 # ---------------------------------------------------------------------------
@@ -478,6 +479,15 @@ def _build_complication_context(
         if c.total_segments > 0 and c.current_segment < c.total_segments
     ]
 
+    # Gather hidden elements for the complication generator
+    hidden = gather_hidden_elements(
+        location=location,
+        npcs_present=npcs_present,
+        recent_events=[],  # TickEvents passed in from situation — not available here yet
+        clocks=clocks,
+    )
+    hidden_dicts = [h.to_dict() for h in hidden]
+
     return ComplicationContext(
         location_id=location.id,
         location_display=getattr(location, "display_name", location.id),
@@ -490,7 +500,7 @@ def _build_complication_context(
         player_condition_tracks=player.get("condition_tracks", {}),
         player_allies=[],  # Populated later when relationship data is richer
         player_goals=list(player.get("goals", [])),
-        hidden_elements=[],  # Populated in Phase 1c
+        hidden_elements=hidden_dicts,
         active_clocks=active_clocks,
         faction_tensions=[],
         recent_tick_events=[],
@@ -622,22 +632,32 @@ def _gather_exposition(
     location: Location,
     npcs_present: List[NPC],
 ) -> List[str]:
-    """Gather exposition information (expanded in Phase 1c)."""
+    """Gather exposition information from location, NPCs, and hidden elements."""
     hints: List[str] = []
 
     # Location details
+    if location.description:
+        hints.append(f"Location: {location.description}")
     if location.dangers:
         hints.append(f"Known dangers: {', '.join(location.dangers)}")
     if location.opportunities:
         hints.append(f"Opportunities: {', '.join(location.opportunities)}")
-    if location.description:
-        hints.append(f"Location: {location.description}")
+    if getattr(location, "current_events", []):
+        hints.append(f"Current events: {', '.join(location.current_events[:3])}")
 
-    # NPC info
+    # NPC voice and role
     for npc in npcs_present:
+        role = getattr(npc, "role", "")
+        voice = getattr(npc, "voice", "")
+        if role:
+            hints.append(f"{npc.display_name} — {role}")
+        if voice:
+            hints.append(f"{npc.display_name}: {voice}")
         if npc.knowledge:
             for k in npc.knowledge[:2]:
-                hints.append(f"{npc.display_name} knows about: {k.topic}")
+                topic = getattr(k, "topic", "")
+                if topic:
+                    hints.append(f"{npc.display_name} could share info about: {topic}")
 
     if not hints:
         hints.append("Nothing notable to report.")
