@@ -4,63 +4,61 @@ description: Narration style guide for Emergence. Loads when generating prose fr
 user-invocable: false
 ---
 
-# Emergence Narration Style
+# Emergence Narration
 
-## Core Register
+## Register
 
-Grounded simulation in the tradition of Berserk, Kenshi, and Cormac McCarthy. Stoic. Tactile. Unsentimental. Powers are physical facts, not spectacle. Violence is real and consequential.
-
-The narrator observes rather than interprets. What characters feel is shown through what they do. Internal monologue is rare and sensory rather than abstract.
-
-Prose is plain and load-bearing. Short sentences alternate with longer ones. Metaphor is infrequent and concrete. Nouns and verbs over adjectives and adverbs. Description is selective — one or two details that do the work.
-
-Dialogue is terse. Characters say what they mean and stop. Simple speech tags. Action beats over speech tags. Silences matter.
+Grounded simulation. Stoic. Tactile. Unsentimental. The narrator observes rather than interprets. Show through action, not interpretation. Prose is plain and load-bearing. Dialogue is terse. Powers are physical facts, not spectacle.
 
 ## Register Directives
 
-- **standard**: Clear, grounded prose. Present tense for action, past for reflection.
-- **eldritch**: Unsettling. Senses contradict. Time behaves wrong. Language destabilizes gently.
-- **intimate**: Close, personal. Interior thoughts, quiet moments. Earned emotional weight.
-- **action**: Terse, kinetic. Short sentences. Sensory impact. No purple prose.
-- **quiet**: Understated. What is NOT said matters. Restraint and implication.
+- **standard**: Clear, grounded. Present tense for action, past for reflection.
+- **eldritch**: Senses contradict. Time wrong. Language destabilizes gently.
+- **intimate**: Close, personal. Quiet moments. Earned emotional weight.
+- **action**: Terse, kinetic. Short sentences. Sensory impact.
+- **quiet**: Understated. What is NOT said matters. Restraint.
 
-## Scene Type Guidelines
+## Response Types and Word Counts
 
-### combat_turn (40-80 words)
-Describe the physical action. Powers are things happening to the world, not named moves. Do not say "critical hit" or use gamey language. One sensory detail minimum.
+Word counts vary by response type, NOT just scene_type:
 
-### scene_framing (60-120 words)
-Establish place, time, presence. Ground in physical detail. Do not introduce characters not listed in the payload.
+| Response type | Words | When |
+|---|---|---|
+| Scene opening | 100-200 | New location, new day, post-travel, post-combat |
+| Scene continuation | 40-80 | Follow-up action in same scene |
+| Scene close | 30-60 | Dramatic question answered, transition out |
+| Combat turn | 25-60 | Per round narration |
+| Character creation | 80-200 | Session zero beats |
+| Preamble | 150-300 | Session start, recap + in media res |
 
-### situation_description (80-150 words)
-Describe the current moment of tension or opportunity. Present choices clearly but in voice.
+## The Narration Pipeline
 
-### dialogue (40-100 words)
-Write NPC dialogue in their voice. Do not speak for the player. Terse, faction-appropriate register.
+Every narrated moment follows Sensation -> Information -> Choice:
 
-### character_creation_beat (60-120 words)
-Present the scene and choices. Do not add options beyond those listed.
+1. **Sensation** -- lead with the sense that matters most. Specific nouns beat abstractions.
+2. **Information** -- what the character infers from the sensation. Weave world events in as environmental detail.
+3. **Choice** -- end on the actionable element. The last thing you say is what players act on.
 
-### transition (40-80 words)
-Narrate travel. Terrain, weather, hazards. Brief.
-
-### death_narration (80-150 words)
-Respectful. Focus on what they meant, not how they ended. No consolation.
-
-### time_skip (60-120 words)
-Summarize passage of time. What changed, what persisted.
-
-## Anti-Patterns (NEVER do these)
+## Anti-Patterns
 
 - Power spectacle ("with a mighty blast...")
 - Heroic framing of violence
-- Genre pastiche (grimdark, superhero, action movie)
-- Emotional close-ups (lingering on feelings)
-- Adjectival pile-ups
-- Irony or meta-commentary
-- Exposition dumps
-- Consolation after bad events
-- Moralizing about characters
+- Interior monologue for the PC (never narrate what the PC thinks or feels)
+- Adjectival pile-ups (pick one detail, maybe two)
+- Exposition dumps (deliver background through action, inference, NPC speech)
+- Data dumps (don't list every object, NPC, and exit in one block)
+- Burying the lead (important info at the END, not the middle)
+- Genre pastiche, irony, meta-commentary, consolation, moralizing
 - "In a world where..." establishing cadence
 
-For full example vignettes, see [examples.md](examples.md).
+## Dialogue Register by Faction
+
+- **Iron Crown**: Military cadence. Minimal affect. Brief, precise.
+- **Bourse**: Merchant-precise. Words chosen carefully. Contracts are real.
+- **Central Jersey League**: Civic-academic. Warm-professional. Technical vocabulary.
+- **Catskill Throne**: Terse. Preston speaks briefly. Officers follow suit.
+- **Species I**: Spanish mixed with English. Elders speak with decades of authority.
+- **Warped**: Tier-dependent. Higher tiers use idiosyncratic phrasings.
+
+For full faction/species dialogue registers, see emergence/setting/narration.md.
+For example vignettes, see [examples.md](examples.md).

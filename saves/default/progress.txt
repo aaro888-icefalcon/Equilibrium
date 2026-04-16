@@ -1,0 +1,12 @@
+Phase: Analysis synthesis
+Step 1: Writing scratch notes - DONE
+Step 2: Web research (Angry GM) - DONE (6 articles, 403 on direct fetch, used search + training knowledge)
+Step 3: Subagent/hook evaluation - DONE
+Step 4: Save state audit - DONE (saves gitignored, ticks persist but no git tracking)
+Step 5: Writing final synthesis - DONE
+Step 6: Implementation - DONE
+  - .gitignore: saves/ now tracked
+  - CLAUDE.md: rewritten (removed @auto-loads, added scene structure, pipeline, Angry GM framework, self-check, playtest mode)
+  - narrate skill: rewritten (variable word counts by response type, slimmed)
+  - TRACKING.md: slimmed to 82 lines (narrative-only, removed duplicated stats/guidelines, added dramatic question)
+  - settings.json: hooks strengthened (SessionStart loads tracking, compact reminds pipeline)

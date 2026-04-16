@@ -5,7 +5,8 @@ __pycache__/
 *.egg-info/
 dist/
 build/
-saves/
+saves/**/*.log
+saves/**/.lock
 *.log
 .lock
 session_zero_state.json
