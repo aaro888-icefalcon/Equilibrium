@@ -1,1 +1,1001 @@
-{}
+{
+  "id": "38155c54-5bbf-4760-b198-2406c507ab7b",
+  "schema_version": "1.0",
+  "name": "Abhishek \"Shake\" Rao",
+  "species": "human",
+  "age_at_onset": 29,
+  "current_age": 30,
+  "attributes": {
+    "strength": 6,
+    "agility": 6,
+    "perception": 8,
+    "will": 10,
+    "insight": 10,
+    "might": 6
+  },
+  "condition_tracks": {
+    "physical": 5,
+    "mental": 5,
+    "social": 5
+  },
+  "harm": [],
+  "powers": [
+    {
+      "power_id": "kinetic_impact_battering_ram",
+      "name": "Battering Ram",
+      "category": "kinetic",
+      "sub_category": "impact",
+      "tier": 3,
+      "slot": "primary",
+      "playstyles": [
+        "Tank",
+        "Brawler"
+      ],
+      "selected_cast_mode": {
+        "slot_id": "cast_2",
+        "action_cost": "major",
+        "range_band": "close",
+        "duration": "instant",
+        "effect_description": "ram \u2014 Reposition + Heavy: 3 damage + push 2m.",
+        "effect_parameters": {
+          "damage": 3,
+          "push": "2m",
+          "requires": "combined_actions"
+        },
+        "targeting_scope": "enemy_single",
+        "pool_cost": 2
+      },
+      "selected_rider": {
+        "slot_id": "rider_a",
+        "rider_type": "strike",
+        "effect_description": "on_Full charge attacks +1 damage + push 1m.",
+        "effect_parameters": {},
+        "pool_cost": 1,
+        "combo_note": "charge_push"
+      }
+    },
+    {
+      "power_id": "spatial_translative_teleportation",
+      "name": "Teleportation",
+      "category": "spatial",
+      "sub_category": "translative",
+      "tier": 3,
+      "slot": "secondary",
+      "playstyles": [
+        "Skirmisher",
+        "Assassin"
+      ],
+      "selected_cast_mode": {
+        "slot_id": "cast_1",
+        "action_cost": "minor",
+        "range_band": "medium",
+        "duration": "instant",
+        "effect_description": "short hop \u2014 teleport up to 10m to seen location.",
+        "effect_parameters": {
+          "distance": "10m",
+          "line_of_sight": "required"
+        },
+        "targeting_scope": "self",
+        "pool_cost": 2
+      },
+      "selected_rider": {
+        "slot_id": "rider_b",
+        "rider_type": "posture",
+        "effect_description": "once per round in Dodge posture, a hit that would land instead misses (blink-avoid).",
+        "effect_parameters": {
+          "auto_miss": "1_per_round",
+          "posture": "dodge"
+        },
+        "pool_cost": 0,
+        "combo_note": "dodge_blink"
+      }
+    }
+  ],
+  "power_category_primary": "kinetic",
+  "power_category_secondary": "spatial",
+  "tier": 3,
+  "tier_ceiling": 5,
+  "breakthroughs": [
+    {
+      "id": "breakthrough_0",
+      "type": "manifestation",
+      "description": "Initial manifestation: kinetic + spatial at T3",
+      "cost": "onset trauma"
+    }
+  ],
+  "heat": {
+    "current": 0,
+    "faction_modifiers": {
+      "yonkers-compact": -3,
+      "delmarva-harvest-lords": 0
+    }
+  },
+  "corruption": 0,
+  "relationships": {
+    "npc-gen-marcus-hassan": {
+      "standing": 2,
+      "history": [],
+      "current_state": "alive_present",
+      "trust": 2
+    },
+    "npc-gen-xavier-yilmaz": {
+      "standing": 3,
+      "history": [],
+      "current_state": "alive_present",
+      "trust": 3
+    },
+    "npc-gen-kwame-becker": {
+      "standing": 2,
+      "history": [],
+      "current_state": "alive_present",
+      "trust": 2
+    },
+    "npc-gen-tom\u00e1s-johansson": {
+      "standing": -2,
+      "history": [],
+      "current_state": "alive_present",
+      "trust": 0
+    },
+    "npc-gen-james-okonkwo": {
+      "standing": 1,
+      "history": [],
+      "current_state": "alive_present",
+      "trust": 1
+    },
+    "npc-gen-li-becker": {
+      "standing": 1,
+      "history": [],
+      "current_state": "alive_present",
+      "trust": 1
+    },
+    "npc-tie-akhil-rao-00": {
+      "standing": 2,
+      "current_state": "unknown",
+      "trust": 0
+    },
+    "npc-tie-dr-rao-father-01": {
+      "standing": 2,
+      "current_state": "unknown",
+      "trust": 0
+    },
+    "npc-tie-dr-rao-mother-02": {
+      "standing": 2,
+      "current_state": "unknown",
+      "trust": 0
+    },
+    "npc-tie-denice-03": {
+      "standing": 2,
+      "current_state": "unknown",
+      "trust": 0
+    },
+    "npc-tie-alex-04": {
+      "standing": 2,
+      "current_state": "unknown",
+      "trust": 0
+    },
+    "npc-tie-bella-05": {
+      "standing": 2,
+      "current_state": "unknown",
+      "trust": 0
+    },
+    "npc-tie-henry-06": {
+      "standing": 2,
+      "current_state": "unknown",
+      "trust": 0
+    },
+    "npc-tie-saurabh-07": {
+      "standing": 2,
+      "current_state": "unknown",
+      "trust": 0
+    },
+    "npc-tie-jason-08": {
+      "standing": 2,
+      "current_state": "unknown",
+      "trust": 0
+    },
+    "npc-tie-jessica-09": {
+      "standing": 2,
+      "current_state": "unknown",
+      "trust": 0
+    },
+    "npc-tie-zyra-10": {
+      "standing": 2,
+      "current_state": "unknown",
+      "trust": 0
+    },
+    "npc-tie-kyle-11": {
+      "standing": 2,
+      "current_state": "unknown",
+      "trust": 0
+    },
+    "npc-tie-karthik-12": {
+      "standing": 2,
+      "current_state": "unknown",
+      "trust": 0
+    },
+    "npc-tie-gordon-13": {
+      "standing": 2,
+      "current_state": "unknown",
+      "trust": 0
+    },
+    "npc-tie-grandma-rao-14": {
+      "standing": 2,
+      "current_state": "unknown",
+      "trust": 0
+    }
+  },
+  "inventory": [
+    {
+      "id": "clothes_working",
+      "name": "Working Clothes",
+      "description": "",
+      "quantity": 1,
+      "mechanical_effect": null
+    },
+    {
+      "id": "training_gear",
+      "name": "Training Gear",
+      "description": "",
+      "quantity": 1,
+      "mechanical_effect": null
+    }
+  ],
+  "location": "loc-delmarva-farmstead",
+  "history": [
+    {
+      "date": "T-1y",
+      "category": "session_zero",
+      "description": "Onset: most of the world ended.",
+      "consequences": []
+    },
+    {
+      "date": "T-1y",
+      "category": "session_zero",
+      "description": "Pre-onset: Doctor, nurse, or paramedic",
+      "consequences": []
+    },
+    {
+      "date": "T+0",
+      "category": "session_zero",
+      "description": "Onset: first manifestation beat.",
+      "consequences": []
+    },
+    {
+      "date": "T+0",
+      "category": "session_zero",
+      "description": "Manifestation (primary): Kinetic \u2014 Battering Ram",
+      "consequences": []
+    },
+    {
+      "date": "T+0",
+      "category": "session_zero",
+      "description": "Manifestation (secondary): Spatial \u2014 Teleportation",
+      "consequences": []
+    },
+    {
+      "date": "T+0",
+      "category": "session_zero",
+      "description": "Battering Ram (cast_mode) \u2014 lore seed captured",
+      "consequences": []
+    },
+    {
+      "date": "T+0",
+      "category": "session_zero",
+      "description": "Battering Ram cast_mode: option 2",
+      "consequences": []
+    },
+    {
+      "date": "T+0",
+      "category": "session_zero",
+      "description": "Battering Ram (rider) \u2014 lore seed captured",
+      "consequences": []
+    },
+    {
+      "date": "T+0",
+      "category": "session_zero",
+      "description": "Battering Ram rider: option 1",
+      "consequences": []
+    },
+    {
+      "date": "T+0",
+      "category": "session_zero",
+      "description": "Teleportation (cast_mode) \u2014 lore seed captured",
+      "consequences": []
+    },
+    {
+      "date": "T+0",
+      "category": "session_zero",
+      "description": "Teleportation cast_mode: option 1",
+      "consequences": []
+    },
+    {
+      "date": "T+0",
+      "category": "session_zero",
+      "description": "Teleportation (rider) \u2014 lore seed captured",
+      "consequences": []
+    },
+    {
+      "date": "T+0",
+      "category": "session_zero",
+      "description": "Teleportation rider: option 2",
+      "consequences": []
+    },
+    {
+      "date": "T+0.1y",
+      "category": "session_zero",
+      "description": "First months: Make rounds with Marcus Hassan \u2014 the sick, the wounded, the dying. Never enough hands.",
+      "consequences": []
+    },
+    {
+      "date": "T+0.2y",
+      "category": "session_zero",
+      "description": "Settled in: Delmarva Peninsula",
+      "consequences": []
+    },
+    {
+      "date": "T+0.5y",
+      "category": "session_zero",
+      "description": "Relationship: Xavier Yilmaz (family, ally)",
+      "consequences": []
+    },
+    {
+      "date": "T+0.5y",
+      "category": "session_zero",
+      "description": "Relationship: Kwame Becker (friend, ally)",
+      "consequences": []
+    },
+    {
+      "date": "T+0.5y",
+      "category": "session_zero",
+      "description": "Relationship: Tom\u00e1s Johansson (rival, foe)",
+      "consequences": []
+    },
+    {
+      "date": "T+0.8y",
+      "category": "session_zero",
+      "description": "Faction encounter: James Okonkwo (Delmarva Harvest Lords)",
+      "consequences": []
+    },
+    {
+      "date": "T+1y",
+      "category": "session_zero",
+      "description": "Vow: Riser",
+      "consequences": []
+    }
+  ],
+  "statuses": [],
+  "skills": {
+    "first_aid": 6,
+    "surgery": 6,
+    "pharmacology": 4,
+    "literacy": 6,
+    "diagnosis": 4,
+    "instruction": 2,
+    "investigation": 3,
+    "history": 1,
+    "streetwise": 1,
+    "survival": 1,
+    "negotiation": 1,
+    "farming": 1
+  },
+  "resources": {
+    "medical_kit_partial": 2,
+    "cu": 15,
+    "lodging_paid": 1
+  },
+  "goals": [
+    {
+      "id": "apprentice_to_npc-gen-marcus-hassan",
+      "description": "Marcus Hassan Has More to Teach You",
+      "progress": 0,
+      "pressure": 2
+    },
+    {
+      "id": "protect_family",
+      "description": "Protect Your Family",
+      "progress": 0,
+      "pressure": 3
+    },
+    {
+      "id": "renegotiate_delmarva-harvest-lords",
+      "description": "Renegotiate With James Okonkwo",
+      "progress": 0,
+      "pressure": 2
+    },
+    {
+      "id": "train_with_npc-gen-li-becker",
+      "description": "Earn Li Becker's Respect",
+      "progress": 0,
+      "pressure": 2
+    },
+    {
+      "id": "earn_standing",
+      "description": "Make a Name in the Region",
+      "progress": 0,
+      "pressure": 2
+    }
+  ],
+  "session_zero_choices": {
+    "sz_v2_intro": {
+      "history": [
+        {
+          "timestamp": "T-1y",
+          "description": "Onset: most of the world ended.",
+          "type": "session_zero"
+        }
+      ]
+    },
+    "sz_v2_life_text": {
+      "name": "Abhishek \"Shake\" Rao",
+      "age_at_onset": 29,
+      "self_description": "Indian-American male, 30 (29 on the day of the Onset). 5'11\", 140 lb, slim. Vascular surgery resident at NYU, PGY-4 and academic chief for the year; rotates through Tisch, Bellevue, and the VA. Lives in hospital-provided housing in Manhattan adjacent to NYU. Originally from Delaware. Parents are physicians: dad an inventive, scattered, entrepreneurial vascular surgeon; mom a retired, grounded general surgeon. Younger brother Akhil is a med student at Mount Sinai. Extended family (cousin, aunt, uncle, grandma) in Bergen County, NJ. Close circle includes college friends Denice (OBGYN, Chicago \u2014 kind, quiet, iconoclastic), Alex (radiologist, Philly \u2014 laconic, fearless), Bella (finance \u2014 organized, busy); med-school friends Henry (ophthalmologist, Boston \u2014 gregarious), Saurabh (cardiology, San Diego \u2014 analytical). Coworkers: senior co-resident Jason (wry, joking, blunt), junior Jessica (kind, blunt, efficient), peer Zyra (bubbly, not known well), senior Kyle (anxious, fiery but protective), junior Karthik (analytical, friendly), intern Gordon (suave). Habits: heavy reader, action RPGs, military history, lapsed Tae Kwon Do, active on dating apps. No current partner, no kids, wants both eventually. Temperament: blunt, direct, patient but not gentle \u2014 pushes back. Unusually curious; builds frameworks to make sense of things. Organizationally loose on paperwork and routine follow-through; strong on high-stakes execution. Tends to overthink resolved situations. Values loyalty and dependability above most things; enjoyment and achievement next.",
+      "reaction_tags": [
+        "kinetic",
+        "velocity",
+        "somatic",
+        "vitality",
+        "biochemistry",
+        "Medic",
+        "cognitive",
+        "Controller",
+        "predictive",
+        "Investigator",
+        "dominant",
+        "Tank",
+        "perceptive",
+        "impact",
+        "spatial",
+        "phasing"
+      ],
+      "attribute_deltas": {
+        "insight": 6,
+        "perception": 3,
+        "will": 3
+      },
+      "skills": {
+        "first_aid": 6,
+        "surgery": 6,
+        "pharmacology": 3,
+        "literacy": 7,
+        "diagnosis": 3,
+        "instruction": 1,
+        "investigation": 2,
+        "history": 1
+      },
+      "resources": {
+        "medical_kit_partial": 1
+      },
+      "heat": {
+        "yonkers-compact": -2
+      },
+      "narrative_tag": "medical",
+      "occupation": "medical",
+      "npc_seeds": [
+        {
+          "name": "Akhil Rao",
+          "relation": "younger brother",
+          "location": "Manhattan",
+          "descriptor": "medical student at Mount Sinai",
+          "status": "unknown",
+          "seed_index": 0
+        },
+        {
+          "name": "Dr. Rao (father)",
+          "relation": "father",
+          "location": "Delaware",
+          "descriptor": "inventive, scattered, entrepreneurial vascular surgeon",
+          "status": "unknown",
+          "seed_index": 1
+        },
+        {
+          "name": "Dr. Rao (mother)",
+          "relation": "mother",
+          "location": "Delaware",
+          "descriptor": "retired, grounded general surgeon",
+          "status": "unknown",
+          "seed_index": 2
+        },
+        {
+          "name": "Denice",
+          "relation": "college friend",
+          "location": "Chicago",
+          "descriptor": "OBGYN; kind, quiet, iconoclastic",
+          "status": "unknown",
+          "seed_index": 3
+        },
+        {
+          "name": "Alex",
+          "relation": "college friend",
+          "location": "Philadelphia",
+          "descriptor": "radiologist; laconic, fearless",
+          "status": "unknown",
+          "seed_index": 4
+        },
+        {
+          "name": "Bella",
+          "relation": "college friend",
+          "location": "unknown",
+          "descriptor": "finance; organized, busy",
+          "status": "unknown",
+          "seed_index": 5
+        },
+        {
+          "name": "Henry",
+          "relation": "med-school friend",
+          "location": "Boston",
+          "descriptor": "ophthalmologist; gregarious",
+          "status": "unknown",
+          "seed_index": 6
+        },
+        {
+          "name": "Saurabh",
+          "relation": "med-school friend",
+          "location": "San Diego",
+          "descriptor": "cardiologist; analytical",
+          "status": "unknown",
+          "seed_index": 7
+        },
+        {
+          "name": "Jason",
+          "relation": "senior co-resident, close friend",
+          "location": "Manhattan",
+          "descriptor": "wry, joking, blunt",
+          "status": "unknown",
+          "seed_index": 8
+        },
+        {
+          "name": "Jessica",
+          "relation": "junior co-resident",
+          "location": "Manhattan",
+          "descriptor": "kind, blunt, efficient",
+          "status": "unknown",
+          "seed_index": 9
+        },
+        {
+          "name": "Zyra",
+          "relation": "peer co-resident",
+          "location": "Manhattan",
+          "descriptor": "bubbly; not well known",
+          "status": "unknown",
+          "seed_index": 10
+        },
+        {
+          "name": "Kyle",
+          "relation": "senior co-resident",
+          "location": "Manhattan",
+          "descriptor": "anxious, fiery but protective",
+          "status": "unknown",
+          "seed_index": 11
+        },
+        {
+          "name": "Karthik",
+          "relation": "junior co-resident",
+          "location": "Manhattan",
+          "descriptor": "analytical, friendly",
+          "status": "unknown",
+          "seed_index": 12
+        },
+        {
+          "name": "Gordon",
+          "relation": "intern",
+          "location": "Manhattan",
+          "descriptor": "suave",
+          "status": "unknown",
+          "seed_index": 13
+        },
+        {
+          "name": "Grandma Rao",
+          "relation": "grandmother",
+          "location": "Bergen County, NJ",
+          "descriptor": "family elder",
+          "status": "unknown",
+          "seed_index": 14
+        }
+      ],
+      "history": [
+        {
+          "timestamp": "T-1y",
+          "description": "Pre-onset: Doctor, nurse, or paramedic",
+          "type": "session_zero"
+        }
+      ]
+    },
+    "sz_v2_action_text": {
+      "scenario_reactions": {
+        "action": "Strike back. No hesitation, no warning \u2014 Shake explodes off the bed toward the older man, aiming to close the distance before he reaches the block. Move fast and hard, drive him back into the counter, make him the problem the younger one has to solve. Shake does not know what the thing under his skin is, only that it is already moving with him."
+      },
+      "scenario_vignettes": {
+        "action": "v1_apartment_invasion"
+      },
+      "reaction_tags": [
+        "kinetic",
+        "impact",
+        "Brawler",
+        "Tank"
+      ],
+      "history": [
+        {
+          "timestamp": "T+0",
+          "description": "Onset: first manifestation beat.",
+          "type": "session_zero"
+        }
+      ]
+    },
+    "sz_v2_slate": {
+      "powers": [
+        {
+          "power_id": "kinetic_impact_battering_ram",
+          "name": "Battering Ram",
+          "category": "kinetic",
+          "sub_category": "impact",
+          "tier": 3,
+          "slot": "primary",
+          "playstyles": [
+            "Tank",
+            "Brawler"
+          ]
+        },
+        {
+          "power_id": "spatial_translative_teleportation",
+          "name": "Teleportation",
+          "category": "spatial",
+          "sub_category": "translative",
+          "tier": 3,
+          "slot": "secondary",
+          "playstyles": [
+            "Skirmisher",
+            "Assassin"
+          ]
+        }
+      ],
+      "power_category_primary": "kinetic",
+      "power_category_secondary": "spatial",
+      "tier": 3,
+      "tier_ceiling": 5,
+      "breakthroughs": [
+        {
+          "id": "breakthrough_0",
+          "type": "manifestation",
+          "description": "Initial manifestation: kinetic + spatial at T3",
+          "cost": "onset trauma"
+        }
+      ],
+      "history": [
+        {
+          "timestamp": "T+0",
+          "description": "Manifestation (primary): Kinetic \u2014 Battering Ram",
+          "type": "session_zero"
+        },
+        {
+          "timestamp": "T+0",
+          "description": "Manifestation (secondary): Spatial \u2014 Teleportation",
+          "type": "session_zero"
+        }
+      ],
+      "pending_slate": [],
+      "pending_slate_scene": ""
+    },
+    "sz_v2_cast1_text": {
+      "scenario_reactions": {
+        "sz_v2_cast1": "The two men breaking into the apartment. The older one never got to the knife block \u2014 Shake crossed the room and drove him through it, bottles and glass and the drawer front all collapsing at once. The younger one dropped the crowbar. He said nothing. He just looked at Shake like a thing that had gone wrong in a night already full of wrong things, and then he ran."
+      },
+      "reaction_tags": [
+        "kinetic",
+        "Tank",
+        "spatial",
+        "phasing"
+      ],
+      "skills": {
+        "streetwise": 1
+      },
+      "history": [
+        {
+          "timestamp": "T+0",
+          "description": "Battering Ram (cast_mode) \u2014 lore seed captured",
+          "type": "session_zero"
+        }
+      ]
+    },
+    "sz_v2_cast1": {
+      "history": [
+        {
+          "timestamp": "T+0",
+          "description": "Battering Ram cast_mode: option 2",
+          "type": "session_zero"
+        }
+      ]
+    },
+    "sz_v2_rider1_text": {
+      "scenario_reactions": {
+        "sz_v2_rider1": "A wound. The older intruder had powers too \u2014 something that sharpened the edges of what he touched. When Shake drove him into the counter, the man got a hand on him and opened a gash down his left forearm that ran deep enough to see fascia. Shake finished him, then sat on his kitchen floor with a dishrag wrapped around it and stitched himself up by flashlight. It scarred. He still flexes the hand sometimes when he is thinking."
+      },
+      "reaction_tags": [],
+      "skills": {
+        "survival": 1
+      },
+      "history": [
+        {
+          "timestamp": "T+0",
+          "description": "Battering Ram (rider) \u2014 lore seed captured",
+          "type": "session_zero"
+        }
+      ]
+    },
+    "sz_v2_rider1": {
+      "history": [
+        {
+          "timestamp": "T+0",
+          "description": "Battering Ram rider: option 1",
+          "type": "session_zero"
+        }
+      ]
+    },
+    "sz_v2_cast2_text": {
+      "scenario_reactions": {
+        "sz_v2_cast2": "Another one like him. Someone becoming prominent in the city after the Onset \u2014 a figure Shake had seen at a distance twice before actually meeting, the way you see someone in a hospital corridor and start filing them before you know their name. Not a friend. Not yet an enemy. Someone whose ability worked in the same register as his own second one, and who moved through a room like the room was negotiable. Watching them was what made Shake notice the quiet thing in himself that had been waiting."
+      },
+      "reaction_tags": [
+        "spatial",
+        "phasing",
+        "cognitive",
+        "Controller"
+      ],
+      "skills": {
+        "instruction": 1
+      },
+      "history": [
+        {
+          "timestamp": "T+0",
+          "description": "Teleportation (cast_mode) \u2014 lore seed captured",
+          "type": "session_zero"
+        }
+      ]
+    },
+    "sz_v2_cast2": {
+      "history": [
+        {
+          "timestamp": "T+0",
+          "description": "Teleportation cast_mode: option 1",
+          "type": "session_zero"
+        }
+      ]
+    },
+    "sz_v2_rider2_text": {
+      "scenario_reactions": {
+        "sz_v2_rider2": "It will not put him inside another object. No splicing. Shake learned this the first time he tried to step to the wrong side of a wall he could not see through \u2014 the ability simply refused, a flat no-go pressure in the back of his skull, the way a hand refuses to close on a hot stove. He can step into space. He cannot step into matter. If the destination is occupied, he does not arrive."
+      },
+      "reaction_tags": [
+        "spatial",
+        "translative",
+        "phasing"
+      ],
+      "skills": {
+        "investigation": 1
+      },
+      "history": [
+        {
+          "timestamp": "T+0",
+          "description": "Teleportation (rider) \u2014 lore seed captured",
+          "type": "session_zero"
+        }
+      ]
+    },
+    "sz_v2_rider2": {
+      "history": [
+        {
+          "timestamp": "T+0",
+          "description": "Teleportation rider: option 2",
+          "type": "session_zero"
+        }
+      ]
+    },
+    "sz_v2_survival": {
+      "attribute_deltas": {
+        "insight": 1,
+        "will": 1
+      },
+      "skills": {
+        "first_aid": 2,
+        "pharmacology": 1,
+        "diagnosis": 1
+      },
+      "resources": {
+        "medical_kit_partial": 1
+      },
+      "heat": {
+        "yonkers-compact": -1
+      },
+      "narrative_tag": "field medic",
+      "history": [
+        {
+          "timestamp": "T+0.1y",
+          "description": "First months: Make rounds with Marcus Hassan \u2014 the sick, the wounded, the dying. Never enough hands.",
+          "type": "session_zero"
+        }
+      ],
+      "relationship": {
+        "npc_id": "npc-gen-marcus-hassan",
+        "display_name": "Marcus Hassan",
+        "standing": 2,
+        "current_state": "alive_present",
+        "trust": 2,
+        "archetype": "mentor"
+      },
+      "generated_npcs": [
+        {
+          "npc_id": "npc-gen-marcus-hassan",
+          "display_name": "Marcus Hassan",
+          "scene_id": "sz_v2_survival",
+          "role": "mentor",
+          "standing": 2,
+          "hooks": [
+            "Marcus Hassan Has More to Teach You"
+          ]
+        }
+      ],
+      "goals": [
+        {
+          "id": "apprentice_to_npc-gen-marcus-hassan",
+          "description": "Marcus Hassan Has More to Teach You",
+          "pressure": 2,
+          "progress": 0
+        }
+      ]
+    },
+    "sz_v2_location": {
+      "region": "Delmarva",
+      "location": "loc-delmarva-farmstead",
+      "history": [
+        {
+          "timestamp": "T+0.2y",
+          "description": "Settled in: Delmarva Peninsula",
+          "type": "session_zero"
+        }
+      ]
+    },
+    "sz_v2_relationships": {
+      "relationship": {
+        "npc_id": "npc-gen-xavier-yilmaz",
+        "display_name": "Xavier Yilmaz",
+        "standing": 3,
+        "current_state": "alive_present",
+        "trust": 3,
+        "archetype": "family"
+      },
+      "goals": [
+        {
+          "id": "protect_family",
+          "description": "Protect Your Family",
+          "progress": 0,
+          "pressure": 3
+        }
+      ],
+      "history": [
+        {
+          "timestamp": "T+0.5y",
+          "description": "Relationship: Xavier Yilmaz (family, ally)",
+          "type": "session_zero"
+        },
+        {
+          "timestamp": "T+0.5y",
+          "description": "Relationship: Kwame Becker (friend, ally)",
+          "type": "session_zero"
+        },
+        {
+          "timestamp": "T+0.5y",
+          "description": "Relationship: Tom\u00e1s Johansson (rival, foe)",
+          "type": "session_zero"
+        }
+      ]
+    },
+    "sz_v2_faction": {
+      "skills": {
+        "negotiation": 1,
+        "farming": 1
+      },
+      "heat": {
+        "delmarva-harvest-lords": 0
+      },
+      "faction_standing": {
+        "delmarva-harvest-lords": 1
+      },
+      "narrative_tag": "negotiated with faction",
+      "relationship": {
+        "npc_id": "npc-gen-james-okonkwo",
+        "display_name": "James Okonkwo",
+        "standing": 1,
+        "current_state": "alive_present",
+        "trust": 1,
+        "archetype": "steward"
+      },
+      "generated_npcs": [
+        {
+          "npc_id": "npc-gen-james-okonkwo",
+          "display_name": "James Okonkwo",
+          "scene_id": "sz_v2_faction",
+          "role": "delmarva-harvest-lords_representative",
+          "standing": 1,
+          "hooks": [
+            "Renegotiate With James Okonkwo"
+          ]
+        }
+      ],
+      "goals": [
+        {
+          "id": "renegotiate_delmarva-harvest-lords",
+          "description": "Renegotiate With James Okonkwo",
+          "pressure": 2,
+          "progress": 0
+        }
+      ],
+      "history": [
+        {
+          "timestamp": "T+0.8y",
+          "description": "Faction encounter: James Okonkwo (Delmarva Harvest Lords)",
+          "type": "session_zero"
+        }
+      ]
+    },
+    "sz_v2_vows": {
+      "goals": [
+        {
+          "id": "train_with_npc-gen-li-becker",
+          "description": "Earn Li Becker's Respect",
+          "progress": 0,
+          "pressure": 2
+        },
+        {
+          "id": "earn_standing",
+          "description": "Make a Name in the Region",
+          "progress": 0,
+          "pressure": 2
+        }
+      ],
+      "resources": {
+        "cu": 15,
+        "lodging_paid": 1
+      },
+      "inventory": [
+        {
+          "id": "clothes_working",
+          "name": "Working Clothes",
+          "quantity": 1
+        },
+        {
+          "id": "training_gear",
+          "name": "Training Gear",
+          "quantity": 1
+        }
+      ],
+      "history": [
+        {
+          "timestamp": "T+1y",
+          "description": "Vow: Riser",
+          "type": "session_zero"
+        }
+      ],
+      "relationship": {
+        "npc_id": "npc-gen-li-becker",
+        "display_name": "Li Becker",
+        "standing": 1,
+        "current_state": "alive_present",
+        "trust": 1,
+        "archetype": "mentor"
+      },
+      "generated_npcs": [
+        {
+          "npc_id": "npc-gen-li-becker",
+          "display_name": "Li Becker",
+          "scene_id": "sz_v2_vows",
+          "role": "mentor",
+          "standing": 1,
+          "hooks": [
+            "Earn Li Becker's Respect"
+          ]
+        }
+      ]
+    }
+  },
+  "current_location": "loc-delmarva-farmstead",
+  "home_region": "loc-delmarva-farmstead"
+}

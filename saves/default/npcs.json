@@ -5551,5 +5551,515 @@
     ],
     "status": "alive",
     "social_block": null
+  },
+  "npc-tie-akhil-rao-00": {
+    "id": "npc-tie-akhil-rao-00",
+    "schema_version": "1.0",
+    "display_name": "Akhil Rao",
+    "faction_affiliation": {
+      "primary": null,
+      "secondary": []
+    },
+    "location": "Manhattan",
+    "schedule": {},
+    "species": "human",
+    "age": 30,
+    "manifestation": {
+      "tier": 0,
+      "has_powers": false,
+      "powers": []
+    },
+    "role": "younger brother",
+    "goals": [],
+    "relationships": {},
+    "resources": [],
+    "knowledge": [],
+    "personality_traits": [],
+    "current_concerns": [
+      "medical student at Mount Sinai"
+    ],
+    "memory": [],
+    "standing_with_player_default": 0,
+    "what_they_want_from_player": "",
+    "voice": "medical student at Mount Sinai",
+    "hooks": [],
+    "status": "unknown",
+    "social_block": null
+  },
+  "npc-tie-dr-rao-father-01": {
+    "id": "npc-tie-dr-rao-father-01",
+    "schema_version": "1.0",
+    "display_name": "Dr. Rao (father)",
+    "faction_affiliation": {
+      "primary": null,
+      "secondary": []
+    },
+    "location": "Delaware",
+    "schedule": {},
+    "species": "human",
+    "age": 30,
+    "manifestation": {
+      "tier": 0,
+      "has_powers": false,
+      "powers": []
+    },
+    "role": "father",
+    "goals": [],
+    "relationships": {},
+    "resources": [],
+    "knowledge": [],
+    "personality_traits": [],
+    "current_concerns": [
+      "inventive, scattered, entrepreneurial vascular surgeon"
+    ],
+    "memory": [],
+    "standing_with_player_default": 0,
+    "what_they_want_from_player": "",
+    "voice": "inventive, scattered, entrepreneurial vascular surgeon",
+    "hooks": [],
+    "status": "unknown",
+    "social_block": null
+  },
+  "npc-tie-dr-rao-mother-02": {
+    "id": "npc-tie-dr-rao-mother-02",
+    "schema_version": "1.0",
+    "display_name": "Dr. Rao (mother)",
+    "faction_affiliation": {
+      "primary": null,
+      "secondary": []
+    },
+    "location": "Delaware",
+    "schedule": {},
+    "species": "human",
+    "age": 30,
+    "manifestation": {
+      "tier": 0,
+      "has_powers": false,
+      "powers": []
+    },
+    "role": "mother",
+    "goals": [],
+    "relationships": {},
+    "resources": [],
+    "knowledge": [],
+    "personality_traits": [],
+    "current_concerns": [
+      "retired, grounded general surgeon"
+    ],
+    "memory": [],
+    "standing_with_player_default": 0,
+    "what_they_want_from_player": "",
+    "voice": "retired, grounded general surgeon",
+    "hooks": [],
+    "status": "unknown",
+    "social_block": null
+  },
+  "npc-tie-denice-03": {
+    "id": "npc-tie-denice-03",
+    "schema_version": "1.0",
+    "display_name": "Denice",
+    "faction_affiliation": {
+      "primary": null,
+      "secondary": []
+    },
+    "location": "Chicago",
+    "schedule": {},
+    "species": "human",
+    "age": 30,
+    "manifestation": {
+      "tier": 0,
+      "has_powers": false,
+      "powers": []
+    },
+    "role": "college friend",
+    "goals": [],
+    "relationships": {},
+    "resources": [],
+    "knowledge": [],
+    "personality_traits": [],
+    "current_concerns": [
+      "OBGYN; kind, quiet, iconoclastic"
+    ],
+    "memory": [],
+    "standing_with_player_default": 0,
+    "what_they_want_from_player": "",
+    "voice": "OBGYN; kind, quiet, iconoclastic",
+    "hooks": [],
+    "status": "unknown",
+    "social_block": null
+  },
+  "npc-tie-alex-04": {
+    "id": "npc-tie-alex-04",
+    "schema_version": "1.0",
+    "display_name": "Alex",
+    "faction_affiliation": {
+      "primary": null,
+      "secondary": []
+    },
+    "location": "Philadelphia",
+    "schedule": {},
+    "species": "human",
+    "age": 30,
+    "manifestation": {
+      "tier": 0,
+      "has_powers": false,
+      "powers": []
+    },
+    "role": "college friend",
+    "goals": [],
+    "relationships": {},
+    "resources": [],
+    "knowledge": [],
+    "personality_traits": [],
+    "current_concerns": [
+      "radiologist; laconic, fearless"
+    ],
+    "memory": [],
+    "standing_with_player_default": 0,
+    "what_they_want_from_player": "",
+    "voice": "radiologist; laconic, fearless",
+    "hooks": [],
+    "status": "unknown",
+    "social_block": null
+  },
+  "npc-tie-bella-05": {
+    "id": "npc-tie-bella-05",
+    "schema_version": "1.0",
+    "display_name": "Bella",
+    "faction_affiliation": {
+      "primary": null,
+      "secondary": []
+    },
+    "location": "unknown",
+    "schedule": {},
+    "species": "human",
+    "age": 30,
+    "manifestation": {
+      "tier": 0,
+      "has_powers": false,
+      "powers": []
+    },
+    "role": "college friend",
+    "goals": [],
+    "relationships": {},
+    "resources": [],
+    "knowledge": [],
+    "personality_traits": [],
+    "current_concerns": [
+      "finance; organized, busy"
+    ],
+    "memory": [],
+    "standing_with_player_default": 0,
+    "what_they_want_from_player": "",
+    "voice": "finance; organized, busy",
+    "hooks": [],
+    "status": "unknown",
+    "social_block": null
+  },
+  "npc-tie-henry-06": {
+    "id": "npc-tie-henry-06",
+    "schema_version": "1.0",
+    "display_name": "Henry",
+    "faction_affiliation": {
+      "primary": null,
+      "secondary": []
+    },
+    "location": "Boston",
+    "schedule": {},
+    "species": "human",
+    "age": 30,
+    "manifestation": {
+      "tier": 0,
+      "has_powers": false,
+      "powers": []
+    },
+    "role": "med-school friend",
+    "goals": [],
+    "relationships": {},
+    "resources": [],
+    "knowledge": [],
+    "personality_traits": [],
+    "current_concerns": [
+      "ophthalmologist; gregarious"
+    ],
+    "memory": [],
+    "standing_with_player_default": 0,
+    "what_they_want_from_player": "",
+    "voice": "ophthalmologist; gregarious",
+    "hooks": [],
+    "status": "unknown",
+    "social_block": null
+  },
+  "npc-tie-saurabh-07": {
+    "id": "npc-tie-saurabh-07",
+    "schema_version": "1.0",
+    "display_name": "Saurabh",
+    "faction_affiliation": {
+      "primary": null,
+      "secondary": []
+    },
+    "location": "San Diego",
+    "schedule": {},
+    "species": "human",
+    "age": 30,
+    "manifestation": {
+      "tier": 0,
+      "has_powers": false,
+      "powers": []
+    },
+    "role": "med-school friend",
+    "goals": [],
+    "relationships": {},
+    "resources": [],
+    "knowledge": [],
+    "personality_traits": [],
+    "current_concerns": [
+      "cardiologist; analytical"
+    ],
+    "memory": [],
+    "standing_with_player_default": 0,
+    "what_they_want_from_player": "",
+    "voice": "cardiologist; analytical",
+    "hooks": [],
+    "status": "unknown",
+    "social_block": null
+  },
+  "npc-tie-jason-08": {
+    "id": "npc-tie-jason-08",
+    "schema_version": "1.0",
+    "display_name": "Jason",
+    "faction_affiliation": {
+      "primary": null,
+      "secondary": []
+    },
+    "location": "Manhattan",
+    "schedule": {},
+    "species": "human",
+    "age": 30,
+    "manifestation": {
+      "tier": 0,
+      "has_powers": false,
+      "powers": []
+    },
+    "role": "senior co-resident, close friend",
+    "goals": [],
+    "relationships": {},
+    "resources": [],
+    "knowledge": [],
+    "personality_traits": [],
+    "current_concerns": [
+      "wry, joking, blunt"
+    ],
+    "memory": [],
+    "standing_with_player_default": 0,
+    "what_they_want_from_player": "",
+    "voice": "wry, joking, blunt",
+    "hooks": [],
+    "status": "unknown",
+    "social_block": null
+  },
+  "npc-tie-jessica-09": {
+    "id": "npc-tie-jessica-09",
+    "schema_version": "1.0",
+    "display_name": "Jessica",
+    "faction_affiliation": {
+      "primary": null,
+      "secondary": []
+    },
+    "location": "Manhattan",
+    "schedule": {},
+    "species": "human",
+    "age": 30,
+    "manifestation": {
+      "tier": 0,
+      "has_powers": false,
+      "powers": []
+    },
+    "role": "junior co-resident",
+    "goals": [],
+    "relationships": {},
+    "resources": [],
+    "knowledge": [],
+    "personality_traits": [],
+    "current_concerns": [
+      "kind, blunt, efficient"
+    ],
+    "memory": [],
+    "standing_with_player_default": 0,
+    "what_they_want_from_player": "",
+    "voice": "kind, blunt, efficient",
+    "hooks": [],
+    "status": "unknown",
+    "social_block": null
+  },
+  "npc-tie-zyra-10": {
+    "id": "npc-tie-zyra-10",
+    "schema_version": "1.0",
+    "display_name": "Zyra",
+    "faction_affiliation": {
+      "primary": null,
+      "secondary": []
+    },
+    "location": "Manhattan",
+    "schedule": {},
+    "species": "human",
+    "age": 30,
+    "manifestation": {
+      "tier": 0,
+      "has_powers": false,
+      "powers": []
+    },
+    "role": "peer co-resident",
+    "goals": [],
+    "relationships": {},
+    "resources": [],
+    "knowledge": [],
+    "personality_traits": [],
+    "current_concerns": [
+      "bubbly; not well known"
+    ],
+    "memory": [],
+    "standing_with_player_default": 0,
+    "what_they_want_from_player": "",
+    "voice": "bubbly; not well known",
+    "hooks": [],
+    "status": "unknown",
+    "social_block": null
+  },
+  "npc-tie-kyle-11": {
+    "id": "npc-tie-kyle-11",
+    "schema_version": "1.0",
+    "display_name": "Kyle",
+    "faction_affiliation": {
+      "primary": null,
+      "secondary": []
+    },
+    "location": "Manhattan",
+    "schedule": {},
+    "species": "human",
+    "age": 30,
+    "manifestation": {
+      "tier": 0,
+      "has_powers": false,
+      "powers": []
+    },
+    "role": "senior co-resident",
+    "goals": [],
+    "relationships": {},
+    "resources": [],
+    "knowledge": [],
+    "personality_traits": [],
+    "current_concerns": [
+      "anxious, fiery but protective"
+    ],
+    "memory": [],
+    "standing_with_player_default": 0,
+    "what_they_want_from_player": "",
+    "voice": "anxious, fiery but protective",
+    "hooks": [],
+    "status": "unknown",
+    "social_block": null
+  },
+  "npc-tie-karthik-12": {
+    "id": "npc-tie-karthik-12",
+    "schema_version": "1.0",
+    "display_name": "Karthik",
+    "faction_affiliation": {
+      "primary": null,
+      "secondary": []
+    },
+    "location": "Manhattan",
+    "schedule": {},
+    "species": "human",
+    "age": 30,
+    "manifestation": {
+      "tier": 0,
+      "has_powers": false,
+      "powers": []
+    },
+    "role": "junior co-resident",
+    "goals": [],
+    "relationships": {},
+    "resources": [],
+    "knowledge": [],
+    "personality_traits": [],
+    "current_concerns": [
+      "analytical, friendly"
+    ],
+    "memory": [],
+    "standing_with_player_default": 0,
+    "what_they_want_from_player": "",
+    "voice": "analytical, friendly",
+    "hooks": [],
+    "status": "unknown",
+    "social_block": null
+  },
+  "npc-tie-gordon-13": {
+    "id": "npc-tie-gordon-13",
+    "schema_version": "1.0",
+    "display_name": "Gordon",
+    "faction_affiliation": {
+      "primary": null,
+      "secondary": []
+    },
+    "location": "Manhattan",
+    "schedule": {},
+    "species": "human",
+    "age": 30,
+    "manifestation": {
+      "tier": 0,
+      "has_powers": false,
+      "powers": []
+    },
+    "role": "intern",
+    "goals": [],
+    "relationships": {},
+    "resources": [],
+    "knowledge": [],
+    "personality_traits": [],
+    "current_concerns": [
+      "suave"
+    ],
+    "memory": [],
+    "standing_with_player_default": 0,
+    "what_they_want_from_player": "",
+    "voice": "suave",
+    "hooks": [],
+    "status": "unknown",
+    "social_block": null
+  },
+  "npc-tie-grandma-rao-14": {
+    "id": "npc-tie-grandma-rao-14",
+    "schema_version": "1.0",
+    "display_name": "Grandma Rao",
+    "faction_affiliation": {
+      "primary": null,
+      "secondary": []
+    },
+    "location": "Bergen County, NJ",
+    "schedule": {},
+    "species": "human",
+    "age": 30,
+    "manifestation": {
+      "tier": 0,
+      "has_powers": false,
+      "powers": []
+    },
+    "role": "grandmother",
+    "goals": [],
+    "relationships": {},
+    "resources": [],
+    "knowledge": [],
+    "personality_traits": [],
+    "current_concerns": [
+      "family elder"
+    ],
+    "memory": [],
+    "standing_with_player_default": 0,
+    "what_they_want_from_player": "",
+    "voice": "family elder",
+    "hooks": [],
+    "status": "unknown",
+    "social_block": null
   }
 }
