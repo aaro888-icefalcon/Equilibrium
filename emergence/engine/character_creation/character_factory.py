@@ -306,9 +306,28 @@ class CharacterFactory:
         if "pending_dilemma_choice" in choice_data:
             state.pending_dilemma_choice = choice_data["pending_dilemma_choice"]
 
-        # Threats — appended, never replaced.
+        # Threats — appended, never replaced.  Each entry may carry an
+        # optional archetype id (key into data/threats/threat_archetypes.json)
+        # and a pressure rating (1-5, clamped to the archetype's range).
+        # Schema: {npc_id, name, standing, source, summary,
+        #          archetype, pressure}.
         for threat in choice_data.get("threats", []):
-            state.threats.append(threat)
+            normalized = dict(threat)
+            archetype_id = normalized.get("archetype", "")
+            if archetype_id:
+                from emergence.engine.character_creation.threats import (
+                    get_archetype,
+                    clamp_pressure,
+                )
+                arc = get_archetype(archetype_id)
+                if arc:
+                    # Default pressure to archetype default if absent.
+                    if "pressure" not in normalized:
+                        normalized["pressure"] = arc.pressure_default
+                    normalized["pressure"] = clamp_pressure(
+                        archetype_id, int(normalized["pressure"]),
+                    )
+            state.threats.append(normalized)
 
         state.beat_index += 1
         return state
