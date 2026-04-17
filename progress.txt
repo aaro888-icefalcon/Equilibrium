@@ -75,3 +75,4 @@ v3-H: save reset; ready to commit
 
 === v4 character-creation arc ===
 1.1.a done: threat_archetypes.json written (10 archetypes) at data/threats/
+1.1.b done: threats.py loader + ThreatArchetype dataclass; smoke test loads 10, clamp works
