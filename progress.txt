@@ -112,3 +112,4 @@ v3-H: save reset; ready to commit
 3.3+3.4 done: step scene-ack CLI primitive + --output-json on step scene-apply; hard gate on step scene blocks advance while pending_ack set; ack handler builds summary payload from most-recent seeded NPC/threat/goal/location/history and clears the flag
 
 3.5.a done: Seventh Avenue vignette data — framing + 3 attention options + 3 engagement options + closing_summary
+3.5.b-h done: OnsetScene class in onset_scene.py — 4 phases (biography text, attention pick, engagement pick, 2-of-10 slate); reaction-dominant weights (1:4); is_complete gates advance; pending_ack set on slate pick. pending_engagement_choice added to CreationState. End-to-end smoke test passes for Shake bio.

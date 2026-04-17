@@ -130,6 +130,11 @@ class CreationState:
     # powers from the slate computed off the dilemma tags).
     pending_dilemma_choice: str = ""
 
+    # v4 Onset phase 2 — engagement pick.  Mirrors pending_dilemma_choice
+    # (attention pick) but for the second beat.  Scene advances when both
+    # are set and 2 powers are picked.
+    pending_engagement_choice: str = ""
+
     # v4 arc — starting location locked in vignette 4.  Distinct from
     # state.location (current location in the sim) because finalize
     # copies starting_location into the world and into CharacterSheet's
@@ -402,9 +407,12 @@ class CharacterFactory:
         if "pending_slate_scene" in choice_data:
             state.pending_slate_scene = choice_data["pending_slate_scene"]
 
-        # Awakening dilemma pick (phase 1 of AwakeningScene).
+        # Awakening dilemma pick (phase 1 of AwakeningScene, phase 1 of OnsetScene).
         if "pending_dilemma_choice" in choice_data:
             state.pending_dilemma_choice = choice_data["pending_dilemma_choice"]
+        # OnsetScene phase 2 — engagement pick.
+        if "pending_engagement_choice" in choice_data:
+            state.pending_engagement_choice = choice_data["pending_engagement_choice"]
 
         # Threats — appended, never replaced.  Each entry may carry an
         # optional archetype id (key into data/threats/threat_archetypes.json)
