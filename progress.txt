@@ -83,3 +83,4 @@ v3-H: save reset; ready to commit
 1.2.a done: seed_pools.py skeleton — SeedPools dataclass + compute_seed_pools dispatch + 4 V-branch stubs
 1.2.b done: V1 branch — NYC default, 1 faction, 2 Manhattan/Brooklyn locations, 10 threats, 8 NPC archetypes
 1.2.c done: V2 branch — region-lock, three outcomes {stay, displaced, traveled|displaced}; faction+location filtering by outcome
+1.2.d done: V3 branch — filtered by locked region, consumed non-recurrable threats excluded, vow_packages surfaced

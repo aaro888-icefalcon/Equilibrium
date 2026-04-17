@@ -231,9 +231,97 @@ def _compute_v2(state: CreationState) -> SeedPools:
     )
 
 
+_REGION_LOCATIONS: Dict[str, List[Dict[str, Any]]] = {
+    "New York City": [
+        {"id": "loc-manhattan-midtown", "name": "Manhattan midtown", "region": "New York City", "startable": True},
+        {"id": "loc-brooklyn-tower-districts", "name": "Brooklyn tower districts", "region": "New York City", "startable": True},
+    ],
+    "Northern New Jersey": [
+        {"id": "loc-port-newark-compound", "name": "Port Newark compound", "region": "Northern New Jersey", "startable": True},
+    ],
+    "Hudson Valley": [
+        {"id": "loc-kingston-hv", "name": "Kingston, Hudson Valley", "region": "Hudson Valley", "startable": True},
+    ],
+    "Central New Jersey": [
+        {"id": "loc-rutgers-campus", "name": "Rutgers campus, Central Jersey", "region": "Central New Jersey", "startable": True},
+    ],
+    "Philadelphia": [
+        {"id": "loc-philadelphia-bourse-floor", "name": "Philadelphia Bourse floor", "region": "Philadelphia", "startable": True},
+    ],
+    "Lehigh Valley": [
+        {"id": "loc-lehigh-allentown", "name": "Allentown, Lehigh Valley", "region": "Lehigh Valley", "startable": True},
+    ],
+    "Delmarva": [
+        {"id": "loc-delmarva-granary", "name": "Delmarva granary", "region": "Delmarva", "startable": True},
+    ],
+}
+
+
+def _filter_threats_by_consumption(
+    state: CreationState,
+) -> List[str]:
+    """Return threat archetypes whose consumed-ness allows re-use.
+
+    An archetype is eligible if (a) not yet in state.threats, OR (b)
+    already in state.threats but its `recurrable` flag is True.
+    """
+    from emergence.engine.character_creation.threats import (
+        get_archetype, list_archetype_ids,
+    )
+    consumed = {t.get("archetype", "") for t in state.threats if t.get("archetype")}
+    out: List[str] = []
+    for aid in list_archetype_ids():
+        if aid not in consumed:
+            out.append(aid)
+            continue
+        arc = get_archetype(aid)
+        if arc and arc.recurrable:
+            out.append(aid)
+    return out
+
+
 def _compute_v3(state: CreationState) -> SeedPools:
-    """V3 stub — filled in 1.2.d."""
-    raise NotImplementedError("v3 compute — wired in 1.2.d")
+    """V3: winter Y1.  Region is now locked (from V2).
+
+    Pools are filtered to the locked region.  Threats exclude anything
+    consumed in V1/V2 unless `recurrable`.  At least one vow seed is
+    surfaced (the first-pick-worthy package) since V3 is where the
+    narrator plants the commitment that will ripen at V4.
+    """
+    from emergence.engine.character_creation.scenarios import (
+        REGION_FACTIONS, FACTION_DEMANDS, VOW_PACKAGES,
+    )
+
+    region = state.region or "New York City"
+    locations = list(_REGION_LOCATIONS.get(region, _V1_NYC_LOCATIONS))
+
+    rep = REGION_FACTIONS.get(region)
+    factions: List[Dict[str, Any]] = []
+    if rep:
+        factions.append({
+            "id": rep["id"],
+            "name": rep["name"],
+            "demand_data": FACTION_DEMANDS.get(rep["id"], {}),
+        })
+
+    threat_ids = _filter_threats_by_consumption(state)
+
+    vows = [dict(v) for v in VOW_PACKAGES]  # all packages eligible; narrator picks
+
+    return SeedPools(
+        vignette_index=3,
+        region=region,
+        npc_archetypes=["mentor", "ally", "rival", "dependent", "informant", "medic"],
+        factions=factions,
+        locations=locations,
+        threats=threat_ids,
+        vow_packages=vows,
+        region_outcomes=None,
+        notes=[
+            f"V3: region locked to {region}",
+            f"{len(threat_ids)} threat archetypes eligible after V1/V2 filter",
+        ],
+    )
 
 
 def _compute_v4(state: CreationState) -> SeedPools:
