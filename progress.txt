@@ -95,3 +95,4 @@ v3-H: save reset; ready to commit
 
 === Phase 2 — Narrator contract ===
 2.1.a+b+c done: vignette_contract.py — VignetteOutput, VignetteChoice, MechanicalBinding, SeedBundle + 5 seed leaf dataclasses; from_json parser with ValueError on malformed
+2.1.d done: scaffolds.py — VignetteScaffold + SeedRequirement + Option dataclasses + PER_INDEX_DEFAULTS (1..4)
