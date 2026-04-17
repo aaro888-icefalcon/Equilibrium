@@ -218,16 +218,28 @@ class OnsetAndBiographyScene(_V3Scene):
 # ---------------------------------------------------------------------------
 
 class AwakeningScene(_V3Scene):
-    """Merges v2 ActionScenarioScene + PowerSlateScene.
+    """Two-phase first-manifestation beat.
 
-    Text input: reaction (one vignette framing from the action pool).
-    Choices: pick 2 from a 10-power slate, comma-separated via apply_multi.
+    Phase 1 — dilemma pick: the player picks ONE option from the vignette's
+    diegetic choices (a real moral tradeoff, not free-form prose).  Optional
+    free-text elaboration feeds additional reaction tags.  The chosen
+    option's tags become the primary reaction signal.
+
+    Phase 2 — power pick: the engine computes a 10-power slate with
+    reaction-dominant weighting (w_desc=1, w_reaction=4) and the player
+    picks 2 (comma-separated via apply_multi).
+
+    State-machine: phase is tracked by state.pending_dilemma_choice.  Empty
+    means phase 1; set means phase 2.  is_complete() reports scene-done
+    only when both phases have resolved.
     """
 
     scene_id = "sz_v3_awakening"
     register = "intimate"
 
     _SLATE_SIZE = 10
+    _W_DESC = 1       # bio weight in power scoring
+    _W_REACTION = 4   # dilemma-choice weight (reaction-dominant)
 
     def __init__(self) -> None:
         super().__init__()
@@ -237,8 +249,11 @@ class AwakeningScene(_V3Scene):
     def prepare(self, state: CreationState, rng: _random.Random) -> None:
         vignette_rng = _random.Random(state.seed + 101)
         self._vignette = scenario_pool.select_action_vignette(vignette_rng)
-        # Compute slate from whatever tags are on state (empty pre-text).
-        self._options = self._compute_slate(state)
+        # Only compute slate once dilemma is picked; phase 1 shows dilemma.
+        if state.pending_dilemma_choice:
+            self._options = self._compute_slate(state)
+        else:
+            self._options = []
 
     def _compute_slate(self, state: CreationState) -> List[Any]:
         option_rng = _random.Random(state.seed + 317)
@@ -249,52 +264,88 @@ class AwakeningScene(_V3Scene):
         powers = list(_get_v2_powers().values())
         return scenario_pool.pick_ten(
             powers, desc_tags, reaction_tags, option_rng,
+            w_desc=self._W_DESC, w_reaction=self._W_REACTION,
         )
 
     def get_framing(self, state: CreationState) -> str:
-        # Short orientation fallback; narrator uses scenario_code for the
-        # full vignette rendering.
         return self._vignette.get("framing", "") if self._vignette else ""
 
+    def _phase(self, state: CreationState) -> str:
+        return "power_slate" if state.pending_dilemma_choice else "dilemma"
+
     def get_scenario_code(self, state: CreationState) -> Dict[str, Any]:
-        slate = self._current_slate(state)
-        power_options = []
-        for i, p in enumerate(slate):
-            label = V2_CATEGORY_LABELS.get(p.category, p.category.title())
-            identity = (
-                getattr(p, "identity", "")
-                or getattr(p, "description", "")
-                or ""
-            )
-            power_options.append({
+        phase = self._phase(state)
+        vignette_choices = (self._vignette.get("choices") or []) if self._vignette else []
+        dilemma_options: List[Dict[str, Any]] = []
+        for i, c in enumerate(vignette_choices):
+            dilemma_options.append({
                 "index": i,
-                "name": p.name,
-                "category": p.category,
-                "category_label": label,
-                "sub_category": getattr(p, "sub_category", ""),
-                "identity": identity,
-                "playstyles": list(getattr(p, "playstyles", []) or []),
+                "id": c.get("id", f"choice_{i}"),
+                "label": c.get("label", ""),
+                "tradeoff": c.get("tradeoff", ""),
             })
+
+        power_options: List[Dict[str, Any]] = []
+        if phase == "power_slate":
+            slate = self._current_slate(state)
+            for i, p in enumerate(slate):
+                label = V2_CATEGORY_LABELS.get(p.category, p.category.title())
+                identity = (
+                    getattr(p, "identity", "")
+                    or getattr(p, "description", "")
+                    or ""
+                )
+                power_options.append({
+                    "index": i,
+                    "name": p.name,
+                    "category": p.category,
+                    "category_label": label,
+                    "sub_category": getattr(p, "sub_category", ""),
+                    "identity": identity,
+                    "playstyles": list(getattr(p, "playstyles", []) or []),
+                })
+
         return {
-            "scene_intent": "First manifestation vignette + player picks two powers.",
+            "scene_intent": (
+                "First manifestation vignette: pick one dilemma choice "
+                "(reaction-dominant signal), then pick two powers from "
+                "the resulting slate."
+            ),
             "beat_target_words": [400, 600],
             "vignette_id": self._vignette.get("id", "") if self._vignette else "",
             "vignette_framing": self._vignette.get("framing", "") if self._vignette else "",
+            "phase": phase,
+            "dilemma_options": dilemma_options,
+            "dilemma_choice": state.pending_dilemma_choice or "",
             "power_slate": power_options,
             "invitation": (
-                "After the player writes their reaction, present all 10 "
-                "power options grouped by category with identity snippets. "
-                "Player picks 2 indices (comma-separated)."
+                "Present the vignette, then the dilemma options with their "
+                "tradeoffs.  Player picks 1.  After apply, present the "
+                "resulting 10-power slate; player picks 2 (comma-separated)."
             ),
             "hidden_seeds": [
-                "Both picks may come from the same category — no exclusion.",
+                "Reaction weight is 4x description weight — the dilemma pick "
+                "drives the slate.",
+                "Both power picks may come from the same category — no exclusion.",
                 "Powers enter at tier 3 with tier ceiling 5.",
             ],
         }
 
     def get_choices(self, state: CreationState) -> List[str]:
+        if self._phase(state) == "dilemma":
+            choices = (self._vignette.get("choices") or []) if self._vignette else []
+            lines: List[str] = []
+            for c in choices:
+                label = c.get("label", "")
+                tradeoff = c.get("tradeoff", "")
+                if tradeoff:
+                    lines.append(f"{label}  —  {tradeoff}")
+                else:
+                    lines.append(label)
+            return lines
+        # Phase 2: power slate.
         slate = self._current_slate(state)
-        lines: List[str] = []
+        lines = []
         for p in slate:
             label = V2_CATEGORY_LABELS.get(p.category, p.category.title())
             sub = getattr(p, "sub_category", "") or ""
@@ -320,16 +371,20 @@ class AwakeningScene(_V3Scene):
         return list(self._options)
 
     def needs_text_input(self) -> bool:
+        # Optional elaboration during phase 1 only.
         return True
 
     def text_prompts(self, state: CreationState) -> List[Dict[str, str]]:
-        return [{
-            "key": "reaction",
-            "prompt": (
-                "Your reaction in this moment.  A few sentences — what you "
-                "do in the next half-second, in your own words."
-            ),
-        }]
+        if self._phase(state) == "dilemma":
+            return [{
+                "key": "reaction",
+                "prompt": (
+                    "Optional: a line or two in your own words about how "
+                    "you take the action you picked.  Skip if you want the "
+                    "choice to stand alone."
+                ),
+            }]
+        return []
 
     def apply_text(
         self,
@@ -338,38 +393,20 @@ class AwakeningScene(_V3Scene):
         factory: CharacterFactory,
         rng: _random.Random,
     ) -> CreationState:
+        # Only meaningful during phase 1 — captures elaboration tags that
+        # augment the dilemma choice's tags.  Phase 2 ignores text.
+        if self._phase(state) != "dilemma":
+            return state
         reaction = text_inputs.get("reaction", "").strip()
-        updated = state
-        vignette_id = self._vignette.get("id", "") if self._vignette else ""
-
-        if reaction:
-            tags = scenario_pool.extract_tags(reaction)
-            updated = factory.apply_scene_result(self.scene_id + "_text", {
-                "scenario_reactions": {"action": reaction},
-                "scenario_vignettes": {"action": vignette_id},
-                "reaction_tags": tags,
-                "history": [{
-                    "timestamp": "T+0",
-                    "description": "Onset: first manifestation beat.",
-                    "type": "session_zero",
-                }],
-            }, updated, rng)
-
-        slate = self._compute_slate(updated)
-        self._options = slate
-        slate_payload = [
-            {
-                "power_id": p.id,
-                "name": p.name,
-                "category": p.category,
-                "sub_category": getattr(p, "sub_category", ""),
-            }
-            for p in slate
-        ]
-        return factory.apply_scene_result(self.scene_id + "_slate", {
-            "pending_slate": slate_payload,
-            "pending_slate_scene": self.scene_id,
-        }, updated, rng)
+        if not reaction:
+            return state
+        tags = scenario_pool.extract_tags(reaction)
+        existing = list(state.reaction_tags)
+        merged = existing + [t for t in tags if t not in existing]
+        return factory.apply_scene_result(self.scene_id + "_elaboration", {
+            "scenario_reactions": {"action_elaboration": reaction},
+            "reaction_tags": merged,
+        }, state, rng)
 
     def apply(
         self,
@@ -378,6 +415,10 @@ class AwakeningScene(_V3Scene):
         factory: CharacterFactory,
         rng: _random.Random,
     ) -> CreationState:
+        phase = self._phase(state)
+        if phase == "dilemma":
+            return self._apply_dilemma(choice_index, state, factory, rng)
+        # Phase 2 single-choice: pick the selected power + its neighbor.
         slate = self._current_slate(state)
         if not slate:
             return state
@@ -386,6 +427,51 @@ class AwakeningScene(_V3Scene):
         if second_idx == first_idx:
             second_idx = (first_idx + 2) % len(slate)
         return self.apply_multi([first_idx, second_idx], state, factory, rng)
+
+    def _apply_dilemma(
+        self,
+        choice_index: int,
+        state: CreationState,
+        factory: CharacterFactory,
+        rng: _random.Random,
+    ) -> CreationState:
+        choices = (self._vignette.get("choices") or []) if self._vignette else []
+        if not choices:
+            return state
+        idx = min(max(0, choice_index), len(choices) - 1)
+        picked = choices[idx]
+        vignette_id = self._vignette.get("id", "") if self._vignette else ""
+        dilemma_tags = list(picked.get("tags", []))
+        # Dilemma tags take precedence; elaboration tags (if any) extend.
+        existing = list(state.reaction_tags)
+        merged = dilemma_tags + [t for t in existing if t not in dilemma_tags]
+        updated = factory.apply_scene_result(self.scene_id + "_dilemma", {
+            "pending_dilemma_choice": picked.get("id", f"choice_{idx}"),
+            "scenario_reactions": {"action": picked.get("label", "")},
+            "scenario_vignettes": {"action": vignette_id},
+            "reaction_tags": merged,
+            "history": [{
+                "timestamp": "T+0",
+                "description": "Onset: first manifestation beat.",
+                "type": "session_zero",
+            }],
+        }, state, rng)
+        slate = self._compute_slate(updated)
+        self._options = slate
+        slate_payload = [{
+            "power_id": p.id,
+            "name": p.name,
+            "category": p.category,
+            "sub_category": getattr(p, "sub_category", ""),
+        } for p in slate]
+        return factory.apply_scene_result(self.scene_id + "_slate", {
+            "pending_slate": slate_payload,
+            "pending_slate_scene": self.scene_id,
+        }, updated, rng)
+
+    def is_complete(self, state: CreationState) -> bool:
+        # Scene advances only when dilemma picked AND 2 powers applied.
+        return bool(state.pending_dilemma_choice) and len(state.powers) >= 2
 
     def apply_multi(
         self,

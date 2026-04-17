@@ -435,8 +435,12 @@ def step_scene_apply(args: Any, save_root: str) -> Dict[str, Any]:
 
     # Advance rule: scenes that offer choices require a choice to advance.
     # Scenes that offer none advance as soon as apply_text has been called.
+    # Multi-phase scenes (e.g. AwakeningScene dilemma → power slate) can
+    # veto the advance via an is_complete() hook.
     has_choices = bool(available_choices)
     should_advance = applied_choice or (applied_text and not has_choices)
+    if should_advance and hasattr(scene, "is_complete"):
+        should_advance = bool(scene.is_complete(creation_state))
 
     current_scene = sz_data.get("current_scene", index)
     next_scene = index + 1 if should_advance else current_scene
@@ -447,9 +451,13 @@ def step_scene_apply(args: Any, save_root: str) -> Dict[str, Any]:
 
     # Build summary.  When the scene has not advanced we expose the
     # pending slate so the narrator can present the new 10-option list.
+    # Multi-phase scenes may have applied one phase (dilemma) but still
+    # need input for the next (power slate), so re-read choices post-apply
+    # and surface them when present.
     awaiting: Optional[str] = None
     if not should_advance:
-        if has_choices and not applied_choice:
+        post_choices = scene.get_choices(creation_state)
+        if post_choices:
             awaiting = "choice"
         elif not applied_text and not applied_choice:
             awaiting = "input"

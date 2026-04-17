@@ -125,6 +125,11 @@ class CreationState:
     pending_slate: List[Dict[str, Any]] = dataclasses.field(default_factory=list)
     pending_slate_scene: str = ""
 
+    # Dilemma pick for the awakening vignette (scene 1).  Empty in phase 1
+    # (choose dilemma), set to the chosen option's id in phase 2 (pick 2
+    # powers from the slate computed off the dilemma tags).
+    pending_dilemma_choice: str = ""
+
     # Threats — named NPCs or forces that press on the character. Entries
     # accumulate across scenes (survival raid, faction play, vow enemy) and
     # are finalized into the character sheet's relationships (negative
@@ -296,6 +301,10 @@ class CharacterFactory:
             state.pending_slate = list(choice_data["pending_slate"])
         if "pending_slate_scene" in choice_data:
             state.pending_slate_scene = choice_data["pending_slate_scene"]
+
+        # Awakening dilemma pick (phase 1 of AwakeningScene).
+        if "pending_dilemma_choice" in choice_data:
+            state.pending_dilemma_choice = choice_data["pending_dilemma_choice"]
 
         # Threats — appended, never replaced.
         for threat in choice_data.get("threats", []):

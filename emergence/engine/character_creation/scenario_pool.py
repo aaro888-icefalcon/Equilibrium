@@ -549,6 +549,38 @@ _SLOT_1_VIGNETTES: List[Dict[str, Any]] = [
             "dead, but the wiring isn't — is sparking under the dash.\n\n"
             "What do you do?"
         ),
+        "choices": [
+            {
+                "id": "heave_man",
+                "label": "Heave the dead weight off her.",
+                "tradeoff": "The man may not survive the angle you'll move him at. You're choosing the child.",
+                "tags": ["kinetic", "impact", "Brawler", "Tank"],
+            },
+            {
+                "id": "kill_spark",
+                "label": "Kill the spark in the other car before the diesel catches.",
+                "tradeoff": "Every second on the car is a second she doesn't have. But none of them have seconds if it catches.",
+                "tags": ["material", "elemental", "Controller"],
+            },
+            {
+                "id": "read_wreck",
+                "label": "Read the wreck first — who else is alive in there, where the worst of it is.",
+                "tradeoff": "The diesel does not wait for certainty.",
+                "tags": ["cognitive", "perceptive", "Investigator"],
+            },
+            {
+                "id": "command_woman",
+                "label": "Seize the screaming woman. Make her help you lift.",
+                "tradeoff": "Her panic is a liability. Your voice may break her further.",
+                "tags": ["cognitive", "dominant", "Controller"],
+            },
+            {
+                "id": "tend_man",
+                "label": "Get to the man first. He may be alive. The child's airway isn't blocked.",
+                "tradeoff": "The woman outside sees you choose the grown man over the child. She will remember.",
+                "tags": ["somatic", "vitality", "Medic"],
+            },
+        ],
     },
     {
         "id": "v1_hospital_code",
@@ -569,6 +601,38 @@ _SLOT_1_VIGNETTES: List[Dict[str, Any]] = [
             "The patient's pressure drops ten more points.\n\n"
             "What do you do?"
         ),
+        "choices": [
+            {
+                "id": "hold_pressure",
+                "label": "Hold pressure by feel. Work the vessel with your hands. Treat him.",
+                "tradeoff": "Without suction, without light, without the attending. You may be working on a corpse.",
+                "tags": ["somatic", "vitality", "biochemistry", "Medic"],
+            },
+            {
+                "id": "take_command",
+                "label": "Take the room. Order suction by hand, retractors, clamp. Make them move.",
+                "tradeoff": "The anesthesiologist has years on you. You're about to spend a relationship.",
+                "tags": ["cognitive", "dominant", "Controller"],
+            },
+            {
+                "id": "find_attending",
+                "label": "Get the attending. He's in the dark somewhere close — find him, fast.",
+                "tradeoff": "Every second off the table, the patient bleeds.",
+                "tags": ["cognitive", "perceptive", "Investigator", "spatial"],
+            },
+            {
+                "id": "lend_pulse",
+                "label": "Lend the pulse what is opening in you.",
+                "tradeoff": "You don't know what it is. You don't know what it takes.",
+                "tags": ["somatic", "vitality", "paradoxic", "Medic"],
+            },
+            {
+                "id": "call_code",
+                "label": "Call it. Pull the team out. He is gone; the living matter.",
+                "tradeoff": "He has a name on the whiteboard you read this morning.",
+                "tags": ["cognitive", "predictive", "Controller"],
+            },
+        ],
     },
     {
         "id": "v1_stairwell",
@@ -590,6 +654,38 @@ _SLOT_1_VIGNETTES: List[Dict[str, Any]] = [
             "The man takes a step.\n\n"
             "What do you do?"
         ),
+        "choices": [
+            {
+                "id": "close_distance",
+                "label": "Close the distance. Take the knife off him.",
+                "tradeoff": "A serrated blade does not forgive hands.",
+                "tags": ["kinetic", "impact", "Brawler"],
+            },
+            {
+                "id": "shield_woman",
+                "label": "Put yourself between him and the woman.",
+                "tradeoff": "Your body is what stops the knife.",
+                "tags": ["kinetic", "somatic", "Tank"],
+            },
+            {
+                "id": "read_him",
+                "label": "Read him. Find what he's actually afraid of.",
+                "tradeoff": "He may not wait for you to finish.",
+                "tags": ["cognitive", "perceptive", "Investigator"],
+            },
+            {
+                "id": "scramble_him",
+                "label": "Make him not see what he thinks he sees.",
+                "tradeoff": "You've never done this. You don't know what it costs.",
+                "tags": ["cognitive", "dominant", "Controller"],
+            },
+            {
+                "id": "force_door",
+                "label": "Force the fire door below. Get them out past him.",
+                "tradeoff": "You turn your back on a knife to do it.",
+                "tags": ["kinetic", "material", "Skirmisher"],
+            },
+        ],
     },
     {
         "id": "v1_subway_flood",
@@ -610,6 +706,38 @@ _SLOT_1_VIGNETTES: List[Dict[str, Any]] = [
             "and is watching you. Everyone in the car is watching you now.\n\n"
             "What do you do?"
         ),
+        "choices": [
+            {
+                "id": "pry_doors",
+                "label": "Pry the doors. Brute force.",
+                "tradeoff": "The emergency release you throw may pin whoever's closest.",
+                "tags": ["kinetic", "impact", "Brawler"],
+            },
+            {
+                "id": "take_car",
+                "label": "Take the car. Calm them. Triage who goes out first.",
+                "tradeoff": "You will not save all thirty-four. You choose who goes first.",
+                "tags": ["cognitive", "dominant", "Controller"],
+            },
+            {
+                "id": "find_breach",
+                "label": "Find the breach — where the water is actually coming in.",
+                "tradeoff": "Understanding is not yet rescue.",
+                "tags": ["cognitive", "perceptive", "Investigator"],
+            },
+            {
+                "id": "lift_woman",
+                "label": "Get the old woman onto a seat. Then the next. Then the next.",
+                "tradeoff": "The teenager at the door will see who you chose.",
+                "tags": ["somatic", "vitality", "Medic", "Tank"],
+            },
+            {
+                "id": "through_wall",
+                "label": "Find a way through the wall, not the door.",
+                "tradeoff": "You don't know if whatever is waking in you can carry others.",
+                "tags": ["spatial", "phasing", "Skirmisher"],
+            },
+        ],
     },
     {
         "id": "v1_apartment_invasion",
@@ -633,6 +761,38 @@ _SLOT_1_VIGNETTES: List[Dict[str, Any]] = [
             "The older one steps toward the block.\n\n"
             "What do you do?"
         ),
+        "choices": [
+            {
+                "id": "go_older",
+                "label": "Go at the older one. He's the real threat.",
+                "tradeoff": "The younger one has a crowbar at your back.",
+                "tags": ["kinetic", "impact", "Brawler"],
+            },
+            {
+                "id": "break_younger",
+                "label": "Break the younger one first — he's scared, he'll fold.",
+                "tradeoff": "The older one closes distance before you finish.",
+                "tags": ["cognitive", "perceptive", "kinetic", "Skirmisher"],
+            },
+            {
+                "id": "scramble_them",
+                "label": "Scramble what they think they're seeing.",
+                "tradeoff": "You don't know how to aim it. You don't know where it stops.",
+                "tags": ["cognitive", "dominant", "Controller"],
+            },
+            {
+                "id": "weaponize_room",
+                "label": "Turn the room against them — shelving, lamp, glass.",
+                "tradeoff": "Your home goes with them.",
+                "tags": ["kinetic", "material", "Controller"],
+            },
+            {
+                "id": "talk",
+                "label": "Stop. Talk. They're hungry, not killers.",
+                "tradeoff": "The older man has done this before. He knows what talking means.",
+                "tags": ["cognitive", "telepathic", "Controller"],
+            },
+        ],
     },
     {
         "id": "v1_rooftop_fall",
@@ -655,6 +815,38 @@ _SLOT_1_VIGNETTES: List[Dict[str, Any]] = [
             "The concrete cracks another inch.\n\n"
             "What do you do?"
         ),
+        "choices": [
+            {
+                "id": "drop_flat",
+                "label": "Drop flat. Save yourself. The parapet is going.",
+                "tradeoff": "He watches you look away.",
+                "tags": ["kinetic", "velocity", "Skirmisher"],
+            },
+            {
+                "id": "reach_him",
+                "label": "Reach for him with whatever is waking in you.",
+                "tradeoff": "You don't know if you can hold the weight.",
+                "tags": ["kinetic", "reach", "spatial"],
+            },
+            {
+                "id": "anchor_pull",
+                "label": "Anchor yourself to the roof door. Pull him in by hand.",
+                "tradeoff": "If your leverage is wrong, the parapet takes you both.",
+                "tags": ["kinetic", "somatic", "Tank"],
+            },
+            {
+                "id": "read_concrete",
+                "label": "Read the concrete. Find the seam that still holds.",
+                "tradeoff": "The concrete does not wait for certainty.",
+                "tags": ["cognitive", "perceptive", "Investigator"],
+            },
+            {
+                "id": "step_to_him",
+                "label": "Will yourself to him.",
+                "tradeoff": "If the unlock in you is not that, you both go.",
+                "tags": ["spatial", "translative", "Skirmisher"],
+            },
+        ],
     },
 ]
 
