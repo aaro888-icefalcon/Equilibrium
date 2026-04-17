@@ -268,13 +268,37 @@ def step_scene(args: Any, save_root: str) -> Dict[str, Any]:
     if needs_text:
         text_prompts = list(scene.text_prompts(creation_state))
 
-    # Build narrator payload
+    # Build narrator payload — enriched with v3 scene hooks if available.
     from emergence.engine.narrator.payloads import build_character_creation_payload
+    scenario_code = (
+        scene.get_scenario_code(creation_state)
+        if hasattr(scene, "get_scenario_code")
+        else {}
+    )
+    known_npcs = (
+        scene.get_known_npcs(creation_state)
+        if hasattr(scene, "get_known_npcs")
+        else []
+    )
+    must_state = (
+        scene.get_must_state_mechanics(creation_state)
+        if hasattr(scene, "get_must_state_mechanics")
+        else []
+    )
+    choice_groups = (
+        scene.get_choice_groups(creation_state)
+        if hasattr(scene, "get_choice_groups")
+        else []
+    )
     payload = build_character_creation_payload(
         scene_id=scene.scene_id,
         framing_text=framing,
         choices=[str(c) for c in choices],
         register=scene.register,
+        scenario_code=scenario_code,
+        known_npcs=known_npcs,
+        must_state_mechanics=must_state,
+        choice_groups=choice_groups,
     )
 
     return {
@@ -286,6 +310,10 @@ def step_scene(args: Any, save_root: str) -> Dict[str, Any]:
         "choices": choices,
         "needs_text_input": needs_text,
         "text_prompts": text_prompts,
+        "scenario_code": scenario_code,
+        "known_npcs": known_npcs,
+        "must_state_mechanics": must_state,
+        "choice_groups": choice_groups,
         "narrator_payload": payload,
     }
 
@@ -654,6 +682,71 @@ def step_preamble(args: Any, save_root: str) -> Dict[str, Any]:
 
     recent_events = []
 
+    # Biography roster: tie-NPCs materialized from session zero (npc-tie-*).
+    biography_roster: List[Dict[str, Any]] = []
+    for npc_id, npc in npcs.items():
+        if npc_id.startswith("npc-tie-"):
+            biography_roster.append({
+                "npc_id": npc_id,
+                "name": getattr(npc, "display_name", npc_id),
+                "relation": getattr(npc, "role", ""),
+                "location": getattr(npc, "location", ""),
+                "status": getattr(npc, "status", "alive"),
+            })
+
+    # Top vows: highest-pressure goals (cap at 3).
+    goals = state["player"].get("goals", []) or []
+    ranked_goals = sorted(
+        goals,
+        key=lambda g: g.get("pressure", 0) if isinstance(g, dict) else getattr(g, "pressure", 0),
+        reverse=True,
+    )
+    top_vows = []
+    for g in ranked_goals[:3]:
+        if isinstance(g, dict):
+            top_vows.append({
+                "id": g.get("id", ""),
+                "description": g.get("description", ""),
+                "pressure": g.get("pressure", 0),
+            })
+
+    # Top threats: from player.threats if present, fallback to negative-
+    # standing relationships.
+    threats = state["player"].get("threats", []) or []
+    if not threats:
+        rels = state["player"].get("relationships", {}) or {}
+        for npc_id, rel in rels.items():
+            standing = (
+                rel.get("standing", 0) if isinstance(rel, dict)
+                else getattr(rel, "standing", 0)
+            )
+            if standing <= -2:
+                name = (
+                    npcs[npc_id].display_name
+                    if npc_id in npcs and hasattr(npcs[npc_id], "display_name")
+                    else npc_id
+                )
+                threats.append({
+                    "npc_id": npc_id,
+                    "name": name,
+                    "standing": standing,
+                    "source": "",
+                    "summary": "",
+                })
+    top_threats = sorted(
+        threats,
+        key=lambda t: t.get("standing", 0) if isinstance(t, dict) else 0,
+    )[:3]
+
+    opening_scenario_code = {
+        "where_character_is": location_name,
+        "location_details": location_details,
+        "who_is_present": npcs_present,
+        "time_since_onset": "one year and change",
+        "season": state.get("world", {}).get("season", ""),
+        "current_day": state.get("world", {}).get("current_day", ""),
+    }
+
     payload = build_preamble_payload(
         player=state["player"],
         location_name=location_name,
@@ -661,11 +754,19 @@ def step_preamble(args: Any, save_root: str) -> Dict[str, Any]:
         npcs_present=npcs_present,
         faction_standings=faction_standings,
         recent_events=recent_events,
+        biography_roster=biography_roster,
+        top_vows=top_vows,
+        top_threats=top_threats,
+        opening_scenario_code=opening_scenario_code,
     )
 
     return {
         "status": "ok",
         "mode": "SIM",
+        "biography_roster": biography_roster,
+        "top_vows": top_vows,
+        "top_threats": top_threats,
+        "opening_scenario_code": opening_scenario_code,
         "narrator_payload": payload,
     }
 
