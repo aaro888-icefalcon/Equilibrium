@@ -19,7 +19,7 @@ class TestBreakthroughTriggers(unittest.TestCase):
         self.char = {
             "tier": 2,
             "tier_ceiling": 10,
-            "primary_category": "physical_kinetic",
+            "primary_category": "kinetic",
             "attributes": {"will": 8, "might": 8, "insight": 8},
             "powers": ["p1", "p2"],
         }
@@ -43,7 +43,7 @@ class TestBreakthroughTriggers(unittest.TestCase):
             "type": "mentorship_complete",
             "training_days": 90,
             "mentor_tier": 4,
-            "mentor_category": "physical_kinetic",
+            "mentor_category": "kinetic",
             "mentor_name": "Sensei",
         }
         trigger = self.engine.check_triggers(self.char, self.world, event)
@@ -55,7 +55,7 @@ class TestBreakthroughTriggers(unittest.TestCase):
             "type": "mentorship_complete",
             "training_days": 89,
             "mentor_tier": 4,
-            "mentor_category": "physical_kinetic",
+            "mentor_category": "kinetic",
         }
         trigger = self.engine.check_triggers(self.char, self.world, event)
         self.assertIsNone(trigger)
@@ -130,7 +130,7 @@ class TestBreakthroughResolution(unittest.TestCase):
         self.char = {
             "tier": 2,
             "tier_ceiling": 10,
-            "primary_category": "physical_kinetic",
+            "primary_category": "kinetic",
             "attributes": {"will": 8, "might": 8, "insight": 8},
             "powers": ["p1", "p2"],
             "breakthrough_marks": [],
@@ -185,7 +185,7 @@ class TestBreakthroughApplication(unittest.TestCase):
         self.char = {
             "tier": 2,
             "tier_ceiling": 10,
-            "primary_category": "physical_kinetic",
+            "primary_category": "kinetic",
             "attributes": {"will": 8, "might": 8, "insight": 8},
             "powers": ["p1"],
             "breakthrough_marks": [],

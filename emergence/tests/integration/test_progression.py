@@ -23,7 +23,7 @@ def _make_char():
         "age": 30,
         "tier": 3,
         "tier_ceiling": 10,
-        "primary_category": "physical_kinetic",
+        "primary_category": "kinetic",
         "attributes": {"strength": 8, "will": 8, "insight": 6},
         "corruption": 0,
         "resources": {},
@@ -40,7 +40,7 @@ class TestCombatPowerMarks(unittest.TestCase):
 
         # Simulate 25 combat uses of a power
         for _ in range(25):
-            tac.log_power_use("pk_push", "physical_kinetic")
+            tac.log_power_use("pk_push", "kinetic")
 
         self.assertEqual(tac.get_power_mark("pk_push"), 1)
 
@@ -49,13 +49,13 @@ class TestCombatPowerMarks(unittest.TestCase):
         tac = TacticalProgression(char)
 
         for _ in range(25):
-            tac.log_power_use("pk_push", "physical_kinetic")
-            tac.log_power_use("pk_shield", "physical_kinetic")
+            tac.log_power_use("pk_push", "kinetic")
+            tac.log_power_use("pk_shield", "kinetic")
 
         self.assertEqual(tac.get_power_mark("pk_push"), 1)
         self.assertEqual(tac.get_power_mark("pk_shield"), 1)
         # Category should be at 50 (25+25)
-        self.assertEqual(tac.get_category_use_count("physical_kinetic"), 50)
+        self.assertEqual(tac.get_category_use_count("kinetic"), 50)
 
 
 class TestSimInteractionStanding(unittest.TestCase):
@@ -92,7 +92,7 @@ class TestProgressionPersistsSave(unittest.TestCase):
             char = _make_char()
 
             # Apply progression
-            TacticalProgression(char).log_power_use("p1", "physical_kinetic")
+            TacticalProgression(char).log_power_use("p1", "kinetic")
             SkillProgression(char).log_skill_use("melee")
             RelationshipProgression(char).update_standing("npc1", 2)
             FactionProgression(char).update_standing("f1", 1)
@@ -125,7 +125,7 @@ class TestProgressionPersistsSave(unittest.TestCase):
             char = _make_char()
             tac = TacticalProgression(char)
             for _ in range(25):
-                tac.log_power_use("p1", "physical_kinetic")
+                tac.log_power_use("p1", "kinetic")
 
             save = SaveManager(tmpdir)
             save.full_save(

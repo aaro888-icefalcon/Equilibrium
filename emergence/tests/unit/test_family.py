@@ -13,7 +13,7 @@ class TestFamilyEngine(unittest.TestCase):
             "name": "Elena",
             "age": age,
             "species": "human",
-            "primary_category": "physical_kinetic",
+            "primary_category": "kinetic",
             "attributes": {"strength": 8, "will": 8},
             "resources": {"cu": 500},
             "children": [],
@@ -61,7 +61,7 @@ class TestFamilyEngine(unittest.TestCase):
     def test_create_descendant_from_child(self):
         char = self._make_char(age=65)
         char["children"] = [
-            {"name": "Ada", "age": 20, "species": "human", "manifested": True, "tier": 1, "primary_category": "auratic"},
+            {"name": "Ada", "age": 20, "species": "human", "manifested": True, "tier": 1, "primary_category": "cognitive"},
         ]
         engine = FamilyEngine()
         desc = engine.create_descendant(char, {}, random.Random(42))
