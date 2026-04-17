@@ -290,8 +290,56 @@ def step_scene(args: Any, save_root: str) -> Dict[str, Any]:
     }
 
 
+def _parse_choice_indices(input_choice: Any) -> List[int]:
+    """Normalize --input-choice into a list of ints.
+
+    Accepts int (single pick), or comma-separated string (multi-pick, used by
+    the power-slate scene's pick-two step).  Returns [] if input is None or
+    unparseable.
+    """
+    if input_choice is None:
+        return []
+    if isinstance(input_choice, int):
+        return [input_choice]
+    if isinstance(input_choice, (list, tuple)):
+        out: List[int] = []
+        for item in input_choice:
+            try:
+                out.append(int(item))
+            except (TypeError, ValueError):
+                continue
+        return out
+    if isinstance(input_choice, str):
+        out = []
+        for part in input_choice.split(","):
+            part = part.strip()
+            if not part:
+                continue
+            try:
+                out.append(int(part))
+            except ValueError:
+                continue
+        return out
+    return []
+
+
 def step_scene_apply(args: Any, save_root: str) -> Dict[str, Any]:
-    """Apply player choice to a session zero scene."""
+    """Apply player choice to a session zero scene.
+
+    Two-phase apply for scenes that expose a slate computed from player
+    text.  Current behavior:
+
+      - Scene declares choices but no choice input was supplied: run
+        apply_text() only and persist state WITHOUT advancing.  Returns
+        the current slate in the response so the caller can pick.
+      - Scene declares no choices and only text was supplied: run
+        apply_text() and advance.
+      - Scene declares choices and choice input was supplied: run
+        apply_text() (if any text) then apply()/apply_multi() and advance.
+
+    Multi-pick scenes (currently only the power-slate scene) dispatch
+    through apply_multi() when more than one choice index is provided.
+    """
     index = getattr(args, "index", 0)
     input_choice = getattr(args, "input_choice", None)
     input_texts_raw = getattr(args, "input_text", None) or []
@@ -321,36 +369,66 @@ def step_scene_apply(args: Any, save_root: str) -> Dict[str, Any]:
 
     scene.prepare(creation_state, rng)
 
-    # Apply text inputs if provided
+    text_inputs: Dict[str, str] = {}
     if input_texts_raw:
-        text_inputs = {}
         for item in input_texts_raw:
             if "=" in item:
                 k, _, v = item.partition("=")
                 text_inputs[k.strip()] = v.strip()
+
+    applied_text = False
+    if text_inputs:
         creation_state = scene.apply_text(text_inputs, creation_state, factory, rng)
+        applied_text = True
 
-    # Apply choice if provided
-    if input_choice is not None:
-        choices = scene.get_choices(creation_state)
-        if choices:
-            choice_idx = min(input_choice, len(choices) - 1)
-            creation_state = scene.apply(choice_idx, creation_state, factory, rng)
+    choice_indices = _parse_choice_indices(input_choice)
+    # Re-prepare so the scene sees the post-apply_text state (matters for
+    # the slate scene — get_choices() reads pending_slate from state).
+    scene.prepare(creation_state, rng)
+    available_choices = scene.get_choices(creation_state)
 
-    # Save updated creation state
-    next_scene = index + 1
+    applied_choice = False
+    if choice_indices and available_choices:
+        if len(choice_indices) > 1 and hasattr(scene, "apply_multi"):
+            creation_state = scene.apply_multi(
+                choice_indices, creation_state, factory, rng,
+            )
+        else:
+            idx0 = min(max(0, choice_indices[0]), len(available_choices) - 1)
+            creation_state = scene.apply(idx0, creation_state, factory, rng)
+        applied_choice = True
+
+    # Advance rule: scenes that offer choices require a choice to advance.
+    # Scenes that offer none advance as soon as apply_text has been called.
+    has_choices = bool(available_choices)
+    should_advance = applied_choice or (applied_text and not has_choices)
+
+    current_scene = sz_data.get("current_scene", index)
+    next_scene = index + 1 if should_advance else current_scene
+
     sz_data["creation_state"] = creation_state.__dict__
     sz_data["current_scene"] = next_scene
     _write_json_file(sz_path, sz_data)
 
-    # Build summary
+    # Build summary.  When the scene has not advanced we expose the
+    # pending slate so the narrator can present the new 10-option list.
+    awaiting: Optional[str] = None
+    if not should_advance:
+        if has_choices and not applied_choice:
+            awaiting = "choice"
+        elif not applied_text and not applied_choice:
+            awaiting = "input"
+
+    # Re-read choices against the (possibly post-text) state for display.
+    display_choices = scene.get_choices(creation_state) if awaiting else []
+
     result = {
         "status": "ok",
         "mode": "SESSION_ZERO",
         "scene_index": index,
         "scene_id": scene.scene_id,
-        "applied": True,
-        "next_scene": next_scene if next_scene < len(scenes) else None,
+        "applied": should_advance,
+        "next_scene": next_scene if should_advance and next_scene < len(scenes) else None,
         "creation_summary": {
             "name": creation_state.name or None,
             "age": creation_state.age_at_onset,
@@ -364,10 +442,105 @@ def step_scene_apply(args: Any, save_root: str) -> Dict[str, Any]:
         },
     }
 
-    if next_scene >= len(scenes):
-        result["message"] = "All scenes complete. Run 'step scene-finalize' to create character."
+    if awaiting:
+        result["awaiting"] = awaiting
+        result["choices"] = display_choices
+        # Expose structured slate for the power-slate scene.
+        if creation_state.pending_slate:
+            result["pending_slate"] = list(creation_state.pending_slate)
+
+    if should_advance and next_scene >= len(scenes):
+        result["message"] = (
+            "All scenes complete. Run 'step scene-finalize' to create character."
+        )
 
     return result
+
+
+def _slugify_name(name: str, suffix: str) -> str:
+    """Make a stable, filesystem-safe NPC id from a display name."""
+    import re as _re
+    base = _re.sub(r"[^a-z0-9]+", "-", name.lower()).strip("-") or "tie"
+    return f"npc-tie-{base}-{suffix}"
+
+
+def _materialize_npc_seeds(
+    npc_seeds: List[Dict[str, Any]],
+    state: Dict[str, Any],
+    player_sheet: Dict[str, Any],
+) -> List[Dict[str, Any]]:
+    """Turn life-description NPC seeds into world NPC registry entries.
+
+    Seeds from the LifeDescriptionScene are tie-of-origin NPCs: family,
+    friends, coworkers the player knew before the Onset.  They land in
+    state['npcs'] with a +2 default standing (proactive help) and are
+    linked to the player sheet's relationships map.  Status is honored
+    if the player marked someone as dead or missing.
+    """
+    if not npc_seeds:
+        return []
+
+    npcs = state.setdefault("npcs", {})
+    sheet_relationships = player_sheet.setdefault("relationships", {})
+    materialized: List[Dict[str, Any]] = []
+
+    for seed in npc_seeds:
+        name = seed.get("name", "").strip()
+        if not name:
+            continue
+        seed_index = seed.get("seed_index", len(materialized))
+        npc_id = _slugify_name(name, f"{seed_index:02d}")
+        status = seed.get("status", "alive").strip().lower() or "alive"
+        # Deceased ties still get a registry entry so the sheet can
+        # reference them narratively, but with status=dead they won't
+        # participate in live simulation.
+        entry = {
+            "id": npc_id,
+            "schema_version": "1.0",
+            "display_name": name,
+            "faction_affiliation": {"primary": None, "secondary": []},
+            "location": seed.get("location", ""),
+            "schedule": {},
+            "species": "human",
+            "age": 30,
+            "manifestation": {"tier": 0, "has_powers": False, "powers": []},
+            "role": seed.get("relation", "tie"),
+            "goals": [],
+            "relationships": {},
+            "resources": [],
+            "knowledge": [],
+            "personality_traits": [],
+            "current_concerns": [seed.get("descriptor", "")]
+            if seed.get("descriptor")
+            else [],
+            "memory": [],
+            "standing_with_player_default": 2 if status == "alive" else 0,
+            "what_they_want_from_player": "",
+            "voice": seed.get("descriptor", ""),
+            "hooks": [],
+            "status": status,
+            "social_block": None,
+        }
+        npcs[npc_id] = entry
+
+        # Mirror into the character sheet so sheet.relationships surfaces
+        # the tie during session zero preamble.
+        if status == "alive":
+            sheet_relationships[npc_id] = {
+                "standing": 2,
+                "current_state": "alive_present",
+                "trust": 2,
+            }
+        else:
+            sheet_relationships[npc_id] = {
+                "standing": 2,
+                "current_state": status if status in {"dead", "missing"} else "unknown",
+                "trust": 0,
+            }
+
+        materialized.append(entry)
+
+    return materialized
 
 
 def step_scene_finalize(args: Any, save_root: str) -> Dict[str, Any]:
@@ -406,6 +579,11 @@ def step_scene_finalize(args: Any, save_root: str) -> Dict[str, Any]:
         else:
             state["player"] = {"name": getattr(sheet, "name", "Unknown")}
 
+    # Materialize any tie NPCs captured during the life-description scene.
+    seeded = _materialize_npc_seeds(
+        list(creation_state.npc_seeds), state, state["player"],
+    )
+
     # Ensure current_location is set (step_situation looks for this key)
     if "location" in state["player"] and "current_location" not in state["player"]:
         state["player"]["current_location"] = state["player"]["location"]
@@ -426,6 +604,10 @@ def step_scene_finalize(args: Any, save_root: str) -> Dict[str, Any]:
         "message": "Character created. Run 'step preamble' for opening narration.",
         "player": _player_summary(state["player"]),
         "character_sheet": state["player"],
+        "seeded_npcs": [
+            {"id": n["id"], "display_name": n["display_name"], "role": n.get("role", ""), "status": n.get("status", "alive")}
+            for n in seeded
+        ],
     }
 
 

@@ -72,7 +72,18 @@ class TestStepScene(unittest.TestCase):
             self.assertEqual(result["status"], "ok")
             self.assertEqual(result["scene_index"], 0)
             self.assertTrue(len(result["framing_text"]) > 0)
+            # Scene 0 is the intro — prose-only, no text input required.
+            self.assertFalse(result["needs_text_input"])
+
+    def test_scene_1_life_needs_text_input(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            dispatch_step(_ns(step_action="init", force=False, seed=42), tmp)
+            result = dispatch_step(_ns(step_action="scene", index=1), tmp)
             self.assertTrue(result["needs_text_input"])
+            prompt_keys = {p["key"] for p in result["text_prompts"]}
+            self.assertIn("name", prompt_keys)
+            self.assertIn("description", prompt_keys)
+            self.assertIn("npc_seeds", prompt_keys)
 
     def test_scene_out_of_range(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -85,45 +96,14 @@ class TestStepScene(unittest.TestCase):
 class TestStepSceneApply(unittest.TestCase):
     """step_scene_apply accepts text inputs and choice selections."""
 
-    def test_apply_text_inputs_scene_0(self):
+    def test_apply_intro_with_choice(self):
+        """Scene 0 (intro) advances on --input-choice 0."""
         with tempfile.TemporaryDirectory() as tmp:
             dispatch_step(_ns(step_action="init", force=False, seed=42), tmp)
             result = dispatch_step(
                 _ns(
                     step_action="scene-apply",
                     index=0,
-                    input_choice=None,
-                    input_text=["name=Test Runner", "age=30"],
-                    seed=42,
-                ),
-                tmp,
-            )
-            self.assertEqual(result["status"], "ok")
-            self.assertTrue(result["applied"])
-            self.assertEqual(result["creation_summary"]["name"], "Test Runner")
-            self.assertEqual(result["creation_summary"]["age"], 30)
-            self.assertEqual(result["next_scene"], 1)
-
-    def test_apply_choice_scene_1(self):
-        """Apply a choice on scene 1 (Occupation) after completing scene 0."""
-        with tempfile.TemporaryDirectory() as tmp:
-            dispatch_step(_ns(step_action="init", force=False, seed=42), tmp)
-            # Scene 0: text input
-            dispatch_step(
-                _ns(
-                    step_action="scene-apply",
-                    index=0,
-                    input_choice=None,
-                    input_text=["name=Test Runner", "age=25"],
-                    seed=42,
-                ),
-                tmp,
-            )
-            # Scene 1: choice input (occupation)
-            result = dispatch_step(
-                _ns(
-                    step_action="scene-apply",
-                    index=1,
                     input_choice=0,
                     input_text=None,
                     seed=42,
@@ -132,7 +112,85 @@ class TestStepSceneApply(unittest.TestCase):
             )
             self.assertEqual(result["status"], "ok")
             self.assertTrue(result["applied"])
+            self.assertEqual(result["next_scene"], 1)
+
+    def test_apply_life_scene_text(self):
+        """Scene 1 (life) advances on text alone (no choice menu)."""
+        with tempfile.TemporaryDirectory() as tmp:
+            dispatch_step(_ns(step_action="init", force=False, seed=42), tmp)
+            dispatch_step(
+                _ns(step_action="scene-apply", index=0,
+                    input_choice=0, input_text=None, seed=42),
+                tmp,
+            )
+            result = dispatch_step(
+                _ns(
+                    step_action="scene-apply",
+                    index=1,
+                    input_choice=None,
+                    input_text=[
+                        "name=Test Runner",
+                        "age=30",
+                        "description=blunt surgeon curious and analytical",
+                    ],
+                    seed=42,
+                ),
+                tmp,
+            )
+            self.assertEqual(result["status"], "ok")
+            self.assertTrue(result["applied"])
+            self.assertEqual(result["creation_summary"]["name"], "Test Runner")
+            self.assertEqual(result["creation_summary"]["age"], 30)
             self.assertEqual(result["next_scene"], 2)
+
+    def test_slate_scene_two_phase(self):
+        """Scene 3 (power slate) needs a choice to advance; text-only call
+        persists pending_slate without advancing."""
+        with tempfile.TemporaryDirectory() as tmp:
+            dispatch_step(_ns(step_action="init", force=False, seed=42), tmp)
+            # 0: intro
+            dispatch_step(_ns(step_action="scene-apply", index=0,
+                              input_choice=0, input_text=None, seed=42), tmp)
+            # 1: life
+            dispatch_step(_ns(
+                step_action="scene-apply", index=1,
+                input_choice=None,
+                input_text=[
+                    "name=Runner", "age=30",
+                    "description=surgeon curious and analytical",
+                ],
+                seed=42,
+            ), tmp)
+            # 2: action
+            dispatch_step(_ns(
+                step_action="scene-apply", index=2,
+                input_choice=None,
+                input_text=["reaction=I reach and study what I can see"],
+                seed=42,
+            ), tmp)
+            # 3: slate — text only, should NOT advance
+            phase_1 = dispatch_step(_ns(
+                step_action="scene-apply", index=3,
+                input_choice=None,
+                input_text=["reaction=I watch and think"],
+                seed=42,
+            ), tmp)
+            self.assertFalse(phase_1["applied"])
+            self.assertEqual(phase_1["awaiting"], "choice")
+            self.assertEqual(len(phase_1["pending_slate"]), 10)
+
+            # 3: slate — choice step, advances
+            phase_2 = dispatch_step(_ns(
+                step_action="scene-apply", index=3,
+                input_choice="0,1",
+                input_text=None,
+                seed=42,
+            ), tmp)
+            self.assertTrue(phase_2["applied"])
+            self.assertEqual(phase_2["next_scene"], 4)
+            self.assertEqual(
+                len(phase_2["creation_summary"]["powers"]), 2,
+            )
 
 
 class TestStepSceneFinalize(unittest.TestCase):
@@ -242,30 +300,67 @@ class TestDispatchUnknownAction(unittest.TestCase):
 # ---------------------------------------------------------------------------
 
 def _apply_all_scenes(save_root: str) -> None:
-    """Walk through all 8 v2 session zero scenes with deterministic inputs."""
-    # Scene 0: text input (name + age)
-    dispatch_step(
-        _ns(
-            step_action="scene-apply",
-            index=0,
-            input_choice=None,
-            input_text=["name=Marisol Reyes", "age=30"],
+    """Walk through all 13 v2 session zero scenes with deterministic inputs.
+
+    Per-scene inputs:
+      0 intro       — choice 0 (Continue)
+      1 life        — name / age / description / empty npc_seeds
+      2 action      — reaction text
+      3 slate       — reaction + two-pick choice '0,1'
+      4-7 cast/rider — narrative text + choice 0
+      8-12 rest     — choice 0
+    """
+    # 0 intro
+    dispatch_step(_ns(
+        step_action="scene-apply", index=0,
+        input_choice=0, input_text=None, seed=42,
+    ), save_root)
+
+    # 1 life
+    dispatch_step(_ns(
+        step_action="scene-apply", index=1,
+        input_choice=None,
+        input_text=[
+            "name=Marisol Reyes",
+            "age=30",
+            "description=blunt surgeon curious and analytical",
+            "npc_seeds=[]",
+        ],
+        seed=42,
+    ), save_root)
+
+    # 2 action
+    dispatch_step(_ns(
+        step_action="scene-apply", index=2,
+        input_choice=None,
+        input_text=["reaction=I reach in and work with my hands"],
+        seed=42,
+    ), save_root)
+
+    # 3 slate — single call with both text and choice exercises the
+    # orchestrator's combined path.
+    dispatch_step(_ns(
+        step_action="scene-apply", index=3,
+        input_choice="0,1",
+        input_text=["reaction=I stay still and study"],
+        seed=42,
+    ), save_root)
+
+    # 4-7 cast / rider — narrative text + choice 0
+    for i in range(4, 8):
+        dispatch_step(_ns(
+            step_action="scene-apply", index=i,
+            input_choice=0,
+            input_text=["narrative=Jason saw me do it first."],
             seed=42,
-        ),
-        save_root,
-    )
-    # Scenes 1-7: choice-based, always pick index 0
-    for i in range(1, 8):
-        dispatch_step(
-            _ns(
-                step_action="scene-apply",
-                index=i,
-                input_choice=0,
-                input_text=None,
-                seed=42,
-            ),
-            save_root,
-        )
+        ), save_root)
+
+    # 8-12 remainder — choice 0
+    for i in range(8, 13):
+        dispatch_step(_ns(
+            step_action="scene-apply", index=i,
+            input_choice=0, input_text=None, seed=42,
+        ), save_root)
 
 
 if __name__ == "__main__":

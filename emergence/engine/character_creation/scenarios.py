@@ -1,17 +1,18 @@
-"""Session Zero v2 — 12 scenarios that each build a visible piece of the sheet.
+"""Session Zero v2 — scenario flow that builds a visible piece of the sheet.
 
-Scenario  0: Identity  (name, age, occupation, freeform self-description)
-Scenario  1: Scenario1 (cinematic danger vignette -> primary power at T3)
-Scenario  2: Scenario2 (second vignette -> secondary power at T3)
-Scenario  3: Primary Cast Mode  (+ narrative prompt: who saw, what it cost)
-Scenario  4: Primary Rider      (+ narrative prompt)
-Scenario  5: Secondary Cast Mode (+ narrative prompt)
-Scenario  6: Secondary Rider    (+ narrative prompt)
-Scenario  7: Survival (months 1-3, pooled specific scenarios with named NPCs)
-Scenario  8: Location (month 2-3, region pick)
-Scenario  9: Relationships (friends, family, foes)
-Scenario 10: Faction (month 10, named representative with specific demands)
-Scenario 11: Vows (settlement situations with named NPCs, initial quests)
+ 0: Intro          (prose-only Onset primer; no input)
+ 1: LifeDescription (name, age, freeform life description, structured tie lines)
+ 2: ActionScenario  (one cinematic vignette; captures reaction tags only)
+ 3: PowerSlate      (two-phase: reaction text -> slate of 10; then pick 2)
+ 4: Primary Cast Mode  (+ narrative prompt)
+ 5: Primary Rider      (+ narrative prompt)
+ 6: Secondary Cast Mode (+ narrative prompt)
+ 7: Secondary Rider    (+ narrative prompt)
+ 8: Survival     (months 1-3, pooled specific scenarios with named NPCs)
+ 9: Location     (region pick)
+10: Relationships (friends, family, foes)
+11: Faction     (named representative with specific demands)
+12: Vows        (settlement situations with named NPCs, initial quests)
 
 Powers come exclusively from the V2 catalog (emergence/data/powers_v2/*.json)
 loaded via load_powers_v2() into the PowerV2 dataclass.
@@ -19,6 +20,7 @@ loaded via load_powers_v2() into the PowerV2 dataclass.
 
 from __future__ import annotations
 
+import json as _json
 import os as _os
 import random as _random
 from typing import Any, Dict, List, Optional
@@ -158,29 +160,107 @@ OCCUPATIONS = [
 ]
 
 # ---------------------------------------------------------------------------
-# Scenario 0 — Identity
+# Occupation lookup helper
 # ---------------------------------------------------------------------------
 
-class IdentityScenario(Scene):
-    """Who you were before the Onset. Name, age, occupation, self-description.
+_OCCUPATION_HINT_TO_INDEX: Dict[str, int] = {
+    "former federal": 0,
+    "former badge": 1,
+    "veteran": 2,
+    "medical": 3,
+    "farmer": 4,
+    "tradesperson": 5,
+    "white collar": 6,
+    "service worker": 7,
+    "academic": 8,
+    "criminal": 9,
+    "laborer": 10,
+}
 
-    Builds: name, age, self_description, reaction_tags (from description),
-    base attributes, starting skills, resources.
-    """
-    scene_id = "sz_v2_identity"
+
+def _occupation_by_hint(hint: str) -> Dict[str, Any]:
+    """Look up an OCCUPATIONS entry by narrative_tag hint.  Falls back to
+    service worker (a neutral, low-signal default) if the hint is unknown."""
+    idx = _OCCUPATION_HINT_TO_INDEX.get(hint, 7)
+    return OCCUPATIONS[idx]
+
+
+# ---------------------------------------------------------------------------
+# Scene 0 — Intro (prose-only preamble)
+# ---------------------------------------------------------------------------
+
+class IntroScene(Scene):
+    """Opening Onset primer.  No inputs.  Single 'continue' choice advances."""
+    scene_id = "sz_v2_intro"
+    register = "standard"
 
     def get_framing(self, state: CreationState) -> str:
         return (
-            "Before we begin, I need to know who you were.\n\n"
-            "The Onset was a year ago. Most of the people you knew are dead. "
-            "The ones who lived carry the habits of what they used to do — "
-            "the way they think, the way they move, what their hands remember.\n\n"
-            "Tell me your name.\n"
-            "Tell me how old you were when everything stopped. (16-65)\n"
-            "Tell me what you did for a living.\n"
-            "And in your own words — a few sentences — tell me who you were. "
-            "Temperament, interests, the people who shaped you, the way "
-            "others described you. Whatever feels true."
+            "One year ago, something happened that did not have a name "
+            "until people started calling it the Onset.\n\n"
+            "Engines stopped. Not all of them — not permanently — but enough "
+            "of them, long enough, at the same moment, that every system "
+            "built on the assumption of uninterrupted power came apart. "
+            "Planes fell. Hospitals went dark. The food in the warehouses "
+            "spoiled before anyone could move it.\n\n"
+            "Most people died in the first six weeks. Some of the ones who "
+            "survived woke up carrying things under their skin that had no "
+            "names. Abilities. Pressures. Second senses. The world called "
+            "them a lot of names in the months after: changed, marked, "
+            "cursed, risen. None of them stuck. The survivors mostly just "
+            "called themselves people, still.\n\n"
+            "That was a year ago.\n\n"
+            "You are one of the ones who lived. Before we go further, "
+            "tell me who you were."
+        )
+
+    def get_choices(self, state: CreationState) -> List[str]:
+        return ["Continue."]
+
+    def apply(self, choice_index, state, factory, rng):
+        return factory.apply_scene_result(self.scene_id, {
+            "history": [{
+                "timestamp": "T-1y",
+                "description": "Onset: most of the world ended.",
+                "type": "session_zero",
+            }],
+        }, state, rng)
+
+
+# ---------------------------------------------------------------------------
+# Scene 1 — Life Description (one big freeform beat)
+# ---------------------------------------------------------------------------
+
+class LifeDescriptionScene(Scene):
+    """The whole life-before-the-Onset beat in one scene.
+
+    Captures name, age, and a long self-description.  The description is
+    parsed for domain signals (skills, attribute deltas, occupation hint)
+    and for reaction-weighting tags.
+
+    Named relationships are captured out-of-band via an optional
+    'npc_seeds' text input — a JSON array of seed dicts, one per NPC
+    mentioned in the description.  The narrator parses the prose and
+    supplies the structured JSON; the engine materializes those seeds
+    into the world's NPC registry at finalize time.
+
+    No choice input — this scene is text-only.  The occupation is derived
+    from the description via DOMAIN_EXTRACTION's occupation_hint; the
+    player is not asked to pick from a menu.
+    """
+    scene_id = "sz_v2_life"
+    register = "standard"
+
+    def get_framing(self, state: CreationState) -> str:
+        return (
+            "Tell me who you were.\n\n"
+            "Your name. Your age the day it happened (16 to 65). What you "
+            "did for a living. Who raised you. Who your people were — "
+            "family, friends, coworkers, the people you'd call in a "
+            "real emergency. Where you lived. What you spent your time "
+            "on when you weren't working.\n\n"
+            "Write as much as feels true. The more detail you give, the "
+            "more the world knows about who you are when we start."
         )
 
     def needs_text_input(self) -> bool:
@@ -188,13 +268,26 @@ class IdentityScenario(Scene):
 
     def text_prompts(self, state: CreationState) -> List[Dict[str, str]]:
         return [
-            {"key": "name", "prompt": "Tell me your name."},
-            {"key": "age", "prompt": "Your age on the day everything stopped. (16-65)"},
-            {"key": "description", "prompt": "A short self-description — who you were before the Onset."},
+            {"key": "name", "prompt": "Your name."},
+            {"key": "age", "prompt": "Your age on the day it happened (16-65)."},
+            {
+                "key": "description",
+                "prompt": "Who you were.  Write as much as feels true.",
+            },
+            {
+                "key": "npc_seeds",
+                "prompt": (
+                    "Optional: a JSON array of named relationships — the "
+                    "narrator fills this from your description.  Each entry: "
+                    "{name, relation, location, descriptor, status}.  "
+                    "Leave empty to skip."
+                ),
+            },
         ]
 
     def get_choices(self, state: CreationState) -> List[str]:
-        return [occ["display"] for occ in OCCUPATIONS]
+        # No choice step; advancing is done entirely via apply_text.
+        return []
 
     def apply_text(
         self,
@@ -210,105 +303,113 @@ class IdentityScenario(Scene):
         except ValueError:
             age = 25
         description = text_inputs.get("description", "").strip()
+
+        # Tag extraction for downstream power weighting
         tags = scenario_pool.extract_description_tags(description)
+
+        # Domain extraction — concrete deltas derived from the prose
+        domain = scenario_pool.extract_domain(description)
+        occupation_hint = domain["occupation_hint"] or ""
+        occupation_row = _occupation_by_hint(occupation_hint)
+
+        # Merge occupation-row skills/attributes with domain-extracted ones.
+        # Domain extraction is additive on top of the occupation baseline.
+        merged_skills: Dict[str, int] = dict(occupation_row["skills"])
+        for skill, level in domain["skills"].items():
+            merged_skills[skill] = merged_skills.get(skill, 0) + level
+
+        merged_attrs: Dict[str, int] = dict(occupation_row["attribute_deltas"])
+        for attr, delta in domain["attribute_deltas"].items():
+            merged_attrs[attr] = merged_attrs.get(attr, 0) + delta
+
+        # Parse optional npc_seeds JSON payload.  The narrator supplies this.
+        npc_seeds = _parse_npc_seeds(text_inputs.get("npc_seeds", ""))
+
         return factory.apply_scene_result(self.scene_id + "_text", {
             "name": name,
             "age_at_onset": age,
             "self_description": description,
             "reaction_tags": tags,
-        }, state, rng)
-
-    def apply(
-        self,
-        choice_index: int,
-        state: CreationState,
-        factory: CharacterFactory,
-        rng: _random.Random,
-    ) -> CreationState:
-        idx = min(choice_index, len(OCCUPATIONS) - 1)
-        occ = OCCUPATIONS[idx]
-        return factory.apply_scene_result(self.scene_id, {
-            "attribute_deltas": dict(occ["attribute_deltas"]),
-            "skills": dict(occ["skills"]),
-            "resources": dict(occ.get("resources", {})),
-            "heat": dict(occ.get("heat", {})),
-            "narrative_tag": occ["narrative_tag"],
+            "attribute_deltas": merged_attrs,
+            "skills": merged_skills,
+            "resources": dict(occupation_row.get("resources", {})),
+            "heat": dict(occupation_row.get("heat", {})),
+            "narrative_tag": occupation_row["narrative_tag"],
+            "occupation": occupation_row["narrative_tag"],
+            "npc_seeds": npc_seeds,
             "history": [{
-                "timestamp": "T+0",
-                "description": f"Pre-onset occupation: {occ['display']}",
+                "timestamp": "T-1y",
+                "description": (
+                    f"Pre-onset: {occupation_row['display'].split(' — ')[0]}"
+                ),
                 "type": "session_zero",
             }],
         }, state, rng)
 
 
-# ---------------------------------------------------------------------------
-# Scenario 1 & 2 — Cinematic Danger Vignettes → Power Selection
-# ---------------------------------------------------------------------------
+def _parse_npc_seeds(raw: str) -> List[Dict[str, Any]]:
+    """Parse the npc_seeds JSON payload into a list of seed dicts.
 
-class _ScenarioBase(Scene):
-    """Shared machinery for the two vignette-driven power-selection scenes.
-
-    Flow per scene:
-      1. prepare()   — pick vignette, pre-compute the 6 weighted V2 choices.
-      2. framing     — present the vignette.
-      3. text input  — freeform "reaction"; apply_text() stores reaction and
-                       extracts tags, then recomputes the 6 choices with the
-                       expanded tag bag.
-      4. choice      — player picks one of the 6 powers.
-      5. apply()     — commit the chosen PowerV2 to state at Tier 3.
+    Expected shape: a JSON array of objects.  Minimal required keys per
+    object: 'name' (non-empty string).  Optional: relation, location,
+    descriptor, status.  Returns [] on parse failure or unexpected shape.
     """
+    raw = (raw or "").strip()
+    if not raw:
+        return []
+    try:
+        parsed = _json.loads(raw)
+    except (ValueError, TypeError):
+        return []
+    if not isinstance(parsed, list):
+        return []
+    seeds: List[Dict[str, Any]] = []
+    for idx, entry in enumerate(parsed):
+        if not isinstance(entry, dict):
+            continue
+        name = str(entry.get("name", "")).strip()
+        if not name:
+            continue
+        seeds.append({
+            "name": name,
+            "relation": str(entry.get("relation", "")).strip(),
+            "location": str(entry.get("location", "")).strip(),
+            "descriptor": str(entry.get("descriptor", "")).strip(),
+            "status": str(entry.get("status", "alive")).strip() or "alive",
+            "seed_index": idx,
+        })
+    return seeds
 
-    _slot: int = 1
-    _slot_key: str = "1"
-    _slot_label: str = "anchor"
+
+# ---------------------------------------------------------------------------
+# Scene 2 — Action Scenario (single vignette, captures reaction only)
+# ---------------------------------------------------------------------------
+
+class ActionScenarioScene(Scene):
+    """A single onset-moment vignette framing the first manifestation.
+
+    The player writes a freeform reaction.  Tags extracted from it are
+    merged into state.reaction_tags for the PowerSlateScene to consume.
+    No power is committed here.
+    """
+    scene_id = "sz_v2_action"
     register = "intimate"
 
     def __init__(self) -> None:
         super().__init__()
         self._vignette: Dict[str, Any] = {}
-        self._options: List[Any] = []
-
-    # -- scene lifecycle ----------------------------------------------------
-
-    def _exclude_category(self, state: CreationState) -> str:
-        return ""
 
     def prepare(self, state: CreationState, rng: _random.Random) -> None:
-        # Deterministic RNGs so get_framing/get_choices and apply agree.
-        vignette_rng = _random.Random(state.seed + self._slot * 101)
-        option_rng = _random.Random(state.seed + self._slot * 211)
-
-        exclude_ids = tuple(
-            vid for k, vid in state.scenario_vignettes.items() if k != self._slot_key
-        )
-        self._vignette = scenario_pool.select_vignette(
-            self._slot, vignette_rng, exclude_ids=exclude_ids,
-        )
-
-        powers = list(_get_v2_powers().values())
-        self._options = scenario_pool.pick_six(
-            powers,
-            list(state.reaction_tags),
-            option_rng,
-            exclude_category=self._exclude_category(state),
-        )
-
-    # -- narration ----------------------------------------------------------
+        # Deterministic vignette pick keyed off the world seed.
+        vignette_rng = _random.Random(state.seed + 101)
+        self._vignette = scenario_pool.select_action_vignette(vignette_rng)
 
     def get_framing(self, state: CreationState) -> str:
         return self._vignette.get("framing", "") if self._vignette else ""
 
     def get_choices(self, state: CreationState) -> List[str]:
-        lines: List[str] = []
-        for p in self._options:
-            label = V2_CATEGORY_LABELS.get(p.category, p.category.title())
-            sub = getattr(p, "sub_category", "") or ""
-            identity = getattr(p, "identity", "") or getattr(p, "description", "") or ""
-            if sub:
-                lines.append(f"[{label} / {sub}] {p.name} — {identity}")
-            else:
-                lines.append(f"[{label}] {p.name} — {identity}")
-        return lines
+        # No menu — the player writes their reaction freely.
+        return []
 
     def needs_text_input(self) -> bool:
         return True
@@ -316,10 +417,11 @@ class _ScenarioBase(Scene):
     def text_prompts(self, state: CreationState) -> List[Dict[str, str]]:
         return [{
             "key": "reaction",
-            "prompt": "Your reaction in this moment — a few sentences, freeform.",
+            "prompt": (
+                "Your reaction in this moment.  A few sentences, freeform — "
+                "what Shake does in the next half-second, in your own words."
+            ),
         }]
-
-    # -- state writers ------------------------------------------------------
 
     def apply_text(
         self,
@@ -332,22 +434,162 @@ class _ScenarioBase(Scene):
         tags = scenario_pool.extract_tags(reaction)
         vignette_id = self._vignette.get("id", "") if self._vignette else ""
 
-        updated = factory.apply_scene_result(self.scene_id + "_text", {
-            "scenario_reactions": {self._slot_key: reaction},
-            "scenario_vignettes": {self._slot_key: vignette_id},
+        return factory.apply_scene_result(self.scene_id + "_text", {
+            "scenario_reactions": {"action": reaction},
+            "scenario_vignettes": {"action": vignette_id},
             "reaction_tags": tags,
+            "history": [{
+                "timestamp": "T+0",
+                "description": "Onset: first manifestation beat.",
+                "type": "session_zero",
+            }],
         }, state, rng)
 
-        # Recompute weighted options now that the reaction has expanded tags.
-        option_rng = _random.Random(state.seed + self._slot * 211)
-        powers = list(_get_v2_powers().values())
-        self._options = scenario_pool.pick_six(
-            powers,
-            list(updated.reaction_tags),
-            option_rng,
-            exclude_category=self._exclude_category(updated),
+
+# ---------------------------------------------------------------------------
+# Scene 3 — Power Slate (two-phase: pick 2 from a slate of 10)
+# ---------------------------------------------------------------------------
+
+class PowerSlateScene(Scene):
+    """Presents 10 weighted power options.  Player picks two.
+
+    Weighting: description tags carry weight 3, reaction tags carry weight 2.
+    Six candidates come from the top-scored pool, four are random fillers.
+    No category exclusion — both picks may come from the same category.
+
+    Two-phase apply:
+      phase 1: apply_text()  — stores the reaction if present (idempotent
+               with ActionScenarioScene since tags dedupe) and computes
+               the slate from combined tags, persisting it to state.
+      phase 2: apply()       — consumes two choice indices (passed as a
+               comma-separated string via scene_choices, or by calling
+               apply_multi()) and commits the two powers.
+
+    The CLI drives this split explicitly.  The embedded SessionZero
+    orchestrator (used for mock/test runs) calls apply() with a single
+    int and picks a deterministic second slot.
+    """
+    scene_id = "sz_v2_slate"
+    register = "intimate"
+
+    _SLATE_SIZE = 10
+
+    def __init__(self) -> None:
+        super().__init__()
+        self._options: List[Any] = []
+
+    def prepare(self, state: CreationState, rng: _random.Random) -> None:
+        self._options = self._compute_slate(state)
+
+    def _compute_slate(self, state: CreationState) -> List[Any]:
+        """Build the 10-option slate from combined desc + reaction tags.
+
+        Description tags come from state.self_description; reaction tags
+        come from state.reaction_tags.  Since reaction_tags accumulates
+        BOTH description-derived tags and scenario reaction tags, we
+        re-extract description tags separately to weight them higher
+        via pick_ten's dual-tag weighting.
+        """
+        option_rng = _random.Random(state.seed + 317)
+        desc_tags = scenario_pool.extract_description_tags(
+            state.self_description or "",
         )
-        return updated
+        reaction_tags = list(state.reaction_tags)
+        powers = list(_get_v2_powers().values())
+        return scenario_pool.pick_ten(
+            powers,
+            desc_tags,
+            reaction_tags,
+            option_rng,
+        )
+
+    def get_framing(self, state: CreationState) -> str:
+        return (
+            "Two things woke up in you at once.\n\n"
+            "Not fully formed — shapes. Pressures. A set of hands that were "
+            "not hands, doing things your hands could not do. You do not "
+            "have names for them yet. You might not for a long time.\n\n"
+            "Ten shapes are surfacing. Pick the two that feel right — "
+            "not the ones that would be useful, the ones that feel like "
+            "yours.\n\n"
+            "Give me the two indices, comma-separated (e.g. 2,7)."
+        )
+
+    def get_choices(self, state: CreationState) -> List[str]:
+        slate = self._current_slate(state)
+        lines: List[str] = []
+        for p in slate:
+            label = V2_CATEGORY_LABELS.get(p.category, p.category.title())
+            sub = getattr(p, "sub_category", "") or ""
+            identity = (
+                getattr(p, "identity", "")
+                or getattr(p, "description", "")
+                or ""
+            )
+            if sub:
+                lines.append(f"[{label} / {sub}] {p.name} — {identity}")
+            else:
+                lines.append(f"[{label}] {p.name} — {identity}")
+        return lines
+
+    def _current_slate(self, state: CreationState) -> List[Any]:
+        """Return the slate to present.  Prefers the persisted pending_slate
+        if this scene already ran apply_text; otherwise falls back to the
+        freshly-prepared options."""
+        if state.pending_slate and state.pending_slate_scene == self.scene_id:
+            powers = _get_v2_powers()
+            resolved = [
+                powers.get(entry.get("power_id"))
+                for entry in state.pending_slate
+            ]
+            return [p for p in resolved if p is not None]
+        return list(self._options)
+
+    def needs_text_input(self) -> bool:
+        return True
+
+    def text_prompts(self, state: CreationState) -> List[Dict[str, str]]:
+        return [{
+            "key": "reaction",
+            "prompt": (
+                "Optional — expand your reaction from the prior scene in your "
+                "own words.  Adds weight to the slate.  Leave empty to reuse "
+                "the reaction already captured."
+            ),
+        }]
+
+    def apply_text(
+        self,
+        text_inputs: Dict[str, str],
+        state: CreationState,
+        factory: CharacterFactory,
+        rng: _random.Random,
+    ) -> CreationState:
+        reaction = text_inputs.get("reaction", "").strip()
+        updated = state
+
+        if reaction:
+            tags = scenario_pool.extract_tags(reaction)
+            updated = factory.apply_scene_result(self.scene_id + "_text", {
+                "scenario_reactions": {"slate": reaction},
+                "reaction_tags": tags,
+            }, updated, rng)
+
+        slate = self._compute_slate(updated)
+        self._options = slate
+        slate_payload = [
+            {
+                "power_id": p.id,
+                "name": p.name,
+                "category": p.category,
+                "sub_category": getattr(p, "sub_category", ""),
+            }
+            for p in slate
+        ]
+        return factory.apply_scene_result(self.scene_id + "_slate", {
+            "pending_slate": slate_payload,
+            "pending_slate_scene": self.scene_id,
+        }, updated, rng)
 
     def apply(
         self,
@@ -356,94 +598,124 @@ class _ScenarioBase(Scene):
         factory: CharacterFactory,
         rng: _random.Random,
     ) -> CreationState:
-        if not self._options:
+        """Single-choice apply used by the embedded SessionZero orchestrator.
+
+        Picks the given index plus a deterministic second pick for the
+        secondary slot.  The CLI uses apply_multi() instead to pass both
+        indices from the player explicitly.
+        """
+        slate = self._current_slate(state)
+        if not slate:
             return state
-        idx = min(max(0, choice_index), len(self._options) - 1)
-        chosen = self._options[idx]
+        first_idx = min(max(0, choice_index), len(slate) - 1)
+        # Second pick: next slot, wrapping.  Deterministic and valid.
+        second_idx = (first_idx + 1) % len(slate)
+        if second_idx == first_idx:
+            second_idx = (first_idx + 2) % len(slate)
+        return self.apply_multi([first_idx, second_idx], state, factory, rng)
 
-        choice_data: Dict[str, Any] = {
-            "powers": [{
-                "power_id": chosen.id,
-                "name": chosen.name,
-                "category": chosen.category,
-                "sub_category": getattr(chosen, "sub_category", ""),
+    def apply_multi(
+        self,
+        choice_indices: List[int],
+        state: CreationState,
+        factory: CharacterFactory,
+        rng: _random.Random,
+    ) -> CreationState:
+        """Commit two picks from the slate as primary + secondary powers.
+
+        Extra indices are ignored; duplicates are collapsed to the second-
+        smallest distinct slot.  Clears pending_slate on the way out.
+        """
+        slate = self._current_slate(state)
+        if not slate:
+            return state
+
+        valid: List[int] = []
+        for idx in choice_indices:
+            try:
+                i = int(idx)
+            except (TypeError, ValueError):
+                continue
+            i = min(max(0, i), len(slate) - 1)
+            if i not in valid:
+                valid.append(i)
+            if len(valid) == 2:
+                break
+        # Fill to two distinct picks if the player only gave one.
+        if len(valid) == 0:
+            valid = [0, 1 if len(slate) > 1 else 0]
+        elif len(valid) == 1:
+            filler = (valid[0] + 1) % len(slate)
+            if filler == valid[0]:
+                filler = (valid[0] + 2) % len(slate)
+            valid.append(filler)
+
+        primary = slate[valid[0]]
+        secondary = slate[valid[1]]
+
+        power_rows = [
+            {
+                "power_id": primary.id,
+                "name": primary.name,
+                "category": primary.category,
+                "sub_category": getattr(primary, "sub_category", ""),
                 "tier": 3,
-                "slot": self._slot_label,
-                "playstyles": list(getattr(chosen, "playstyles", []) or []),
+                "slot": "primary",
+                "playstyles": list(getattr(primary, "playstyles", []) or []),
+            },
+            {
+                "power_id": secondary.id,
+                "name": secondary.name,
+                "category": secondary.category,
+                "sub_category": getattr(secondary, "sub_category", ""),
+                "tier": 3,
+                "slot": "secondary",
+                "playstyles": list(getattr(secondary, "playstyles", []) or []),
+            },
+        ]
+
+        p_label = V2_CATEGORY_LABELS.get(
+            primary.category, primary.category.title(),
+        )
+        s_label = V2_CATEGORY_LABELS.get(
+            secondary.category, secondary.category.title(),
+        )
+
+        return factory.apply_scene_result(self.scene_id, {
+            "powers": power_rows,
+            "power_category_primary": primary.category,
+            "power_category_secondary": secondary.category,
+            "tier": 3,
+            "tier_ceiling": 5,
+            "breakthroughs": [{
+                "id": "breakthrough_0",
+                "type": "manifestation",
+                "description": (
+                    f"Initial manifestation: {primary.category} + "
+                    f"{secondary.category} at T3"
+                ),
+                "cost": "onset trauma",
             }],
-            "history": self._history_entries(chosen),
-        }
-        self._augment_scene_data(chosen, choice_data, state)
-        return factory.apply_scene_result(self.scene_id, choice_data, state, rng)
-
-    # -- subclass hooks -----------------------------------------------------
-
-    def _history_entries(self, chosen: Any) -> List[Dict[str, Any]]:
-        label = V2_CATEGORY_LABELS.get(chosen.category, chosen.category.title())
-        return [{
-            "timestamp": "T+0",
-            "description": f"Manifestation ({self._slot_label}): {label} — {chosen.name}",
-            "type": "session_zero",
-        }]
-
-    def _augment_scene_data(
-        self,
-        chosen: Any,
-        choice_data: Dict[str, Any],
-        state: CreationState,
-    ) -> None:
-        """Override to attach per-slot extras (tier ceiling, breakthroughs, etc)."""
-
-
-class Scenario1Scenario(_ScenarioBase):
-    """First cinematic danger vignette → primary power selection."""
-    scene_id = "sz_v2_scenario1"
-    _slot = 1
-    _slot_key = "1"
-    _slot_label = "anchor"
-
-    def _augment_scene_data(
-        self,
-        chosen: Any,
-        choice_data: Dict[str, Any],
-        state: CreationState,
-    ) -> None:
-        choice_data["power_category_primary"] = chosen.category
-        choice_data["tier"] = 3
-        choice_data["tier_ceiling"] = 5
-        choice_data["breakthroughs"] = [{
-            "id": "breakthrough_0",
-            "type": "manifestation",
-            "description": f"Initial manifestation: {chosen.category} T3",
-            "cost": "onset trauma",
-        }]
-
-
-class Scenario2Scenario(_ScenarioBase):
-    """Second vignette → secondary power selection, primary category excluded."""
-    scene_id = "sz_v2_scenario2"
-    _slot = 2
-    _slot_key = "2"
-    _slot_label = "secondary"
-
-    def _exclude_category(self, state: CreationState) -> str:
-        return state.power_category_primary or ""
-
-    def _history_entries(self, chosen: Any) -> List[Dict[str, Any]]:
-        label = V2_CATEGORY_LABELS.get(chosen.category, chosen.category.title())
-        return [{
-            "timestamp": "T+0.1y",
-            "description": f"Secondary manifestation: {label} — {chosen.name}",
-            "type": "session_zero",
-        }]
-
-    def _augment_scene_data(
-        self,
-        chosen: Any,
-        choice_data: Dict[str, Any],
-        state: CreationState,
-    ) -> None:
-        choice_data["power_category_secondary"] = chosen.category
+            "history": [
+                {
+                    "timestamp": "T+0",
+                    "description": (
+                        f"Manifestation (primary): {p_label} — {primary.name}"
+                    ),
+                    "type": "session_zero",
+                },
+                {
+                    "timestamp": "T+0",
+                    "description": (
+                        f"Manifestation (secondary): {s_label} — {secondary.name}"
+                    ),
+                    "type": "session_zero",
+                },
+            ],
+            # Clear pending_slate now that the picks are committed.
+            "pending_slate": [],
+            "pending_slate_scene": "",
+        }, state, rng)
 
 
 # ---------------------------------------------------------------------------
@@ -459,7 +731,7 @@ class _PowerConfigBase(Scene):
     and _narrative_skill on the subclass.
     """
 
-    _slot: str = "anchor"  # "anchor" or "secondary"
+    _slot: str = "primary"  # "primary" or "secondary"
     _config_type: str = "cast_mode"  # "cast_mode" or "rider"
     _narrative_prompt: str = ""
     _narrative_skill: str = "streetwise"
@@ -603,7 +875,7 @@ class PrimaryCastModeScenario(_PowerConfigBase):
     """Choose how your primary power manifests in use — its cast mode."""
     scene_id = "sz_v2_cast1"
     register = "intimate"
-    _slot = "anchor"
+    _slot = "primary"
     _config_type = "cast_mode"
     _narrative_prompt = (
         "Who was the first person to see you use it? "
@@ -630,7 +902,7 @@ class PrimaryRiderScenario(_PowerConfigBase):
     """Choose a rider effect for your primary power."""
     scene_id = "sz_v2_rider1"
     register = "intimate"
-    _slot = "anchor"
+    _slot = "primary"
     _config_type = "rider"
     _narrative_prompt = (
         "What did using it the first time cost you? "
@@ -1708,18 +1980,19 @@ class VowScenario(Scene):
 # ---------------------------------------------------------------------------
 
 def make_v2_scenes() -> List[Scene]:
-    """Return the 12 v2 scenarios in order."""
+    """Return the 13 v2 scenarios in order."""
     return [
-        IdentityScenario(),              #  0: name, age, occupation, self-description
-        Scenario1Scenario(),             #  1: cinematic vignette → primary power
-        Scenario2Scenario(),             #  2: second vignette → secondary power
-        PrimaryCastModeScenario(),       #  3: primary cast mode (+ narrative)
-        PrimaryRiderScenario(),          #  4: primary rider (+ narrative)
-        SecondaryCastModeScenario(),     #  5: secondary cast mode (+ narrative)
-        SecondaryRiderScenario(),        #  6: secondary rider (+ narrative)
-        SurvivalScenario(),              #  7: months 1-3 (pooled, specific)
-        LocationScenario(),              #  8: region
-        RelationshipScenario(),          #  9: friends, family, foes
-        FactionScenario(),               # 10: named faction representative
-        VowScenario(),                   # 11: vows + settlement NPCs
+        IntroScene(),                    #  0: prose-only Onset primer
+        LifeDescriptionScene(),          #  1: name, age, life prose, NPC seeds
+        ActionScenarioScene(),           #  2: single vignette; capture reaction
+        PowerSlateScene(),               #  3: pick two powers from ten
+        PrimaryCastModeScenario(),       #  4: primary cast mode (+ narrative)
+        PrimaryRiderScenario(),          #  5: primary rider (+ narrative)
+        SecondaryCastModeScenario(),     #  6: secondary cast mode (+ narrative)
+        SecondaryRiderScenario(),        #  7: secondary rider (+ narrative)
+        SurvivalScenario(),              #  8: months 1-3 (pooled, specific)
+        LocationScenario(),              #  9: region
+        RelationshipScenario(),          # 10: friends, family, foes
+        FactionScenario(),               # 11: named faction representative
+        VowScenario(),                   # 12: vows + settlement NPCs
     ]
