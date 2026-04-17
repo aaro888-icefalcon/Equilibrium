@@ -111,3 +111,4 @@ v3-H: save reset; ready to commit
 3.2.d done: test_vignette_prompts.py 7/7 pass
 3.3+3.4 done: step scene-ack CLI primitive + --output-json on step scene-apply; hard gate on step scene blocks advance while pending_ack set; ack handler builds summary payload from most-recent seeded NPC/threat/goal/location/history and clears the flag
 
+3.5.a done: Seventh Avenue vignette data — framing + 3 attention options + 3 engagement options + closing_summary
