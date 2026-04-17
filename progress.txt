@@ -51,3 +51,26 @@ Step 5 done: sim weights + content-tag keywords rekeyed to V2
 Step 6 done: test fixtures bulk-renamed V1->V2, 962/962 pass
 Step 7 done: LEGACY/V1 validator sets deleted, no consumers broken
 V2 restructure pushed
+
+=== v3 session zero redesign ===
+v3-A done: save reset
+v3-B done: payload builders extended (scenario_code, known_npcs, must_state_mechanics, biography_roster, top_vows, top_threats, opening_scenario_code)
+v3-C done: threats field added to CreationState + CharacterSheet; finalize() merges threats into relationships
+v3-D start: 5 v3 scene classes in scenarios_v3.py
+v3-D.1 done: OnsetAndBiographyScene
+v3-D.2 done: AwakeningScene (vignette + 10-power slate, pick 2)
+v3-D.3 done: PowersConfigScene (4-pick multi: cast+rider for both powers, mechanics verbatim)
+v3-D.4 done: FirstYearScene (biography-aware region + survival + relationships + threats)
+v3-D.5 done: StandingAndVowsScene (faction posture + multi-vow pick 2-3 + threat top-up)
+v3-D done: make_v3_scenes returns 5 scenes, import clean
+v3-E done: step_cli wired for v3 scenes + enriched payloads (scenario_code/known_npcs/must_state_mechanics/choice_groups + preamble biography_roster/top_vows/top_threats/opening_scenario_code)
+v3-F done: test suite 1004/1004 pass; v3 unit tests 21/21; v3 integration 7/7
+v3-G done: end-to-end playtest via step CLI — 5 scenes + finalize + preamble
+  - biography ties (Akhil, Jessica, Jason) materialized + surfaced in scene 3 known_npcs
+  - Jason (senior_resident) cast into "Riser" vow via tie-preference matching
+  - 7 goals from 3 vows; 2 threats (Tariq Chen -3 via Avenger vow, Bianca Johansson -2 via relationship web)
+  - preamble payload carries biography_roster, top_vows, top_threats, opening_scenario_code
+  - powers config payload includes must_state_mechanics with verbatim range/duration/pool cost/action
+v3-H: save reset; ready to commit
+
+

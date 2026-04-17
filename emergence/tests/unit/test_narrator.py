@@ -159,7 +159,14 @@ class TestPayloadBuilders(unittest.TestCase):
         self.assertIn("output_target", p)
         self.assertIn("constraints", p)
         self.assertIn("format_instructions", p)
-        self.assertEqual(p["output_target"]["min_words"], 150)
+        # v3 preamble targets longer narration.
+        self.assertEqual(p["output_target"]["min_words"], 250)
+        # v3 preamble exposes biography_roster / top_vows / top_threats /
+        # opening_scenario_code (empty by default when not supplied).
+        self.assertIn("biography_roster", p)
+        self.assertIn("top_vows", p)
+        self.assertIn("top_threats", p)
+        self.assertIn("opening_scenario_code", p)
 
     def test_all_payloads_have_output_target(self):
         """Every payload builder should include output_target and constraints."""

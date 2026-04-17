@@ -125,6 +125,12 @@ class CreationState:
     pending_slate: List[Dict[str, Any]] = dataclasses.field(default_factory=list)
     pending_slate_scene: str = ""
 
+    # Threats — named NPCs or forces that press on the character. Entries
+    # accumulate across scenes (survival raid, faction play, vow enemy) and
+    # are finalized into the character sheet's relationships (negative
+    # standing) AND its top-level `threats` list for narrator presentation.
+    threats: List[Dict[str, Any]] = dataclasses.field(default_factory=list)
+
 
 class CharacterFactory:
     """Applies scene results and finalizes the character sheet."""
@@ -291,6 +297,10 @@ class CharacterFactory:
         if "pending_slate_scene" in choice_data:
             state.pending_slate_scene = choice_data["pending_slate_scene"]
 
+        # Threats — appended, never replaced.
+        for threat in choice_data.get("threats", []):
+            state.threats.append(threat)
+
         state.beat_index += 1
         return state
 
@@ -368,6 +378,10 @@ class CharacterFactory:
             "faction_modifiers": dict(state.heat_deltas),
         }
 
+        # Finalize threats: merge into relationships (if not already present
+        # as negative-standing entries) and expose as a top-level list.
+        threats_final = self._finalize_threats(state, relationships)
+
         sheet = CharacterSheet(
             name=state.name,
             species=state.species,
@@ -391,9 +405,50 @@ class CharacterFactory:
             resources=dict(state.resources),
             goals=goals,
             session_zero_choices=dict(state.scene_choices),
+            threats=threats_final,
         )
 
         return sheet
+
+    def _finalize_threats(
+        self,
+        state: CreationState,
+        relationships: Dict[str, "RelationshipState"],
+    ) -> List[Dict[str, Any]]:
+        """Merge declared threats into relationships and return the final list.
+
+        Each threat entry has a stable `npc_id`. If that NPC already has a
+        relationship row, we keep the existing standing (the scene that
+        created the row is authoritative). If not, we add a negative-standing
+        row from the threat's own standing field.
+        """
+        finalized: List[Dict[str, Any]] = []
+        seen: set = set()
+
+        for threat in state.threats:
+            npc_id = threat.get("npc_id")
+            if not npc_id or npc_id in seen:
+                continue
+            seen.add(npc_id)
+
+            # Ensure a relationship row exists for this threat.
+            if npc_id not in relationships:
+                standing = int(threat.get("standing", -2))
+                relationships[npc_id] = RelationshipState(
+                    standing=standing,
+                    current_state=threat.get("state", "alive_present"),
+                    trust=0,
+                )
+
+            finalized.append({
+                "npc_id": npc_id,
+                "name": threat.get("name", ""),
+                "standing": relationships[npc_id].standing,
+                "source": threat.get("source", ""),
+                "summary": threat.get("summary", ""),
+            })
+
+        return finalized
 
     # Valid die sizes for attributes
     _VALID_DICE = [4, 6, 8, 10, 12]

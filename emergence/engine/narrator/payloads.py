@@ -212,14 +212,37 @@ def build_character_creation_payload(
     framing_text: str,
     choices: List[str],
     register: str = "standard",
+    scenario_code: Optional[Dict[str, Any]] = None,
+    known_npcs: Optional[List[Dict[str, Any]]] = None,
+    must_state_mechanics: Optional[List[str]] = None,
+    choice_groups: Optional[List[Dict[str, Any]]] = None,
+    output_target: Optional[Dict[str, int]] = None,
 ) -> Dict[str, Any]:
+    """Character creation beat payload.
+
+    Rev 3 fields:
+      scenario_code: structured facts the narrator weaves into framing
+        (scene_intent, setting_details, archetype_pool, hidden_seeds).
+        Replaces hardcoded framing_text as the primary source of truth.
+      known_npcs: biography tie-NPCs in scope for this scene (with name,
+        relation, status). The narrator may cast them into archetype roles.
+      must_state_mechanics: verbatim mechanic strings that MUST appear in
+        the narration (damage numbers, range bands, action cost, pool cost).
+      choice_groups: optional grouping metadata for multi-pick scenes. Each
+        entry: {label, start, count} into the flat `choices` list.
+      output_target: override default word count range.
+    """
     return {
         "scene_type": "character_creation_beat",
         "register_directive": register,
         "scene_id": scene_id,
         "framing_text": framing_text,
         "choices": choices,
-        "output_target": {"min_words": 80, "max_words": 200, "format": "mixed"},
+        "scenario_code": scenario_code or {},
+        "known_npcs": known_npcs or [],
+        "must_state_mechanics": must_state_mechanics or [],
+        "choice_groups": choice_groups or [],
+        "output_target": output_target or {"min_words": 80, "max_words": 200, "format": "mixed"},
         "constraints": _constraints(),
     }
 
@@ -289,8 +312,26 @@ def build_preamble_payload(
     faction_standings: Dict[str, int],
     recent_events: List[str],
     register: str = "standard",
+    biography_roster: Optional[List[Dict[str, Any]]] = None,
+    top_vows: Optional[List[Dict[str, Any]]] = None,
+    top_threats: Optional[List[Dict[str, Any]]] = None,
+    opening_scenario_code: Optional[Dict[str, Any]] = None,
 ) -> Dict[str, Any]:
-    """Build a preamble payload — narrative bridge after character creation."""
+    """Build a preamble payload — narrative bridge after character creation.
+
+    Rev 3 fields:
+      biography_roster: tie-NPCs from session zero with current status
+        ({npc_id, name, relation, status}). Narrator references at least
+        one by name.
+      top_vows: the 1-3 most pressing goals ({id, description, pressure}).
+        Narrator references at least one.
+      top_threats: the 1-3 most prominent negative-standing NPCs
+        ({npc_id, name, standing, source}). Narrator references at least
+        one by name.
+      opening_scenario_code: structured "where we are now" (where_character_is,
+        who_is_present, what_pressed_this_week, what_tomorrow_holds) that
+        the narrator uses instead of improvising from goals alone.
+    """
     return {
         "scene_type": "scene_framing",
         "preamble": True,
@@ -310,11 +351,16 @@ def build_preamble_payload(
         "location_details": location_details,
         "npcs_present": npcs_present,
         "recent_events": recent_events,
+        "biography_roster": biography_roster or [],
+        "top_vows": top_vows or [],
+        "top_threats": top_threats or [],
+        "opening_scenario_code": opening_scenario_code or {},
         "format_instructions": (
-            "Recap who the character is — name, background, powers. "
-            "Set the scene at their current location. "
+            "Open at the character's current location a year after the Onset. "
+            "Reference at least one biography tie-NPC by name and at least one "
+            "named threat. Weave one vow's pressure into the final invitation. "
             "End in media res: a moment of tension or choice."
         ),
-        "output_target": {"min_words": 150, "max_words": 300, "format": "prose"},
+        "output_target": {"min_words": 250, "max_words": 400, "format": "prose"},
         "constraints": _constraints(),
     }

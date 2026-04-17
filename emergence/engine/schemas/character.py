@@ -285,6 +285,11 @@ class CharacterSheet:
     # Session zero
     session_zero_choices: Dict[str, Any] = field(default_factory=dict)
 
+    # Threats — named NPCs or forces with negative standing that press on
+    # the character. Populated during session zero and augmented by sim
+    # events. Each entry: {npc_id, name, standing, source, summary}.
+    threats: List[Dict[str, Any]] = field(default_factory=list)
+
     # ------------------------------------------------------------------
     # Serialization helpers
     # ------------------------------------------------------------------
@@ -319,6 +324,7 @@ class CharacterSheet:
             "resources": dict(self.resources),
             "goals": [g.to_dict() for g in self.goals],
             "session_zero_choices": dict(self.session_zero_choices),
+            "threats": [dict(t) for t in self.threats],
         }
 
     @classmethod
@@ -366,4 +372,5 @@ class CharacterSheet:
             resources=data.get("resources", {}),
             goals=[Goal.from_dict(g) for g in data.get("goals", [])],
             session_zero_choices=data.get("session_zero_choices", {}),
+            threats=list(data.get("threats", [])),
         )
