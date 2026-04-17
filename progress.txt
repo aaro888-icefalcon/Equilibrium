@@ -89,3 +89,6 @@ v3-H: save reset; ready to commit
 1.3.a done: reaction_tags persistence regression test, 4/4 pass; no clear path existed, zero-line fix
 1.4.a+b+c done: CreationState gains starting_location, generated_locations, pending_ack; apply_scene_result handles choice_data["locations"] (id vs spec, is_starting promotion) and pending_ack
 1.4.d done: test_location_minting.py, 7/7 pass (reference, spec-mint, starting promotion, round-trip)
+1.5.a done: Phase 1 closed. Full suite 1038 tests, 6 pre-existing awakening failures (rewritten in P3); 34 new v4 tests all green.
+
+=== Phase 1 complete. Data + state plumbing in place. ===
