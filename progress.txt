@@ -107,3 +107,4 @@ v3-H: save reset; ready to commit
 === Phase 3 — Vignette scenes + ack CLI ===
 3.1.a-d done: build_scaffold(state, vignette_index, rng). Loads power from powers_v2, picks 3 cast_modes or rider_slots, fills seed pools, attaches prior_vignette_summaries from history.
 3.1.e done: test_scaffolds.py, 7/7 pass (V1-V4 well-formed, empty-powers graceful, prior_summaries filter, unknown index raises)
+3.2.a-c done: vignette_prompts.py with render_prompt(scaffold, reaction_tags). 6 sections; V1-V4 render ~4kB each. Operator is narrator (documented in header).
