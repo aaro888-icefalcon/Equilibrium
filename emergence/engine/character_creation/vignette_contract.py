@@ -193,6 +193,113 @@ def _safe_dict(d: Any, cls: type) -> Dict[str, Any]:
 _VALID_REGION_OUTCOMES = {"stay_nyc", "displaced_to", "traveled_to"}
 
 
+# ----------------------------------------------------------------------
+# Apply helpers: bundle → choice_data for CharacterFactory
+# ----------------------------------------------------------------------
+
+def bundle_to_choice_data(
+    bundle: "SeedBundle",
+    scene_id: str,
+    power_slot: str,
+    option_id: str,
+    parenthetical: str,
+) -> Dict[str, Any]:
+    """Convert a picked VignetteChoice.seed_bundle into a choice_data dict
+    suitable for CharacterFactory.apply_scene_result.
+
+    The mechanical binding (slot + option_id + parenthetical) is written
+    into choice_data["mechanical_binding"] so downstream consumers (e.g.
+    PowersConfig replacement, sim-layer handoff) can read it.
+    """
+    cd: Dict[str, Any] = {
+        "mechanical_binding": {
+            "slot": power_slot,
+            "option_id": option_id,
+            "parenthetical": parenthetical,
+        },
+    }
+
+    # NPCs → generated_npcs + history
+    gen_npcs: List[Dict[str, Any]] = []
+    for n in bundle.npcs:
+        gen_npcs.append({
+            "npc_id": f"npc-v4-{scene_id}-{_slug(n.name)}",
+            "display_name": n.name,
+            "scene_id": scene_id,
+            "role": n.relation or n.archetype or "ally",
+            "standing": n.standing,
+            "hooks": list(n.hooks),
+            "voice": n.voice,
+            "archetype": n.archetype,
+        })
+    if gen_npcs:
+        cd["generated_npcs"] = gen_npcs
+
+    # Locations (pass-through; apply_scene_result normalizes)
+    if bundle.locations:
+        cd["locations"] = [
+            {"id": loc.id, "spec": loc.spec, "is_starting": loc.is_starting}
+            for loc in bundle.locations
+        ]
+
+    # Faction deltas — apply_scene_result reads "heat" and "faction_standing".
+    if bundle.factions:
+        heats = {f.faction_id: f.heat_delta for f in bundle.factions
+                 if f.heat_delta}
+        standings = {f.faction_id: f.standing_delta for f in bundle.factions
+                     if f.standing_delta}
+        if heats:
+            cd["heat"] = heats
+        if standings:
+            cd["faction_standing"] = standings
+
+    # Threats
+    if bundle.threats:
+        cd["threats"] = [
+            {
+                "npc_id": "",
+                "name": t.name,
+                "standing": t.standing,
+                "source": t.source or f"vignette:{scene_id}",
+                "summary": t.summary,
+                "archetype": t.archetype,
+                **({"pressure": t.pressure} if t.pressure is not None else {}),
+            }
+            for t in bundle.threats
+        ]
+
+    # Vows → goals (flatten)
+    if bundle.vows:
+        goals: List[Dict[str, Any]] = []
+        for v in bundle.vows:
+            for g in v.goals:
+                goals.append(dict(g))
+        if goals:
+            cd["goals"] = goals
+
+    # Region outcome (V2): route to state.region via resolution table.
+    if bundle.region_outcome:
+        cd["region_outcome"] = bundle.region_outcome
+
+    # History entry for prior-vignette summaries.
+    if bundle.history_record:
+        cd["history"] = [{
+            "timestamp": "T+?",
+            "description": bundle.history_record,
+            "type": "character_creation_vignette",
+        }]
+
+    # Signal the ack primitive that a beat needs acknowledgment.
+    cd["pending_ack"] = True
+
+    return cd
+
+
+def _slug(s: str) -> str:
+    import re
+    return re.sub(r"[^a-z0-9]+", "-", (s or "").lower()).strip("-") or "x"
+
+
 def validate_vignette_output(
     output: VignetteOutput,
     scaffold: Any,                 # VignetteScaffold (avoid circular import)
