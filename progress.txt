@@ -73,4 +73,5 @@ v3-G done: end-to-end playtest via step CLI — 5 scenes + finalize + preamble
   - powers config payload includes must_state_mechanics with verbatim range/duration/pool cost/action
 v3-H: save reset; ready to commit
 
-
+=== v4 character-creation arc ===
+1.1.a done: threat_archetypes.json written (10 archetypes) at data/threats/
