@@ -27,7 +27,7 @@ CORRUPTION_EFFECTS = {
     3: [
         "Visible physical alteration; commerce +1 difficulty",
         "Behavioral compulsion",
-        "eldritch_corruptive cost -1",
+        "paradoxic cost -1",
     ],
     4: [
         "Persistent harm tier 2",

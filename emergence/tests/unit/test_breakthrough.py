@@ -239,16 +239,22 @@ class TestMarkCatalog(unittest.TestCase):
 
     def test_all_pools_have_marks(self):
         for cat, pool in MARK_POOLS.items():
-            self.assertEqual(len(pool), 4, f"Pool {cat} should have 4 marks")
+            # Cognitive carries both the old M-prefix (perceptual/mental)
+            # and A-prefix (auratic) marks since those V1 categories merged.
+            expected = 8 if cat == "cognitive" else 4
+            self.assertEqual(
+                len(pool), expected,
+                f"Pool {cat} should have {expected} marks",
+            )
             for mark_id in pool:
                 self.assertIn(mark_id, BREAKTHROUGH_MARKS)
 
-    def test_eldritch_marks_have_corruption(self):
-        for mark_id in MARK_POOLS["eldritch_corruptive"]:
+    def test_paradoxic_marks_have_corruption(self):
+        for mark_id in MARK_POOLS["paradoxic"]:
             effects = BREAKTHROUGH_MARKS[mark_id]["effects"]
             self.assertGreaterEqual(
                 effects.get("corruption", 0), 1,
-                f"Eldritch mark {mark_id} should include corruption",
+                f"Paradoxic mark {mark_id} should include corruption",
             )
 
 
