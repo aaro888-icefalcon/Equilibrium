@@ -39,18 +39,6 @@ SP = DamageType.SPATIAL
 PA = DamageType.PARADOXIC
 
 
-# Migration mapping from v1 damage types to v2
-DAMAGE_TYPE_MAP_V1_TO_V2 = {
-    "physical_kinetic": "kinetic",
-    "perceptual_mental": "cognitive",
-    "matter_energy": "material",
-    "biological_vital": "somatic",
-    "auratic": "cognitive",  # merged
-    "temporal_spatial": "spatial",
-    "eldritch_corruptive": "paradoxic",
-}
-
-
 # ---------------------------------------------------------------------------
 # Armor table
 # ---------------------------------------------------------------------------
@@ -243,7 +231,7 @@ def resolve_damage(
     target_affinity:
         The target's affinity state for this damage type.
     armor:
-        Armor reduction value (applied only for physical_kinetic melee/ranged).
+        Armor reduction value (applied only for kinetic melee/ranged).
     cover:
         Cover reduction value (applied only for KI, MA, SO projectile attacks).
     is_crit:
