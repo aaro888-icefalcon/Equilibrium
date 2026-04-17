@@ -1,0 +1,661 @@
+{
+  "bourse-currency-stability": {
+    "id": "bourse-currency-stability",
+    "schema_version": "1.0",
+    "display_name": "Bourse Currency Stability",
+    "current_segment": 5,
+    "total_segments": 6,
+    "advance_conditions": [
+      {
+        "type": "always",
+        "description": "continued uninterrupted Bourse-coin acceptance at major exchange points"
+      },
+      {
+        "type": "always",
+        "description": "successful arbitration of at least one major inter-faction commercial dispute"
+      },
+      {
+        "type": "always",
+        "description": "resolution of Iron Crown chit devaluation without regional crisis"
+      }
+    ],
+    "advance_rate": {
+      "probability": 0.4,
+      "description": "fast (estimated 1 segment per 3\u20136 months at T+1)"
+    },
+    "completion_consequences": [
+      {
+        "description": "Bourse copper becomes the formal regional standard"
+      },
+      {
+        "description": "continuity scrip trades at a fixed (unfavorable) rate against copper"
+      },
+      {
+        "description": "trade formalizes; contract law tied to Bourse arbitration spreads"
+      },
+      {
+        "description": "House prestige realigns around copper-settlement capacity"
+      }
+    ],
+    "reset_conditions": [
+      {
+        "type": "flag",
+        "description": "Bourse house schism or major default"
+      },
+      {
+        "type": "flag",
+        "description": "South Philly Holding turns on Bourse"
+      }
+    ],
+    "interactions": [
+      {
+        "description": "completion reduces probability of Iron Crown expansion (economic isolation)"
+      },
+      {
+        "description": "completion accelerates Species I consolidation trajectory"
+      }
+    ],
+    "narrative_description": "The copper coin the merchants stamp is already doing the work of a standard; what remains is the final recognition. Two-thirds of mid-Atlantic trade already settles in Bourse copper. The last segment is the Lehigh Principalities signing a multi-year grain-for-coal contract denominated in copper, not barter. After that, the currency is simply what money is.",
+    "last_advancement": {},
+    "clock_type": "world",
+    "linked_clock_id": "",
+    "visible_to_player": true
+  },
+  "biokinetic-ag-saturation": {
+    "id": "biokinetic-ag-saturation",
+    "schema_version": "1.0",
+    "display_name": "Biokinetic Agriculture Saturation",
+    "current_segment": 5,
+    "total_segments": 8,
+    "advance_conditions": [
+      {
+        "type": "always",
+        "description": "diffusion of saturation-yield techniques through remaining biokinetic practitioners"
+      },
+      {
+        "type": "always",
+        "description": "establishment of training programs in new regions (Delmarva, Central NJ already complete)"
+      },
+      {
+        "type": "always",
+        "description": "harvest-over-harvest yield stability"
+      }
+    ],
+    "advance_rate": {
+      "probability": 0.4,
+      "description": "fast (Rogers S-curve past inflection; estimated 6\u201312 months per segment)"
+    },
+    "completion_consequences": [
+      {
+        "description": "regional food surplus becomes permanent"
+      },
+      {
+        "description": "famine risk ends across mid-Atlantic (except in faction-collapse scenarios)"
+      },
+      {
+        "description": "biokinetic-healer wages decouple from biokinetic-farmer wages (specialization hardens)"
+      },
+      {
+        "description": "migration pressure into farm districts abates"
+      }
+    ],
+    "reset_conditions": [
+      {
+        "type": "flag",
+        "description": "regional biokinetic-practitioner population collapse"
+      },
+      {
+        "type": "flag",
+        "description": "climate shift or pest outbreak faster than diffusion"
+      }
+    ],
+    "interactions": [
+      {
+        "description": "completion reduces faction-collapse probability across most scenarios"
+      },
+      {
+        "description": "completion makes Delmarva Harvest Lords relatively more powerful"
+      }
+    ],
+    "narrative_description": "The technique is simple once learned. A biokinetic farmer who has seen it done can teach five apprentices in a season. Three years after the first Delmarva demonstration, most of the region's biokinetic farmers are using some version. Three more segments and the grain surplus is a structural fact. Nobody will starve through a bad winter again, unless the world breaks in some other way.",
+    "last_advancement": {},
+    "clock_type": "world",
+    "linked_clock_id": "",
+    "visible_to_player": true
+  },
+  "fed-continuity-erosion": {
+    "id": "fed-continuity-erosion",
+    "schema_version": "1.0",
+    "display_name": "Fed Continuity Erosion",
+    "current_segment": 4,
+    "total_segments": 8,
+    "advance_conditions": [
+      {
+        "type": "always",
+        "description": "Potomac Irregulars' continued operational independence"
+      },
+      {
+        "type": "always",
+        "description": "failed Fed Continuity expansion attempts (Baltimore failure already advanced this)"
+      },
+      {
+        "type": "always",
+        "description": "Alcott credibility deterioration events"
+      },
+      {
+        "type": "always",
+        "description": "scrip currency devaluation episodes"
+      }
+    ],
+    "advance_rate": {
+      "probability": 0.2,
+      "description": "moderate (estimated 1\u20132 segments per year)"
+    },
+    "completion_consequences": [
+      {
+        "description": "Colonel Reeve's Potomac Irregulars formally declare independence"
+      },
+      {
+        "description": "Fed Continuity reduces to DC Mall / Pentagon enclave"
+      },
+      {
+        "description": "continuity scrip collapses; holders face catastrophic losses"
+      },
+      {
+        "description": "Virginia District territory reorganizes under Irregular rule"
+      },
+      {
+        "description": "Species I Consolidation clock accelerates (Fed Continuity was an anchor for status quo)"
+      }
+    ],
+    "reset_conditions": [
+      {
+        "type": "flag",
+        "description": "successful purge of Reeve faction"
+      },
+      {
+        "type": "flag",
+        "description": "major Fed Continuity military victory (extremely unlikely)"
+      }
+    ],
+    "interactions": [
+      {
+        "description": "completion shifts Species I clock forward"
+      },
+      {
+        "description": "completion de-anchors Bourse-Continuity scrip arbitrage"
+      }
+    ],
+    "narrative_description": "The institution was built on the fiction that the country continued. The longer no citizen outside DC sees a federal officer, the thinner the fiction gets. Colonel Reeve in Virginia acts as if Alcott's orders are recommendations. The failed Baltimore expedition proved the reach isn't there. Half the clock has filled in a year. The rest will not take as long.",
+    "last_advancement": {},
+    "clock_type": "world",
+    "linked_clock_id": "",
+    "visible_to_player": true
+  },
+  "iron-crown-vs-staten": {
+    "id": "iron-crown-vs-staten",
+    "schema_version": "1.0",
+    "display_name": "Iron Crown vs. Staten Citadel",
+    "current_segment": 3,
+    "total_segments": 6,
+    "advance_conditions": [
+      {
+        "type": "always",
+        "description": "Iron Crown salvage-toll escalations"
+      },
+      {
+        "type": "always",
+        "description": "Staten Citadel military demonstrations"
+      },
+      {
+        "type": "always",
+        "description": "failed mediation attempts (Bourse has tried twice)"
+      },
+      {
+        "type": "always",
+        "description": "killings of opposing faction members"
+      }
+    ],
+    "advance_rate": {
+      "probability": 0.4,
+      "description": "fast (moving 1 segment per 2\u20134 months)"
+    },
+    "completion_consequences": [
+      {
+        "description": "open war over Manhattan salvage access"
+      },
+      {
+        "description": "Newark-Staten Island harbor becomes a combat zone"
+      },
+      {
+        "description": "major disruption of salvage trade (Tower Lords affected heavily)"
+      },
+      {
+        "description": "likely outcome favors Staten due to spatial-teleportation capability"
+      },
+      {
+        "description": "Iron Crown succession crisis if Volk killed or humiliated"
+      }
+    ],
+    "reset_conditions": [
+      {
+        "type": "flag",
+        "description": "negotiated Bourse-backed toll framework with formal adjustment mechanism"
+      },
+      {
+        "type": "flag",
+        "description": "external threat forcing both to defensive postures"
+      }
+    ],
+    "interactions": [
+      {
+        "description": "completion hurts Bourse commercial volume"
+      },
+      {
+        "description": "completion indirectly empowers Tower Lords (less Iron Crown pressure)"
+      },
+      {
+        "description": "Volk death from war could accelerate fragmentation of Iron Crown territory"
+      }
+    ],
+    "narrative_description": "It is a tariff dispute shaped like a feud. Viktor Chen holds the harbor; Volk wants Manhattan. The Bourse has negotiated twice and both times Volk broke the terms within a season. Three segments of six. The captains all know which way it's going. What none of them know is whether Volk survives it.",
+    "last_advancement": {},
+    "clock_type": "world",
+    "linked_clock_id": "",
+    "visible_to_player": true
+  },
+  "pine-barrens-expansion": {
+    "id": "pine-barrens-expansion",
+    "schema_version": "1.0",
+    "display_name": "Pine Barrens / Listening Expansion",
+    "current_segment": 3,
+    "total_segments": 12,
+    "advance_conditions": [
+      {
+        "type": "always",
+        "description": "Listening cult growth (SIS model indicates steady expansion)"
+      },
+      {
+        "type": "always",
+        "description": "Sprawl territorial creep past defensive boundaries"
+      },
+      {
+        "type": "always",
+        "description": "successful Listening proselytization in populated areas"
+      },
+      {
+        "type": "always",
+        "description": "faction inability to contain"
+      }
+    ],
+    "advance_rate": {
+      "probability": 0.1,
+      "description": "slow (1 segment per 1\u20132 years at current rate)"
+    },
+    "completion_consequences": [
+      {
+        "description": "The Listening breaches the Delaware line"
+      },
+      {
+        "description": "populated southern NJ townships enter corruption contact"
+      },
+      {
+        "description": "potential collapse of Central Jersey League southern townships"
+      },
+      {
+        "description": "Species I Reyes-kin directly threatened"
+      },
+      {
+        "description": "regional existential response required"
+      }
+    ],
+    "reset_conditions": [
+      {
+        "type": "flag",
+        "description": "successful coordinated faction strike against Listening core"
+      },
+      {
+        "type": "flag",
+        "description": "One Who Waits death or dispersal"
+      },
+      {
+        "type": "flag",
+        "description": "neither has ever been attempted"
+      }
+    ],
+    "interactions": [
+      {
+        "description": "completion resets most other clocks (regional crisis)"
+      },
+      {
+        "description": "completion may trigger alliance formations not otherwise possible"
+      }
+    ],
+    "narrative_description": "Twelve segments was a generous estimate. The cult grows by a few thousand each season. The Sprawl creeps outward a field a year. One Who Waits speaks through messengers once or twice a year. The clock moves slowly, but every segment is a measure of how much land is quietly passing from factions to something else.",
+    "last_advancement": {},
+    "clock_type": "world",
+    "linked_clock_id": "",
+    "visible_to_player": true
+  },
+  "crabclaw-fed-war": {
+    "id": "crabclaw-fed-war",
+    "schema_version": "1.0",
+    "display_name": "Crabclaw Confederation \u2013 Fed Continuity War",
+    "current_segment": 3,
+    "total_segments": 6,
+    "advance_conditions": [
+      {
+        "type": "always",
+        "description": "Fed Continuity expansion attempts into Baltimore region (one failure so far)"
+      },
+      {
+        "type": "always",
+        "description": "Crabclaw military strengthening"
+      },
+      {
+        "type": "always",
+        "description": "border incidents"
+      }
+    ],
+    "advance_rate": {
+      "probability": 0.2,
+      "description": "moderate (1 segment per 8\u201314 months)"
+    },
+    "completion_consequences": [
+      {
+        "description": "open war along Chesapeake line"
+      },
+      {
+        "description": "disruption of Delmarva\u2013Crabclaw\u2013Bourse trade"
+      },
+      {
+        "description": "likely Continuity withdrawal (won't win); acceleration of erosion clock"
+      },
+      {
+        "description": "Crabclaw may formally annex some Fed Continuity districts"
+      }
+    ],
+    "reset_conditions": [
+      {
+        "type": "flag",
+        "description": "Alcott cedes Baltimore claims formally"
+      },
+      {
+        "type": "flag",
+        "description": "Crabclaw internal collapse (three T7 warlords are uneasy)"
+      }
+    ],
+    "interactions": [
+      {
+        "description": "completion accelerates Fed Continuity erosion"
+      },
+      {
+        "description": "completion disrupts Delmarva exports northward briefly"
+      }
+    ],
+    "narrative_description": "Alcott's attempt to re-impose federal authority over the Crabclaw lords failed. The three Baltimore warlords now know they do not have to bend. What they are learning is whether they can push. The clock is moving because Fed Continuity cannot accept the loss of Baltimore permanently and the Crabclaw lords cannot accept the loss of their independence.",
+    "last_advancement": {},
+    "clock_type": "world",
+    "linked_clock_id": "",
+    "visible_to_player": true
+  },
+  "catskill-throne-tribute": {
+    "id": "catskill-throne-tribute",
+    "schema_version": "1.0",
+    "display_name": "Catskill Throne Formal Vassalage",
+    "current_segment": 2,
+    "total_segments": 6,
+    "advance_conditions": [
+      {
+        "type": "always",
+        "description": "successful tribute collection cycles"
+      },
+      {
+        "type": "always",
+        "description": "Preston personal demonstrations of force where challenged"
+      },
+      {
+        "type": "always",
+        "description": "incremental demand increases accepted by tributaries"
+      }
+    ],
+    "advance_rate": {
+      "probability": 0.1,
+      "description": "slow (1 segment per 1\u20132 years)"
+    },
+    "completion_consequences": [
+      {
+        "description": "Hudson Valley polities (Bear-House, Yonkers Compact, several smaller) become formal vassals"
+      },
+      {
+        "description": "Catskill Throne gains direct resource-requisition rights"
+      },
+      {
+        "description": "Yonkers Compact internal crisis (was founded on horizontal non-subordination)"
+      },
+      {
+        "description": "Bear-House of Peekskill may resist and fracture"
+      }
+    ],
+    "reset_conditions": [
+      {
+        "type": "flag",
+        "description": "Preston death or incapacitation"
+      },
+      {
+        "type": "flag",
+        "description": "coordinated tributary revolt"
+      }
+    ],
+    "interactions": [
+      {
+        "description": "completion changes regional power balance; Catskill Throne becomes clearly dominant in upper Hudson"
+      },
+      {
+        "description": "Preston's personal mortality affects this clock's meaningfulness"
+      }
+    ],
+    "narrative_description": "Tribute is already paid. The question is what the tribute means. Preston is slowly converting what began as protection-money into the formal language of lordship. Two segments filled. The Yonkers Three Judges have not yet had to decide whether they will kneel; the clock is what counts down to that decision.",
+    "last_advancement": {},
+    "clock_type": "world",
+    "linked_clock_id": "",
+    "visible_to_player": true
+  },
+  "species-i-consolidation": {
+    "id": "species-i-consolidation",
+    "schema_version": "1.0",
+    "display_name": "Species I Formal Polity Declaration",
+    "current_segment": 2,
+    "total_segments": 8,
+    "advance_conditions": [
+      {
+        "type": "always",
+        "description": "Tom\u00e1s Reyes faction advancement"
+      },
+      {
+        "type": "always",
+        "description": "generational turnover in kin-network leadership"
+      },
+      {
+        "type": "always",
+        "description": "external pressure forcing coordination"
+      },
+      {
+        "type": "always",
+        "description": "Fed Continuity weakness (removes anchor of status quo)"
+      }
+    ],
+    "advance_rate": {
+      "probability": 0.2,
+      "description": "variable \u2014 8 year spread across estimated firing window (T+3 to T+25)"
+    },
+    "completion_consequences": [
+      {
+        "description": "formal Species I polity declared"
+      },
+      {
+        "description": "territorial claims in western Philadelphia and PG County corridor"
+      },
+      {
+        "description": "regional political realignment"
+      },
+      {
+        "description": "baseline-human factions either ally (Bourse, CJL) or resist (Iron Crown, Irregulars)"
+      }
+    ],
+    "reset_conditions": [
+      {
+        "type": "flag",
+        "description": "Tom\u00e1s Reyes death"
+      },
+      {
+        "type": "flag",
+        "description": "Flores-kin successful conservative reassertion"
+      }
+    ],
+    "interactions": [
+      {
+        "description": "Fed Continuity erosion accelerates this"
+      },
+      {
+        "description": "Bourse currency stability makes this more viable"
+      },
+      {
+        "description": "Iron Crown aggression could force early declaration"
+      }
+    ],
+    "narrative_description": "Elder Flores is old. Tom\u00e1s Reyes is not. Between them is the question of whether Species I should be a people or a polity. The kin networks are already the largest coherent population in the mid-Atlantic. What they are not yet is a country. The clock ticks when Reyes wins an assembly argument, when Fed Continuity loses another district, when Iron Crown insults one of their own.",
+    "last_advancement": {},
+    "clock_type": "world",
+    "linked_clock_id": "",
+    "visible_to_player": true
+  },
+  "manhattan-eldritch-breach": {
+    "id": "manhattan-eldritch-breach",
+    "schema_version": "1.0",
+    "display_name": "Manhattan Anomalous Entity Breach",
+    "current_segment": 2,
+    "total_segments": 8,
+    "advance_conditions": [
+      {
+        "type": "always",
+        "description": "Echo territorial expansion (not observed yet, but monitored)"
+      },
+      {
+        "type": "always",
+        "description": "appearance of additional anomalous entities in salvage zones"
+      },
+      {
+        "type": "always",
+        "description": "deep-salvage expeditions triggering dormant events"
+      }
+    ],
+    "advance_rate": {
+      "probability": 0.1,
+      "description": "slow (1 segment per 1\u20133 years)"
+    },
+    "completion_consequences": [
+      {
+        "description": "anomalous entities push outside Financial District"
+      },
+      {
+        "description": "Manhattan salvage economy disrupted"
+      },
+      {
+        "description": "Tower Lords' primary revenue source threatened"
+      },
+      {
+        "description": "regional response required; may accelerate eldritch-concerned faction alliances"
+      }
+    ],
+    "reset_conditions": [
+      {
+        "type": "flag",
+        "description": "successful containment intervention (no known method)"
+      },
+      {
+        "type": "flag",
+        "description": "Echo dispersal"
+      }
+    ],
+    "interactions": [
+      {
+        "description": "completion hurts Staten Citadel (salvage dependent)"
+      },
+      {
+        "description": "completion strengthens anti-eldritch faction alliances"
+      }
+    ],
+    "narrative_description": "The Echo has not moved in four years. That is the comforting fact. The uncomfortable fact is that nobody knows what would move it, and the deep-salvage runs go further each year. Two segments of eight. The clock moves in small increments \u2014 a salvager goes in and doesn't come out, a building in the lower east appears to have shifted overnight, someone reports hearing something no one else heard. The clock does not move quickly. It only ever moves.",
+    "last_advancement": {},
+    "clock_type": "world",
+    "linked_clock_id": "",
+    "visible_to_player": true
+  },
+  "harvest-lords-unification": {
+    "id": "harvest-lords-unification",
+    "schema_version": "1.0",
+    "display_name": "Delmarva Harvest Lords Unification",
+    "current_segment": 1,
+    "total_segments": 8,
+    "advance_conditions": [
+      {
+        "type": "always",
+        "description": "external military threat forcing coordination"
+      },
+      {
+        "type": "always",
+        "description": "succession events creating consolidation opportunity"
+      },
+      {
+        "type": "always",
+        "description": "Bourse commercial pressure"
+      },
+      {
+        "type": "always",
+        "description": "generational leadership turnover"
+      }
+    ],
+    "advance_rate": {
+      "probability": 0.1,
+      "description": "very slow (1 segment per 2\u20134 years)"
+    },
+    "completion_consequences": [
+      {
+        "description": "unified Delmarva polity declared (under a single lord or council)"
+      },
+      {
+        "description": "regional agricultural superpower emerges"
+      },
+      {
+        "description": "Philadelphia Bourse pricing relationship changes"
+      },
+      {
+        "description": "potential military action against Crabclaw or northward expansion"
+      }
+    ],
+    "reset_conditions": [
+      {
+        "type": "flag",
+        "description": "dominant lord faction's patron dies without succession"
+      },
+      {
+        "type": "flag",
+        "description": "internal harvest lord war"
+      }
+    ],
+    "interactions": [
+      {
+        "description": "completion transforms regional political map"
+      },
+      {
+        "description": "completion gives Delmarva food-supply leverage equivalent to military power"
+      }
+    ],
+    "narrative_description": "The six major lords prefer their individual freedoms. None wants to kneel to another. None wants to be kneeled to, quite. One segment filled in four years. The clock moves when external pressure rises \u2014 when Crabclaw turns north, when Fed Continuity tries to levy them, when the Bourse proposes a price structure they can't refuse. If they unify, they will be the region's second great power after Catskill. If they never do, they will be the region's granary, which is perhaps enough.",
+    "last_advancement": {},
+    "clock_type": "world",
+    "linked_clock_id": "",
+    "visible_to_player": true
+  }
+}
