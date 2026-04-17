@@ -12,7 +12,7 @@
     "species": "baseline-human",
     "age": 50,
     "manifestation": {
-      "category": "physical",
+      "category": "kinetic",
       "tier": 9,
       "specific_abilities": [
         "T9 Physical/kinetic narrow specialist; Perceptual-T3 battlefield-awareness secondary"
@@ -136,7 +136,7 @@
     "species": "baseline-human",
     "age": 58,
     "manifestation": {
-      "category": "perceptual",
+      "category": "cognitive",
       "tier": 3,
       "specific_abilities": [
         "T3 Perceptual primary (situational awareness, memory, emotional reading); modest Auratic-T2 trust-secondary"
@@ -256,7 +256,7 @@
     "species": "baseline-human",
     "age": 47,
     "manifestation": {
-      "category": "physical",
+      "category": "kinetic",
       "tier": 8,
       "specific_abilities": [
         "T8 Physical/kinetic primary; Auratic-T4 command-presence secondary"
@@ -365,7 +365,7 @@
     "species": "baseline-human",
     "age": 44,
     "manifestation": {
-      "category": "physical",
+      "category": "kinetic",
       "tier": 8,
       "specific_abilities": [
         "T8 Matter/Energy primary (matter-reshaping, thermal containment); Physical-T5 (mineralized durability) secondary; Perceptual-T3 (structural sensing) tertiary"
@@ -474,7 +474,7 @@
     "species": "baseline-human",
     "age": 42,
     "manifestation": {
-      "category": "physical",
+      "category": "kinetic",
       "tier": 8,
       "specific_abilities": [
         "T8 Physical/kinetic primary; Auratic dread-field secondary; Biological-T3 durability tertiary"
@@ -595,7 +595,7 @@
     "species": "baseline-human",
     "age": 39,
     "manifestation": {
-      "category": "perceptual",
+      "category": "cognitive",
       "tier": 7,
       "specific_abilities": [
         "T7 Temporal/Spatial primary (short-range teleport, harbor logistics); Perceptual-T4 secondary"
@@ -698,7 +698,7 @@
     "species": "metahuman-I (Herrera-kin)",
     "age": 53,
     "manifestation": {
-      "category": "perceptual",
+      "category": "cognitive",
       "tier": 6,
       "specific_abilities": [
         "T6 Perceptual primary (commercial intuition, memory, species-enhanced sight); Auratic-T3 trust-presence secondary"
@@ -907,7 +907,7 @@
     "species": "metahuman-I (Flores-kin)",
     "age": 80,
     "manifestation": {
-      "category": "perceptual",
+      "category": "cognitive",
       "tier": 4,
       "specific_abilities": [
         "T4 Perceptual primary (species-enhanced sight + memory + emotional reading)"
@@ -1008,7 +1008,7 @@
     "species": "metahuman-I (Reyes-kin)",
     "age": 46,
     "manifestation": {
-      "category": "perceptual",
+      "category": "cognitive",
       "tier": 6,
       "specific_abilities": [
         "T6 Perceptual primary (species-enhanced + species-recognition at extreme distance); Auratic-T4 political-presence secondary"
@@ -1109,7 +1109,7 @@
     "species": "baseline-human",
     "age": 49,
     "manifestation": {
-      "category": "physical",
+      "category": "kinetic",
       "tier": 7,
       "specific_abilities": [
         "T7 Physical primary; Perceptual-T4 tactical-awareness secondary"
@@ -1208,7 +1208,7 @@
     "species": "baseline-human",
     "age": 30,
     "manifestation": {
-      "category": "perceptual",
+      "category": "cognitive",
       "tier": 6,
       "specific_abilities": [
         "T6 Temporal/Spatial primary (short-range teleport, folded inventory); Perceptual-T4 remote-viewing secondary"
@@ -1295,7 +1295,7 @@
     "species": "baseline-human",
     "age": 38,
     "manifestation": {
-      "category": "perceptual",
+      "category": "cognitive",
       "tier": 6,
       "specific_abilities": [
         "T6 Auratic primary (truth-field); Perceptual-T3 emotional-reading secondary"
@@ -1394,7 +1394,7 @@
     "species": "baseline-human",
     "age": 41,
     "manifestation": {
-      "category": "physical",
+      "category": "kinetic",
       "tier": 7,
       "specific_abilities": [
         "T7 Physical primary (kinetic + durability)"
@@ -1484,7 +1484,7 @@
     "species": "metahuman-H",
     "age": 35,
     "manifestation": {
-      "category": "physical",
+      "category": "kinetic",
       "tier": 6,
       "specific_abilities": [
         "T6 Matter/Energy primary (metal-edge sharpening); Physical-T3 reflexes secondary"
@@ -1583,7 +1583,7 @@
     "species": "baseline-human",
     "age": 36,
     "manifestation": {
-      "category": "perceptual",
+      "category": "cognitive",
       "tier": 7,
       "specific_abilities": [
         "T7 Biological primary (pain induction through contact); Perceptual-T3 (sensing pain in others) secondary"
@@ -1670,7 +1670,7 @@
     "species": "baseline-human",
     "age": 44,
     "manifestation": {
-      "category": "perceptual",
+      "category": "cognitive",
       "tier": 6,
       "specific_abilities": [
         "T6 Perceptual primary (telepathic communication); Auratic-T3 trust-presence secondary"
@@ -1757,7 +1757,7 @@
     "species": "baseline-human",
     "age": 41,
     "manifestation": {
-      "category": "perceptual",
+      "category": "cognitive",
       "tier": 6,
       "specific_abilities": [
         "T6 Perceptual primary (coordination-telepathy + threat-precognition); Temporal-T3 (short-range spatial awareness) secondary"
@@ -1864,7 +1864,7 @@
     "species": "baseline-human",
     "age": 50,
     "manifestation": {
-      "category": "perceptual",
+      "category": "cognitive",
       "tier": 4,
       "specific_abilities": [
         "T4 Biological primary; Perceptual-T3 medical-diagnosis secondary"
@@ -1968,7 +1968,7 @@
     "species": "baseline-human",
     "age": 54,
     "manifestation": {
-      "category": "perceptual",
+      "category": "cognitive",
       "tier": 5,
       "specific_abilities": [
         "T5 Auratic primary (trust-field); Perceptual-T3 emotional-reading secondary"
@@ -2061,7 +2061,7 @@
     "species": "baseline-human",
     "age": 45,
     "manifestation": {
-      "category": "physical",
+      "category": "kinetic",
       "tier": 7,
       "specific_abilities": [
         "T7 Physical primary (kinetic)"
@@ -2145,7 +2145,7 @@
     "species": "baseline-human",
     "age": 67,
     "manifestation": {
-      "category": "perceptual",
+      "category": "cognitive",
       "tier": 5,
       "specific_abilities": [
         "T5 Perceptual primary (commercial-intuition + memory); Auratic-T3 personal-magnetism secondary"
@@ -2240,7 +2240,7 @@
     "species": "metahuman-C",
     "age": 58,
     "manifestation": {
-      "category": "perceptual",
+      "category": "cognitive",
       "tier": 5,
       "specific_abilities": [
         "T5 Matter/Energy primary (delicate-matter, mechanism-repair); Perceptual-T4 (machine-understanding) secondary"
@@ -2323,7 +2323,7 @@
     "species": "baseline-human",
     "age": 39,
     "manifestation": {
-      "category": "physical",
+      "category": "kinetic",
       "tier": 4,
       "specific_abilities": [
         "T4 Perceptual primary; Physical-T3 hardiness secondary"
@@ -2409,7 +2409,7 @@
     "species": "metahuman-G",
     "age": 51,
     "manifestation": {
-      "category": "perceptual",
+      "category": "cognitive",
       "tier": 3,
       "specific_abilities": [
         "T3 Biological primary (plant affinity, soil rehabilitation); Perceptual-T2 agricultural-diagnosis secondary"
@@ -2503,7 +2503,7 @@
     "species": "metahuman-C",
     "age": 71,
     "manifestation": {
-      "category": "perceptual",
+      "category": "cognitive",
       "tier": 5,
       "specific_abilities": [
         "T5 Matter/Energy primary (precision small-matter); Perceptual-T3 mechanism-understanding secondary"
@@ -2592,7 +2592,7 @@
     "species": "metahuman-H",
     "age": 36,
     "manifestation": {
-      "category": "physical",
+      "category": "kinetic",
       "tier": 2,
       "specific_abilities": [
         "T2 Biological primary (species-enhanced metabolism + regeneration); Physical-T2 endurance-running secondary"
@@ -2693,7 +2693,7 @@
     "species": "metahuman-H",
     "age": 42,
     "manifestation": {
-      "category": "perceptual",
+      "category": "cognitive",
       "tier": 4,
       "specific_abilities": [
         "T4 Biological primary; Perceptual-T3 network-coordination secondary"
@@ -2785,7 +2785,7 @@
     "species": "metahuman-I (Herrera-kin)",
     "age": 73,
     "manifestation": {
-      "category": "perceptual",
+      "category": "cognitive",
       "tier": 3,
       "specific_abilities": [
         "T3 Perceptual primary"
@@ -2877,7 +2877,7 @@
     "species": "metahuman-I (Diaz-kin)",
     "age": 69,
     "manifestation": {
-      "category": "perceptual",
+      "category": "cognitive",
       "tier": 4,
       "specific_abilities": [
         "T4 Perceptual primary; Biological-T3 healing secondary"
@@ -2972,7 +2972,7 @@
     "species": "baseline-human",
     "age": 54,
     "manifestation": {
-      "category": "biological",
+      "category": "cognitive",
       "tier": 7,
       "specific_abilities": [
         "T7 Biological primary (agriculture, livestock breeding); Auratic-T3 land-aura secondary"
@@ -3048,7 +3048,7 @@
     "species": "metahuman-C",
     "age": 48,
     "manifestation": {
-      "category": "matter",
+      "category": "material",
       "tier": 6,
       "specific_abilities": [
         "T6 Biological primary; Matter/Energy-T3 substance-analysis secondary"
@@ -3121,7 +3121,7 @@
     "species": "baseline-human",
     "age": 61,
     "manifestation": {
-      "category": "biological",
+      "category": "cognitive",
       "tier": 6,
       "specific_abilities": [
         "T6 Biological primary; Auratic-T5 calm-field secondary"
@@ -3194,7 +3194,7 @@
     "species": "metahuman-I",
     "age": 49,
     "manifestation": {
-      "category": "perceptual",
+      "category": "cognitive",
       "tier": 7,
       "specific_abilities": [
         "T7 Biological primary; Perceptual-T3 species-enhanced secondary"
@@ -3280,7 +3280,7 @@
     "species": "baseline-human",
     "age": 43,
     "manifestation": {
-      "category": "physical",
+      "category": "kinetic",
       "tier": 5,
       "specific_abilities": [
         "T5 Biological primary (marine-specific); Physical-T3 swimming-adaptation secondary"
@@ -3353,7 +3353,7 @@
     "species": "baseline-human",
     "age": 52,
     "manifestation": {
-      "category": "biological",
+      "category": "cognitive",
       "tier": 6,
       "specific_abilities": [
         "T6 Biological primary; Auratic-T4 contemplative-zone secondary"
@@ -3436,7 +3436,7 @@
     "species": "baseline-human (all three)",
     "age": 30,
     "manifestation": {
-      "category": "perceptual",
+      "category": "cognitive",
       "tier": 6,
       "specific_abilities": [
         "Obi T6 Biological/Auratic; Rubinstein T5 Biological/Perceptual; Villanueva T6 Biological/Temporal (rare combination \u2014 sees where healing is needed before injury)"
@@ -3530,7 +3530,7 @@
     "species": "baseline-human",
     "age": 44,
     "manifestation": {
-      "category": "perceptual",
+      "category": "cognitive",
       "tier": 6,
       "specific_abilities": [
         "T6 Perceptual primary (broadband telepathy for Voice network); Auratic-T4 trust-field secondary"
@@ -3603,7 +3603,7 @@
     "species": "baseline-human",
     "age": 38,
     "manifestation": {
-      "category": "matter",
+      "category": "material",
       "tier": 5,
       "specific_abilities": [
         "T5 Biological primary; Matter/Energy-T3 water-affinity secondary"
@@ -3689,7 +3689,7 @@
     "species": "baseline-human",
     "age": 56,
     "manifestation": {
-      "category": "perceptual",
+      "category": "cognitive",
       "tier": 4,
       "specific_abilities": [
         "T4 Auratic primary (trust + calm field); Perceptual-T3 emotional insight secondary"
@@ -3766,7 +3766,7 @@
     "species": "baseline-human",
     "age": 56,
     "manifestation": {
-      "category": "perceptual",
+      "category": "cognitive",
       "tier": 8,
       "specific_abilities": [
         "T8 Matter/Energy primary (micron-precise work); Perceptual-T4 sensing material properties secondary"
@@ -3846,7 +3846,7 @@
     "species": "baseline-human",
     "age": 41,
     "manifestation": {
-      "category": "perceptual",
+      "category": "cognitive",
       "tier": 5,
       "specific_abilities": [
         "T5 Biological primary; Perceptual-T4 diagnostic secondary; Temporal-T3 (brief patient-decline foresight) tertiary"
@@ -3922,7 +3922,7 @@
     "species": "baseline-human (transformed)",
     "age": 48,
     "manifestation": {
-      "category": "perceptual",
+      "category": "cognitive",
       "tier": 4,
       "specific_abilities": [
         "T4-equivalent; Eldritch primary (entity-contact residual); Perceptual-T3 strange-knowledge secondary"
@@ -4007,7 +4007,7 @@
     "species": "baseline-human",
     "age": 30,
     "manifestation": {
-      "category": "perceptual",
+      "category": "cognitive",
       "tier": 4,
       "specific_abilities": [
         "T4-equivalent; Perceptual primary; Eldritch-T3 sensing-anomalous-entities secondary"
@@ -4148,7 +4148,7 @@
     "species": "baseline-human",
     "age": 10,
     "manifestation": {
-      "category": "perceptual",
+      "category": "cognitive",
       "tier": 5,
       "specific_abilities": [
         "T5-equivalent for her age; Temporal/Spatial primary (spontaneous short-range teleportation); Perceptual-T3 precognition secondary"
@@ -4216,7 +4216,7 @@
     "species": "baseline-human",
     "age": 41,
     "manifestation": {
-      "category": "physical",
+      "category": "kinetic",
       "tier": 6,
       "specific_abilities": [
         "T6 Physical primary; Auratic-T3 intimidation-field secondary"
@@ -4289,7 +4289,7 @@
     "species": "baseline-human (suspected)",
     "age": 30,
     "manifestation": {
-      "category": "biological",
+      "category": "somatic",
       "tier": 6,
       "specific_abilities": [
         "T6 Biological primary (non-consensual mutation work); Eldritch-T3 secondary (bargaining for effects he should not produce)"
@@ -4369,7 +4369,7 @@
     "species": "baseline-human",
     "age": 38,
     "manifestation": {
-      "category": "physical",
+      "category": "kinetic",
       "tier": 7,
       "specific_abilities": [
         "T7 Physical primary; Temporal-T3 short-range-teleport (hit-and-run) secondary"
@@ -4442,7 +4442,7 @@
     "species": "baseline-human",
     "age": 64,
     "manifestation": {
-      "category": "perceptual",
+      "category": "cognitive",
       "tier": 3,
       "specific_abilities": [
         "T3 Perceptual primary (memory + cross-referencing at scale)"
@@ -4515,7 +4515,7 @@
     "species": "baseline-human",
     "age": 47,
     "manifestation": {
-      "category": "perceptual",
+      "category": "cognitive",
       "tier": 4,
       "specific_abilities": [
         "T4 Perceptual primary (remote-viewing-adjacent + spatial memory); Matter/Energy-T2 fine-drawing precision secondary"
@@ -4588,7 +4588,7 @@
     "species": "baseline-human",
     "age": 49,
     "manifestation": {
-      "category": "perceptual",
+      "category": "cognitive",
       "tier": 3,
       "specific_abilities": [
         "T3 Perceptual primary (language and culture intuition)"
@@ -4666,7 +4666,7 @@
     "species": "baseline-human",
     "age": 52,
     "manifestation": {
-      "category": "perceptual",
+      "category": "cognitive",
       "tier": 4,
       "specific_abilities": [
         "T4 Matter/Energy primary (electrical systems); Perceptual-T4 understanding-mechanisms secondary"
@@ -4739,7 +4739,7 @@
     "species": "baseline-human",
     "age": 19,
     "manifestation": {
-      "category": "perceptual",
+      "category": "cognitive",
       "tier": 6,
       "specific_abilities": [
         "T6 Matter/Energy primary (electromagnetic precision); Perceptual-T3 machine-sympathy secondary"
@@ -4819,7 +4819,7 @@
     "species": "metahuman-G",
     "age": 9,
     "manifestation": {
-      "category": "biological",
+      "category": "somatic",
       "tier": 3,
       "specific_abilities": [
         "T3 Biological primary (species-enhanced plant affinity, extraordinary for age)"
@@ -4879,7 +4879,7 @@
     "species": "metahuman-I",
     "age": 35,
     "manifestation": {
-      "category": "physical",
+      "category": "kinetic",
       "tier": 5,
       "specific_abilities": [
         "T5 Physical primary; Perceptual-T4 (species-enhanced sight + tactical-awareness) secondary"
@@ -4965,7 +4965,7 @@
     "species": "baseline-human",
     "age": 39,
     "manifestation": {
-      "category": "perceptual",
+      "category": "cognitive",
       "tier": 6,
       "specific_abilities": [
         "T6 Temporal/Spatial primary (harbor-crossing permission system); Perceptual-T3 threat-detection secondary"
