@@ -168,8 +168,15 @@ def step_init(args: Any, save_root: str) -> Dict[str, Any]:
 
     _save_full_state(save_root, state)
 
-    # Initialize session zero state
-    sz_state = {"current_scene": 0, "creation_state": {}, "completed": False}
+    # Initialize session zero state with a real entropy seed. Without this,
+    # CreationState.seed defaults to 0 and every character creation reuses
+    # Random(317) for the power slate and Random(101) for the vignette —
+    # making "random" fillers deterministic across players.
+    sz_state = {
+        "current_scene": 0,
+        "creation_state": {"seed": random.Random().getrandbits(64)},
+        "completed": False,
+    }
     _write_json_file(os.path.join(save_root, "session_zero_state.json"), sz_state)
 
     return {
