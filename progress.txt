@@ -113,3 +113,4 @@ v3-H: save reset; ready to commit
 
 3.5.a done: Seventh Avenue vignette data — framing + 3 attention options + 3 engagement options + closing_summary
 3.5.b-h done: OnsetScene class in onset_scene.py — 4 phases (biography text, attention pick, engagement pick, 2-of-10 slate); reaction-dominant weights (1:4); is_complete gates advance; pending_ack set on slate pick. pending_engagement_choice added to CreationState. End-to-end smoke test passes for Shake bio.
+3.5.i done: test_onset_scene.py 11/11 pass (phases, text input, choices per phase, completion + ack, reaction tag accumulation)
