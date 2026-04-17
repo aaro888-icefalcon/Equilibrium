@@ -92,3 +92,6 @@ v3-H: save reset; ready to commit
 1.5.a done: Phase 1 closed. Full suite 1038 tests, 6 pre-existing awakening failures (rewritten in P3); 34 new v4 tests all green.
 
 === Phase 1 complete. Data + state plumbing in place. ===
+
+=== Phase 2 — Narrator contract ===
+2.1.a+b+c done: vignette_contract.py — VignetteOutput, VignetteChoice, MechanicalBinding, SeedBundle + 5 seed leaf dataclasses; from_json parser with ValueError on malformed
