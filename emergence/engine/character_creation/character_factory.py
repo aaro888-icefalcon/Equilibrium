@@ -130,6 +130,24 @@ class CreationState:
     # powers from the slate computed off the dilemma tags).
     pending_dilemma_choice: str = ""
 
+    # v4 arc — starting location locked in vignette 4.  Distinct from
+    # state.location (current location in the sim) because finalize
+    # copies starting_location into the world and into CharacterSheet's
+    # initial position.
+    starting_location: str = ""
+
+    # v4 arc — locations minted by vignette scenes (e.g. a new safehouse,
+    # a freshly-claimed ruin).  Each entry carries either an existing id
+    # or a full spec; the finalize step writes specs into the world
+    # locations dict.  Schema per entry:
+    #   {"id": str | None, "spec": {...} | None, "is_starting": bool}
+    generated_locations: List[Dict[str, Any]] = dataclasses.field(default_factory=list)
+
+    # v4 arc — ack beat gate.  When a vignette's apply seeds state, this
+    # flag is set.  step scene-ack clears it.  step scene for the next
+    # index refuses to advance until cleared.
+    pending_ack: bool = False
+
     # Threats — named NPCs or forces that press on the character. Entries
     # accumulate across scenes (survival raid, faction play, vow enemy) and
     # are finalized into the character sheet's relationships (negative
@@ -297,6 +315,22 @@ class CharacterFactory:
             state.location = choice_data["location"]
         if "region" in choice_data:
             state.region = choice_data["region"]
+
+        # v4 arc — locations minted by a vignette.  Each entry is either
+        # an existing location id to reference, or a full spec to mint.
+        # If `is_starting`, promote to state.starting_location.
+        for loc_entry in choice_data.get("locations", []):
+            normalized = dict(loc_entry)
+            state.generated_locations.append(normalized)
+            if normalized.get("is_starting"):
+                lid = normalized.get("id") or (normalized.get("spec") or {}).get("id", "")
+                if lid:
+                    state.starting_location = lid
+
+        # v4 arc — pending_ack flag, set by vignette applies and cleared
+        # by step scene-ack.
+        if "pending_ack" in choice_data:
+            state.pending_ack = bool(choice_data["pending_ack"])
 
         # Condition track maxes
         for track, max_val in choice_data.get("condition_track_maxes", {}).items():
