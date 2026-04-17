@@ -110,6 +110,19 @@ def build_parser() -> argparse.ArgumentParser:
     )
     step_apply.add_argument("--input-text", action="append", default=None,
                             help="Text input as key=value (repeatable)")
+    step_apply.add_argument(
+        "--output-json", type=str, default=None, dest="output_json",
+        help="Path to narrator VignetteOutput JSON (or '-' for stdin). "
+             "Used by vignette scenes; triggers validation + apply.",
+    )
+
+    # step scene-ack — consume pending_ack and emit a post-pick summary
+    step_ack = step_sub.add_parser(
+        "scene-ack",
+        help="Emit the post-pick acknowledgment beat for a vignette scene.",
+    )
+    step_ack.add_argument("--index", type=int, required=True,
+                          help="Scene index that was just applied (0-5)")
 
     # step scene-finalize
     step_sub.add_parser("scene-finalize", help="Finalize character from session zero")
