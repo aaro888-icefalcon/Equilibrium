@@ -40,15 +40,6 @@ VALID_POWER_SUB_CATEGORIES = {
     # cognitive
     "auratic", "dominant", "perceptive", "predictive", "telepathic",
 }
-# Legacy V1 category set — only retained so save-file migration checks
-# can recognise pre-V2 category strings. Do not use for new validation;
-# all new content targets VALID_POWER_CATEGORIES (V2 broads).
-VALID_POWER_CATEGORIES_LEGACY = {
-    "physical_kinetic", "perceptual_mental", "matter_energy",
-    "biological_vital", "auratic", "temporal_spatial", "eldritch_corruptive",
-}
-# Backwards-compat alias; prefer VALID_POWER_CATEGORIES_LEGACY.
-VALID_POWER_CATEGORIES_V1 = VALID_POWER_CATEGORIES_LEGACY
 VALID_CONDITION_TRACKS = {"physical", "mental", "social"}
 VALID_STATUS_NAMES = {
     "bleeding", "stunned", "shaken", "burning", "exposed", "marked", "corrupted",
