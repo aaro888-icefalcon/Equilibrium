@@ -325,5 +325,67 @@ def _compute_v3(state: CreationState) -> SeedPools:
 
 
 def _compute_v4(state: CreationState) -> SeedPools:
-    """V4 stub — filled in 1.2.e."""
-    raise NotImplementedError("v4 compute — wired in 1.2.e")
+    """V4: spring Y2.  Starting-location vignette.
+
+    Must include at least one named antagonist and at least one startable
+    location candidate.  Vow packages are presented so the narrator can
+    surface the commitment planted in V3; at least 2 are required so the
+    player's pick can bind ≥2 goals.
+    """
+    from emergence.engine.character_creation.scenarios import (
+        REGION_FACTIONS, FACTION_DEMANDS, VOW_PACKAGES,
+    )
+
+    region = state.region or "New York City"
+
+    # All locations in the region are startable candidates in V4.
+    locations = list(_REGION_LOCATIONS.get(region, _V1_NYC_LOCATIONS))
+    for loc in locations:
+        loc["startable"] = True
+
+    rep = REGION_FACTIONS.get(region)
+    factions: List[Dict[str, Any]] = []
+    if rep:
+        factions.append({
+            "id": rep["id"],
+            "name": rep["name"],
+            "demand_data": FACTION_DEMANDS.get(rep["id"], {}),
+        })
+
+    threat_ids = _filter_threats_by_consumption(state)
+
+    # Named-antagonist archetypes: require at least one to be eligible so
+    # the narrator can surface a named enemy.  Prefer recurrable +
+    # human/social options over anomalous ones for ignition usability.
+    named_antagonist_candidates = [
+        aid for aid in ("named_rival_human", "faction_assassin_contract",
+                        "knife_scavenger_survivor", "ruined_former_ally",
+                        "iron_crown_notice")
+        if aid in threat_ids
+    ]
+    if not named_antagonist_candidates:
+        # fallback: force the default named_rival_human into the pool
+        threat_ids.append("named_rival_human")
+        named_antagonist_candidates = ["named_rival_human"]
+
+    vows = [dict(v) for v in VOW_PACKAGES]
+
+    return SeedPools(
+        vignette_index=4,
+        region=region,
+        npc_archetypes=[
+            "named_antagonist", "ally", "rival", "dependent",
+            "mentor", "informant", "medic", "faction_contact",
+        ],
+        factions=factions,
+        locations=locations,
+        threats=threat_ids,
+        vow_packages=vows,
+        region_outcomes=None,
+        notes=[
+            f"V4: region {region}, starting-location lock",
+            f"named antagonist candidates: {named_antagonist_candidates}",
+            f"{len(locations)} startable location(s)",
+            f"{len(vows)} vow packages (>=2 required for commit)",
+        ],
+    )
