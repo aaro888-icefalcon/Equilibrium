@@ -184,3 +184,144 @@ def _safe_dict(d: Any, cls: type) -> Dict[str, Any]:
         raise ValueError(f"expected dict for {cls.__name__}, got {type(d).__name__}")
     allowed = {f.name for f in dataclasses.fields(cls)}
     return {k: v for k, v in d.items() if k in allowed}
+
+
+# ----------------------------------------------------------------------
+# Validator
+# ----------------------------------------------------------------------
+
+_VALID_REGION_OUTCOMES = {"stay_nyc", "displaced_to", "traveled_to"}
+
+
+def validate_vignette_output(
+    output: VignetteOutput,
+    scaffold: Any,                 # VignetteScaffold (avoid circular import)
+    state: Any = None,             # CreationState (unused today; reserved)
+) -> List[str]:
+    """Return a list of violation strings.  Empty list = valid."""
+    violations: List[str] = []
+
+    # 1. Three choices exactly.
+    if len(output.choices) != 3:
+        violations.append(f"expected 3 choices, got {len(output.choices)}")
+
+    pool_ids = set(scaffold.option_ids()) if scaffold.option_pool else set()
+    base_by_id = {o.option_id: o.base_description for o in scaffold.option_pool}
+
+    for i, choice in enumerate(output.choices):
+        prefix = f"choice[{i}]"
+
+        # 2. Mechanical binding: slot + option_id pool.
+        if choice.mechanical_binding.slot != scaffold.mechanical_slot:
+            violations.append(
+                f"{prefix}.slot={choice.mechanical_binding.slot!r} "
+                f"!= scaffold.mechanical_slot={scaffold.mechanical_slot!r}"
+            )
+        if pool_ids and choice.mechanical_binding.option_id not in pool_ids:
+            violations.append(
+                f"{prefix}.option_id={choice.mechanical_binding.option_id!r} "
+                f"not in scaffold.option_pool={sorted(pool_ids)}"
+            )
+
+        # 3. Parenthetical: non-empty AND distinct from option base description.
+        paren = (choice.mechanical_parenthetical or "").strip()
+        if not paren:
+            violations.append(f"{prefix}.mechanical_parenthetical is empty")
+        else:
+            base = (base_by_id.get(choice.mechanical_binding.option_id, "") or "").strip()
+            if paren and paren == base:
+                violations.append(
+                    f"{prefix}.mechanical_parenthetical is identical to "
+                    f"option base description; be specific to this character"
+                )
+
+        # 4. Seed bundle minimums (per-choice).
+        req = scaffold.required_seeds
+        b = choice.seed_bundle
+        if len(b.npcs) < req.min_npcs:
+            violations.append(f"{prefix}.seed_bundle.npcs "
+                              f"{len(b.npcs)}<{req.min_npcs}")
+        if len(b.locations) < req.min_locations:
+            violations.append(f"{prefix}.seed_bundle.locations "
+                              f"{len(b.locations)}<{req.min_locations}")
+        if len(b.factions) < req.min_factions:
+            violations.append(f"{prefix}.seed_bundle.factions "
+                              f"{len(b.factions)}<{req.min_factions}")
+        if len(b.threats) < req.min_threats:
+            violations.append(f"{prefix}.seed_bundle.threats "
+                              f"{len(b.threats)}<{req.min_threats}")
+        if len(b.vows) < req.min_vows:
+            violations.append(f"{prefix}.seed_bundle.vows "
+                              f"{len(b.vows)}<{req.min_vows}")
+
+        # 5. Archetype id resolution for threats.
+        from emergence.engine.character_creation.threats import list_archetype_ids
+        known_archetypes = set(list_archetype_ids())
+        for t in b.threats:
+            if t.archetype and t.archetype not in known_archetypes:
+                violations.append(
+                    f"{prefix}.seed_bundle.threats archetype "
+                    f"{t.archetype!r} is not a known archetype"
+                )
+
+        # 6. Faction id resolution.
+        from emergence.engine.character_creation.scenarios import REGION_FACTIONS
+        known_factions = {rep["id"] for rep in REGION_FACTIONS.values()}
+        for f in b.factions:
+            if f.faction_id and f.faction_id not in known_factions:
+                violations.append(
+                    f"{prefix}.seed_bundle.factions faction_id "
+                    f"{f.faction_id!r} is not a known faction"
+                )
+
+        # 7. V2: region_outcome value must be in the valid set.
+        if req.require_region_outcome:
+            if not b.region_outcome:
+                violations.append(f"{prefix}.seed_bundle.region_outcome is required for V2")
+            elif b.region_outcome not in _VALID_REGION_OUTCOMES:
+                violations.append(
+                    f"{prefix}.seed_bundle.region_outcome "
+                    f"{b.region_outcome!r} not in {sorted(_VALID_REGION_OUTCOMES)}"
+                )
+
+    # 8. V2: aggregate region_outcome set must equal
+    #    {stay_nyc, displaced_to, traveled_to} OR {stay_nyc, displaced_to, displaced_to}.
+    if scaffold.required_seeds.require_region_outcome and len(output.choices) == 3:
+        seen = [c.seed_bundle.region_outcome for c in output.choices]
+        seen_set = sorted(seen)
+        valid_a = sorted(["stay_nyc", "displaced_to", "traveled_to"])
+        valid_b = sorted(["stay_nyc", "displaced_to", "displaced_to"])
+        if seen_set != valid_a and seen_set != valid_b:
+            violations.append(
+                f"V2 region_outcome set {seen} must be "
+                f"[stay_nyc, displaced_to, traveled_to] or "
+                f"[stay_nyc, displaced_to, displaced_to]"
+            )
+
+    # 9. V4: exactly one choice's locations has is_starting=True
+    #    AND total vow entries resolve to >= min_goals_from_vows goals.
+    if scaffold.required_seeds.require_is_starting:
+        starting_count = sum(
+            1 for c in output.choices
+            for loc in c.seed_bundle.locations
+            if loc.is_starting
+        )
+        if starting_count != 1:
+            violations.append(
+                f"V4: exactly one choice must have is_starting=True "
+                f"in its seed_bundle.locations; got {starting_count}"
+            )
+
+    if scaffold.required_seeds.min_goals_from_vows > 0:
+        # Sum goals across all choices' vows; narrator offers 3 choices,
+        # only one is picked — but the SCAFFOLD's min applies per-choice
+        # (the picked choice must deliver ≥N goals).  Enforce per choice.
+        min_g = scaffold.required_seeds.min_goals_from_vows
+        for i, c in enumerate(output.choices):
+            total_goals = sum(len(v.goals) for v in c.seed_bundle.vows)
+            if total_goals < min_g:
+                violations.append(
+                    f"choice[{i}].seed_bundle.vows goals {total_goals}<{min_g}"
+                )
+
+    return violations
