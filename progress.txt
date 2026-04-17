@@ -85,3 +85,4 @@ v3-H: save reset; ready to commit
 1.2.c done: V2 branch — region-lock, three outcomes {stay, displaced, traveled|displaced}; faction+location filtering by outcome
 1.2.d done: V3 branch — filtered by locked region, consumed non-recurrable threats excluded, vow_packages surfaced
 1.2.e done: V4 branch — startable locations flagged, named_antagonist candidates required (fallback inserts named_rival_human)
+1.2.f done: test_seed_pools.py, 12/12 pass (V1-V4 across 7 regions + dispatch errors)
