@@ -300,6 +300,32 @@ def _slug(s: str) -> str:
     return re.sub(r"[^a-z0-9]+", "-", (s or "").lower()).strip("-") or "x"
 
 
+def apply_vignette_choice(
+    choice: "VignetteChoice",
+    scene_id: str,
+    state: Any,
+    factory: Any,
+    rng: Any,
+    threat_floor: int = 2,
+) -> Any:
+    """Apply a picked VignetteChoice to state, then enforce the threat floor.
+
+    Wraps bundle_to_choice_data + factory.apply_scene_result +
+    factory._ensure_threat_floor into one call so vignette scene
+    implementations don't need to know the factory-layer plumbing.
+    """
+    cd = bundle_to_choice_data(
+        choice.seed_bundle,
+        scene_id,
+        choice.mechanical_binding.slot,
+        choice.mechanical_binding.option_id,
+        choice.mechanical_parenthetical,
+    )
+    state = factory.apply_scene_result(scene_id, cd, state, rng)
+    state = factory._ensure_threat_floor(state, rng, floor=threat_floor)
+    return state
+
+
 def validate_vignette_output(
     output: VignetteOutput,
     scaffold: Any,                 # VignetteScaffold (avoid circular import)

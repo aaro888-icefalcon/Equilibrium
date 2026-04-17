@@ -99,3 +99,4 @@ v3-H: save reset; ready to commit
 2.2.a-f done: validate_vignette_output — 3-choice check, slot+option_pool, parenthetical non-empty+distinct, per-choice seed minimums, archetype/faction resolution, V2 region_outcome set, V4 is_starting + goal floor
 2.2.g done: test_vignette_contract.py, 20/20 pass (from_json, golden, 7 violation paths, V2 region rules ×4, V4 is_starting + goals ×4)
 2.3.a done: bundle_to_choice_data helper routes SeedBundle -> choice_data; end-to-end apply lands NPCs, locations (starting), faction heat+standing, threats (normalized), vow goals, history, pending_ack
+2.3.b+c done: apply_vignette_choice wrapper (apply + floor); test_apply_vignette_choice.py 8/8 pass (npcs, starting_location, factions, threats, floor, ack, history, vows->goals)
