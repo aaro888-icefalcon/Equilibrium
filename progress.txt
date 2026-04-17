@@ -79,3 +79,5 @@ v3-H: save reset; ready to commit
 1.1.c done: apply_scene_result normalizes threat archetype/pressure (default + clamp); legacy entries passthrough
 1.1.d done: _top_up_threats ported to CharacterFactory._ensure_threat_floor; old site shimmed; floor reaches 2 from 0, idempotent
 1.1.e done: test_threats.py added, 11/11 pass (registry, normalization, floor)
+1.1 gate: pre-existing awakening/powers_config failures (7) predate v4 work; tests rewritten in phase 3 when AwakeningScene -> OnsetScene. v4 tests 11/11 green.
+1.2.a done: seed_pools.py skeleton — SeedPools dataclass + compute_seed_pools dispatch + 4 V-branch stubs
