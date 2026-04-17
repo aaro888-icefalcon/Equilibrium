@@ -103,3 +103,6 @@ v3-H: save reset; ready to commit
 2.4.a done: Phase 2 closed. 1066 tests; 6 pre-existing failures unchanged; 62 v4 tests green.
 
 === Phase 2 complete. Narrator contract + validator + apply path in place. ===
+
+=== Phase 3 — Vignette scenes + ack CLI ===
+3.1.a-d done: build_scaffold(state, vignette_index, rng). Loads power from powers_v2, picks 3 cast_modes or rider_slots, fills seed pools, attaches prior_vignette_summaries from history.
