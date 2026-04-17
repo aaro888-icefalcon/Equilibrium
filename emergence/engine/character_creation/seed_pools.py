@@ -127,9 +127,108 @@ def _compute_v1(state: CreationState) -> SeedPools:
     )
 
 
+_V2_DISPLACED_LOCATIONS = [
+    {"id": "loc-port-newark-compound", "name": "Port Newark compound",
+     "region": "Northern New Jersey", "startable": False},
+    {"id": "loc-kingston-hv", "name": "Kingston, Hudson Valley",
+     "region": "Hudson Valley", "startable": False},
+    {"id": "loc-rutgers-campus", "name": "Rutgers campus, Central Jersey",
+     "region": "Central New Jersey", "startable": False},
+]
+
+_V2_TRAVELED_LOCATIONS = [
+    {"id": "loc-philadelphia-bourse-floor", "name": "Philadelphia Bourse floor",
+     "region": "Philadelphia", "startable": False},
+    {"id": "loc-lehigh-allentown", "name": "Allentown, Lehigh Valley",
+     "region": "Lehigh Valley", "startable": False},
+    {"id": "loc-delmarva-granary", "name": "Delmarva granary",
+     "region": "Delmarva", "startable": False},
+]
+
+
+def _v1_surfaced_non_local(state: CreationState) -> bool:
+    """Heuristic: did V1 produce an NPC or history entry pointing outside NYC?"""
+    for npc in state.generated_npcs:
+        loc = (npc.get("location") or "").lower()
+        if loc and not loc.startswith("loc-manhattan") and not loc.startswith("loc-brooklyn"):
+            return True
+    for entry in state.history:
+        desc = (entry.get("description") or "").lower()
+        if any(k in desc for k in ("jersey", "philadelphia", "hudson", "lehigh", "delmarva")):
+            return True
+    return False
+
+
 def _compute_v2(state: CreationState) -> SeedPools:
-    """V2 stub — filled in 1.2.c."""
-    raise NotImplementedError("v2 compute — wired in 1.2.c")
+    """V2: autumn Y1.  The region-lock vignette.
+
+    Three region_outcomes — stay_nyc, displaced_to, traveled_to — unless V1
+    did not surface a non-local NPC or travel hook; then traveled_to is
+    substituted with a second displaced_to option.  The narrator offers
+    three distinct choices, each binding a different region outcome; the
+    validator enforces either the {stay, displaced, traveled} set or the
+    {stay, displaced, displaced} set.
+    """
+    from emergence.engine.character_creation.scenarios import (
+        REGION_FACTIONS, FACTION_DEMANDS, VOW_PACKAGES,
+    )
+    from emergence.engine.character_creation.threats import (
+        get_archetype, list_archetype_ids,
+    )
+
+    travel_enabled = _v1_surfaced_non_local(state)
+
+    # Locations: one stay, one displaced, one travel (or second displaced).
+    locations: List[Dict[str, Any]] = list(_V1_NYC_LOCATIONS[:1])  # stay candidate
+    locations.extend(_V2_DISPLACED_LOCATIONS[:1])                   # displaced candidate
+    if travel_enabled:
+        locations.extend(_V2_TRAVELED_LOCATIONS[:1])
+    else:
+        locations.extend(_V2_DISPLACED_LOCATIONS[1:2])              # second displaced
+
+    # Factions: NYC + the displaced/traveled target regions.
+    factions: List[Dict[str, Any]] = []
+    seen_fids = set()
+    for loc in locations:
+        rep = REGION_FACTIONS.get(loc["region"])
+        if rep and rep["id"] not in seen_fids:
+            factions.append({
+                "id": rep["id"],
+                "name": rep["name"],
+                "demand_data": FACTION_DEMANDS.get(rep["id"], {}),
+            })
+            seen_fids.add(rep["id"])
+
+    # Threats: exclude archetypes already consumed by V1 unless recurrable.
+    consumed = {t.get("archetype", "") for t in state.threats if t.get("archetype")}
+    threat_ids: List[str] = []
+    for aid in list_archetype_ids():
+        if aid not in consumed:
+            threat_ids.append(aid)
+            continue
+        arc = get_archetype(aid)
+        if arc and arc.recurrable:
+            threat_ids.append(aid)
+
+    region_outcomes = ["stay_nyc", "displaced_to"]
+    region_outcomes.append("traveled_to" if travel_enabled else "displaced_to")
+
+    vows = [dict(v) for v in VOW_PACKAGES]
+
+    return SeedPools(
+        vignette_index=2,
+        region=None,  # not yet locked; V2's pick locks it
+        npc_archetypes=["faction_contact", "ally", "rival", "dependent", "informant"],
+        factions=factions,
+        locations=locations,
+        threats=threat_ids,
+        vow_packages=vows,
+        region_outcomes=region_outcomes,
+        notes=[
+            "V2: region-lock vignette",
+            f"traveled_to {'enabled' if travel_enabled else 'substituted with second displaced_to'}",
+        ],
+    )
 
 
 def _compute_v3(state: CreationState) -> SeedPools:
