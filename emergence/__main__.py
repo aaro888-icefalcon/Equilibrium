@@ -104,7 +104,10 @@ def build_parser() -> argparse.ArgumentParser:
     # step scene-apply
     step_apply = step_sub.add_parser("scene-apply", help="Apply choice to session zero scene")
     step_apply.add_argument("--index", type=int, required=True, help="Scene index (0-7)")
-    step_apply.add_argument("--input-choice", type=int, default=None, help="Choice index (0-based)")
+    step_apply.add_argument(
+        "--input-choice", type=str, default=None,
+        help="Choice index (0-based).  For multi-pick scenes, comma-separated (e.g. '2,7').",
+    )
     step_apply.add_argument("--input-text", action="append", default=None,
                             help="Text input as key=value (repeatable)")
 

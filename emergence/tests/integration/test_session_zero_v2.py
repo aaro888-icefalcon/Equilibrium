@@ -1,4 +1,4 @@
-"""Integration tests for the V2 session-zero flow — full 12-scene character creation."""
+"""Integration tests for the V2 session-zero flow — full 13-scene character creation."""
 
 import random
 import unittest
@@ -19,11 +19,12 @@ _TEXT_ANSWERS = {
     "description": "blunt surgeon, protective and analytical, patient under pressure",
     "reaction": "I reach in and start working on the bleeder with both hands",
     "narrative": "My senior resident Jason saw me do it. He didn't speak for a minute.",
+    "npc_seeds": "[]",
 }
 
 
 class TestFullV2Flow(unittest.TestCase):
-    """Run the full 12-scene v2 session zero and verify the output."""
+    """Run the full 13-scene v2 session zero and verify the output."""
 
     def _run_session_zero(self, seed: int, default_choice: int = 0) -> object:
         scenes = make_v2_scenes()
@@ -48,7 +49,7 @@ class TestFullV2Flow(unittest.TestCase):
         sheet = self._run_session_zero(seed=42)
         self.assertEqual(len(sheet.powers), 2)
         slots = {p.get("slot") for p in sheet.powers}
-        self.assertIn("anchor", slots)
+        self.assertIn("primary", slots)
         self.assertIn("secondary", slots)
 
     def test_powers_are_v2_ids(self):
@@ -63,12 +64,6 @@ class TestFullV2Flow(unittest.TestCase):
                 any(pid.startswith(prefix) for prefix in v2_category_prefixes),
                 f"power_id {pid!r} is not a V2 id",
             )
-
-    def test_powers_cross_category(self):
-        sheet = self._run_session_zero(seed=42)
-        anchor = next(p for p in sheet.powers if p["slot"] == "anchor")
-        secondary = next(p for p in sheet.powers if p["slot"] == "secondary")
-        self.assertNotEqual(anchor["category"], secondary["category"])
 
     def test_has_skills(self):
         sheet = self._run_session_zero(seed=42)
@@ -115,11 +110,45 @@ class TestFullV2Flow(unittest.TestCase):
         sheet = self._run_session_zero(seed=42)
         self.assertGreater(len(sheet.session_zero_choices), 0)
 
-    def test_12_scenes_all_run(self):
-        """All 12 scenes should contribute to history."""
+    def test_all_13_scenes_run(self):
         sheet = self._run_session_zero(seed=42)
-        # Some scenes don't add history entries directly, but the majority do.
+        # Most scenes contribute history entries; a few (intro) contribute one.
         self.assertGreaterEqual(len(sheet.history), 8)
+
+
+class TestNpcSeedParsing(unittest.TestCase):
+    """The life-description scene accepts structured NPC seeds."""
+
+    def test_seeds_round_trip_into_creation_state(self):
+        from emergence.engine.character_creation.scenarios import LifeDescriptionScene
+        from emergence.engine.character_creation.character_factory import (
+            CharacterFactory,
+            CreationState,
+        )
+
+        scene = LifeDescriptionScene()
+        state = CreationState(seed=1)
+        factory = CharacterFactory()
+        rng = random.Random(1)
+
+        json_seeds = (
+            '[{"name":"Jason","relation":"senior_resident","location":"Bellevue",'
+            '"descriptor":"wry, blunt","status":"alive"},'
+            '{"name":"Akhil","relation":"brother","location":"Mount Sinai",'
+            '"descriptor":"med student","status":"alive"}]'
+        )
+        result = scene.apply_text(
+            {
+                "name": "Abhishek Rao",
+                "age": "30",
+                "description": "blunt surgeon, curious and analytical reader",
+                "npc_seeds": json_seeds,
+            },
+            state, factory, rng,
+        )
+        self.assertEqual(len(result.npc_seeds), 2)
+        names = {s["name"] for s in result.npc_seeds}
+        self.assertEqual(names, {"Jason", "Akhil"})
 
 
 if __name__ == "__main__":

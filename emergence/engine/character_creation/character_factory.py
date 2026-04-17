@@ -109,6 +109,22 @@ class CreationState:
     # NPCs generated during session zero scenes
     generated_npcs: List[Dict[str, Any]] = dataclasses.field(default_factory=list)
 
+    # Free-form occupation parsed from the life-description scene.  Stored
+    # separately from narrative_tags because the occupation look-up in the
+    # OCCUPATIONS table is derived from this value.
+    occupation: str = ""
+
+    # Structured NPC seeds captured during the life-description scene.
+    # Each entry: {name, relation, location, descriptor, status}.  Written
+    # into the world's NPC registry at finalize time.
+    npc_seeds: List[Dict[str, Any]] = dataclasses.field(default_factory=list)
+
+    # The power slate held between the reaction-text phase of the slate
+    # scene (which rebuilds and stores the 10 candidates) and the choice
+    # phase (which reads them back).  Empty outside the slate scene.
+    pending_slate: List[Dict[str, Any]] = dataclasses.field(default_factory=list)
+    pending_slate_scene: str = ""
+
 
 class CharacterFactory:
     """Applies scene results and finalizes the character sheet."""
@@ -259,6 +275,21 @@ class CharacterFactory:
         for tag in choice_data.get("reaction_tags", []):
             if tag not in state.reaction_tags:
                 state.reaction_tags.append(tag)
+
+        # Occupation (life-description scene)
+        if "occupation" in choice_data:
+            state.occupation = choice_data["occupation"]
+
+        # NPC seeds parsed from the life-description scene
+        for seed in choice_data.get("npc_seeds", []):
+            state.npc_seeds.append(seed)
+
+        # Pending slate (two-phase slate scene: written on text apply,
+        # consumed on choice apply).  An empty list here is a valid reset.
+        if "pending_slate" in choice_data:
+            state.pending_slate = list(choice_data["pending_slate"])
+        if "pending_slate_scene" in choice_data:
+            state.pending_slate_scene = choice_data["pending_slate_scene"]
 
         state.beat_index += 1
         return state

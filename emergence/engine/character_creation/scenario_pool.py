@@ -1,9 +1,10 @@
 """Scenario pool and tag-weighted power selection for session zero.
 
-Two cinematic danger vignettes (slots 1 and 2) frame each of the power-
-selection scenes.  The player responds freeform; the engine extracts tags
-from their response, scores V2 powers against those tags, and returns the
-top-4 weighted candidates plus 2 random fillers as the 6 choices.
+One cinematic danger vignette frames the power-selection beat.  The player
+writes a freeform reaction.  The engine extracts tags from their reaction
+(gut instinct) and from their earlier life description (personality), scores
+every V2 power against the combined tag bag, and returns a slate of ten
+candidates: top-scored first, then random fillers.
 
 Sub-categories and playstyles on PowerV2 (see engine/schemas/content.py)
 provide the match surface — no new schema fields required.
@@ -157,6 +158,293 @@ SELF_DESCRIPTION_KEYWORDS: Dict[str, List[str]] = {
 
 
 # ---------------------------------------------------------------------------
+# Domain extraction — keywords → concrete skill / attribute / occupation deltas
+# ---------------------------------------------------------------------------
+# The life-description scene parses the player's prose for domain signals.
+# Each keyword yields a deterministic patch: small skill grants, attribute
+# nudges, and (for occupation-naming words) an occupation hint that's used
+# to look up the OCCUPATIONS table entry.
+#
+# Matches are case-insensitive exact word matches, same as the tag tables.
+# A word contributes at most once per extraction call even if it recurs.
+
+DOMAIN_EXTRACTION: Dict[str, Dict[str, Any]] = {
+    # --- medical ---
+    "surgeon": {
+        "skills": {"surgery": 2, "first_aid": 1, "diagnosis": 1},
+        "attribute_deltas": {"insight": 1, "perception": 1},
+        "occupation_hint": "medical",
+    },
+    "surgery": {
+        "skills": {"surgery": 1, "first_aid": 1},
+        "attribute_deltas": {},
+    },
+    "resident": {
+        "skills": {"first_aid": 1, "pharmacology": 1, "literacy": 1},
+        "attribute_deltas": {"will": 1},
+        "occupation_hint": "medical",
+    },
+    "doctor": {
+        "skills": {"first_aid": 2, "diagnosis": 1},
+        "attribute_deltas": {"insight": 1},
+        "occupation_hint": "medical",
+    },
+    "physician": {
+        "skills": {"first_aid": 2, "diagnosis": 1},
+        "attribute_deltas": {"insight": 1},
+        "occupation_hint": "medical",
+    },
+    "nurse": {
+        "skills": {"first_aid": 2, "pharmacology": 1},
+        "attribute_deltas": {"perception": 1},
+        "occupation_hint": "medical",
+    },
+    "medic": {
+        "skills": {"first_aid": 2, "diagnosis": 1},
+        "attribute_deltas": {"perception": 1},
+        "occupation_hint": "medical",
+    },
+    "paramedic": {
+        "skills": {"first_aid": 2, "diagnosis": 1},
+        "attribute_deltas": {"perception": 1, "agility": 1},
+        "occupation_hint": "medical",
+    },
+    "medical": {
+        "skills": {"first_aid": 1},
+        "attribute_deltas": {},
+        "occupation_hint": "medical",
+    },
+    "vascular": {
+        "skills": {"surgery": 1, "diagnosis": 1},
+        "attribute_deltas": {},
+    },
+
+    # --- combat / uniformed ---
+    "soldier": {
+        "skills": {"combat_ranged": 2, "combat_melee": 1, "tactics": 1},
+        "attribute_deltas": {"strength": 1, "will": 1},
+        "occupation_hint": "veteran",
+    },
+    "veteran": {
+        "skills": {"combat_melee": 1, "combat_ranged": 1, "survival": 1},
+        "attribute_deltas": {"will": 1},
+        "occupation_hint": "veteran",
+    },
+    "marine": {
+        "skills": {"combat_ranged": 2, "combat_melee": 1, "tactics": 1},
+        "attribute_deltas": {"strength": 1, "will": 1},
+        "occupation_hint": "veteran",
+    },
+    "cop": {
+        "skills": {"streetwise": 1, "intimidation": 1, "combat_ranged": 1},
+        "attribute_deltas": {"perception": 1},
+        "occupation_hint": "former badge",
+    },
+    "officer": {
+        "skills": {"streetwise": 1, "intimidation": 1},
+        "attribute_deltas": {"perception": 1},
+    },
+    "police": {
+        "skills": {"streetwise": 1, "intimidation": 1, "combat_ranged": 1},
+        "attribute_deltas": {"perception": 1},
+        "occupation_hint": "former badge",
+    },
+    "emt": {
+        "skills": {"first_aid": 2, "streetwise": 1},
+        "attribute_deltas": {"perception": 1, "agility": 1},
+        "occupation_hint": "former badge",
+    },
+
+    # --- trades / labor ---
+    "electrician": {
+        "skills": {"repair": 2, "crafting": 1},
+        "attribute_deltas": {"agility": 1, "insight": 1},
+        "occupation_hint": "tradesperson",
+    },
+    "plumber": {
+        "skills": {"repair": 2, "crafting": 1},
+        "attribute_deltas": {"agility": 1},
+        "occupation_hint": "tradesperson",
+    },
+    "mechanic": {
+        "skills": {"repair": 2, "crafting": 1},
+        "attribute_deltas": {"agility": 1, "insight": 1},
+        "occupation_hint": "tradesperson",
+    },
+    "carpenter": {
+        "skills": {"crafting": 2, "repair": 1},
+        "attribute_deltas": {"strength": 1, "agility": 1},
+        "occupation_hint": "tradesperson",
+    },
+    "engineer": {
+        "skills": {"crafting": 1, "repair": 1, "literacy": 1},
+        "attribute_deltas": {"insight": 1},
+        "occupation_hint": "tradesperson",
+    },
+    "construction": {
+        "skills": {"crafting": 1, "repair": 1},
+        "attribute_deltas": {"strength": 1},
+        "occupation_hint": "laborer",
+    },
+    "dockworker": {
+        "skills": {"survival": 1, "streetwise": 1},
+        "attribute_deltas": {"strength": 1},
+        "occupation_hint": "laborer",
+    },
+
+    # --- white-collar / academic ---
+    "lawyer": {
+        "skills": {"literacy": 2, "negotiation": 1, "bureaucracy": 1},
+        "attribute_deltas": {"insight": 1, "will": 1},
+        "occupation_hint": "white collar",
+    },
+    "analyst": {
+        "skills": {"literacy": 1, "investigation": 1, "bureaucracy": 1},
+        "attribute_deltas": {"insight": 1, "perception": 1},
+        "occupation_hint": "former federal",
+    },
+    "teacher": {
+        "skills": {"instruction": 2, "literacy": 1},
+        "attribute_deltas": {"insight": 1, "will": 1},
+        "occupation_hint": "academic",
+    },
+    "professor": {
+        "skills": {"instruction": 2, "literacy": 2, "history": 1},
+        "attribute_deltas": {"insight": 1},
+        "occupation_hint": "academic",
+    },
+    "academic": {
+        "skills": {"literacy": 1, "instruction": 1},
+        "attribute_deltas": {"insight": 1},
+        "occupation_hint": "academic",
+    },
+    "student": {
+        "skills": {"literacy": 1},
+        "attribute_deltas": {},
+    },
+    "clerk": {
+        "skills": {"bureaucracy": 1, "literacy": 1},
+        "attribute_deltas": {},
+        "occupation_hint": "former federal",
+    },
+
+    # --- service / streets ---
+    "driver": {
+        "skills": {"navigation": 1, "streetwise": 1},
+        "attribute_deltas": {"perception": 1},
+        "occupation_hint": "service worker",
+    },
+    "cook": {
+        "skills": {"cooking": 2, "streetwise": 1},
+        "attribute_deltas": {},
+        "occupation_hint": "service worker",
+    },
+    "bartender": {
+        "skills": {"streetwise": 1, "negotiation": 1},
+        "attribute_deltas": {"perception": 1},
+        "occupation_hint": "service worker",
+    },
+    "waitress": {
+        "skills": {"streetwise": 1, "negotiation": 1},
+        "attribute_deltas": {},
+        "occupation_hint": "service worker",
+    },
+    "farmer": {
+        "skills": {"farming": 2, "survival": 1, "animal_handling": 1},
+        "attribute_deltas": {"strength": 1, "will": 1},
+        "occupation_hint": "farmer",
+    },
+
+    # --- criminal ---
+    "thief": {
+        "skills": {"stealth": 2, "streetwise": 1, "lockpicking": 1},
+        "attribute_deltas": {"agility": 1},
+        "occupation_hint": "criminal",
+    },
+    "dealer": {
+        "skills": {"streetwise": 2, "negotiation": 1},
+        "attribute_deltas": {"perception": 1},
+        "occupation_hint": "criminal",
+    },
+    "smuggler": {
+        "skills": {"stealth": 1, "streetwise": 1, "navigation": 1},
+        "attribute_deltas": {"agility": 1},
+        "occupation_hint": "criminal",
+    },
+
+    # --- body / training ---
+    "martial": {
+        "skills": {"combat_melee": 2},
+        "attribute_deltas": {"agility": 1, "strength": 1},
+    },
+    "boxer": {
+        "skills": {"combat_melee": 2},
+        "attribute_deltas": {"strength": 1, "agility": 1},
+    },
+    "boxing": {
+        "skills": {"combat_melee": 1},
+        "attribute_deltas": {"strength": 1},
+    },
+    "karate": {
+        "skills": {"combat_melee": 2},
+        "attribute_deltas": {"agility": 1},
+    },
+    "taekwondo": {
+        "skills": {"combat_melee": 2},
+        "attribute_deltas": {"agility": 1},
+    },
+    "judo": {
+        "skills": {"combat_melee": 2},
+        "attribute_deltas": {"strength": 1, "agility": 1},
+    },
+    "wrestler": {
+        "skills": {"combat_melee": 1},
+        "attribute_deltas": {"strength": 1},
+    },
+    "wrestling": {
+        "skills": {"combat_melee": 1},
+        "attribute_deltas": {"strength": 1},
+    },
+    "runner": {
+        "skills": {"survival": 1},
+        "attribute_deltas": {"agility": 1},
+    },
+    "climber": {
+        "skills": {"survival": 1},
+        "attribute_deltas": {"strength": 1, "agility": 1},
+    },
+
+    # --- interests / habits ---
+    "reader": {
+        "skills": {"literacy": 2},
+        "attribute_deltas": {"insight": 1},
+    },
+    "historian": {
+        "skills": {"literacy": 1, "history": 2},
+        "attribute_deltas": {"insight": 1},
+    },
+    "history": {
+        "skills": {"history": 1},
+        "attribute_deltas": {},
+    },
+    "linguist": {
+        "skills": {"languages": 2, "literacy": 1},
+        "attribute_deltas": {"insight": 1},
+    },
+
+    # --- temperament (attributes only, no skills) ---
+    "blunt": {"skills": {}, "attribute_deltas": {"will": 1}},
+    "patient": {"skills": {}, "attribute_deltas": {"will": 1}},
+    "curious": {"skills": {"investigation": 1}, "attribute_deltas": {"perception": 1}},
+    "analytical": {"skills": {"investigation": 1}, "attribute_deltas": {"insight": 1}},
+    "pragmatic": {"skills": {}, "attribute_deltas": {"insight": 1}},
+    "loyal": {"skills": {}, "attribute_deltas": {"will": 1}},
+    "stubborn": {"skills": {}, "attribute_deltas": {"will": 1}},
+    "reckless": {"skills": {}, "attribute_deltas": {"agility": 1}},
+}
+
+
+# ---------------------------------------------------------------------------
 # Tag extraction
 # ---------------------------------------------------------------------------
 
@@ -183,7 +471,7 @@ def extract_tags(text: str, table: Optional[Dict[str, List[str]]] = None) -> Lis
 
 
 def extract_description_tags(text: str) -> List[str]:
-    """Tag extraction for scene-0 self-description — uses both tables so
+    """Tag extraction for the life-description scene — uses both tables so
     keywords that only appear in the reaction table (e.g. 'run', 'fight')
     still contribute when they show up in a self-description."""
     tags = extract_tags(text, SELF_DESCRIPTION_KEYWORDS)
@@ -191,6 +479,43 @@ def extract_description_tags(text: str) -> List[str]:
         if tag not in tags:
             tags.append(tag)
     return tags
+
+
+def extract_domain(text: str) -> Dict[str, Any]:
+    """Parse *text* through DOMAIN_EXTRACTION and return concrete deltas.
+
+    Returns a dict with:
+      - skills: Dict[str, int]     (summed across unique matching keywords)
+      - attribute_deltas: Dict[str, int]
+      - occupation_hint: Optional[str]  (first seen wins)
+
+    Matches are exact-word, case-insensitive.  Each keyword contributes at
+    most once per call; duplicate occurrences of the same word do not stack.
+    """
+    result: Dict[str, Any] = {
+        "skills": {},
+        "attribute_deltas": {},
+        "occupation_hint": None,
+    }
+    if not text:
+        return result
+    seen_words: set[str] = set()
+    for word in _WORD_RE.findall(text.lower()):
+        if word in seen_words:
+            continue
+        entry = DOMAIN_EXTRACTION.get(word)
+        if not entry:
+            continue
+        seen_words.add(word)
+        for skill, level in entry.get("skills", {}).items():
+            result["skills"][skill] = result["skills"].get(skill, 0) + level
+        for attr, delta in entry.get("attribute_deltas", {}).items():
+            result["attribute_deltas"][attr] = (
+                result["attribute_deltas"].get(attr, 0) + delta
+            )
+        if result["occupation_hint"] is None and entry.get("occupation_hint"):
+            result["occupation_hint"] = entry["occupation_hint"]
+    return result
 
 
 # ---------------------------------------------------------------------------
@@ -558,3 +883,94 @@ def pick_six(
         rng.shuffle(pad)
         result.extend(pad[: 6 - len(result)])
     return result[:6]
+
+
+def score_power_combined(
+    power: Any,
+    desc_tags: List[str],
+    reaction_tags: List[str],
+    w_desc: int = 3,
+    w_reaction: int = 2,
+) -> int:
+    """Combined score: personality (description) and gut instinct (reaction).
+
+    Each source is independently scored against the power via score_power(),
+    then weighted.  Description signals the player's baseline identity;
+    reaction signals the instinctive move they just chose under pressure.
+    Default weighting biases toward description, matching the design intent
+    that powers express who the player already is, shaded by how they react.
+    """
+    return (
+        w_desc * score_power(power, desc_tags)
+        + w_reaction * score_power(power, reaction_tags)
+    )
+
+
+def pick_ten(
+    powers: List[Any],
+    desc_tags: List[str],
+    reaction_tags: List[str],
+    rng: _random.Random,
+    w_desc: int = 3,
+    w_reaction: int = 2,
+    top_count: int = 6,
+    filler_count: int = 4,
+) -> List[Any]:
+    """Return a slate of ten V2 powers for the pick-two power beat.
+
+    Top *top_count* are the highest combined-scored candidates (desc × w_desc
+    plus reaction × w_reaction).  Remaining *filler_count* are random draws
+    from the rest of the pool.  No category exclusion — the player may pick
+    two powers from the same category.  Duplicates never appear.  If the
+    catalog is smaller than top_count + filler_count, returns everything.
+    """
+    total = top_count + filler_count
+    eligible = list(powers)
+    if len(eligible) <= total:
+        return eligible
+
+    scored = [
+        (p, score_power_combined(p, desc_tags, reaction_tags, w_desc, w_reaction))
+        for p in eligible
+    ]
+    scored.sort(key=lambda pair: pair[1], reverse=True)
+
+    top_weighted: List[Any] = []
+    leftover: List[Any] = []
+    for power, score in scored:
+        if score > 0 and len(top_weighted) < top_count:
+            top_weighted.append(power)
+        else:
+            leftover.append(power)
+
+    picked_ids = {p.id for p in top_weighted}
+    remaining = [p for p in leftover if p.id not in picked_ids]
+    fill = rng.sample(remaining, min(filler_count, len(remaining)))
+
+    result = top_weighted + fill
+    if len(result) < total:
+        # Pool was under-weighted (no tag hits); top up from remaining eligible.
+        pad = [p for p in eligible if p.id not in {x.id for x in result}]
+        rng.shuffle(pad)
+        result.extend(pad[: total - len(result)])
+    return result[:total]
+
+
+# ---------------------------------------------------------------------------
+# Unified action vignette selection
+# ---------------------------------------------------------------------------
+
+def select_action_vignette(
+    rng: _random.Random,
+    exclude_ids: Tuple[str, ...] = (),
+) -> Dict[str, Any]:
+    """Pick one onset-moment vignette for the single action scenario beat.
+
+    Draws from the slot-1 pool (first-manifestation framings), since the
+    new flow compresses power selection into a single cinematic beat where
+    both abilities surface together.
+    """
+    candidates = list(_SLOT_1_VIGNETTES)
+    usable = [v for v in candidates if v["id"] not in exclude_ids]
+    pool = usable or candidates
+    return rng.choice(pool)

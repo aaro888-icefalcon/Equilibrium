@@ -1,4 +1,13 @@
-"""Unit tests for the V2 session-zero scenarios (12-scene flow)."""
+"""Unit tests for the V2 session-zero scenarios.
+
+Covers the redesigned 13-scene flow:
+    0 IntroScene
+    1 LifeDescriptionScene
+    2 ActionScenarioScene
+    3 PowerSlateScene
+    4-7 Cast/Rider scenes
+    8-12 Survival / Location / Relationship / Faction / Vows
+"""
 
 import random
 import unittest
@@ -8,16 +17,17 @@ from emergence.engine.character_creation.character_factory import (
     CreationState,
 )
 from emergence.engine.character_creation.scenarios import (
+    ActionScenarioScene,
     FactionScenario,
     FACTION_DEMANDS,
-    IdentityScenario,
+    IntroScene,
+    LifeDescriptionScene,
     LocationScenario,
+    PowerSlateScene,
     PrimaryCastModeScenario,
     PrimaryRiderScenario,
     REGION_FACTIONS,
     RelationshipScenario,
-    Scenario1Scenario,
-    Scenario2Scenario,
     SecondaryCastModeScenario,
     SecondaryRiderScenario,
     SurvivalScenario,
@@ -32,7 +42,7 @@ from emergence.engine.character_creation.scenarios import (
 class TestMakeV2Scenes(unittest.TestCase):
     def test_scene_count(self):
         scenes = make_v2_scenes()
-        self.assertEqual(len(scenes), 12)
+        self.assertEqual(len(scenes), 13)
 
     def test_scene_ids_unique(self):
         scenes = make_v2_scenes()
@@ -41,97 +51,235 @@ class TestMakeV2Scenes(unittest.TestCase):
 
     def test_scene_order(self):
         ids = [s.scene_id for s in make_v2_scenes()]
-        self.assertEqual(ids[0], "sz_v2_identity")
-        self.assertEqual(ids[1], "sz_v2_scenario1")
-        self.assertEqual(ids[2], "sz_v2_scenario2")
+        self.assertEqual(ids[0], "sz_v2_intro")
+        self.assertEqual(ids[1], "sz_v2_life")
+        self.assertEqual(ids[2], "sz_v2_action")
+        self.assertEqual(ids[3], "sz_v2_slate")
         self.assertEqual(ids[-1], "sz_v2_vows")
 
 
-class TestIdentityScenario(unittest.TestCase):
+class TestIntroScene(unittest.TestCase):
     def setUp(self):
-        self.scene = IdentityScenario()
+        self.scene = IntroScene()
         self.state = CreationState(seed=42)
         self.factory = CharacterFactory()
         self.rng = random.Random(42)
 
-    def test_text_prompts_include_description(self):
+    def test_intro_has_framing(self):
+        framing = self.scene.get_framing(self.state)
+        self.assertGreater(len(framing), 100)
+
+    def test_intro_has_continue_choice(self):
+        choices = self.scene.get_choices(self.state)
+        self.assertEqual(len(choices), 1)
+
+    def test_intro_apply_adds_history(self):
+        result = self.scene.apply(0, self.state, self.factory, self.rng)
+        self.assertEqual(len(result.history), 1)
+
+
+class TestLifeDescriptionScene(unittest.TestCase):
+    def setUp(self):
+        self.scene = LifeDescriptionScene()
+        self.state = CreationState(seed=42)
+        self.factory = CharacterFactory()
+        self.rng = random.Random(42)
+
+    def test_text_prompts_include_description_and_npc_seeds(self):
         keys = [p["key"] for p in self.scene.text_prompts(self.state)]
         self.assertIn("name", keys)
         self.assertIn("age", keys)
         self.assertIn("description", keys)
+        self.assertIn("npc_seeds", keys)
 
-    def test_apply_text_stores_description_and_tags(self):
+    def test_no_choice_menu(self):
+        self.assertEqual(self.scene.get_choices(self.state), [])
+
+    def test_apply_text_stores_name_age_description(self):
         result = self.scene.apply_text(
-            {"name": "Abhishek", "age": "30",
-             "description": "blunt surgeon, protective and analytical"},
+            {
+                "name": "Abhishek",
+                "age": "30",
+                "description": "blunt surgeon, curious and analytical",
+            },
             self.state,
             self.factory,
             self.rng,
         )
         self.assertEqual(result.name, "Abhishek")
         self.assertEqual(result.age_at_onset, 30)
-        self.assertIn("blunt", result.self_description.lower())
-        self.assertGreater(len(result.reaction_tags), 0)
+        self.assertIn("surgeon", result.self_description)
+
+    def test_apply_text_derives_surgeon_skills(self):
+        result = self.scene.apply_text(
+            {
+                "name": "A",
+                "age": "30",
+                "description": "surgeon with curious patient temperament",
+            },
+            self.state,
+            self.factory,
+            self.rng,
+        )
+        self.assertIn("surgery", result.skills)
+        self.assertGreater(result.skills["surgery"], 0)
+
+    def test_apply_text_sets_occupation(self):
+        result = self.scene.apply_text(
+            {"name": "A", "age": "30", "description": "surgeon"},
+            self.state,
+            self.factory,
+            self.rng,
+        )
+        self.assertEqual(result.occupation, "medical")
+
+    def test_apply_text_parses_npc_seeds_json(self):
+        result = self.scene.apply_text(
+            {
+                "name": "A",
+                "age": "30",
+                "description": "surgeon",
+                "npc_seeds": (
+                    '[{"name":"Akhil","relation":"brother",'
+                    '"location":"Mount Sinai","descriptor":"med student",'
+                    '"status":"alive"}]'
+                ),
+            },
+            self.state,
+            self.factory,
+            self.rng,
+        )
+        self.assertEqual(len(result.npc_seeds), 1)
+        self.assertEqual(result.npc_seeds[0]["name"], "Akhil")
+
+    def test_apply_text_empty_npc_seeds_is_ok(self):
+        result = self.scene.apply_text(
+            {"name": "A", "age": "30", "description": "surgeon", "npc_seeds": ""},
+            self.state,
+            self.factory,
+            self.rng,
+        )
+        self.assertEqual(result.npc_seeds, [])
+
+    def test_apply_text_invalid_npc_seeds_json_is_ignored(self):
+        result = self.scene.apply_text(
+            {
+                "name": "A",
+                "age": "30",
+                "description": "surgeon",
+                "npc_seeds": "this is not JSON",
+            },
+            self.state,
+            self.factory,
+            self.rng,
+        )
+        self.assertEqual(result.npc_seeds, [])
 
 
-class TestScenario1Scenario(unittest.TestCase):
+class TestActionScenarioScene(unittest.TestCase):
     def setUp(self):
-        self.scene = Scenario1Scenario()
+        self.scene = ActionScenarioScene()
         self.state = CreationState(seed=42)
         self.factory = CharacterFactory()
         self.rng = random.Random(42)
 
-    def test_prepare_selects_slot_1_vignette(self):
+    def test_prepare_picks_slot_1_vignette(self):
         self.scene.prepare(self.state, self.rng)
         self.assertTrue(self.scene._vignette.get("id", "").startswith("v1_"))
 
-    def test_always_returns_six_choices(self):
+    def test_no_menu_only_reaction(self):
         self.scene.prepare(self.state, self.rng)
-        self.assertEqual(len(self.scene.get_choices(self.state)), 6)
+        self.assertEqual(self.scene.get_choices(self.state), [])
+        self.assertTrue(self.scene.needs_text_input())
 
-    def test_apply_commits_v2_power_at_tier_3(self):
+    def test_apply_text_stores_reaction_tags(self):
         self.scene.prepare(self.state, self.rng)
-        result = self.scene.apply(0, self.state, self.factory, self.rng)
-        self.assertEqual(len(result.powers), 1)
-        power = result.powers[0]
-        self.assertEqual(power["slot"], "anchor")
-        self.assertEqual(power["tier"], 3)
-        self.assertIn(power["category"], V2_CATEGORY_LABELS)
-        self.assertEqual(result.tier, 3)
-        self.assertEqual(result.tier_ceiling, 5)
+        result = self.scene.apply_text(
+            {"reaction": "I hide and watch"},
+            self.state,
+            self.factory,
+            self.rng,
+        )
+        self.assertIn("spatial", result.reaction_tags)
+
+    def test_apply_text_does_not_commit_power(self):
+        self.scene.prepare(self.state, self.rng)
+        result = self.scene.apply_text(
+            {"reaction": "I fight"},
+            self.state,
+            self.factory,
+            self.rng,
+        )
+        self.assertEqual(len(result.powers), 0)
 
 
-class TestScenario2Scenario(unittest.TestCase):
+class TestPowerSlateScene(unittest.TestCase):
     def setUp(self):
+        self.scene = PowerSlateScene()
         self.state = CreationState(seed=42)
+        # Seed the state with description and reaction tags so the slate
+        # has tag-weighted options.
+        self.state.self_description = "surgeon, protective and analytical"
+        self.state.reaction_tags = ["cognitive", "perceptive"]
         self.factory = CharacterFactory()
-
-        # Seed scene 1 first so scene 2 knows what to exclude.
-        s1 = Scenario1Scenario()
-        s1.prepare(self.state, random.Random(42))
-        self.state = s1.apply(0, self.state, self.factory, random.Random(42))
-
-        self.scene = Scenario2Scenario()
         self.rng = random.Random(42)
 
-    def test_prepare_selects_slot_2_vignette(self):
+    def test_prepare_yields_ten_options(self):
         self.scene.prepare(self.state, self.rng)
-        self.assertTrue(self.scene._vignette.get("id", "").startswith("v2_"))
+        self.assertEqual(len(self.scene._options), 10)
 
-    def test_options_exclude_primary_category(self):
-        primary = self.state.power_category_primary
+    def test_apply_text_persists_pending_slate(self):
         self.scene.prepare(self.state, self.rng)
-        for p in self.scene._options:
-            self.assertNotEqual(p.category, primary)
+        result = self.scene.apply_text(
+            {"reaction": "I reach for the nearest thing"},
+            self.state, self.factory, self.rng,
+        )
+        self.assertEqual(len(result.pending_slate), 10)
+        self.assertEqual(result.pending_slate_scene, self.scene.scene_id)
 
-    def test_apply_commits_secondary(self):
+    def test_apply_multi_commits_two_powers(self):
         self.scene.prepare(self.state, self.rng)
-        result = self.scene.apply(0, self.state, self.factory, self.rng)
-        anchor = [p for p in result.powers if p["slot"] == "anchor"]
-        secondary = [p for p in result.powers if p["slot"] == "secondary"]
-        self.assertEqual(len(anchor), 1)
-        self.assertEqual(len(secondary), 1)
-        self.assertNotEqual(anchor[0]["category"], secondary[0]["category"])
+        # Persist the slate first (two-phase flow).
+        state = self.scene.apply_text({}, self.state, self.factory, self.rng)
+        result = self.scene.apply_multi(
+            [0, 3], state, self.factory, self.rng,
+        )
+        self.assertEqual(len(result.powers), 2)
+        slots = {p.get("slot") for p in result.powers}
+        self.assertIn("primary", slots)
+        self.assertIn("secondary", slots)
+
+    def test_apply_multi_clears_pending_slate(self):
+        self.scene.prepare(self.state, self.rng)
+        state = self.scene.apply_text({}, self.state, self.factory, self.rng)
+        result = self.scene.apply_multi(
+            [0, 1], state, self.factory, self.rng,
+        )
+        self.assertEqual(result.pending_slate, [])
+        self.assertEqual(result.pending_slate_scene, "")
+
+    def test_apply_single_deterministic_second_pick(self):
+        """apply(idx) used by the SessionZero orchestrator picks a
+        deterministic second slot so two distinct powers land."""
+        self.scene.prepare(self.state, self.rng)
+        state = self.scene.apply_text({}, self.state, self.factory, self.rng)
+        result = self.scene.apply(0, state, self.factory, self.rng)
+        self.assertEqual(len(result.powers), 2)
+        ids = [p.get("power_id") for p in result.powers]
+        self.assertEqual(len(set(ids)), 2)
+
+    def test_same_category_allowed(self):
+        """No category exclusion: both picks may share a category."""
+        self.scene.prepare(self.state, self.rng)
+        state = self.scene.apply_text({}, self.state, self.factory, self.rng)
+        # Force the slate to include two powers of the same category.
+        # We rely on the slate being non-trivial after seeding; the mere
+        # absence of an exclusion check in apply_multi is the invariant.
+        result = self.scene.apply_multi(
+            [0, 1], state, self.factory, self.rng,
+        )
+        self.assertEqual(len(result.powers), 2)
+        # No assertion on categories differing.
 
 
 class TestAdditiveSkills(unittest.TestCase):
@@ -213,22 +361,24 @@ class TestVowScenario(unittest.TestCase):
 
 
 class TestPowerConfigScenarios(unittest.TestCase):
-    """Cast-mode / rider selection scenes use V2 ids directly."""
+    """Cast-mode / rider selection scenes use V2 ids directly.
+
+    The new flow commits both powers via PowerSlateScene; these tests
+    build a minimal state with a primary + secondary power row and
+    confirm the config scenes find their slot.
+    """
 
     def setUp(self):
         self.factory = CharacterFactory()
         self.rng = random.Random(42)
         self.state = CreationState(seed=42)
+        self.state.self_description = "surgeon, blunt and analytical"
+        self.state.reaction_tags = ["cognitive", "perceptive"]
 
-        # Build an anchor + secondary via the scenario scenes, so the
-        # power_id values in state match real V2 entries.
-        s1 = Scenario1Scenario()
-        s1.prepare(self.state, random.Random(42))
-        self.state = s1.apply(0, self.state, self.factory, random.Random(42))
-
-        s2 = Scenario2Scenario()
-        s2.prepare(self.state, random.Random(43))
-        self.state = s2.apply(0, self.state, self.factory, random.Random(43))
+        slate_scene = PowerSlateScene()
+        slate_scene.prepare(self.state, random.Random(42))
+        self.state = slate_scene.apply_text({}, self.state, self.factory, random.Random(42))
+        self.state = slate_scene.apply_multi([0, 1], self.state, self.factory, random.Random(42))
 
     def test_primary_cast_mode_prepare_finds_options(self):
         scene = PrimaryCastModeScenario()
