@@ -4,16 +4,46 @@
     "display_name": "Lesser Corruption",
     "register": "eldritch",
     "tier": 3,
-    "attribute_defaults": {"strength": 8, "agility": 6, "perception": 6, "will": 10, "insight": 6, "might": 8},
-    "condition_track_defaults": {"physical": 0, "mental": 0, "social": 0},
-    "condition_track_max": {"physical": 5, "mental": 5, "social": 3},
-    "affinity_table": {"physical_kinetic": "neutral", "perceptual_mental": "resistant", "matter_energy": "neutral", "biological_vital": "neutral", "auratic": "resistant", "temporal_spatial": "neutral", "eldritch_corruptive": "absorb"},
+    "attribute_defaults": {
+      "strength": 8,
+      "agility": 6,
+      "perception": 6,
+      "will": 10,
+      "insight": 6,
+      "might": 8
+    },
+    "condition_track_defaults": {
+      "physical": 0,
+      "mental": 0,
+      "social": 0
+    },
+    "condition_track_max": {
+      "physical": 5,
+      "mental": 5,
+      "social": 3
+    },
+    "affinity_table": {
+      "kinetic": "neutral",
+      "cognitive": "resistant",
+      "material": "neutral",
+      "somatic": "neutral",
+      "spatial": "neutral",
+      "paradoxic": "absorb"
+    },
     "ai_profile": "opportunist",
     "exposure_max": 4,
-    "abilities": ["whispered_offer", "wrong_touch", "inhuman_endurance"],
-    "powers": ["curse_mark"],
+    "abilities": [
+      "whispered_offer",
+      "wrong_touch",
+      "inhuman_endurance"
+    ],
+    "powers": [
+      "curse_mark"
+    ],
     "retreat_conditions": [],
-    "parley_conditions": ["relinquish_faith"],
+    "parley_conditions": [
+      "relinquish_faith"
+    ],
     "description": "He had been a man a month ago. He still almost was.",
     "tactics_note": "Offers corruption bargains mid-fight."
   },
@@ -22,14 +52,43 @@
     "display_name": "Greater Corruption",
     "register": "eldritch",
     "tier": 5,
-    "attribute_defaults": {"strength": 10, "agility": 8, "perception": 8, "will": 12, "insight": 10, "might": 10},
-    "condition_track_defaults": {"physical": 0, "mental": 0, "social": 0},
-    "condition_track_max": {"physical": 6, "mental": 6, "social": 4},
-    "affinity_table": {"physical_kinetic": "resistant", "perceptual_mental": "resistant", "matter_energy": "neutral", "biological_vital": "resistant", "auratic": "resistant", "temporal_spatial": "neutral", "eldritch_corruptive": "absorb"},
+    "attribute_defaults": {
+      "strength": 10,
+      "agility": 8,
+      "perception": 8,
+      "will": 12,
+      "insight": 10,
+      "might": 10
+    },
+    "condition_track_defaults": {
+      "physical": 0,
+      "mental": 0,
+      "social": 0
+    },
+    "condition_track_max": {
+      "physical": 6,
+      "mental": 6,
+      "social": 4
+    },
+    "affinity_table": {
+      "kinetic": "resistant",
+      "cognitive": "resistant",
+      "material": "neutral",
+      "somatic": "resistant",
+      "spatial": "neutral",
+      "paradoxic": "absorb"
+    },
     "ai_profile": "defensive",
     "exposure_max": 6,
-    "abilities": ["sovereign_proxy", "undertow_pull", "litany"],
-    "powers": ["whispered_bargain", "deep_pact"],
+    "abilities": [
+      "sovereign_proxy",
+      "undertow_pull",
+      "litany"
+    ],
+    "powers": [
+      "whispered_bargain",
+      "deep_pact"
+    ],
     "retreat_conditions": [],
     "parley_conditions": [],
     "description": "What he was now had been her sister. It was not now.",
@@ -40,15 +99,43 @@
     "display_name": "Voice from Elsewhere",
     "register": "eldritch",
     "tier": 5,
-    "attribute_defaults": {"strength": 4, "agility": 8, "perception": 12, "will": 12, "insight": 12, "might": 4},
-    "condition_track_defaults": {"physical": 0, "mental": 0, "social": 0},
-    "condition_track_max": {"physical": 1, "mental": 5, "social": 1},
-    "affinity_table": {"physical_kinetic": "immune", "perceptual_mental": "neutral", "matter_energy": "resistant", "biological_vital": "neutral", "auratic": "vulnerable", "temporal_spatial": "vulnerable", "eldritch_corruptive": "neutral"},
+    "attribute_defaults": {
+      "strength": 4,
+      "agility": 8,
+      "perception": 12,
+      "will": 12,
+      "insight": 12,
+      "might": 4
+    },
+    "condition_track_defaults": {
+      "physical": 0,
+      "mental": 0,
+      "social": 0
+    },
+    "condition_track_max": {
+      "physical": 1,
+      "mental": 5,
+      "social": 1
+    },
+    "affinity_table": {
+      "kinetic": "immune",
+      "cognitive": "vulnerable",
+      "material": "resistant",
+      "somatic": "neutral",
+      "spatial": "vulnerable",
+      "paradoxic": "neutral"
+    },
     "ai_profile": "tactical",
     "exposure_max": 5,
-    "abilities": ["whispered_truth", "unvoice", "wrong_name"],
+    "abilities": [
+      "whispered_truth",
+      "unvoice",
+      "wrong_name"
+    ],
     "powers": [],
-    "retreat_conditions": ["dawn_or_lead_lined"],
+    "retreat_conditions": [
+      "dawn_or_lead_lined"
+    ],
     "parley_conditions": [],
     "description": "Nothing stood there. Something was speaking.",
     "tactics_note": "Mental assault; fades at dawn or in lead-lined zones."
@@ -58,16 +145,47 @@
     "display_name": "Things That Knew",
     "register": "eldritch",
     "tier": 6,
-    "attribute_defaults": {"strength": 10, "agility": 6, "perception": 12, "will": 12, "insight": 12, "might": 10},
-    "condition_track_defaults": {"physical": 0, "mental": 0, "social": 0},
-    "condition_track_max": {"physical": 5, "mental": 6, "social": 5},
-    "affinity_table": {"physical_kinetic": "resistant", "perceptual_mental": "resistant", "matter_energy": "neutral", "biological_vital": "neutral", "auratic": "neutral", "temporal_spatial": "neutral", "eldritch_corruptive": "absorb"},
+    "attribute_defaults": {
+      "strength": 10,
+      "agility": 6,
+      "perception": 12,
+      "will": 12,
+      "insight": 12,
+      "might": 10
+    },
+    "condition_track_defaults": {
+      "physical": 0,
+      "mental": 0,
+      "social": 0
+    },
+    "condition_track_max": {
+      "physical": 5,
+      "mental": 6,
+      "social": 5
+    },
+    "affinity_table": {
+      "kinetic": "resistant",
+      "cognitive": "resistant",
+      "material": "neutral",
+      "somatic": "neutral",
+      "spatial": "neutral",
+      "paradoxic": "absorb"
+    },
     "ai_profile": "tactical",
     "exposure_max": 6,
-    "abilities": ["recite_name", "multi_limb_strike", "witness_without_body"],
-    "powers": ["curse_mark", "whispered_bargain"],
+    "abilities": [
+      "recite_name",
+      "multi_limb_strike",
+      "witness_without_body"
+    ],
+    "powers": [
+      "curse_mark",
+      "whispered_bargain"
+    ],
     "retreat_conditions": [],
-    "parley_conditions": ["bargain_accepted"],
+    "parley_conditions": [
+      "bargain_accepted"
+    ],
     "description": "It did not look at her. It had seen her.",
     "tactics_note": "Knows true names; present in multiple zones."
   },
@@ -76,15 +194,43 @@
     "display_name": "The One Who Returns",
     "register": "eldritch",
     "tier": 6,
-    "attribute_defaults": {"strength": 10, "agility": 12, "perception": 10, "will": 8, "insight": 8, "might": 12},
-    "condition_track_defaults": {"physical": 0, "mental": 0, "social": 0},
-    "condition_track_max": {"physical": 6, "mental": 5, "social": 4},
-    "affinity_table": {"physical_kinetic": "resistant", "perceptual_mental": "neutral", "matter_energy": "neutral", "biological_vital": "resistant", "auratic": "neutral", "temporal_spatial": "neutral", "eldritch_corruptive": "absorb"},
+    "attribute_defaults": {
+      "strength": 10,
+      "agility": 12,
+      "perception": 10,
+      "will": 8,
+      "insight": 8,
+      "might": 12
+    },
+    "condition_track_defaults": {
+      "physical": 0,
+      "mental": 0,
+      "social": 0
+    },
+    "condition_track_max": {
+      "physical": 6,
+      "mental": 5,
+      "social": 4
+    },
+    "affinity_table": {
+      "kinetic": "resistant",
+      "cognitive": "neutral",
+      "material": "neutral",
+      "somatic": "resistant",
+      "spatial": "neutral",
+      "paradoxic": "absorb"
+    },
     "ai_profile": "opportunist",
     "exposure_max": 7,
-    "abilities": ["first_wound_healed", "familiar_path", "last_death_echo"],
+    "abilities": [
+      "first_wound_healed",
+      "familiar_path",
+      "last_death_echo"
+    ],
     "powers": [],
-    "retreat_conditions": ["phy_gte_6"],
+    "retreat_conditions": [
+      "phy_gte_6"
+    ],
     "parley_conditions": [],
     "description": "She had killed it last autumn. It had taken the same steps getting here.",
     "tactics_note": "Heals first wound; knows terrain; once-per-scene damage negation."
@@ -94,16 +240,47 @@
     "display_name": "The Pact-Touched",
     "register": "eldritch",
     "tier": 7,
-    "attribute_defaults": {"strength": 8, "agility": 8, "perception": 10, "will": 12, "insight": 12, "might": 10},
-    "condition_track_defaults": {"physical": 0, "mental": 0, "social": 0},
-    "condition_track_max": {"physical": 5, "mental": 6, "social": 5},
-    "affinity_table": {"physical_kinetic": "resistant", "perceptual_mental": "resistant", "matter_energy": "neutral", "biological_vital": "neutral", "auratic": "resistant", "temporal_spatial": "neutral", "eldritch_corruptive": "absorb"},
+    "attribute_defaults": {
+      "strength": 8,
+      "agility": 8,
+      "perception": 10,
+      "will": 12,
+      "insight": 12,
+      "might": 10
+    },
+    "condition_track_defaults": {
+      "physical": 0,
+      "mental": 0,
+      "social": 0
+    },
+    "condition_track_max": {
+      "physical": 5,
+      "mental": 6,
+      "social": 5
+    },
+    "affinity_table": {
+      "kinetic": "resistant",
+      "cognitive": "resistant",
+      "material": "neutral",
+      "somatic": "neutral",
+      "spatial": "neutral",
+      "paradoxic": "absorb"
+    },
     "ai_profile": "tactical",
     "exposure_max": 8,
-    "abilities": ["pact_channel", "mark_all", "patron_intervention"],
-    "powers": ["deep_pact", "sovereign_voice"],
+    "abilities": [
+      "pact_channel",
+      "mark_all",
+      "patron_intervention"
+    ],
+    "powers": [
+      "deep_pact",
+      "sovereign_voice"
+    ],
     "retreat_conditions": [],
-    "parley_conditions": ["patron_mentioned_by_name"],
+    "parley_conditions": [
+      "patron_mentioned_by_name"
+    ],
     "description": "The voice was his. What came out between words was not.",
     "tactics_note": "Attacker-at-range; relies on patron."
   }

@@ -33,18 +33,6 @@ class PowerCategory(str, Enum):
     PARADOXIC = "paradoxic"
 
 
-# Migration mapping from v1 categories to v2 broads
-CATEGORY_MAP_V1_TO_V2 = {
-    "physical_kinetic": "kinetic",
-    "perceptual_mental": "cognitive",
-    "matter_energy": "material",
-    "biological_vital": "somatic",
-    "temporal_spatial": "spatial",
-    "eldritch_corruptive": "paradoxic",
-    "auratic": "cognitive",  # merged into cognitive
-}
-
-
 class ConditionTrack(str, Enum):
     PHYSICAL = "physical"
     MENTAL = "mental"

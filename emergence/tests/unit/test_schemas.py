@@ -45,8 +45,8 @@ class TestCharacterSheetRoundTrip(unittest.TestCase):
             condition_tracks={"physical": 2, "mental": 1, "social": 0},
             harm=[Harm(tier=2, description="deep cut", persistent=True, source="combat", date_acquired="T+1y")],
             powers=["kin_push", "hard_skin"],
-            power_category_primary="physical_kinetic",
-            power_category_secondary="biological_vital",
+            power_category_primary="kinetic",
+            power_category_secondary="somatic",
             tier=3, tier_ceiling=5,
             breakthroughs=[Breakthrough(date="T+1y", from_tier=2, to_tier=3, cost="scar", trigger="near_death")],
             heat={"iron_crown": 2, "bourse": -1},
@@ -96,7 +96,7 @@ class TestCombatantRoundTrip(unittest.TestCase):
             harm=[], powers=["kin_push"], tier=2, corruption=0, statuses=[],
             side="enemy", ai_profile="aggressive",
             exposure_track=0, exposure_max=3,
-            affinity_table={"physical_kinetic": "neutral", "eldritch_corruptive": "vulnerable"},
+            affinity_table={"kinetic": "neutral", "paradoxic": "vulnerable"},
             abilities=["melee_crude", "rifle_shot"],
             template_id="human_scavenger_raider",
             retreat_conditions=["phy >= 3/5"],
@@ -241,7 +241,7 @@ class TestWorldSchemaRoundTrips(unittest.TestCase):
             id="npc_chen", display_name="Chen", role="mechanic",
             faction_affiliation={"primary": "bourse", "secondary": []},
             location="yonkers_market", species="silver_hand", age=35,
-            manifestation=NpcManifest(category="matter_energy", tier=2),
+            manifestation=NpcManifest(category="material", tier=2),
             personality_traits=["quiet", "precise"],
             knowledge=[NpcKnowledge(topic="repairs", detail="pre-onset vehicles")],
             memory=[NpcMemory(date="T+1y", event="met player", emotional_weight=3)],
@@ -315,10 +315,10 @@ class TestWorldSchemaRoundTrips(unittest.TestCase):
 class TestContentSchemaRoundTrips(unittest.TestCase):
     def test_power(self):
         p = Power(
-            id="kin_push", name="Kinetic Push", category="physical_kinetic",
+            id="kin_push", name="Kinetic Push", category="kinetic",
             tier=1, cost=PowerCost(condition={"physical": 1}),
             effect=PowerEffect(type="damage", parameters={"base": 6, "push_zones": 1}),
-            damage_type="physical_kinetic",
+            damage_type="kinetic",
             description="Force push, displaces target one zone.",
         )
         d = p.to_dict()
@@ -384,7 +384,7 @@ class TestCompleteWorldStateRoundTrip(unittest.TestCase):
         loc = Location(id="yonkers", display_name="Yonkers", type="town", economic_state="sufficient")
         clock = Clock(id="eldritch", display_name="Eldritch Pressure", current_segment=2, total_segments=8)
         char = CharacterSheet(name="Ana", species="human", tier=3, tier_ceiling=5,
-                              power_category_primary="physical_kinetic", location="yonkers")
+                              power_category_primary="kinetic", location="yonkers")
 
         bundle = {
             "world": ws.to_dict(),

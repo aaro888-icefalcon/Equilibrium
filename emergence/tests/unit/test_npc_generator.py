@@ -34,8 +34,8 @@ class TestGenerateNpc(unittest.TestCase):
     def test_manifestation_has_category(self):
         npc = generate_npc(rng=random.Random(42))
         self.assertIn(npc.manifestation.category, [
-            "physical", "perceptual", "matter_energy",
-            "biological", "auratic", "temporal_spatial", "eldritch",
+            "kinetic", "cognitive", "material",
+            "somatic", "spatial", "paradoxic",
         ])
 
     def test_age_in_range(self):

@@ -56,15 +56,15 @@ BREAKTHROUGH_MARKS = {
     "U3": {"name": "Limp/scar/chronic", "effects": {"persistent_harm_upgrade": True, "attribute_penalty": -1}},
 }
 
-# Category → mark pool mapping
+# V2 broad → mark pool mapping.  Perceptual/mental + auratic V1 marks
+# both map into the cognitive broad, so that pool carries 8 entries.
 MARK_POOLS = {
-    "physical_kinetic": ["P1", "P2", "P3", "P4"],
-    "perceptual_mental": ["M1", "M2", "M3", "M4"],
-    "matter_energy": ["E1", "E2", "E3", "E4"],
-    "biological_vital": ["B1", "B2", "B3", "B4"],
-    "auratic": ["A1", "A2", "A3", "A4"],
-    "temporal_spatial": ["T1", "T2", "T3", "T4"],
-    "eldritch_corruptive": ["X1", "X2", "X3", "X4"],
+    "kinetic":   ["P1", "P2", "P3", "P4"],
+    "cognitive": ["M1", "M2", "M3", "M4", "A1", "A2", "A3", "A4"],
+    "material":  ["E1", "E2", "E3", "E4"],
+    "somatic":   ["B1", "B2", "B3", "B4"],
+    "spatial":   ["T1", "T2", "T3", "T4"],
+    "paradoxic": ["X1", "X2", "X3", "X4"],
 }
 
 
@@ -208,7 +208,7 @@ class BreakthroughEngine:
         will = character.get("attributes", {}).get("will", 6)
         might = character.get("attributes", {}).get("might", 6)
         insight = character.get("attributes", {}).get("insight", 6)
-        primary_cat = character.get("primary_category", "physical_kinetic")
+        primary_cat = character.get("primary_category", "kinetic")
 
         # Determine if roll succeeds
         success = True
@@ -242,7 +242,7 @@ class BreakthroughEngine:
             corruption = 1
             if bt_type == "breadth":
                 corruption += 1
-            side_effects.append("biased to eldritch_corruptive")
+            side_effects.append("biased to paradoxic")
 
         elif cond == 4:  # Substance: Will check vs DC 10
             roll = rng.randint(1, will)

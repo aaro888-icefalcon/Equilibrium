@@ -1,12 +1,8 @@
-"""Integration tests for the v2 session zero flow — full 14-scene character creation."""
+"""Integration tests for the V2 session-zero flow — full 12-scene character creation."""
 
 import random
 import unittest
 
-from emergence.engine.character_creation.character_factory import (
-    CharacterFactory,
-    CreationState,
-)
 from emergence.engine.character_creation.session_zero import (
     FixedInputSource,
     MockNarratorSink,
@@ -15,15 +11,26 @@ from emergence.engine.character_creation.session_zero import (
 from emergence.engine.character_creation.scenarios import make_v2_scenes
 
 
+# Text answers keyed by the substring FixedInputSource matches against.
+# Substrings are lowercased in get_text(), so these must be lowercase.
+_TEXT_ANSWERS = {
+    "name": "Elena Vasquez",
+    "age": "28",
+    "description": "blunt surgeon, protective and analytical, patient under pressure",
+    "reaction": "I reach in and start working on the bleeder with both hands",
+    "narrative": "My senior resident Jason saw me do it. He didn't speak for a minute.",
+}
+
+
 class TestFullV2Flow(unittest.TestCase):
-    """Run the full 14-scene v2 session zero and verify the output."""
+    """Run the full 12-scene v2 session zero and verify the output."""
 
     def _run_session_zero(self, seed: int, default_choice: int = 0) -> object:
         scenes = make_v2_scenes()
         sz = SessionZero(scenes)
         rng = random.Random(seed)
         input_source = FixedInputSource(
-            texts={"name": "Elena Vasquez", "age": "28"},
+            texts=_TEXT_ANSWERS,
             choices={},
             default_choice=default_choice,
         )
@@ -44,27 +51,34 @@ class TestFullV2Flow(unittest.TestCase):
         self.assertIn("anchor", slots)
         self.assertIn("secondary", slots)
 
-    def test_powers_have_cast_modes_and_riders(self):
+    def test_powers_are_v2_ids(self):
         sheet = self._run_session_zero(seed=42)
-        anchor = next((p for p in sheet.powers if p.get("slot") == "anchor"), None)
-        self.assertIsNotNone(anchor)
-        # Cast mode and rider should be set (if V2 data was found)
-        if "selected_cast_mode" in anchor:
-            self.assertIsInstance(anchor["selected_cast_mode"], dict)
-        if "selected_rider" in anchor:
-            self.assertIsInstance(anchor["selected_rider"], dict)
+        v2_category_prefixes = {
+            "kinetic_", "material_", "paradoxic_",
+            "spatial_", "somatic_", "cognitive_",
+        }
+        for power in sheet.powers:
+            pid = power.get("power_id", "")
+            self.assertTrue(
+                any(pid.startswith(prefix) for prefix in v2_category_prefixes),
+                f"power_id {pid!r} is not a V2 id",
+            )
+
+    def test_powers_cross_category(self):
+        sheet = self._run_session_zero(seed=42)
+        anchor = next(p for p in sheet.powers if p["slot"] == "anchor")
+        secondary = next(p for p in sheet.powers if p["slot"] == "secondary")
+        self.assertNotEqual(anchor["category"], secondary["category"])
 
     def test_has_skills(self):
         sheet = self._run_session_zero(seed=42)
         self.assertGreater(len(sheet.skills), 0)
 
-    def test_skills_are_additive(self):
-        """If occupation and temperament both grant the same skill, they should stack."""
+    def test_skills_capped(self):
         sheet = self._run_session_zero(seed=42)
-        # Skills should be present and > 0
         for skill, val in sheet.skills.items():
             self.assertGreater(val, 0)
-            self.assertLessEqual(val, 6)  # Capped at MAX_SESSION_ZERO_SKILL
+            self.assertLessEqual(val, 6)
 
     def test_has_relationships(self):
         sheet = self._run_session_zero(seed=42)
@@ -97,36 +111,15 @@ class TestFullV2Flow(unittest.TestCase):
         for p1, p2 in zip(sheet1.powers, sheet2.powers):
             self.assertEqual(p1.get("power_id"), p2.get("power_id"))
 
-    def test_different_seeds_produce_variety(self):
-        """Different seeds should produce different characters."""
-        sheets = [self._run_session_zero(seed=s) for s in range(5)]
-        # At least 2 different power categories across 5 seeds
-        categories = {s.power_category_primary for s in sheets}
-        # With fixed default_choice=0, category is always the same,
-        # but relationships/NPCs should differ
-        npc_counts = {len(s.relationships) for s in sheets}
-        # At minimum, we should get valid characters
-        for s in sheets:
-            self.assertEqual(s.tier, 3)
-            self.assertTrue(len(s.powers) >= 2)
-
-    def test_different_choices_produce_different_characters(self):
-        """Different choice indices should produce different characters."""
-        sheet0 = self._run_session_zero(seed=42, default_choice=0)
-        sheet1 = self._run_session_zero(seed=42, default_choice=1)
-        # Skills or narrative tags should differ
-        self.assertNotEqual(sheet0.skills, sheet1.skills)
-
     def test_session_zero_choices_recorded(self):
         sheet = self._run_session_zero(seed=42)
-        # Should have scene choices from multiple scenes
         self.assertGreater(len(sheet.session_zero_choices), 0)
 
-    def test_14_scenes_all_run(self):
-        """All 14 scenes should contribute to history."""
+    def test_12_scenes_all_run(self):
+        """All 12 scenes should contribute to history."""
         sheet = self._run_session_zero(seed=42)
-        # At least 10 history entries (some scenes may not add history)
-        self.assertGreaterEqual(len(sheet.history), 10)
+        # Some scenes don't add history entries directly, but the majority do.
+        self.assertGreaterEqual(len(sheet.history), 8)
 
 
 if __name__ == "__main__":

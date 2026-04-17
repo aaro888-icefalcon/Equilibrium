@@ -108,14 +108,15 @@ _TIER_PYRAMID = {
     10: 0.00005,
 }
 
+# NPC manifestation weights across the 6 V2 broads.  Cognitive absorbs
+# the legacy perceptual + auratic slices; the rest are mapped 1:1.
 _DOMAIN_FRACTIONS = {
-    "physical": 0.28,
-    "perceptual": 0.15,
-    "matter_energy": 0.14,
-    "biological": 0.14,
-    "auratic": 0.12,
-    "temporal_spatial": 0.09,
-    "eldritch": 0.015,
+    "kinetic":   0.28,
+    "cognitive": 0.27,
+    "material":  0.14,
+    "somatic":   0.14,
+    "spatial":   0.09,
+    "paradoxic": 0.015,
 }
 
 # ---------------------------------------------------------------------------

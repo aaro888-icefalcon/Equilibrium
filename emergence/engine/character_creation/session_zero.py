@@ -128,6 +128,10 @@ class Scene:
         """Whether this scene needs free-text input before choices."""
         return False
 
+    def text_prompts(self, state: CreationState) -> List[Dict[str, str]]:
+        """Return prompts for freeform text input. Each item: {"key": str, "prompt": str}."""
+        return []
+
     def apply_text(
         self,
         text_inputs: Dict[str, str],
@@ -176,14 +180,13 @@ class SessionZero:
 
             # Handle text input if needed
             if scene.needs_text_input():
-                text_inputs = {}
-                if "opening" in scene.scene_id.lower() or scene.scene_id in ("sz_0", "sz_v2_identity"):
-                    name = input_source.get_text("Tell me your name.")
-                    age_str = input_source.get_text(
-                        "Tell me your age on the day everything stopped."
-                    )
-                    text_inputs["name"] = name
-                    text_inputs["age"] = age_str
+                text_inputs: Dict[str, str] = {}
+                for prompt_spec in scene.text_prompts(state):
+                    key = prompt_spec.get("key", "")
+                    prompt = prompt_spec.get("prompt", key)
+                    if not key:
+                        continue
+                    text_inputs[key] = input_source.get_text(prompt)
                 state = scene.apply_text(text_inputs, state, self.factory, rng)
 
             # Present choices and get selection

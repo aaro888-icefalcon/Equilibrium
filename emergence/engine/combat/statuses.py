@@ -98,7 +98,7 @@ class StatusEngine:
                     "type": "damage",
                     "track": "mental",
                     "amount": 1,
-                    "damage_type": "eldritch_corruptive",
+                    "damage_type": "paradoxic",
                     "source": "corrupted_sovereign_perception",
                 })
 
@@ -117,7 +117,7 @@ class StatusEngine:
                 "type": "damage",
                 "track": "physical",
                 "amount": 1,
-                "damage_type": "matter_energy",
+                "damage_type": "material",
                 "source": "burning",
             })
 
@@ -126,7 +126,7 @@ class StatusEngine:
                 "type": "damage",
                 "track": "physical",
                 "amount": 1,
-                "damage_type": "physical_kinetic",
+                "damage_type": "kinetic",
                 "source": "bleeding",
             })
 

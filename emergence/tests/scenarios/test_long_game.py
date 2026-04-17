@@ -28,7 +28,7 @@ def _make_test_character(seed=42):
         "species": "human",
         "tier": 2,
         "tier_ceiling": 10,
-        "primary_category": "physical_kinetic",
+        "primary_category": "kinetic",
         "attributes": {
             "strength": 8, "agility": 8, "will": 8,
             "insight": 6, "perception": 8, "might": 8,
@@ -83,8 +83,8 @@ class TestLongGame5Years(unittest.TestCase):
                 encounters += 1
 
                 # Use powers
-                tac.log_power_use("pk_force_push", "physical_kinetic")
-                tac.log_power_use("pk_kinetic_shield", "physical_kinetic")
+                tac.log_power_use("pk_force_push", "kinetic")
+                tac.log_power_use("pk_kinetic_shield", "kinetic")
 
                 # Use skills
                 skills.log_skill_use("melee")
@@ -183,7 +183,7 @@ class TestAgingThroughDeath(unittest.TestCase):
         parent["age"] = 70
         parent["children"] = [
             {"name": "Ada", "age": 25, "species": "human", "manifested": True,
-             "tier": 2, "primary_category": "auratic"},
+             "tier": 2, "primary_category": "cognitive"},
         ]
         parent["relationships"] = {
             "npc1": {"standing": 3, "state": "loyal"},
@@ -210,7 +210,7 @@ class TestProgressionPersistence(unittest.TestCase):
         char = _make_test_character(42)
 
         # Apply various progression
-        TacticalProgression(char).log_power_use("p1", "physical_kinetic")
+        TacticalProgression(char).log_power_use("p1", "kinetic")
         SkillProgression(char).log_skill_use("melee")
         RelationshipProgression(char).update_standing("npc1", 1)
         FactionProgression(char).update_standing("f1", 2)

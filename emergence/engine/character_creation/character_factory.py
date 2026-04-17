@@ -94,6 +94,18 @@ class CreationState:
     onset_circumstance: str = ""
     temperament: str = ""
 
+    # Freeform self-description (scene 0) and danger-scenario reactions (scenes 1, 2).
+    # Drive tag extraction for power weighting and narrative mood.
+    self_description: str = ""
+    scenario_reactions: Dict[str, str] = dataclasses.field(default_factory=dict)
+
+    # Cinematic vignettes presented in scenes 1 and 2 (by slot key: "1" / "2").
+    # Stored so narrator can reference them and the slot-2 vignette can avoid reuse.
+    scenario_vignettes: Dict[str, str] = dataclasses.field(default_factory=dict)
+
+    # Tags inferred from freeform text (scene 0 description + scene 1/2 reactions).
+    reaction_tags: List[str] = dataclasses.field(default_factory=list)
+
     # NPCs generated during session zero scenes
     generated_npcs: List[Dict[str, Any]] = dataclasses.field(default_factory=list)
 
@@ -230,6 +242,23 @@ class CharacterFactory:
             state.name = choice_data["name"]
         if "age_at_onset" in choice_data:
             state.age_at_onset = choice_data["age_at_onset"]
+
+        # Self-description (scene 0)
+        if "self_description" in choice_data:
+            state.self_description = choice_data["self_description"]
+
+        # Scenario reactions (scenes 1, 2) keyed by slot
+        for slot, reaction in choice_data.get("scenario_reactions", {}).items():
+            state.scenario_reactions[str(slot)] = reaction
+
+        # Scenario vignette IDs (scenes 1, 2) keyed by slot
+        for slot, vignette_id in choice_data.get("scenario_vignettes", {}).items():
+            state.scenario_vignettes[str(slot)] = vignette_id
+
+        # Reaction tags accumulated across scenes 0-2 (dedup, preserve order)
+        for tag in choice_data.get("reaction_tags", []):
+            if tag not in state.reaction_tags:
+                state.reaction_tags.append(tag)
 
         state.beat_index += 1
         return state

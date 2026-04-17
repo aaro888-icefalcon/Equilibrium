@@ -19,7 +19,7 @@ class TestBreakthroughTriggers(unittest.TestCase):
         self.char = {
             "tier": 2,
             "tier_ceiling": 10,
-            "primary_category": "physical_kinetic",
+            "primary_category": "kinetic",
             "attributes": {"will": 8, "might": 8, "insight": 8},
             "powers": ["p1", "p2"],
         }
@@ -43,7 +43,7 @@ class TestBreakthroughTriggers(unittest.TestCase):
             "type": "mentorship_complete",
             "training_days": 90,
             "mentor_tier": 4,
-            "mentor_category": "physical_kinetic",
+            "mentor_category": "kinetic",
             "mentor_name": "Sensei",
         }
         trigger = self.engine.check_triggers(self.char, self.world, event)
@@ -55,7 +55,7 @@ class TestBreakthroughTriggers(unittest.TestCase):
             "type": "mentorship_complete",
             "training_days": 89,
             "mentor_tier": 4,
-            "mentor_category": "physical_kinetic",
+            "mentor_category": "kinetic",
         }
         trigger = self.engine.check_triggers(self.char, self.world, event)
         self.assertIsNone(trigger)
@@ -130,7 +130,7 @@ class TestBreakthroughResolution(unittest.TestCase):
         self.char = {
             "tier": 2,
             "tier_ceiling": 10,
-            "primary_category": "physical_kinetic",
+            "primary_category": "kinetic",
             "attributes": {"will": 8, "might": 8, "insight": 8},
             "powers": ["p1", "p2"],
             "breakthrough_marks": [],
@@ -185,7 +185,7 @@ class TestBreakthroughApplication(unittest.TestCase):
         self.char = {
             "tier": 2,
             "tier_ceiling": 10,
-            "primary_category": "physical_kinetic",
+            "primary_category": "kinetic",
             "attributes": {"will": 8, "might": 8, "insight": 8},
             "powers": ["p1"],
             "breakthrough_marks": [],
@@ -239,16 +239,22 @@ class TestMarkCatalog(unittest.TestCase):
 
     def test_all_pools_have_marks(self):
         for cat, pool in MARK_POOLS.items():
-            self.assertEqual(len(pool), 4, f"Pool {cat} should have 4 marks")
+            # Cognitive carries both the old M-prefix (perceptual/mental)
+            # and A-prefix (auratic) marks since those V1 categories merged.
+            expected = 8 if cat == "cognitive" else 4
+            self.assertEqual(
+                len(pool), expected,
+                f"Pool {cat} should have {expected} marks",
+            )
             for mark_id in pool:
                 self.assertIn(mark_id, BREAKTHROUGH_MARKS)
 
-    def test_eldritch_marks_have_corruption(self):
-        for mark_id in MARK_POOLS["eldritch_corruptive"]:
+    def test_paradoxic_marks_have_corruption(self):
+        for mark_id in MARK_POOLS["paradoxic"]:
             effects = BREAKTHROUGH_MARKS[mark_id]["effects"]
             self.assertGreaterEqual(
                 effects.get("corruption", 0), 1,
-                f"Eldritch mark {mark_id} should include corruption",
+                f"Paradoxic mark {mark_id} should include corruption",
             )
 
 

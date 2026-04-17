@@ -4,16 +4,47 @@
     "display_name": "Scavenger Raider",
     "register": "human",
     "tier": 2,
-    "attribute_defaults": {"strength": 8, "agility": 6, "perception": 6, "will": 6, "insight": 4, "might": 8},
-    "condition_track_defaults": {"physical": 0, "mental": 0, "social": 0},
-    "condition_track_max": {"physical": 5, "mental": 5, "social": 5},
-    "affinity_table": {"physical_kinetic": "neutral", "perceptual_mental": "neutral", "matter_energy": "neutral", "biological_vital": "neutral", "auratic": "neutral", "temporal_spatial": "neutral", "eldritch_corruptive": "vulnerable"},
+    "attribute_defaults": {
+      "strength": 8,
+      "agility": 6,
+      "perception": 6,
+      "will": 6,
+      "insight": 4,
+      "might": 8
+    },
+    "condition_track_defaults": {
+      "physical": 0,
+      "mental": 0,
+      "social": 0
+    },
+    "condition_track_max": {
+      "physical": 5,
+      "mental": 5,
+      "social": 5
+    },
+    "affinity_table": {
+      "kinetic": "neutral",
+      "cognitive": "neutral",
+      "material": "neutral",
+      "somatic": "neutral",
+      "spatial": "neutral",
+      "paradoxic": "vulnerable"
+    },
     "ai_profile": "aggressive",
     "exposure_max": 3,
-    "abilities": ["melee_crude", "rifle_shot", "scavenger_sense"],
+    "abilities": [
+      "melee_crude",
+      "rifle_shot",
+      "scavenger_sense"
+    ],
     "powers": [],
-    "retreat_conditions": ["phy_gte_3"],
-    "parley_conditions": ["food_offered", "safe_passage_offered"],
+    "retreat_conditions": [
+      "phy_gte_3"
+    ],
+    "parley_conditions": [
+      "food_offered",
+      "safe_passage_offered"
+    ],
     "description": "He had not eaten properly in a week and his rifle was older than he was.",
     "tactics_note": "Ambushes at ruin chokepoints."
   },
@@ -22,16 +53,47 @@
     "display_name": "Militia Soldier",
     "register": "human",
     "tier": 2,
-    "attribute_defaults": {"strength": 8, "agility": 6, "perception": 6, "will": 6, "insight": 6, "might": 8},
-    "condition_track_defaults": {"physical": 0, "mental": 0, "social": 0},
-    "condition_track_max": {"physical": 5, "mental": 5, "social": 5},
-    "affinity_table": {"physical_kinetic": "neutral", "perceptual_mental": "neutral", "matter_energy": "neutral", "biological_vital": "neutral", "auratic": "neutral", "temporal_spatial": "neutral", "eldritch_corruptive": "vulnerable"},
+    "attribute_defaults": {
+      "strength": 8,
+      "agility": 6,
+      "perception": 6,
+      "will": 6,
+      "insight": 6,
+      "might": 8
+    },
+    "condition_track_defaults": {
+      "physical": 0,
+      "mental": 0,
+      "social": 0
+    },
+    "condition_track_max": {
+      "physical": 5,
+      "mental": 5,
+      "social": 5
+    },
+    "affinity_table": {
+      "kinetic": "neutral",
+      "cognitive": "neutral",
+      "material": "neutral",
+      "somatic": "neutral",
+      "spatial": "neutral",
+      "paradoxic": "vulnerable"
+    },
     "ai_profile": "tactical",
     "exposure_max": 3,
-    "abilities": ["drilled_melee", "rifle_shot", "squad_signal"],
+    "abilities": [
+      "drilled_melee",
+      "rifle_shot",
+      "squad_signal"
+    ],
     "powers": [],
-    "retreat_conditions": ["mission_fail"],
-    "parley_conditions": ["surrender_offered", "credentials_shown"],
+    "retreat_conditions": [
+      "mission_fail"
+    ],
+    "parley_conditions": [
+      "surrender_offered",
+      "credentials_shown"
+    ],
     "description": "Uniform in decent repair; the boots were the tell.",
     "tactics_note": "Pairs, maintains line."
   },
@@ -40,16 +102,50 @@
     "display_name": "Warlord Lieutenant",
     "register": "human",
     "tier": 6,
-    "attribute_defaults": {"strength": 10, "agility": 8, "perception": 8, "will": 10, "insight": 8, "might": 10},
-    "condition_track_defaults": {"physical": 0, "mental": 0, "social": 0},
-    "condition_track_max": {"physical": 5, "mental": 5, "social": 5},
-    "affinity_table": {"physical_kinetic": "resistant", "perceptual_mental": "neutral", "matter_energy": "neutral", "biological_vital": "neutral", "auratic": "neutral", "temporal_spatial": "neutral", "eldritch_corruptive": "vulnerable"},
+    "attribute_defaults": {
+      "strength": 10,
+      "agility": 8,
+      "perception": 8,
+      "will": 10,
+      "insight": 8,
+      "might": 10
+    },
+    "condition_track_defaults": {
+      "physical": 0,
+      "mental": 0,
+      "social": 0
+    },
+    "condition_track_max": {
+      "physical": 5,
+      "mental": 5,
+      "social": 5
+    },
+    "affinity_table": {
+      "kinetic": "resistant",
+      "cognitive": "neutral",
+      "material": "neutral",
+      "somatic": "neutral",
+      "spatial": "neutral",
+      "paradoxic": "vulnerable"
+    },
     "ai_profile": "tactical",
     "exposure_max": 7,
-    "abilities": ["sword_heavy", "rifle_fine", "command"],
-    "powers": ["kin_strike", "dread_field"],
-    "retreat_conditions": ["never_unless_ordered"],
-    "parley_conditions": ["cease_hostilities_above", "defer_to_superior_mentioned"],
+    "abilities": [
+      "sword_heavy",
+      "rifle_fine",
+      "command"
+    ],
+    "powers": [
+      "kin_strike",
+      "dread_field"
+    ],
+    "retreat_conditions": [
+      "never_unless_ordered"
+    ],
+    "parley_conditions": [
+      "cease_hostilities_above",
+      "defer_to_superior_mentioned"
+    ],
     "description": "Plate under a long coat, a soldier's stillness, eyes that did not leave the room's exits.",
     "tactics_note": "Holds the line, coordinates subordinates."
   },
@@ -58,16 +154,51 @@
     "display_name": "Faction Patrol Leader",
     "register": "human",
     "tier": 4,
-    "attribute_defaults": {"strength": 8, "agility": 8, "perception": 8, "will": 10, "insight": 8, "might": 8},
-    "condition_track_defaults": {"physical": 0, "mental": 0, "social": 0},
-    "condition_track_max": {"physical": 5, "mental": 5, "social": 5},
-    "affinity_table": {"physical_kinetic": "neutral", "perceptual_mental": "neutral", "matter_energy": "neutral", "biological_vital": "neutral", "auratic": "resistant", "temporal_spatial": "neutral", "eldritch_corruptive": "neutral"},
+    "attribute_defaults": {
+      "strength": 8,
+      "agility": 8,
+      "perception": 8,
+      "will": 10,
+      "insight": 8,
+      "might": 8
+    },
+    "condition_track_defaults": {
+      "physical": 0,
+      "mental": 0,
+      "social": 0
+    },
+    "condition_track_max": {
+      "physical": 5,
+      "mental": 5,
+      "social": 5
+    },
+    "affinity_table": {
+      "kinetic": "neutral",
+      "cognitive": "resistant",
+      "material": "neutral",
+      "somatic": "neutral",
+      "spatial": "neutral",
+      "paradoxic": "neutral"
+    },
     "ai_profile": "defensive",
     "exposure_max": 5,
-    "abilities": ["disciplined_shot", "parley_voice", "emergency_bandage"],
-    "powers": ["calm_field", "read_intent"],
-    "retreat_conditions": ["phy_gte_3", "parley_offered"],
-    "parley_conditions": ["identifiable_affiliation", "non_faction_violence"],
+    "abilities": [
+      "disciplined_shot",
+      "parley_voice",
+      "emergency_bandage"
+    ],
+    "powers": [
+      "calm_field",
+      "read_intent"
+    ],
+    "retreat_conditions": [
+      "phy_gte_3",
+      "parley_offered"
+    ],
+    "parley_conditions": [
+      "identifiable_affiliation",
+      "non_faction_violence"
+    ],
     "description": "She had been in five fights this year and did not wish to be in another.",
     "tactics_note": "De-escalation first."
   },
@@ -76,16 +207,50 @@
     "display_name": "Species F Retinue Champion",
     "register": "human",
     "tier": 5,
-    "attribute_defaults": {"strength": 12, "agility": 8, "perception": 6, "will": 8, "insight": 6, "might": 12},
-    "condition_track_defaults": {"physical": 0, "mental": 0, "social": 0},
-    "condition_track_max": {"physical": 6, "mental": 5, "social": 5},
-    "affinity_table": {"physical_kinetic": "resistant", "perceptual_mental": "neutral", "matter_energy": "neutral", "biological_vital": "neutral", "auratic": "neutral", "temporal_spatial": "neutral", "eldritch_corruptive": "vulnerable"},
+    "attribute_defaults": {
+      "strength": 12,
+      "agility": 8,
+      "perception": 6,
+      "will": 8,
+      "insight": 6,
+      "might": 12
+    },
+    "condition_track_defaults": {
+      "physical": 0,
+      "mental": 0,
+      "social": 0
+    },
+    "condition_track_max": {
+      "physical": 6,
+      "mental": 5,
+      "social": 5
+    },
+    "affinity_table": {
+      "kinetic": "resistant",
+      "cognitive": "neutral",
+      "material": "neutral",
+      "somatic": "neutral",
+      "spatial": "neutral",
+      "paradoxic": "vulnerable"
+    },
     "ai_profile": "aggressive",
     "exposure_max": 6,
-    "abilities": ["heavy_sword", "lunge_close", "armor_plate"],
-    "powers": ["kin_strike", "leap"],
-    "retreat_conditions": ["phy_gte_4"],
-    "parley_conditions": ["honor_duel_offered", "surrender_formal"],
+    "abilities": [
+      "heavy_sword",
+      "lunge_close",
+      "armor_plate"
+    ],
+    "powers": [
+      "kin_strike",
+      "leap"
+    ],
+    "retreat_conditions": [
+      "phy_gte_4"
+    ],
+    "parley_conditions": [
+      "honor_duel_offered",
+      "surrender_formal"
+    ],
     "description": "Very large, very still, until he was not.",
     "tactics_note": "Closes range, breaks line."
   },
@@ -94,16 +259,50 @@
     "display_name": "Species I Scout Captain",
     "register": "human",
     "tier": 5,
-    "attribute_defaults": {"strength": 8, "agility": 8, "perception": 12, "will": 10, "insight": 10, "might": 8},
-    "condition_track_defaults": {"physical": 0, "mental": 0, "social": 0},
-    "condition_track_max": {"physical": 5, "mental": 5, "social": 5},
-    "affinity_table": {"physical_kinetic": "neutral", "perceptual_mental": "resistant", "matter_energy": "neutral", "biological_vital": "neutral", "auratic": "neutral", "temporal_spatial": "neutral", "eldritch_corruptive": "neutral"},
+    "attribute_defaults": {
+      "strength": 8,
+      "agility": 8,
+      "perception": 12,
+      "will": 10,
+      "insight": 10,
+      "might": 8
+    },
+    "condition_track_defaults": {
+      "physical": 0,
+      "mental": 0,
+      "social": 0
+    },
+    "condition_track_max": {
+      "physical": 5,
+      "mental": 5,
+      "social": 5
+    },
+    "affinity_table": {
+      "kinetic": "neutral",
+      "cognitive": "resistant",
+      "material": "neutral",
+      "somatic": "neutral",
+      "spatial": "neutral",
+      "paradoxic": "neutral"
+    },
     "ai_profile": "tactical",
     "exposure_max": 6,
-    "abilities": ["longshot_bow", "two_shot", "kin_sight"],
-    "powers": ["read_intent", "telepathy"],
-    "retreat_conditions": ["phy_gte_3"],
-    "parley_conditions": ["kin_connection", "non_hostile_intent"],
+    "abilities": [
+      "longshot_bow",
+      "two_shot",
+      "kin_sight"
+    ],
+    "powers": [
+      "read_intent",
+      "telepathy"
+    ],
+    "retreat_conditions": [
+      "phy_gte_3"
+    ],
+    "parley_conditions": [
+      "kin_connection",
+      "non_hostile_intent"
+    ],
     "description": "Her eyes caught the room light and kept it.",
     "tactics_note": "Ranged superiority, information warfare."
   },
@@ -112,16 +311,50 @@
     "display_name": "Assassin",
     "register": "human",
     "tier": 4,
-    "attribute_defaults": {"strength": 6, "agility": 12, "perception": 10, "will": 8, "insight": 8, "might": 6},
-    "condition_track_defaults": {"physical": 0, "mental": 0, "social": 0},
-    "condition_track_max": {"physical": 4, "mental": 5, "social": 5},
-    "affinity_table": {"physical_kinetic": "neutral", "perceptual_mental": "neutral", "matter_energy": "neutral", "biological_vital": "neutral", "auratic": "neutral", "temporal_spatial": "neutral", "eldritch_corruptive": "vulnerable"},
+    "attribute_defaults": {
+      "strength": 6,
+      "agility": 12,
+      "perception": 10,
+      "will": 8,
+      "insight": 8,
+      "might": 6
+    },
+    "condition_track_defaults": {
+      "physical": 0,
+      "mental": 0,
+      "social": 0
+    },
+    "condition_track_max": {
+      "physical": 4,
+      "mental": 5,
+      "social": 5
+    },
+    "affinity_table": {
+      "kinetic": "neutral",
+      "cognitive": "neutral",
+      "material": "neutral",
+      "somatic": "neutral",
+      "spatial": "neutral",
+      "paradoxic": "vulnerable"
+    },
     "ai_profile": "opportunist",
     "exposure_max": 4,
-    "abilities": ["poisoned_blade", "shadow_move", "throw_knife"],
-    "powers": ["illusion", "blink"],
-    "retreat_conditions": ["phy_gte_2", "target_down"],
-    "parley_conditions": ["contract_ended_plausible"],
+    "abilities": [
+      "poisoned_blade",
+      "shadow_move",
+      "throw_knife"
+    ],
+    "powers": [
+      "illusion",
+      "blink"
+    ],
+    "retreat_conditions": [
+      "phy_gte_2",
+      "target_down"
+    ],
+    "parley_conditions": [
+      "contract_ended_plausible"
+    ],
     "description": "You did not see her enter. You did not want to be looking for her.",
     "tactics_note": "One hit, vanish."
   },
@@ -130,16 +363,49 @@
     "display_name": "Hedge Knight",
     "register": "human",
     "tier": 4,
-    "attribute_defaults": {"strength": 10, "agility": 8, "perception": 8, "will": 8, "insight": 8, "might": 10},
-    "condition_track_defaults": {"physical": 0, "mental": 0, "social": 0},
-    "condition_track_max": {"physical": 5, "mental": 5, "social": 5},
-    "affinity_table": {"physical_kinetic": "resistant", "perceptual_mental": "neutral", "matter_energy": "neutral", "biological_vital": "neutral", "auratic": "neutral", "temporal_spatial": "neutral", "eldritch_corruptive": "vulnerable"},
+    "attribute_defaults": {
+      "strength": 10,
+      "agility": 8,
+      "perception": 8,
+      "will": 8,
+      "insight": 8,
+      "might": 10
+    },
+    "condition_track_defaults": {
+      "physical": 0,
+      "mental": 0,
+      "social": 0
+    },
+    "condition_track_max": {
+      "physical": 5,
+      "mental": 5,
+      "social": 5
+    },
+    "affinity_table": {
+      "kinetic": "resistant",
+      "cognitive": "neutral",
+      "material": "neutral",
+      "somatic": "neutral",
+      "spatial": "neutral",
+      "paradoxic": "vulnerable"
+    },
     "ai_profile": "defensive",
     "exposure_max": 5,
-    "abilities": ["sword_taught", "shield_block", "parry_riposte"],
-    "powers": ["hard_skin"],
-    "retreat_conditions": ["contract_over"],
-    "parley_conditions": ["coin_offered", "better_contract_offered"],
+    "abilities": [
+      "sword_taught",
+      "shield_block",
+      "parry_riposte"
+    ],
+    "powers": [
+      "hard_skin"
+    ],
+    "retreat_conditions": [
+      "contract_over"
+    ],
+    "parley_conditions": [
+      "coin_offered",
+      "better_contract_offered"
+    ],
     "description": "He owed no one and no one mistook him for harmless.",
     "tactics_note": "Measured; does not overcommit."
   },
@@ -148,16 +414,49 @@
     "display_name": "Charismatic Preacher",
     "register": "human",
     "tier": 5,
-    "attribute_defaults": {"strength": 6, "agility": 6, "perception": 8, "will": 12, "insight": 10, "might": 6},
-    "condition_track_defaults": {"physical": 0, "mental": 0, "social": 0},
-    "condition_track_max": {"physical": 5, "mental": 5, "social": 6},
-    "affinity_table": {"physical_kinetic": "neutral", "perceptual_mental": "neutral", "matter_energy": "neutral", "biological_vital": "neutral", "auratic": "resistant", "temporal_spatial": "neutral", "eldritch_corruptive": "neutral"},
+    "attribute_defaults": {
+      "strength": 6,
+      "agility": 6,
+      "perception": 8,
+      "will": 12,
+      "insight": 10,
+      "might": 6
+    },
+    "condition_track_defaults": {
+      "physical": 0,
+      "mental": 0,
+      "social": 0
+    },
+    "condition_track_max": {
+      "physical": 5,
+      "mental": 5,
+      "social": 6
+    },
+    "affinity_table": {
+      "kinetic": "neutral",
+      "cognitive": "resistant",
+      "material": "neutral",
+      "somatic": "neutral",
+      "spatial": "neutral",
+      "paradoxic": "neutral"
+    },
     "ai_profile": "defensive",
     "exposure_max": 5,
-    "abilities": ["sermon", "whispered_offer", "crowd_draw"],
-    "powers": ["trust_field", "rally"],
-    "retreat_conditions": ["never_while_audience"],
-    "parley_conditions": ["theological_common_ground"],
+    "abilities": [
+      "sermon",
+      "whispered_offer",
+      "crowd_draw"
+    ],
+    "powers": [
+      "trust_field",
+      "rally"
+    ],
+    "retreat_conditions": [
+      "never_while_audience"
+    ],
+    "parley_conditions": [
+      "theological_common_ground"
+    ],
     "description": "He did not raise his voice. The voice did something else instead.",
     "tactics_note": "Wins before combat starts, or loses."
   },
@@ -166,16 +465,48 @@
     "display_name": "Rogue Surgeon",
     "register": "human",
     "tier": 3,
-    "attribute_defaults": {"strength": 6, "agility": 6, "perception": 8, "will": 8, "insight": 10, "might": 6},
-    "condition_track_defaults": {"physical": 0, "mental": 0, "social": 0},
-    "condition_track_max": {"physical": 5, "mental": 5, "social": 5},
-    "affinity_table": {"physical_kinetic": "neutral", "perceptual_mental": "neutral", "matter_energy": "neutral", "biological_vital": "resistant", "auratic": "neutral", "temporal_spatial": "neutral", "eldritch_corruptive": "neutral"},
+    "attribute_defaults": {
+      "strength": 6,
+      "agility": 6,
+      "perception": 8,
+      "will": 8,
+      "insight": 10,
+      "might": 6
+    },
+    "condition_track_defaults": {
+      "physical": 0,
+      "mental": 0,
+      "social": 0
+    },
+    "condition_track_max": {
+      "physical": 5,
+      "mental": 5,
+      "social": 5
+    },
+    "affinity_table": {
+      "kinetic": "neutral",
+      "cognitive": "neutral",
+      "material": "neutral",
+      "somatic": "resistant",
+      "spatial": "neutral",
+      "paradoxic": "neutral"
+    },
     "ai_profile": "opportunist",
     "exposure_max": 4,
-    "abilities": ["scalpel", "triage", "knockout_drug"],
-    "powers": ["wound_close"],
-    "retreat_conditions": ["phy_gte_2"],
-    "parley_conditions": ["medical_supplies_offered"],
+    "abilities": [
+      "scalpel",
+      "triage",
+      "knockout_drug"
+    ],
+    "powers": [
+      "wound_close"
+    ],
+    "retreat_conditions": [
+      "phy_gte_2"
+    ],
+    "parley_conditions": [
+      "medical_supplies_offered"
+    ],
     "description": "Her hands were clean in a world where that was an effort.",
     "tactics_note": "Applies pressure fluidly; hates to fight directly."
   },
@@ -184,16 +515,46 @@
     "display_name": "Displaced Veteran",
     "register": "human",
     "tier": 3,
-    "attribute_defaults": {"strength": 8, "agility": 6, "perception": 6, "will": 8, "insight": 8, "might": 10},
-    "condition_track_defaults": {"physical": 0, "mental": 0, "social": 0},
-    "condition_track_max": {"physical": 5, "mental": 5, "social": 5},
-    "affinity_table": {"physical_kinetic": "resistant", "perceptual_mental": "vulnerable", "matter_energy": "neutral", "biological_vital": "neutral", "auratic": "neutral", "temporal_spatial": "neutral", "eldritch_corruptive": "neutral"},
+    "attribute_defaults": {
+      "strength": 8,
+      "agility": 6,
+      "perception": 6,
+      "will": 8,
+      "insight": 8,
+      "might": 10
+    },
+    "condition_track_defaults": {
+      "physical": 0,
+      "mental": 0,
+      "social": 0
+    },
+    "condition_track_max": {
+      "physical": 5,
+      "mental": 5,
+      "social": 5
+    },
+    "affinity_table": {
+      "kinetic": "resistant",
+      "cognitive": "vulnerable",
+      "material": "neutral",
+      "somatic": "neutral",
+      "spatial": "neutral",
+      "paradoxic": "neutral"
+    },
     "ai_profile": "defensive",
     "exposure_max": 5,
-    "abilities": ["old_drill", "dig_in", "grit"],
+    "abilities": [
+      "old_drill",
+      "dig_in",
+      "grit"
+    ],
     "powers": [],
-    "retreat_conditions": ["phy_gte_4"],
-    "parley_conditions": ["shared_service_reference"],
+    "retreat_conditions": [
+      "phy_gte_4"
+    ],
+    "parley_conditions": [
+      "shared_service_reference"
+    ],
     "description": "His gear was older than some of the people fighting him.",
     "tactics_note": "Positional; will surrender if no escape."
   },
@@ -202,14 +563,42 @@
     "display_name": "Fanatic",
     "register": "human",
     "tier": 3,
-    "attribute_defaults": {"strength": 8, "agility": 6, "perception": 6, "will": 12, "insight": 6, "might": 10},
-    "condition_track_defaults": {"physical": 0, "mental": 0, "social": 0},
-    "condition_track_max": {"physical": 5, "mental": 6, "social": 3},
-    "affinity_table": {"physical_kinetic": "neutral", "perceptual_mental": "resistant", "matter_energy": "neutral", "biological_vital": "neutral", "auratic": "vulnerable", "temporal_spatial": "neutral", "eldritch_corruptive": "resistant"},
+    "attribute_defaults": {
+      "strength": 8,
+      "agility": 6,
+      "perception": 6,
+      "will": 12,
+      "insight": 6,
+      "might": 10
+    },
+    "condition_track_defaults": {
+      "physical": 0,
+      "mental": 0,
+      "social": 0
+    },
+    "condition_track_max": {
+      "physical": 5,
+      "mental": 6,
+      "social": 3
+    },
+    "affinity_table": {
+      "kinetic": "neutral",
+      "cognitive": "vulnerable",
+      "material": "neutral",
+      "somatic": "neutral",
+      "spatial": "neutral",
+      "paradoxic": "resistant"
+    },
     "ai_profile": "aggressive",
     "exposure_max": 5,
-    "abilities": ["zealous_strike", "chant", "last_stand"],
-    "powers": ["dread_field"],
+    "abilities": [
+      "zealous_strike",
+      "chant",
+      "last_stand"
+    ],
+    "powers": [
+      "dread_field"
+    ],
     "retreat_conditions": [],
     "parley_conditions": [],
     "description": "He meant it. Every word.",

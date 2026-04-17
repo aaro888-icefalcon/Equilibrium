@@ -25,10 +25,20 @@ VALID_SPECIES = {
 VALID_POWER_CATEGORIES = {
     "somatic", "cognitive", "material", "kinetic", "spatial", "paradoxic",
 }
-# Keep v1 categories for migration validation
-VALID_POWER_CATEGORIES_V1 = {
-    "physical_kinetic", "perceptual_mental", "matter_energy",
-    "biological_vital", "auratic", "temporal_spatial", "eldritch_corruptive",
+# V2 sub-categories: 5 per broad, 30 total. Matches powers_v2/*.json.
+VALID_POWER_SUB_CATEGORIES = {
+    # kinetic
+    "gravitic", "impact", "projective", "sonic", "velocity",
+    # material
+    "corrosive", "elemental", "machinal", "radiant", "transmutative",
+    # paradoxic
+    "anomalous", "divinatory", "probabilistic", "sympathetic", "temporal",
+    # somatic
+    "augmentation", "biochemistry", "metamorphosis", "predation", "vitality",
+    # spatial
+    "gateway", "phasing", "reach", "territorial", "translative",
+    # cognitive
+    "auratic", "dominant", "perceptive", "predictive", "telepathic",
 }
 VALID_CONDITION_TRACKS = {"physical", "mental", "social"}
 VALID_STATUS_NAMES = {
