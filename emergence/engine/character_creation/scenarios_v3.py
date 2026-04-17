@@ -1753,50 +1753,12 @@ class StandingAndVowsScene(_V3Scene):
         factory: CharacterFactory,
         rng: _random.Random,
     ) -> CreationState:
-        """Ensure at least 2 threats by finalize. Synthesize fillers from
-        the faction if needed."""
-        if len(state.threats) >= 2:
-            return state
-        deficit = 2 - len(state.threats)
-        fid = self._faction.get("id", "unknown")
-        fname = self._faction.get("name", "the local power")
+        """Shim: delegate to CharacterFactory._ensure_threat_floor.
 
-        fillers: List[Dict[str, Any]] = []
-        for i in range(deficit):
-            npc = generate_npc("rival", {}, rng)
-            npc_id = getattr(npc, "id", f"npc-threat-{rng.getrandbits(32):08x}")
-            npc_name = getattr(npc, "display_name", "a rival")
-            fillers.append({
-                "threats": [{
-                    "npc_id": npc_id,
-                    "name": npc_name,
-                    "standing": -2,
-                    "source": f"region:{fid}",
-                    "summary": f"{npc_name} — local rival, {fname} territory",
-                }],
-                "generated_npcs": [{
-                    "npc_id": npc_id,
-                    "display_name": npc_name,
-                    "scene_id": self.scene_id,
-                    "role": "rival",
-                    "standing": -2,
-                    "hooks": [],
-                }],
-                "relationship": {
-                    "npc_id": npc_id,
-                    "display_name": npc_name,
-                    "standing": -2,
-                    "current_state": "alive_present",
-                    "trust": 0,
-                    "archetype": "rival",
-                },
-            })
-
-        for choice_data in fillers:
-            state = factory.apply_scene_result(
-                self.scene_id + "_filler_threat", choice_data, state, rng,
-            )
-        return state
+        Historical home of the threat-floor logic; the implementation
+        moved to CharacterFactory so any scene's apply can call it.
+        """
+        return factory._ensure_threat_floor(state, rng)
 
 
 # ---------------------------------------------------------------------------

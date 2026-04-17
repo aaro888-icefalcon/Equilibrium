@@ -77,3 +77,4 @@ v3-H: save reset; ready to commit
 1.1.a done: threat_archetypes.json written (10 archetypes) at data/threats/
 1.1.b done: threats.py loader + ThreatArchetype dataclass; smoke test loads 10, clamp works
 1.1.c done: apply_scene_result normalizes threat archetype/pressure (default + clamp); legacy entries passthrough
+1.1.d done: _top_up_threats ported to CharacterFactory._ensure_threat_floor; old site shimmed; floor reaches 2 from 0, idempotent

@@ -144,6 +144,72 @@ class CharacterFactory:
     MAX_SESSION_ZERO_ATTRIBUTE = 10  # d10 cap during session zero
     MAX_SESSION_ZERO_SKILL = 6  # cap per skill during session zero
 
+    # -----------------------------------------------------------------
+    # Threat floor
+    # -----------------------------------------------------------------
+
+    def _ensure_threat_floor(
+        self,
+        state: "CreationState",
+        rng: _random.Random,
+        floor: int = 2,
+        default_archetype: str = "named_rival_human",
+    ) -> "CreationState":
+        """Top up state.threats to *floor* using the default archetype.
+
+        Each generated filler creates a new "rival" NPC, registers it in
+        state.generated_npcs, and adds a threat entry carrying the
+        archetype id + pressure default.  Intended to be called at the
+        end of any vignette's apply so the player never enters the sim
+        with fewer than *floor* named pressures.
+        """
+        if len(state.threats) >= floor:
+            return state
+        from emergence.engine.sim.npc_generator import generate_npc
+        from emergence.engine.character_creation.threats import get_archetype
+
+        arc = get_archetype(default_archetype)
+        region = state.region or "unknown"
+        deficit = floor - len(state.threats)
+        for _ in range(deficit):
+            npc = generate_npc("rival", {}, rng)
+            npc_id = getattr(npc, "id", f"npc-threat-{rng.getrandbits(32):08x}")
+            npc_name = getattr(npc, "display_name", "a rival")
+            pressure = arc.pressure_default if arc else 2
+            state = self.apply_scene_result(
+                "threat_floor",
+                {
+                    "threats": [{
+                        "npc_id": npc_id,
+                        "name": npc_name,
+                        "standing": -2,
+                        "source": f"engine_floor:{region}",
+                        "summary": f"{npc_name} — local rival",
+                        "archetype": default_archetype,
+                        "pressure": pressure,
+                    }],
+                    "generated_npcs": [{
+                        "npc_id": npc_id,
+                        "display_name": npc_name,
+                        "scene_id": "threat_floor",
+                        "role": "rival",
+                        "standing": -2,
+                        "hooks": [],
+                    }],
+                    "relationship": {
+                        "npc_id": npc_id,
+                        "display_name": npc_name,
+                        "standing": -2,
+                        "current_state": "alive_present",
+                        "trust": 0,
+                        "archetype": "rival",
+                    },
+                },
+                state,
+                rng,
+            )
+        return state
+
     def apply_scene_result(
         self,
         scene_id: str,
