@@ -140,17 +140,33 @@ def parse_manifestation(val: Any) -> NpcManifest:
     tiers = _TIER_RE.findall(text)
     tier = max(int(t) for t in tiers) if tiers else 1
 
-    # Extract category
-    categories = [
-        "physical", "kinetic", "perceptual", "mental",
-        "matter", "energy", "biological", "vital",
-        "auratic", "temporal", "spatial", "eldritch",
-    ]
+    # Extract category from NPC manifestation text.  Keywords cover the
+    # 6 V2 broads plus everyday synonyms ('physical', 'mental', etc.) that
+    # authored text commonly uses; the first match wins and is normalised
+    # to a V2 broad before being returned.
+    keyword_to_v2 = {
+        "kinetic":    "kinetic",
+        "physical":   "kinetic",
+        "cognitive":  "cognitive",
+        "perceptual": "cognitive",
+        "mental":     "cognitive",
+        "auratic":    "cognitive",
+        "material":   "material",
+        "matter":     "material",
+        "energy":     "material",
+        "somatic":    "somatic",
+        "biological": "somatic",
+        "vital":      "somatic",
+        "spatial":    "spatial",
+        "temporal":   "spatial",
+        "paradoxic":  "paradoxic",
+        "eldritch":   "paradoxic",
+    }
     found_cat = ""
     lower = text.lower()
-    for cat in categories:
-        if cat in lower:
-            found_cat = cat
+    for keyword, v2_cat in keyword_to_v2.items():
+        if keyword in lower:
+            found_cat = v2_cat
             break
 
     return NpcManifest(
