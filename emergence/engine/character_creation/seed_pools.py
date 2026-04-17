@@ -66,9 +66,65 @@ def compute_seed_pools(
 
 # Branch implementations follow in subsequent commits.
 
+_V1_NPC_ARCHETYPES = [
+    "survivor", "rival", "companion", "dependent",
+    "medic", "scavenger", "informant", "enforcer",
+]
+
+_V1_NYC_LOCATIONS = [
+    {"id": "loc-manhattan-midtown",
+     "name": "Manhattan midtown",
+     "region": "New York City",
+     "startable": False},
+    {"id": "loc-brooklyn-tower-districts",
+     "name": "Brooklyn tower districts",
+     "region": "New York City",
+     "startable": False},
+]
+
+_V1_NYC_FACTIONS = ["tower-lords", "queens-commonage"]
+
+
 def _compute_v1(state: CreationState) -> SeedPools:
-    """V1 stub — filled in 1.2.b."""
-    raise NotImplementedError("v1 compute — wired in 1.2.b")
+    """V1: weeks after Onset. NYC-default pools. No prior vignette state.
+
+    Region is not yet locked — V2 decides. V1 presents threats that will
+    shape the reaction_tag signal heading into V2; the vignette's picks
+    seed NPCs, one threat, and one location in Manhattan or Brooklyn.
+    """
+    from emergence.engine.character_creation.scenarios import (
+        REGION_FACTIONS, FACTION_DEMANDS, VOW_PACKAGES,
+    )
+    from emergence.engine.character_creation.threats import list_archetype_ids
+
+    # NYC-default factions: tower-lords (primary) + queens-commonage (if seeded).
+    factions: List[Dict[str, Any]] = []
+    nyc_rep = REGION_FACTIONS.get("New York City", {"id": "tower-lords", "name": "Tower Lords of Brooklyn"})
+    factions.append({
+        "id": nyc_rep["id"],
+        "name": nyc_rep["name"],
+        "demand_data": FACTION_DEMANDS.get(nyc_rep["id"], {}),
+    })
+
+    # Threats: all archetypes eligible at V1 (no prior exclusions).
+    threat_ids = list(list_archetype_ids())
+
+    # Vow packages are seeded at V3+; V1 surfaces none for commitment.
+    # However the narrator may reference VOW_PACKAGES motifs for flavor,
+    # so we return the list so the scaffold can quote from it.
+    vows = [dict(v) for v in VOW_PACKAGES]
+
+    return SeedPools(
+        vignette_index=1,
+        region="New York City",
+        npc_archetypes=list(_V1_NPC_ARCHETYPES),
+        factions=factions,
+        locations=[dict(loc) for loc in _V1_NYC_LOCATIONS],
+        threats=threat_ids,
+        vow_packages=vows,
+        region_outcomes=None,
+        notes=["V1: NYC default, no region lock yet, all threat archetypes eligible"],
+    )
 
 
 def _compute_v2(state: CreationState) -> SeedPools:
