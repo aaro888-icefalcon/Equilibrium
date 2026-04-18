@@ -115,3 +115,4 @@ v3-H: save reset; ready to commit
 3.5.b-h done: OnsetScene class in onset_scene.py — 4 phases (biography text, attention pick, engagement pick, 2-of-10 slate); reaction-dominant weights (1:4); is_complete gates advance; pending_ack set on slate pick. pending_engagement_choice added to CreationState. End-to-end smoke test passes for Shake bio.
 3.5.i done: test_onset_scene.py 11/11 pass (phases, text input, choices per phase, completion + ack, reaction tag accumulation)
 3.6.a-d done: YearOneVignetteScene(index) class — prepare builds scaffold+prompt; get_scenario_code serializes both; apply_vignette_output routes JSON -> validate -> apply_vignette_choice; region lock resolves on V2 outcomes
+3.6.e-f done: integration test V1->V4 sequential with golden payloads; region locks at V2, starting_location at V4, >=3 named NPCs, >=2 goals; validation failure surfaces violations
