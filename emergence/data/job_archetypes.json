@@ -1,0 +1,847 @@
+{
+  "_comment": "Job archetypes keyed by post-emergence location id. Each archetype is a skeleton that Claude personalizes into a job bundle card at runtime. See emergence/docs/job_bundle_guidelines.md for the generation contract.",
+  "_archetype_schema": {
+    "id": "stable unique id",
+    "title": "short display title",
+    "daily_loop_hint": "one-line gist of what the PC does day-to-day",
+    "skill_tilts_hint": "list of canonical skill ids this job exercises",
+    "factions": {
+      "positive_candidates": ["faction_id", "..."],
+      "negative_candidates": ["faction_id", "..."]
+    },
+    "npc_role_hints": ["ally_mentor", "ally_coworker", "rival_colleague", "contact_liaison", "patron"],
+    "threat_candidates": ["canonical_threat_archetype_id", "..."],
+    "starting_sublocation_hint": "district/building/quarter inside the settlement",
+    "notes": "author notes for Claude; tone, tension, flavor"
+  },
+  "locations": {
+    "manhattan_fragment": [
+      {
+        "id": "mf_echo_watcher",
+        "title": "Echo-Watcher for a Tower Lord Contract",
+        "daily_loop_hint": "Patrol the perimeter of Lower Manhattan's Echo, note who goes in, who comes out, what doesn't come out at all.",
+        "skill_tilts_hint": ["urban_movement", "perception_check", "stealth"],
+        "factions": {"positive_candidates": ["brooklyn_tower_lords"], "negative_candidates": ["the_listening"]},
+        "npc_role_hints": ["patron_tower_lord", "ally_coworker", "rival_colleague", "contact_informant"],
+        "threat_candidates": ["eldritch_persistent", "warped_predator_personal"],
+        "starting_sublocation_hint": "a 14th Street watchroom above a shuttered drugstore",
+        "notes": "Quiet, vigilant work. Low violence until it isn't. The Echo gets into your sleep."
+      },
+      {
+        "id": "mf_clinic_runner",
+        "title": "Street Clinic Runner",
+        "daily_loop_hint": "Clinic hours in a converted bodega near Hell's Kitchen; home visits to patients the Bourse won't see.",
+        "skill_tilts_hint": ["first_aid", "surgery", "pharmacology", "streetwise"],
+        "factions": {"positive_candidates": ["queens_commonage"], "negative_candidates": ["iron_crown_newark"]},
+        "npc_role_hints": ["ally_coworker", "patient_regular", "contact_liaison", "rival_colleague"],
+        "threat_candidates": ["debt_holder", "biokinetic_error_infection"],
+        "starting_sublocation_hint": "a second-floor walk-up clinic above 42nd and 9th",
+        "notes": "Always short on supplies. Always short on time. Community-rooted."
+      },
+      {
+        "id": "mf_salvage_broker",
+        "title": "Salvage Broker — Midtown Corridor",
+        "daily_loop_hint": "Track crews pulling material from dead towers; broker between scavengers and Brooklyn buyers.",
+        "skill_tilts_hint": ["negotiation", "streetwise", "bureaucracy", "faction_etiquette"],
+        "factions": {"positive_candidates": ["brooklyn_tower_lords", "philadelphia_bourse"], "negative_candidates": ["iron_crown_newark"]},
+        "npc_role_hints": ["patron_buyer", "contact_scavenger", "rival_broker", "ally_enforcer"],
+        "threat_candidates": ["knife_scavenger_survivor", "named_rival_human"],
+        "starting_sublocation_hint": "a back office above a freight yard on 11th Avenue",
+        "notes": "All paperwork, all handshakes, all margins. Violence is delegated."
+      },
+      {
+        "id": "mf_tower_medic",
+        "title": "Tower-Lord House Medic",
+        "daily_loop_hint": "Resident physician for one of the Midtown vertical fiefdoms; your patients are the lord's family and enforcers.",
+        "skill_tilts_hint": ["surgery", "first_aid", "faction_etiquette", "intimidation"],
+        "factions": {"positive_candidates": ["brooklyn_tower_lords"], "negative_candidates": ["queens_commonage"]},
+        "npc_role_hints": ["patron_lord", "ally_guard_captain", "rival_heir", "contact_steward"],
+        "threat_candidates": ["faction_assassin_contract", "family_complication"],
+        "starting_sublocation_hint": "a tower on 57th Street, twelve floors up, windows intact",
+        "notes": "Comfortable, compromised. The lord's children are reasons."
+      }
+    ],
+    "brooklyn_tower_lords": [
+      {
+        "id": "btl_captain_aide",
+        "title": "Aide to a Tower Captain",
+        "daily_loop_hint": "Muster lists, patrol routes, intake of newcomers at the Tower's main lift.",
+        "skill_tilts_hint": ["command", "faction_etiquette", "bureaucracy", "streetwise"],
+        "factions": {"positive_candidates": ["brooklyn_tower_lords"], "negative_candidates": ["iron_crown_newark"]},
+        "npc_role_hints": ["patron_captain", "ally_lieutenant", "rival_rival_aide", "contact_quartermaster"],
+        "threat_candidates": ["named_rival_human", "faction_assassin_contract"],
+        "starting_sublocation_hint": "a corner office in a Williamsburg high-rise",
+        "notes": "Politics, protocol, petty rivalries. The lord is present. So is the knife."
+      },
+      {
+        "id": "btl_salvage_crew",
+        "title": "Salvage Crew Runner",
+        "daily_loop_hint": "Lead a five-person crew into dead blocks; clear, scavenge, haul, sell.",
+        "skill_tilts_hint": ["scavenging", "urban_movement", "tactics", "melee"],
+        "factions": {"positive_candidates": ["brooklyn_tower_lords"], "negative_candidates": ["manhattan_fragment"]},
+        "npc_role_hints": ["ally_coworker", "rival_rival_crew", "contact_fence", "patron_buyer"],
+        "threat_candidates": ["knife_scavenger_survivor", "warped_predator_personal"],
+        "starting_sublocation_hint": "a rigged warehouse at the Navy Yard edge",
+        "notes": "Physical, material, dangerous. Crew loyalty runs deep."
+      },
+      {
+        "id": "btl_tower_schoolmaster",
+        "title": "Schoolmaster in a Tower Commune",
+        "daily_loop_hint": "Run literacy and history for Tower children; mediate minor disputes among their parents.",
+        "skill_tilts_hint": ["instruction", "literacy", "history", "negotiation"],
+        "factions": {"positive_candidates": ["brooklyn_tower_lords"], "negative_candidates": ["iron_crown_newark"]},
+        "npc_role_hints": ["patron_elder", "ally_parent_council", "rival_orthodox_teacher", "contact_librarian"],
+        "threat_candidates": ["named_rival_human", "family_complication"],
+        "starting_sublocation_hint": "a cleared restaurant floor in a Prospect Heights tower",
+        "notes": "Soft power. You know everyone's children. That's the leverage."
+      },
+      {
+        "id": "btl_border_doctor",
+        "title": "Inter-Tower Border Doctor",
+        "daily_loop_hint": "Neutral medic who crosses Tower boundaries under truce flags; treat wounded on both sides.",
+        "skill_tilts_hint": ["surgery", "first_aid", "negotiation", "faction_etiquette"],
+        "factions": {"positive_candidates": ["brooklyn_tower_lords", "queens_commonage"], "negative_candidates": []},
+        "npc_role_hints": ["patron_truce_warden", "ally_nurse", "rival_rival_medic", "contact_courier"],
+        "threat_candidates": ["biokinetic_error_infection", "debt_holder"],
+        "starting_sublocation_hint": "a clearinghouse on the Gowanus truce line",
+        "notes": "Neutrality is a daily negotiation. The truce is always one incident from breaking."
+      }
+    ],
+    "queens_commonage": [
+      {
+        "id": "qc_field_supervisor",
+        "title": "Agricultural Field Supervisor",
+        "daily_loop_hint": "Coordinate crop rotations across three Queens agricultural blocks; liaise with the perceptual-coordinated commune council.",
+        "skill_tilts_hint": ["agriculture", "command", "instruction", "weather_read"],
+        "factions": {"positive_candidates": ["queens_commonage"], "negative_candidates": ["iron_crown_newark"]},
+        "npc_role_hints": ["patron_council_elder", "ally_coworker", "rival_allotment_rival", "contact_market_factor"],
+        "threat_candidates": ["named_rival_human", "family_complication"],
+        "starting_sublocation_hint": "a field office at the converted Flushing Meadows barn complex",
+        "notes": "Group-think is literal. The commune's decisions arrive half-formed from everyone at once."
+      },
+      {
+        "id": "qc_ritual_medic",
+        "title": "Commune Medic with Ritual Duties",
+        "daily_loop_hint": "Rounds through the Commonage's healing halls; participate in the perceptual rituals that bind decisions.",
+        "skill_tilts_hint": ["first_aid", "surgery", "faction_etiquette", "instruction"],
+        "factions": {"positive_candidates": ["queens_commonage"], "negative_candidates": ["manhattan_fragment"]},
+        "npc_role_hints": ["patron_ritual_elder", "ally_coworker", "rival_orthodoxy_rival", "contact_patient_archivist"],
+        "threat_candidates": ["biokinetic_error_infection", "eldritch_persistent"],
+        "starting_sublocation_hint": "a converted school auditorium now a healing hall in Jamaica",
+        "notes": "Participating in the rituals changes you. That's the cost of the work."
+      },
+      {
+        "id": "qc_trade_envoy",
+        "title": "Trade Envoy to the Bourse",
+        "daily_loop_hint": "Regular runs to Philadelphia and back; negotiate grain-for-copper contracts with Bourse factors.",
+        "skill_tilts_hint": ["negotiation", "faction_etiquette", "bureaucracy", "regional_geography"],
+        "factions": {"positive_candidates": ["queens_commonage", "philadelphia_bourse"], "negative_candidates": ["iron_crown_newark"]},
+        "npc_role_hints": ["patron_council", "contact_bourse_factor", "rival_envoy_rival", "ally_escort"],
+        "threat_candidates": ["knife_scavenger_survivor", "named_rival_human"],
+        "starting_sublocation_hint": "an envoy's quarters near the Long Island City rail junction",
+        "notes": "Mobile. Trusted. Exposed. The Iron Crown doesn't like competitors."
+      },
+      {
+        "id": "qc_border_guard",
+        "title": "Commonage Border Guard Captain",
+        "daily_loop_hint": "Command a watch station on the Queens-Brooklyn line; screen migrants; negotiate with Tower Lord patrols.",
+        "skill_tilts_hint": ["tactics", "command", "firearms", "intimidation"],
+        "factions": {"positive_candidates": ["queens_commonage"], "negative_candidates": ["brooklyn_tower_lords"]},
+        "npc_role_hints": ["ally_lieutenant", "rival_tower_captain", "contact_migrant_organizer", "patron_council"],
+        "threat_candidates": ["named_rival_human", "warped_predator_personal"],
+        "starting_sublocation_hint": "a sandbagged intersection at the Myrtle-Broadway line",
+        "notes": "Disciplined violence. Most days are paperwork. Some days aren't."
+      }
+    ],
+    "staten_citadel": [
+      {
+        "id": "sc_harbor_master",
+        "title": "Citadel Harbor Assistant Master",
+        "daily_loop_hint": "Track salvage manifests entering the harbor; apply the Citadel's toll schedule; work under Chen's deputies.",
+        "skill_tilts_hint": ["bureaucracy", "negotiation", "faction_etiquette", "streetwise"],
+        "factions": {"positive_candidates": ["staten_citadel"], "negative_candidates": ["iron_crown_newark", "brooklyn_tower_lords"]},
+        "npc_role_hints": ["patron_chen_deputy", "ally_clerk", "rival_envious_clerk", "contact_captain"],
+        "threat_candidates": ["faction_assassin_contract", "debt_holder"],
+        "starting_sublocation_hint": "a dockside office in the converted Staten Island Ferry Terminal",
+        "notes": "Chen sees further than he should. He also sees you."
+      },
+      {
+        "id": "sc_quiet_surgeon",
+        "title": "Quiet Surgeon for Citadel Retainers",
+        "daily_loop_hint": "Treat the Citadel's temporal-spatial specialists; patch injuries no one else understands.",
+        "skill_tilts_hint": ["surgery", "first_aid", "faction_etiquette", "perception_check"],
+        "factions": {"positive_candidates": ["staten_citadel"], "negative_candidates": ["queens_commonage"]},
+        "npc_role_hints": ["patron_chen_deputy", "ally_nurse", "rival_orthodoxy_rival", "contact_patient_specialist"],
+        "threat_candidates": ["eldritch_persistent", "biokinetic_error_infection"],
+        "starting_sublocation_hint": "a private clinic in the Todt Hill compound",
+        "notes": "The injuries don't always make sense. Record what you see; submit to Chen."
+      },
+      {
+        "id": "sc_toll_enforcer",
+        "title": "Toll Enforcer on the Harbor Approach",
+        "daily_loop_hint": "Board salvage vessels at the Citadel's toll lines; collect duty or confiscate cargo.",
+        "skill_tilts_hint": ["intimidation", "tactics", "firearms", "faction_etiquette"],
+        "factions": {"positive_candidates": ["staten_citadel"], "negative_candidates": ["brooklyn_tower_lords"]},
+        "npc_role_hints": ["patron_harbor_captain", "ally_crew", "rival_rival_enforcer", "contact_smuggler"],
+        "threat_candidates": ["named_rival_human", "knife_scavenger_survivor"],
+        "starting_sublocation_hint": "a patrol cutter moored at Stapleton",
+        "notes": "Direct work. Captains remember your face. Some of them come back."
+      },
+      {
+        "id": "sc_records_clerk",
+        "title": "Citadel Records Clerk",
+        "daily_loop_hint": "Maintain the Citadel's archive of seized manifests; reconcile ledgers with Chen's spatial projections.",
+        "skill_tilts_hint": ["literacy", "bureaucracy", "history", "languages"],
+        "factions": {"positive_candidates": ["staten_citadel"], "negative_candidates": ["philadelphia_bourse"]},
+        "npc_role_hints": ["patron_chief_archivist", "ally_junior_clerk", "rival_disputed_entry_rival", "contact_foreign_factor"],
+        "threat_candidates": ["eldritch_persistent", "debt_holder"],
+        "starting_sublocation_hint": "the vault below the Citadel's central hall",
+        "notes": "Quiet, bookish, dangerous. The records know things the recorders don't."
+      }
+    ],
+    "flushing_edison_c_cluster": [
+      {
+        "id": "fe_twelve_hands_artisan",
+        "title": "Artisan Under the Twelve Hands",
+        "daily_loop_hint": "Metalwork and fine goods in a Species C cooperative; deliver to Bourse and Commonage buyers.",
+        "skill_tilts_hint": ["craft", "basic_repair", "faction_etiquette", "languages"],
+        "factions": {"positive_candidates": ["flushing_edison_c_cluster", "philadelphia_bourse"], "negative_candidates": ["iron_crown_newark"]},
+        "npc_role_hints": ["patron_twelve_hands_elder", "ally_coworker", "rival_young_hand", "contact_bourse_buyer"],
+        "threat_candidates": ["named_rival_human", "debt_holder"],
+        "starting_sublocation_hint": "a workshop in a Flushing converted restaurant block",
+        "notes": "Cluster loyalty matters. Work with your hands; the metallic sheen on yours is a sign."
+      },
+      {
+        "id": "fe_cluster_physician",
+        "title": "Cluster Physician",
+        "daily_loop_hint": "Medical care for Species C manifestations and their attendant conditions; bridge to outside medical networks.",
+        "skill_tilts_hint": ["surgery", "first_aid", "pharmacology", "languages"],
+        "factions": {"positive_candidates": ["flushing_edison_c_cluster"], "negative_candidates": []},
+        "npc_role_hints": ["patron_twelve_hands_medical", "ally_colleague", "rival_orthodox_healer", "contact_outside_liaison"],
+        "threat_candidates": ["biokinetic_error_infection", "family_complication"],
+        "starting_sublocation_hint": "the cluster's main clinic near Main Street Flushing",
+        "notes": "Species C physiology is different. Old textbooks only get you so far."
+      },
+      {
+        "id": "fe_edison_liaison",
+        "title": "Edison Township Liaison",
+        "daily_loop_hint": "Shuttle between Flushing and the Edison cluster; coordinate shipments, carry private correspondence.",
+        "skill_tilts_hint": ["negotiation", "regional_geography", "faction_etiquette", "languages"],
+        "factions": {"positive_candidates": ["flushing_edison_c_cluster", "central_jersey_league"], "negative_candidates": ["iron_crown_newark"]},
+        "npc_role_hints": ["patron_council", "ally_escort", "rival_envoy_rival", "contact_township_leader"],
+        "threat_candidates": ["knife_scavenger_survivor", "named_rival_human"],
+        "starting_sublocation_hint": "an envoy's room in Edison's council compound",
+        "notes": "The Iron Crown considers your route their territory. They are wrong but vocal."
+      },
+      {
+        "id": "fe_workshop_medic",
+        "title": "Workshop Medic",
+        "daily_loop_hint": "Treat industrial injuries in the Flushing artisan district; keep the looms and furnaces running.",
+        "skill_tilts_hint": ["first_aid", "pharmacology", "basic_repair", "languages"],
+        "factions": {"positive_candidates": ["flushing_edison_c_cluster"], "negative_candidates": []},
+        "npc_role_hints": ["ally_foreman", "patron_twelve_hands_steward", "rival_outside_specialist", "contact_apprentice"],
+        "threat_candidates": ["biokinetic_error_infection", "debt_holder"],
+        "starting_sublocation_hint": "an infirmary beside a metal shop on Kissena Boulevard",
+        "notes": "You smell like hot metal. Your patients work through pain; you learn when to push back."
+      }
+    ],
+    "iron_crown_newark": [
+      {
+        "id": "ic_medical_officer",
+        "title": "Iron Crown Medical Officer",
+        "daily_loop_hint": "Run triage at the Crown's Newark clinic; rotate through patrol assignments treating enforcer injuries.",
+        "skill_tilts_hint": ["surgery", "first_aid", "command", "faction_etiquette"],
+        "factions": {"positive_candidates": ["iron_crown_newark"], "negative_candidates": ["queens_commonage", "yonkers_compact"]},
+        "npc_role_hints": ["patron_crown_captain", "ally_nurse", "rival_ambitious_officer", "contact_patrol_sergeant"],
+        "threat_candidates": ["faction_assassin_contract", "named_rival_human"],
+        "starting_sublocation_hint": "a clinic adjacent to the Newark governance compound",
+        "notes": "Competence rewarded. Dissent not. Volk sees everything eventually."
+      },
+      {
+        "id": "ic_port_clerk",
+        "title": "Port Manifest Clerk",
+        "daily_loop_hint": "Process cargo manifests at Port Newark; apply Crown duty; flag smuggling patterns to intelligence officers.",
+        "skill_tilts_hint": ["bureaucracy", "literacy", "languages", "perception_check"],
+        "factions": {"positive_candidates": ["iron_crown_newark"], "negative_candidates": ["staten_citadel", "brooklyn_tower_lords"]},
+        "npc_role_hints": ["patron_port_captain", "ally_clerk", "rival_disputed_entry_rival", "contact_smuggler_informant"],
+        "threat_candidates": ["debt_holder", "faction_assassin_contract"],
+        "starting_sublocation_hint": "a customs office on the Newark waterfront",
+        "notes": "Paperwork is weaponized. What you write gets people taken."
+      },
+      {
+        "id": "ic_patrol_lieutenant",
+        "title": "Patrol Lieutenant",
+        "daily_loop_hint": "Lead a six-person patrol through Essex County checkpoint rotations; report weekly to the district captain.",
+        "skill_tilts_hint": ["tactics", "command", "firearms", "intimidation"],
+        "factions": {"positive_candidates": ["iron_crown_newark"], "negative_candidates": ["yonkers_compact", "queens_commonage"]},
+        "npc_role_hints": ["patron_district_captain", "ally_sergeant", "rival_rival_lieutenant", "contact_local_elder"],
+        "threat_candidates": ["named_rival_human", "ruined_former_ally"],
+        "starting_sublocation_hint": "a patrol barracks in the Ironbound",
+        "notes": "Direct power. The villages you patrol don't love you. Your squad does."
+      },
+      {
+        "id": "ic_contract_specialist",
+        "title": "Contract Medical Specialist to District Enforcers",
+        "daily_loop_hint": "Field medic on violent assignments; patch wounds under fire; sign reports the captain dictates.",
+        "skill_tilts_hint": ["surgery", "field_medicine", "firearms", "faction_etiquette"],
+        "factions": {"positive_candidates": ["iron_crown_newark"], "negative_candidates": ["central_jersey_league"]},
+        "npc_role_hints": ["patron_enforcer_captain", "ally_squad", "rival_envious_medic", "contact_patient_turncoat"],
+        "threat_candidates": ["family_complication", "ruined_former_ally"],
+        "starting_sublocation_hint": "a forward medical tent at a rotating rural station",
+        "notes": "You see what the reports don't mention. You decide what to do about it."
+      }
+    ],
+    "yonkers_compact": [
+      {
+        "id": "yc_commune_surgeon",
+        "title": "Commune Surgeon",
+        "daily_loop_hint": "Surgical work in the Compact's central clinic; consult the Three Judges on difficult cases.",
+        "skill_tilts_hint": ["surgery", "first_aid", "pharmacology", "faction_etiquette"],
+        "factions": {"positive_candidates": ["yonkers_compact"], "negative_candidates": ["iron_crown_newark"]},
+        "npc_role_hints": ["patron_judge", "ally_nurse", "rival_junior_surgeon", "contact_biokinetic_specialist"],
+        "threat_candidates": ["biokinetic_error_infection", "named_rival_human"],
+        "starting_sublocation_hint": "the converted Yonkers General Hospital top floor",
+        "notes": "The Judges consult. Your practice runs within what they accept."
+      },
+      {
+        "id": "yc_field_coordinator",
+        "title": "Agricultural Field Coordinator",
+        "daily_loop_hint": "Manage biokinetic-supplemented crop yields in Westchester; coordinate with the Compact's seasonal rituals.",
+        "skill_tilts_hint": ["agriculture", "command", "weather_read", "instruction"],
+        "factions": {"positive_candidates": ["yonkers_compact"], "negative_candidates": ["catskill_throne"]},
+        "npc_role_hints": ["patron_elder", "ally_coworker", "rival_allotment_rival", "contact_ritualist"],
+        "threat_candidates": ["biokinetic_error_infection", "family_complication"],
+        "starting_sublocation_hint": "a field office near the Saw Mill Parkway",
+        "notes": "Rituals organize the week. Rain comes when the ritual is right. Or doesn't."
+      },
+      {
+        "id": "yc_border_envoy",
+        "title": "Compact Border Envoy",
+        "daily_loop_hint": "Diplomatic runs to Peekskill and the Catskill periphery; carry Judge-authorized terms.",
+        "skill_tilts_hint": ["negotiation", "faction_etiquette", "regional_geography", "literacy"],
+        "factions": {"positive_candidates": ["yonkers_compact", "peekskill_bear_house"], "negative_candidates": ["catskill_throne"]},
+        "npc_role_hints": ["patron_judge", "ally_escort", "rival_rival_envoy", "contact_foreign_factor"],
+        "threat_candidates": ["named_rival_human", "ruined_former_ally"],
+        "starting_sublocation_hint": "an envoy's quarters in Yonkers's converted city hall",
+        "notes": "Your word carries weight because the Judges speak through you. Don't improvise."
+      },
+      {
+        "id": "yc_ritual_apprentice",
+        "title": "Ritual Apprentice to a Judge",
+        "daily_loop_hint": "Learn the Compact's biokinetic practice under one of the Three; assist in decisions that bind the commune.",
+        "skill_tilts_hint": ["faction_etiquette", "literacy", "instruction", "pharmacology"],
+        "factions": {"positive_candidates": ["yonkers_compact"], "negative_candidates": ["the_listening"]},
+        "npc_role_hints": ["patron_judge", "ally_fellow_apprentice", "rival_rival_apprentice", "contact_archive_keeper"],
+        "threat_candidates": ["eldritch_persistent", "family_complication"],
+        "starting_sublocation_hint": "the Judge's chambers beneath the old Untermyer estate",
+        "notes": "You will change. You know this going in."
+      }
+    ],
+    "peekskill_bear_house": [
+      {
+        "id": "pbh_reactor_medic",
+        "title": "Reactor Medic",
+        "daily_loop_hint": "Radiological and trauma care for crew at the Bear-House reactor; monitor chronic exposures.",
+        "skill_tilts_hint": ["surgery", "field_medicine", "pharmacology", "faction_etiquette"],
+        "factions": {"positive_candidates": ["peekskill_bear_house"], "negative_candidates": ["catskill_throne"]},
+        "npc_role_hints": ["patron_chief_engineer", "ally_nurse", "rival_orthodox_medic", "contact_worker_elder"],
+        "threat_candidates": ["biokinetic_error_infection", "debt_holder"],
+        "starting_sublocation_hint": "the reactor compound's medical bay",
+        "notes": "The work is quiet until it isn't. The Bear-House pays well for silence."
+      },
+      {
+        "id": "pbh_fabrication_foreman",
+        "title": "Fabrication Yard Foreman",
+        "daily_loop_hint": "Oversee metallurgical fabrication crews in the yards; coordinate material flow with the reactor team.",
+        "skill_tilts_hint": ["craft", "command", "basic_repair", "instruction"],
+        "factions": {"positive_candidates": ["peekskill_bear_house"], "negative_candidates": ["philadelphia_bourse"]},
+        "npc_role_hints": ["patron_chief_of_yards", "ally_lead_worker", "rival_rival_foreman", "contact_buyer"],
+        "threat_candidates": ["named_rival_human", "ruined_former_ally"],
+        "starting_sublocation_hint": "the main fabrication floor on the Hudson",
+        "notes": "Output is watched. The Throne upriver cares about your output too."
+      },
+      {
+        "id": "pbh_border_scout",
+        "title": "Upriver Border Scout",
+        "daily_loop_hint": "Patrol the Bear-House's northern perimeter; watch for Catskill Throne incursions; trade with independents.",
+        "skill_tilts_hint": ["wilderness", "stealth", "tactics", "regional_geography"],
+        "factions": {"positive_candidates": ["peekskill_bear_house"], "negative_candidates": ["catskill_throne"]},
+        "npc_role_hints": ["patron_scout_captain", "ally_fellow_scout", "rival_throne_scout", "contact_independent"],
+        "threat_candidates": ["warped_predator_personal", "named_rival_human"],
+        "starting_sublocation_hint": "a forward outpost above Cold Spring",
+        "notes": "Solitary. The woods are not empty."
+      },
+      {
+        "id": "pbh_trade_factor",
+        "title": "Trade Factor for Bear-House Metal",
+        "daily_loop_hint": "Broker steel and copper exports; negotiate with Bourse agents and Lehigh representatives.",
+        "skill_tilts_hint": ["negotiation", "faction_etiquette", "bureaucracy", "regional_geography"],
+        "factions": {"positive_candidates": ["peekskill_bear_house", "philadelphia_bourse"], "negative_candidates": ["lehigh_principalities"]},
+        "npc_role_hints": ["patron_trade_master", "ally_clerk", "rival_bourse_factor", "contact_independent_buyer"],
+        "threat_candidates": ["debt_holder", "named_rival_human"],
+        "starting_sublocation_hint": "a trade hall beside the Peekskill wharfs",
+        "notes": "The Bear-House wants scale. The buyers want leverage. You're in the middle."
+      }
+    ],
+    "central_jersey_league": [
+      {
+        "id": "cj_township_physician",
+        "title": "Township Physician",
+        "daily_loop_hint": "Serve one of the League's 15 member townships as principal medical officer; report to the town council.",
+        "skill_tilts_hint": ["surgery", "first_aid", "pharmacology", "faction_etiquette"],
+        "factions": {"positive_candidates": ["central_jersey_league"], "negative_candidates": ["iron_crown_newark"]},
+        "npc_role_hints": ["patron_council", "ally_nurse", "rival_rival_physician", "contact_apothecary"],
+        "threat_candidates": ["biokinetic_error_infection", "family_complication"],
+        "starting_sublocation_hint": "a converted schoolhouse clinic in a Middlesex County town",
+        "notes": "Community-rooted. Everyone knows your patients. Everyone notices who you treat first."
+      },
+      {
+        "id": "cj_circuit_rider",
+        "title": "Circuit-Riding Negotiator",
+        "daily_loop_hint": "Travel among League townships mediating disputes; enforce the League's mutual-defense accords.",
+        "skill_tilts_hint": ["negotiation", "regional_geography", "bureaucracy", "faction_etiquette"],
+        "factions": {"positive_candidates": ["central_jersey_league"], "negative_candidates": ["iron_crown_newark"]},
+        "npc_role_hints": ["patron_league_chair", "ally_apprentice", "rival_township_contrarian", "contact_elder_mediator"],
+        "threat_candidates": ["named_rival_human", "ruined_former_ally"],
+        "starting_sublocation_hint": "a rented room in New Brunswick serving as your base",
+        "notes": "Always moving. Always negotiating. Always one failed mediation from a township-level war."
+      },
+      {
+        "id": "cj_mutual_defense_captain",
+        "title": "Mutual-Defense Captain",
+        "daily_loop_hint": "Command a township militia rotation; train new recruits; coordinate with neighboring captains.",
+        "skill_tilts_hint": ["tactics", "command", "firearms", "instruction"],
+        "factions": {"positive_candidates": ["central_jersey_league"], "negative_candidates": ["iron_crown_newark", "pine_barrens_batsto"]},
+        "npc_role_hints": ["patron_league_council", "ally_lieutenant", "rival_rival_captain", "contact_retired_officer"],
+        "threat_candidates": ["named_rival_human", "ruined_former_ally"],
+        "starting_sublocation_hint": "a militia barracks at a Middlesex crossroads",
+        "notes": "Local volunteers. Local weapons. Local stakes."
+      },
+      {
+        "id": "cj_agricultural_factor",
+        "title": "Agricultural Factor",
+        "daily_loop_hint": "Broker crop surpluses among League townships; negotiate bulk export contracts with the Bourse.",
+        "skill_tilts_hint": ["negotiation", "agriculture", "bureaucracy", "regional_geography"],
+        "factions": {"positive_candidates": ["central_jersey_league", "philadelphia_bourse"], "negative_candidates": ["iron_crown_newark"]},
+        "npc_role_hints": ["patron_council", "ally_coworker", "rival_rival_factor", "contact_bourse_buyer"],
+        "threat_candidates": ["debt_holder", "named_rival_human"],
+        "starting_sublocation_hint": "a grain exchange office in New Brunswick",
+        "notes": "Peaceful work on a map where peace is negotiated daily."
+      }
+    ],
+    "princeton_accord": [
+      {
+        "id": "pa_accord_hall_clerk",
+        "title": "Accord Hall Clerk",
+        "daily_loop_hint": "Maintain the Accord's legal archives; process town petitions; draft response correspondence.",
+        "skill_tilts_hint": ["bureaucracy", "literacy", "history", "languages"],
+        "factions": {"positive_candidates": ["princeton_accord", "central_jersey_league"], "negative_candidates": ["iron_crown_newark"]},
+        "npc_role_hints": ["patron_chief_archivist", "ally_junior_clerk", "rival_ambitious_clerk", "contact_traveling_lawyer"],
+        "threat_candidates": ["named_rival_human", "faction_assassin_contract"],
+        "starting_sublocation_hint": "the university's old McCosh Hall, now the Accord archive",
+        "notes": "Words are policy. Your memos shape months."
+      },
+      {
+        "id": "pa_teaching_medic",
+        "title": "Teaching Physician at the Accord School",
+        "daily_loop_hint": "Train new medics in the Accord's reopened medical school; maintain a research practice.",
+        "skill_tilts_hint": ["surgery", "instruction", "literacy", "pharmacology"],
+        "factions": {"positive_candidates": ["princeton_accord"], "negative_candidates": []},
+        "npc_role_hints": ["patron_dean", "ally_colleague", "rival_rival_researcher", "contact_visiting_lecturer"],
+        "threat_candidates": ["biokinetic_error_infection", "named_rival_human"],
+        "starting_sublocation_hint": "a lecture hall in the reopened medical school",
+        "notes": "Contemplative work. The Accord is cautious. So is your research."
+      },
+      {
+        "id": "pa_visiting_scholar",
+        "title": "Visiting Scholar on Post-Onset Phenomena",
+        "daily_loop_hint": "Document manifestations across the region; publish under Accord seal; correspond with Bourse and Commonage researchers.",
+        "skill_tilts_hint": ["literacy", "history", "regional_geography", "perception_check"],
+        "factions": {"positive_candidates": ["princeton_accord", "queens_commonage"], "negative_candidates": ["the_listening"]},
+        "npc_role_hints": ["patron_provost", "ally_colleague", "rival_theoretical_rival", "contact_field_informant"],
+        "threat_candidates": ["eldritch_persistent", "named_rival_human"],
+        "starting_sublocation_hint": "a study in the old Firestone Library",
+        "notes": "Dangerous work. What you write about, you eventually meet."
+      },
+      {
+        "id": "pa_accord_diplomat",
+        "title": "Accord Diplomat to the Region",
+        "daily_loop_hint": "Shuttle among Princeton, Philadelphia, and New Brunswick carrying Accord positions; maintain back-channel relationships.",
+        "skill_tilts_hint": ["negotiation", "faction_etiquette", "regional_geography", "languages"],
+        "factions": {"positive_candidates": ["princeton_accord", "philadelphia_bourse", "central_jersey_league"], "negative_candidates": ["iron_crown_newark"]},
+        "npc_role_hints": ["patron_council", "ally_translator", "rival_rival_diplomat", "contact_foreign_negotiator"],
+        "threat_candidates": ["faction_assassin_contract", "named_rival_human"],
+        "starting_sublocation_hint": "a diplomat's office in Nassau Hall",
+        "notes": "Words over violence. Until words fail."
+      }
+    ],
+    "philadelphia_bourse": [
+      {
+        "id": "pb_clinic_attending",
+        "title": "Attending at a Bourse-Chartered Clinic",
+        "daily_loop_hint": "Surgical attending at a Rittenhouse clinic serving merchant scions and their enforcers.",
+        "skill_tilts_hint": ["surgery", "pharmacology", "faction_etiquette", "bureaucracy"],
+        "factions": {"positive_candidates": ["philadelphia_bourse"], "negative_candidates": ["south_philly_holding"]},
+        "npc_role_hints": ["patron_clinic_founder", "ally_nurse", "rival_heir_physician", "contact_notary"],
+        "threat_candidates": ["debt_holder", "named_rival_human"],
+        "starting_sublocation_hint": "a chartered clinic on Walnut Street near Rittenhouse Square",
+        "notes": "Comfortable. Compromised. The Bourse protects its own; so do you."
+      },
+      {
+        "id": "pb_copper_factor",
+        "title": "Copper-Currency Factor",
+        "daily_loop_hint": "Manage copper ledger balances for a mercantile house; settle inter-faction accounts at Bourse quarterly sessions.",
+        "skill_tilts_hint": ["negotiation", "bureaucracy", "literacy", "faction_etiquette"],
+        "factions": {"positive_candidates": ["philadelphia_bourse"], "negative_candidates": ["staten_citadel"]},
+        "npc_role_hints": ["patron_house_principal", "ally_apprentice", "rival_house_factor", "contact_smith_guild_elder"],
+        "threat_candidates": ["debt_holder", "ruined_former_ally"],
+        "starting_sublocation_hint": "a counting house on Second Street near the Old Customs",
+        "notes": "Money as language. Small errors cascade into large favors owed."
+      },
+      {
+        "id": "pb_caravan_escort",
+        "title": "Caravan Escort Captain",
+        "daily_loop_hint": "Lead armed escorts on Bourse trade routes through New Jersey and Delaware; negotiate passage with township militias.",
+        "skill_tilts_hint": ["tactics", "firearms", "regional_geography", "negotiation"],
+        "factions": {"positive_candidates": ["philadelphia_bourse", "central_jersey_league"], "negative_candidates": ["iron_crown_newark"]},
+        "npc_role_hints": ["patron_caravan_master", "ally_lieutenant", "rival_rival_captain", "contact_local_warden"],
+        "threat_candidates": ["knife_scavenger_survivor", "named_rival_human"],
+        "starting_sublocation_hint": "a caravan yard north of Fishtown",
+        "notes": "The roads teach you what maps don't."
+      },
+      {
+        "id": "pb_records_archivist",
+        "title": "Civic Archivist at the Old Hall",
+        "daily_loop_hint": "Maintain the Bourse's civic records; handle petitioner correspondence; mediate disputes involving record discrepancies.",
+        "skill_tilts_hint": ["literacy", "bureaucracy", "history", "negotiation"],
+        "factions": {"positive_candidates": ["philadelphia_bourse"], "negative_candidates": ["south_philly_holding"]},
+        "npc_role_hints": ["patron_chief_archivist", "ally_junior_clerk", "rival_rival_archivist", "contact_petitioner_spokesperson"],
+        "threat_candidates": ["faction_assassin_contract", "named_rival_human"],
+        "starting_sublocation_hint": "the archive vault beneath Independence Hall's east wing",
+        "notes": "History here is contested. You are one of the contests."
+      }
+    ],
+    "south_philly_holding": [
+      {
+        "id": "sp_navy_yard_medic",
+        "title": "Navy Yard Medic",
+        "daily_loop_hint": "Treat industrial and combat injuries at Dreng's Navy Yard infirmary; patch enforcers and dock crews alike.",
+        "skill_tilts_hint": ["surgery", "field_medicine", "pharmacology", "streetwise"],
+        "factions": {"positive_candidates": ["south_philly_holding"], "negative_candidates": ["philadelphia_bourse"]},
+        "npc_role_hints": ["patron_yard_captain", "ally_fellow_medic", "rival_rival_medic", "contact_dock_foreman"],
+        "threat_candidates": ["named_rival_human", "debt_holder"],
+        "starting_sublocation_hint": "an infirmary at the gate of the Philadelphia Navy Yard",
+        "notes": "Dreng is a name spoken quietly. The work is not quiet."
+      },
+      {
+        "id": "sp_enforcer_lieutenant",
+        "title": "Enforcer Lieutenant",
+        "daily_loop_hint": "Command a ward patrol for Dreng's holding; collect protection fees; escalate disputes to the captain.",
+        "skill_tilts_hint": ["intimidation", "tactics", "firearms", "streetwise"],
+        "factions": {"positive_candidates": ["south_philly_holding"], "negative_candidates": ["philadelphia_bourse"]},
+        "npc_role_hints": ["patron_dreng_captain", "ally_sergeant", "rival_ambitious_rival", "contact_local_merchant"],
+        "threat_candidates": ["named_rival_human", "ruined_former_ally"],
+        "starting_sublocation_hint": "a ward post on Snyder Avenue",
+        "notes": "Loyalty is the currency. Loyalty to Dreng."
+      },
+      {
+        "id": "sp_rail_runner",
+        "title": "Rail Runner on the South Philly Spurs",
+        "daily_loop_hint": "Work one of the rail crews Dreng uses for freight; handle loading, security, and occasional cargo modification.",
+        "skill_tilts_hint": ["basic_repair", "streetwise", "brawling", "regional_geography"],
+        "factions": {"positive_candidates": ["south_philly_holding"], "negative_candidates": ["philadelphia_bourse"]},
+        "npc_role_hints": ["patron_crew_boss", "ally_crewmate", "rival_dispatch_rival", "contact_buyer"],
+        "threat_candidates": ["debt_holder", "ruined_former_ally"],
+        "starting_sublocation_hint": "a rail yard near the old stadium complexes",
+        "notes": "Physical, direct. Cargo vanishing is not your problem until someone asks."
+      },
+      {
+        "id": "sp_ward_elder_scribe",
+        "title": "Ward-Elder Scribe",
+        "daily_loop_hint": "Draft correspondence for one of Dreng's ward elders; document community disputes; administer small funds.",
+        "skill_tilts_hint": ["literacy", "bureaucracy", "negotiation", "faction_etiquette"],
+        "factions": {"positive_candidates": ["south_philly_holding"], "negative_candidates": ["philadelphia_bourse"]},
+        "npc_role_hints": ["patron_elder", "ally_apprentice", "rival_ambitious_scribe", "contact_elder_of_other_ward"],
+        "threat_candidates": ["family_complication", "named_rival_human"],
+        "starting_sublocation_hint": "an elder's office above a rowhouse butcher shop",
+        "notes": "Intimate knowledge. Everyone's grievances pass through you."
+      }
+    ],
+    "lehigh_principalities": [
+      {
+        "id": "lp_coal_lord_medic",
+        "title": "Coal-Lord's House Medic",
+        "daily_loop_hint": "Serve a principality's household as principal medic; occasionally treat mine workers in the lord's good graces.",
+        "skill_tilts_hint": ["surgery", "first_aid", "pharmacology", "faction_etiquette"],
+        "factions": {"positive_candidates": ["lehigh_principalities"], "negative_candidates": ["central_jersey_league"]},
+        "npc_role_hints": ["patron_lord", "ally_housekeeper", "rival_heir_physician", "contact_mine_foreman"],
+        "threat_candidates": ["family_complication", "faction_assassin_contract"],
+        "starting_sublocation_hint": "a wing of a Bethlehem manor house",
+        "notes": "The lord eats well. His workers, less."
+      },
+      {
+        "id": "lp_mine_superintendent",
+        "title": "Mine Superintendent",
+        "daily_loop_hint": "Oversee coal extraction for a principality; maintain Species G agricultural integration contracts; report output to the lord.",
+        "skill_tilts_hint": ["command", "craft", "bureaucracy", "regional_geography"],
+        "factions": {"positive_candidates": ["lehigh_principalities"], "negative_candidates": ["catskill_throne"]},
+        "npc_role_hints": ["patron_lord", "ally_foreman", "rival_rival_superintendent", "contact_species_g_liaison"],
+        "threat_candidates": ["named_rival_human", "ruined_former_ally"],
+        "starting_sublocation_hint": "an office at the Jim Thorpe mine entrance",
+        "notes": "Output is watched from above and below."
+      },
+      {
+        "id": "lp_coal_broker",
+        "title": "Coal Broker to Downstream Buyers",
+        "daily_loop_hint": "Negotiate coal shipments to the Bourse, Bear-House, and Iron Crown; manage competing lords' expectations.",
+        "skill_tilts_hint": ["negotiation", "regional_geography", "faction_etiquette", "bureaucracy"],
+        "factions": {"positive_candidates": ["lehigh_principalities", "philadelphia_bourse"], "negative_candidates": ["iron_crown_newark"]},
+        "npc_role_hints": ["patron_lord_council", "ally_apprentice", "rival_rival_broker", "contact_downstream_factor"],
+        "threat_candidates": ["debt_holder", "named_rival_human"],
+        "starting_sublocation_hint": "a trade office at the Allentown rail junction",
+        "notes": "Everyone wants more than you can deliver."
+      },
+      {
+        "id": "lp_itinerant_physician",
+        "title": "Itinerant Physician Among the Mines",
+        "daily_loop_hint": "Travel among the principality's mining towns treating workers; report on health conditions to a reformist lord.",
+        "skill_tilts_hint": ["first_aid", "pharmacology", "regional_geography", "streetwise"],
+        "factions": {"positive_candidates": ["lehigh_principalities"], "negative_candidates": []},
+        "npc_role_hints": ["patron_reformist_lord", "ally_pack_animal_handler", "rival_company_medic", "contact_union_organizer"],
+        "threat_candidates": ["biokinetic_error_infection", "named_rival_human"],
+        "starting_sublocation_hint": "a traveler's kit and a room in each mining town",
+        "notes": "The lord who hired you may not want the reports honest."
+      }
+    ],
+    "crabclaw_baltimore": [
+      {
+        "id": "cc_harbor_physician",
+        "title": "Harbor Physician",
+        "daily_loop_hint": "Serve the three-lord confederation as a harbor-district physician; treat fishermen, dockworkers, and the occasional crew captain.",
+        "skill_tilts_hint": ["surgery", "first_aid", "streetwise", "faction_etiquette"],
+        "factions": {"positive_candidates": ["crabclaw_baltimore"], "negative_candidates": ["delmarva_harvest"]},
+        "npc_role_hints": ["patron_lord_steward", "ally_nurse", "rival_rival_physician", "contact_boat_captain"],
+        "threat_candidates": ["biokinetic_error_infection", "debt_holder"],
+        "starting_sublocation_hint": "a clinic overlooking Fells Point",
+        "notes": "Salt and fish. Work is tidal."
+      },
+      {
+        "id": "cc_fishery_foreman",
+        "title": "Fishery Foreman",
+        "daily_loop_hint": "Coordinate a lord's fishing fleet; handle daily catch ledgers; manage crew disputes.",
+        "skill_tilts_hint": ["command", "weather_read", "swimming", "regional_geography"],
+        "factions": {"positive_candidates": ["crabclaw_baltimore"], "negative_candidates": ["fed_continuity_dc"]},
+        "npc_role_hints": ["patron_lord", "ally_crew_captain", "rival_rival_foreman", "contact_trader"],
+        "threat_candidates": ["named_rival_human", "ruined_former_ally"],
+        "starting_sublocation_hint": "a wharf office near Canton",
+        "notes": "The lords compete visibly. Your fleet's numbers matter."
+      },
+      {
+        "id": "cc_lord_diplomat",
+        "title": "Inter-Lord Diplomat",
+        "daily_loop_hint": "Mediate disputes among the three Crabclaw lords; carry confidential terms between their households.",
+        "skill_tilts_hint": ["negotiation", "faction_etiquette", "bureaucracy", "literacy"],
+        "factions": {"positive_candidates": ["crabclaw_baltimore"], "negative_candidates": []},
+        "npc_role_hints": ["patron_lord_triad", "ally_escort", "rival_rival_diplomat", "contact_elder_mediator"],
+        "threat_candidates": ["faction_assassin_contract", "named_rival_human"],
+        "starting_sublocation_hint": "neutral quarters at an inner-harbor inn",
+        "notes": "Neutrality must be performed daily. Any slip is fatal."
+      },
+      {
+        "id": "cc_salvage_diver",
+        "title": "Salvage Diver",
+        "daily_loop_hint": "Dive on sunken wrecks in the Patapsco and upper bay; recover materiel for the Confederation; manage your own crew.",
+        "skill_tilts_hint": ["swimming", "scavenging", "basic_repair", "weather_read"],
+        "factions": {"positive_candidates": ["crabclaw_baltimore"], "negative_candidates": ["fed_continuity_dc"]},
+        "npc_role_hints": ["patron_salvage_broker", "ally_crewmate", "rival_rival_diver", "contact_buyer"],
+        "threat_candidates": ["knife_scavenger_survivor", "warped_predator_personal"],
+        "starting_sublocation_hint": "a boathouse at Locust Point",
+        "notes": "The bay hides more than it shows. Some of what you bring up wasn't metal."
+      }
+    ],
+    "delmarva_harvest": [
+      {
+        "id": "dh_estate_physician",
+        "title": "Estate Physician to a Harvest Lord",
+        "daily_loop_hint": "Serve one of the six biokinetic lords; treat their household, manage their biokinetic consultations, maintain their quiet reports.",
+        "skill_tilts_hint": ["surgery", "pharmacology", "faction_etiquette", "literacy"],
+        "factions": {"positive_candidates": ["delmarva_harvest"], "negative_candidates": ["fed_continuity_dc"]},
+        "npc_role_hints": ["patron_lord", "ally_housekeeper", "rival_jealous_heir", "contact_biokinetic_specialist"],
+        "threat_candidates": ["family_complication", "biokinetic_error_infection"],
+        "starting_sublocation_hint": "a wing in an Easton estate house",
+        "notes": "The lord's biokinetic practice touches the household. You learn its rhythms."
+      },
+      {
+        "id": "dh_field_medic",
+        "title": "Field Medic to Harvest Labor",
+        "daily_loop_hint": "Serve as roving medic across a Harvest Lord's agricultural fields; treat labor injuries and biokinetic-related illnesses.",
+        "skill_tilts_hint": ["first_aid", "pharmacology", "field_medicine", "regional_geography"],
+        "factions": {"positive_candidates": ["delmarva_harvest"], "negative_candidates": []},
+        "npc_role_hints": ["patron_lord_steward", "ally_fellow_medic", "rival_harsh_overseer", "contact_worker_elder"],
+        "threat_candidates": ["biokinetic_error_infection", "named_rival_human"],
+        "starting_sublocation_hint": "a wagon-based mobile clinic rotating among Queen Anne's County fields",
+        "notes": "You see the cost of the harvest. The lord does not ask your opinion."
+      },
+      {
+        "id": "dh_grain_factor",
+        "title": "Grain Factor for Regional Export",
+        "daily_loop_hint": "Negotiate bulk grain export contracts with the Bourse and Confederation buyers; represent a Harvest Lord's interests.",
+        "skill_tilts_hint": ["negotiation", "bureaucracy", "regional_geography", "faction_etiquette"],
+        "factions": {"positive_candidates": ["delmarva_harvest", "philadelphia_bourse"], "negative_candidates": ["fed_continuity_dc"]},
+        "npc_role_hints": ["patron_lord", "ally_clerk", "rival_rival_factor", "contact_buyer"],
+        "threat_candidates": ["debt_holder", "named_rival_human"],
+        "starting_sublocation_hint": "a grain exchange office at the Easton wharf",
+        "notes": "Peaceful trade on the surface. The lords do not forget leverage."
+      },
+      {
+        "id": "dh_waterman",
+        "title": "Waterman on the Eastern Bay",
+        "daily_loop_hint": "Work a crab and oyster boat along the Eastern Shore; haul to Lord-controlled markets.",
+        "skill_tilts_hint": ["swimming", "weather_read", "regional_geography", "animal_handling"],
+        "factions": {"positive_candidates": ["delmarva_harvest"], "negative_candidates": ["crabclaw_baltimore"]},
+        "npc_role_hints": ["patron_market_buyer", "ally_crewmate", "rival_across_the_bay", "contact_lord_agent"],
+        "threat_candidates": ["named_rival_human", "warped_predator_personal"],
+        "starting_sublocation_hint": "a working deadrise moored at St. Michaels",
+        "notes": "Weather dictates weeks. So do the lords' export quotas."
+      }
+    ],
+    "fed_continuity_dc": [
+      {
+        "id": "fc_pentagon_medical",
+        "title": "Continuity Medical Officer",
+        "daily_loop_hint": "Serve as uniformed physician within the Fed Continuity Command's medical corps; treat uniformed personnel and their families.",
+        "skill_tilts_hint": ["surgery", "first_aid", "command", "bureaucracy"],
+        "factions": {"positive_candidates": ["fed_continuity_dc"], "negative_candidates": ["iron_crown_newark"]},
+        "npc_role_hints": ["patron_senior_officer", "ally_fellow_physician", "rival_ambitious_officer", "contact_enlisted_sergeant"],
+        "threat_candidates": ["family_complication", "named_rival_human"],
+        "starting_sublocation_hint": "the Pentagon's internal medical wing",
+        "notes": "Paperwork and denial. The Command believes it still functions."
+      },
+      {
+        "id": "fc_archive_officer",
+        "title": "Continuity Archive Officer",
+        "daily_loop_hint": "Maintain restricted records; process reconstruction reports from regional agents; flag anomalies for senior officers.",
+        "skill_tilts_hint": ["literacy", "bureaucracy", "languages", "perception_check"],
+        "factions": {"positive_candidates": ["fed_continuity_dc"], "negative_candidates": ["staten_citadel"]},
+        "npc_role_hints": ["patron_chief_archivist", "ally_junior_officer", "rival_rival_archivist", "contact_field_agent"],
+        "threat_candidates": ["faction_assassin_contract", "eldritch_persistent"],
+        "starting_sublocation_hint": "a secure archive below Capitol Hill",
+        "notes": "You see patterns the Command prefers unseen."
+      },
+      {
+        "id": "fc_district_liaison",
+        "title": "District Liaison Officer",
+        "daily_loop_hint": "Represent Continuity authority to Arlington and DC neighborhoods; collect reports, dispense limited aid, manage civil disputes.",
+        "skill_tilts_hint": ["negotiation", "command", "bureaucracy", "faction_etiquette"],
+        "factions": {"positive_candidates": ["fed_continuity_dc"], "negative_candidates": ["crabclaw_baltimore"]},
+        "npc_role_hints": ["patron_commanding_officer", "ally_enlisted_aide", "rival_ambitious_rival", "contact_community_elder"],
+        "threat_candidates": ["named_rival_human", "ruined_former_ally"],
+        "starting_sublocation_hint": "a liaison office in Arlington",
+        "notes": "The uniform still means something. Mostly."
+      },
+      {
+        "id": "fc_field_investigator",
+        "title": "Continuity Field Investigator",
+        "daily_loop_hint": "Investigate anomalies flagged by the archive; travel under Continuity papers; report findings to a senior officer.",
+        "skill_tilts_hint": ["perception_check", "tactics", "regional_geography", "literacy"],
+        "factions": {"positive_candidates": ["fed_continuity_dc"], "negative_candidates": ["pine_barrens_batsto"]},
+        "npc_role_hints": ["patron_senior_officer", "ally_partner", "rival_rival_investigator", "contact_local_informant"],
+        "threat_candidates": ["eldritch_persistent", "faction_assassin_contract"],
+        "starting_sublocation_hint": "a traveler's kit and a room at a Georgetown safehouse",
+        "notes": "You go where the archive points. The archive is not always reliable."
+      }
+    ],
+    "catskill_throne": [
+      {
+        "id": "ct_throne_physician",
+        "title": "Throne Physician",
+        "daily_loop_hint": "Serve Preston's immediate household as medical officer; treat the Throne's retainers; meet Preston weekly.",
+        "skill_tilts_hint": ["surgery", "pharmacology", "faction_etiquette", "literacy"],
+        "factions": {"positive_candidates": ["catskill_throne"], "negative_candidates": ["yonkers_compact", "peekskill_bear_house"]},
+        "npc_role_hints": ["patron_preston", "ally_chamberlain", "rival_jealous_heir", "contact_retainer"],
+        "threat_candidates": ["family_complication", "faction_assassin_contract"],
+        "starting_sublocation_hint": "a wing of the Throne's principal seat at Mount Tremper",
+        "notes": "Preston is T9 kinetic. You are not. His patience is a weather system."
+      },
+      {
+        "id": "ct_pass_warden",
+        "title": "Mountain Pass Warden",
+        "daily_loop_hint": "Command a station on the Throne's southern pass; collect tolls from travelers; screen entries to the Throne's territory.",
+        "skill_tilts_hint": ["tactics", "command", "wilderness", "regional_geography"],
+        "factions": {"positive_candidates": ["catskill_throne"], "negative_candidates": ["peekskill_bear_house"]},
+        "npc_role_hints": ["patron_throne_captain", "ally_deputy_warden", "rival_rival_warden", "contact_traveler"],
+        "threat_candidates": ["named_rival_human", "warped_predator_personal"],
+        "starting_sublocation_hint": "a stone gatehouse at the Pine Hill pass",
+        "notes": "Cold, exposed, isolated. Travelers arrive with stories."
+      },
+      {
+        "id": "ct_hill_surgeon",
+        "title": "Itinerant Surgeon Among the Hill Towns",
+        "daily_loop_hint": "Travel the Throne's hill-town network treating workers and farmers; report on conditions to a Throne retainer.",
+        "skill_tilts_hint": ["surgery", "first_aid", "regional_geography", "wilderness"],
+        "factions": {"positive_candidates": ["catskill_throne"], "negative_candidates": []},
+        "npc_role_hints": ["patron_retainer", "ally_pack_animal_handler", "rival_local_folk_healer", "contact_village_elder"],
+        "threat_candidates": ["biokinetic_error_infection", "family_complication"],
+        "starting_sublocation_hint": "a traveler's kit and rotating rooms in Throne hill towns",
+        "notes": "The Throne is a distant authority up here. Preston's reach is long but uneven."
+      },
+      {
+        "id": "ct_forest_ranger",
+        "title": "Throne Forest Ranger",
+        "daily_loop_hint": "Patrol the Throne's forested margins; hunt, track, interdict; report wildlife and non-wildlife anomalies.",
+        "skill_tilts_hint": ["wilderness", "stealth", "firearms", "perception_check"],
+        "factions": {"positive_candidates": ["catskill_throne"], "negative_candidates": ["pine_barrens_batsto"]},
+        "npc_role_hints": ["patron_ranger_captain", "ally_partner", "rival_rival_ranger", "contact_poacher"],
+        "threat_candidates": ["warped_predator_personal", "eldritch_persistent"],
+        "starting_sublocation_hint": "a ranger cabin on the Ashokan Reservoir shore",
+        "notes": "Solitary work. The forest keeps secrets; you catalog some of them."
+      }
+    ],
+    "pine_barrens_batsto": [
+      {
+        "id": "pb_cult_medic",
+        "title": "Hive-Trained Medic",
+        "daily_loop_hint": "Treat members of the Listening collective at Batsto; bridge conventional medicine and the Hive's ritual practice.",
+        "skill_tilts_hint": ["surgery", "first_aid", "pharmacology", "faction_etiquette"],
+        "factions": {"positive_candidates": ["pine_barrens_batsto"], "negative_candidates": ["fed_continuity_dc", "central_jersey_league"]},
+        "npc_role_hints": ["patron_hive_elder", "ally_fellow_initiate", "rival_orthodox_medic", "contact_ritualist"],
+        "threat_candidates": ["eldritch_persistent", "biokinetic_error_infection"],
+        "starting_sublocation_hint": "an infirmary at the Hive core compound",
+        "notes": "You are inside something that changes you. You chose this or did not; now you live inside it."
+      },
+      {
+        "id": "pb_perimeter_scout",
+        "title": "Barrens Perimeter Scout",
+        "daily_loop_hint": "Patrol the Barrens' outer edge; screen approaching travelers; report to the Hive and to the scattered Ong's Hat settlements.",
+        "skill_tilts_hint": ["wilderness", "stealth", "regional_geography", "perception_check"],
+        "factions": {"positive_candidates": ["pine_barrens_batsto"], "negative_candidates": ["fed_continuity_dc"]},
+        "npc_role_hints": ["patron_hive_captain", "ally_fellow_scout", "rival_fed_investigator", "contact_independent_settler"],
+        "threat_candidates": ["eldritch_persistent", "warped_predator_personal"],
+        "starting_sublocation_hint": "a scout's camp at the Wharton forest edge",
+        "notes": "The Barrens are unreliable — the trees, the roads, the time. You learn to listen."
+      },
+      {
+        "id": "pb_ritualist_apprentice",
+        "title": "Apprentice Ritualist",
+        "daily_loop_hint": "Learn the Hive's ritual practice under a senior; contribute to group perceptual work; attend the Hive's gatherings.",
+        "skill_tilts_hint": ["faction_etiquette", "literacy", "perception_check", "instruction"],
+        "factions": {"positive_candidates": ["pine_barrens_batsto"], "negative_candidates": ["yonkers_compact"]},
+        "npc_role_hints": ["patron_elder_ritualist", "ally_fellow_apprentice", "rival_rival_apprentice", "contact_outside_sympathizer"],
+        "threat_candidates": ["eldritch_persistent", "family_complication"],
+        "starting_sublocation_hint": "a cell in the Batsto ritual complex",
+        "notes": "You will change. The Hive does not hide this."
+      },
+      {
+        "id": "pb_ong_hat_smuggler",
+        "title": "Ong's Hat Smuggler",
+        "daily_loop_hint": "Move goods and messages between Ong's Hat perimeter settlements and the outside; carry Hive-adjacent cargo under less obvious papers.",
+        "skill_tilts_hint": ["stealth", "wilderness", "streetwise", "regional_geography"],
+        "factions": {"positive_candidates": ["pine_barrens_batsto"], "negative_candidates": ["central_jersey_league", "fed_continuity_dc"]},
+        "npc_role_hints": ["patron_perimeter_leader", "ally_co_runner", "rival_rival_smuggler", "contact_outside_buyer"],
+        "threat_candidates": ["named_rival_human", "debt_holder"],
+        "starting_sublocation_hint": "a cabin near Ong's Hat's shifting perimeter",
+        "notes": "The Hive is not your only employer but it's the loudest. Your cargo varies."
+      }
+    ]
+  }
+}

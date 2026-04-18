@@ -1,0 +1,31 @@
+EMERGENCE REDESIGN — PROGRESS
+
+Phase A: Quest foundation
+  [done] quests/schema.py                  Quest + BrightLine + Macrostructure + validator
+  [done] quests/archetypes.py              18 archetype definitions
+  [done] quests/deltas.py                  WorldView + 15 delta ops + reconciler
+  [done] quests/quest.py                   init/tick/check_success/resolve + predicate eval
+  [done] tests/unit/test_quests.py         42 tests passing
+  [done] docs/quest_design_guidelines.md
+  [done] docs/opening_scene_guidelines.md
+  [done] docs/classifier_guidelines.md
+  [done] docs/job_bundle_guidelines.md
+
+Phase B: Character creation scenes
+  [done] classifier_contract.py            pre-emergence JSON validator
+  [done] pre_emergence_scene.py            text elicitation + classifier apply
+  [done] power_pick_scene.py               6/30 subcats, 3x2 powers, auto cast/rider
+  [done] location_scene.py                 post-Onset settlement pick
+  [done] data/job_archetypes.json          18 loc / 72 arch; all location ids aligned
+  [done] job_bundle_scene.py               prepare + validate + pick
+  [done] quest_pick_scene.py               8 gen, 4 backstory, 1 urgent
+  [done] bridge_scene.py                   bridge + opening + validator
+
+Phase C: Wiring
+  [done] session_zero.py orchestrator      six-scene SessionZero + FixedInputSource
+  [done] legacy scene files removed        11 scene files + 14 tests deleted; main.py stub; 955/955 pass
+  [done] step_cli.py — 6 named verbs       creation_store + step_creation + world adapter + argparse + world_pulse/scene_close tick hooks
+
+Phase D: Validation
+  [done] integration test                  test_full_creation_flow.py — mock narrator + deterministic inputs; 956/956 pass
+  [done] smoke test from fresh save        wipe \u2192 init \u2192 pre-emergence prompt/apply-text; biography captured; awaiting classifier JSON

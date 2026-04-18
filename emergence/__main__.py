@@ -97,32 +97,42 @@ def build_parser() -> argparse.ArgumentParser:
     # step status
     step_sub.add_parser("status", help="Show current game state")
 
-    # step scene
-    step_scene = step_sub.add_parser("scene", help="Get session zero scene setup")
-    step_scene.add_argument("--index", type=int, required=True, help="Scene index (0-7)")
+    # step pre-emergence — text elicitation + classifier apply
+    step_pre = step_sub.add_parser("pre-emergence", help="Pre-Onset biography elicitation + classifier")
+    step_pre.add_argument("--mode", choices=["prompt", "apply-text", "apply-classifier"], default="prompt")
+    step_pre.add_argument("--input-text", action="append", default=None, dest="input_text",
+                           help="Text input as key=value (repeatable)")
+    step_pre.add_argument("--input-json", default=None, dest="input_json",
+                           help="Path to narrator classifier JSON output")
 
-    # step scene-apply
-    step_apply = step_sub.add_parser("scene-apply", help="Apply choice to session zero scene")
-    step_apply.add_argument("--index", type=int, required=True, help="Scene index (0-7)")
-    step_apply.add_argument(
-        "--input-choice", type=str, default=None,
-        help="Choice index (0-based).  For multi-pick scenes, comma-separated (e.g. '2,7').",
-    )
-    step_apply.add_argument("--input-text", action="append", default=None,
-                            help="Text input as key=value (repeatable)")
-    step_apply.add_argument(
-        "--output-json", type=str, default=None, dest="output_json",
-        help="Path to narrator VignetteOutput JSON (or '-' for stdin). "
-             "Used by vignette scenes; triggers validation + apply.",
-    )
+    # step pick-power — two-phase power pick (subcats -> powers); auto cast/rider
+    step_pwr = step_sub.add_parser("pick-power", help="Power pick (6/30 subcategories, then 3+3 powers)")
+    step_pwr.add_argument("--picks", default=None,
+                           help="Comma-separated indices of current offer (e.g. '1,4')")
 
-    # step scene-ack — consume pending_ack and emit a post-pick summary
-    step_ack = step_sub.add_parser(
-        "scene-ack",
-        help="Emit the post-pick acknowledgment beat for a vignette scene.",
-    )
-    step_ack.add_argument("--index", type=int, required=True,
-                          help="Scene index that was just applied (0-5)")
+    # step pick-location — post-Onset settlement pick
+    step_loc = step_sub.add_parser("pick-location", help="Post-Onset settlement pick")
+    step_loc.add_argument("--index", type=int, default=None, help="Location choice index")
+
+    # step pick-job — narrator bundle generation + player pick
+    step_job = step_sub.add_parser("pick-job", help="Job bundle generation + pick")
+    step_job.add_argument("--mode", choices=["prompt", "apply", "pick"], default="prompt")
+    step_job.add_argument("--input-json", default=None, dest="input_json",
+                           help="Path to narrator bundle_output JSON")
+    step_job.add_argument("--index", type=int, default=None, help="Pick index into 5 cards")
+
+    # step pick-quest — narrator quest-pool generation + urgent pick
+    step_qp = step_sub.add_parser("pick-quest", help="Quest generation + urgent pick")
+    step_qp.add_argument("--mode", choices=["prompt", "apply", "pick"], default="prompt")
+    step_qp.add_argument("--input-json", default=None, dest="input_json",
+                          help="Path to narrator quest_pool JSON")
+    step_qp.add_argument("--index", type=int, default=None, help="Pick index into 4 urgent offers")
+
+    # step bridge — 1500-word bridge + opening scene
+    step_br = step_sub.add_parser("bridge", help="Bridge narrative + opening scene")
+    step_br.add_argument("--mode", choices=["prompt", "apply"], default="prompt")
+    step_br.add_argument("--input-json", default=None, dest="input_json",
+                          help="Path to narrator bridge_output JSON")
 
     # step scene-finalize
     step_sub.add_parser("scene-finalize", help="Finalize character from session zero")
