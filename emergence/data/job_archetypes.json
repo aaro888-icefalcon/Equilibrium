@@ -746,6 +746,18 @@
         "notes": "Dangerous work. What you write about, you eventually meet."
       },
       {
+        "id": "pa_perceptual_examiner",
+        "title": "Perceptual Entrance Examiner",
+        "daily_loop_hint": "Use emotion-read and memory-touch to screen prospective Accord scholars and visiting delegates; flag plants from rival factions.",
+        "skill_tilts_hint": ["power_handling", "perception_check", "faction_etiquette", "literacy"],
+        "theme_tags": ["power_based"],
+        "factions": {"positive_candidates": ["princeton_accord"], "negative_candidates": ["iron_crown_newark", "the_listening"]},
+        "npc_role_hints": ["patron_provost", "ally_coworker", "rival_colleague", "contact_examinee"],
+        "threat_candidates": ["corruption_progressing_self", "faction_assassin_contract"],
+        "starting_sublocation_hint": "an examination chamber off Nassau Hall",
+        "notes": "The Accord trusts your reads. The work shapes what you believe about strangers over time; older examiners struggle to meet new people without scanning."
+      },
+      {
         "id": "pa_accord_hall_clerk",
         "title": "Accord Hall Clerk",
         "daily_loop_hint": "Maintain the Accord's legal archives; process town petitions; draft response correspondence.",

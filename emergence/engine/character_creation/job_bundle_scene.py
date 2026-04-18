@@ -32,6 +32,40 @@ JOB_ARCHETYPES_PATH = os.path.join(
 BUNDLE_CARDS_REQUIRED = 5
 VALID_NPC_ROLES = frozenset(["ally", "contact", "rival", "patron"])
 
+# Theme buckets recognized by the sampler. These match the tags on every
+# archetype in data/job_archetypes.json.
+THEME_BUCKETS = ("old_skills", "power_based", "combat_heavy", "hybrid", "post_apoc_generic")
+
+# Bucket mix for the 5 sampled archetypes: enforces profession-diversity and
+# gets combat on the menu. Satisfied greedily by the sampler.
+BUCKET_MIN = {
+    "power_based": 2,
+    "combat_heavy": 1,
+    "old_skills": 1,
+}
+BUCKET_MAX = {
+    "old_skills": 2,
+}
+
+# Threat archetypes that imply armed opposition. Duplicated here rather than
+# imported from quests.schema so that the bundle module stays independent.
+_COMBAT_CAPABLE_THREATS = frozenset({
+    "warped_predator_personal",
+    "warped_predator_intelligent",
+    "wretch_swarm",
+    "knife_scavenger_survivor",
+    "faction_assassin_contract",
+    "named_rival_human",
+    "raider_band_reaper",
+    "raider_band_chain_king",
+    "iron_crown_notice",
+    "volk_informant",
+    "preston_notice",
+    "doctor_pale_target",
+    "cult_listening_incursion",
+    "hive_tendril_breach",
+})
+
 
 class BundleValidationError(ValueError):
     def __init__(self, errors: List[str]) -> None:
@@ -62,15 +96,114 @@ class JobBundleScene:
         return list(self._load_archetypes().get(location_id, []))
 
     # ------------------------------------------------------------------
+    # Deterministic bucket sampler
+    # ------------------------------------------------------------------
+
+    @staticmethod
+    def sample_archetypes(
+        pool: List[Dict[str, Any]],
+        rng: _random.Random,
+        cards_required: int = BUNDLE_CARDS_REQUIRED,
+    ) -> List[Dict[str, Any]]:
+        """Pick `cards_required` archetypes from `pool` satisfying bucket mix.
+
+        Algorithm:
+          1. Bucketize the pool by theme_tags. An archetype with multiple
+             tags appears in multiple buckets.
+          2. Greedy fill: for each bucket that has a minimum (power_based,
+             combat_heavy, old_skills), draw the required count, respecting
+             BUCKET_MAX caps.
+          3. Fill the remainder from the full pool, skipping already-picked
+             ids and any tag that would exceed a cap.
+
+        Raises RuntimeError if the pool is too small or cannot satisfy the
+        minimums.
+        """
+        if len(pool) < cards_required:
+            raise RuntimeError(
+                f"pool has {len(pool)} archetypes; need >= {cards_required}"
+            )
+
+        by_tag: Dict[str, List[Dict[str, Any]]] = {b: [] for b in THEME_BUCKETS}
+        for a in pool:
+            for tag in a.get("theme_tags") or []:
+                if tag in by_tag:
+                    by_tag[tag].append(a)
+
+        picked: List[Dict[str, Any]] = []
+        picked_ids: set = set()
+        tag_counts: Dict[str, int] = {b: 0 for b in THEME_BUCKETS}
+
+        def _would_exceed_cap(a: Dict[str, Any]) -> bool:
+            for tag in a.get("theme_tags") or []:
+                cap = BUCKET_MAX.get(tag)
+                if cap is not None and tag_counts.get(tag, 0) + 1 > cap:
+                    return True
+            return False
+
+        def _add(a: Dict[str, Any]) -> None:
+            picked.append(a)
+            picked_ids.add(a["id"])
+            for tag in a.get("theme_tags") or []:
+                if tag in tag_counts:
+                    tag_counts[tag] += 1
+
+        # Pass 1: satisfy minimums, in a stable priority order.
+        for bucket in ("power_based", "combat_heavy", "old_skills"):
+            need = BUCKET_MIN.get(bucket, 0)
+            have = sum(1 for p in picked if bucket in (p.get("theme_tags") or []))
+            deficit = need - have
+            if deficit <= 0:
+                continue
+            candidates = [a for a in by_tag[bucket] if a["id"] not in picked_ids and not _would_exceed_cap(a)]
+            rng.shuffle(candidates)
+            for a in candidates[:deficit]:
+                _add(a)
+
+        # Pass 2: fill the remainder from the full pool.
+        remainder = cards_required - len(picked)
+        if remainder > 0:
+            leftovers = [a for a in pool if a["id"] not in picked_ids and not _would_exceed_cap(a)]
+            rng.shuffle(leftovers)
+            for a in leftovers[:remainder]:
+                _add(a)
+
+        # If we still need more because caps blocked us, relax caps and take
+        # anything not yet picked.
+        remainder = cards_required - len(picked)
+        if remainder > 0:
+            leftovers = [a for a in pool if a["id"] not in picked_ids]
+            rng.shuffle(leftovers)
+            for a in leftovers[:remainder]:
+                _add(a)
+
+        if len(picked) != cards_required:
+            raise RuntimeError(
+                f"sampler could not assemble {cards_required} cards "
+                f"(got {len(picked)}); pool too small or mis-tagged"
+            )
+        return picked
+
+    # ------------------------------------------------------------------
     # Phase 1: prepare payload for narrator
     # ------------------------------------------------------------------
 
-    def build_narrator_payload(self, state: CreationState) -> Dict[str, Any]:
+    def build_narrator_payload(
+        self,
+        state: CreationState,
+        rng: Optional[_random.Random] = None,
+    ) -> Dict[str, Any]:
         location_id = state.scene_choices.get("post_emergence_location") or state.starting_location
         if not location_id:
             raise RuntimeError("post-emergence location not yet picked")
         location = get_location(location_id)
         archetypes = self.archetypes_for(location_id)
+
+        # Deterministic bucket sampler: narrow the pool to 5 archetypes that
+        # satisfy bucket minimums before showing it to the narrator. This
+        # stops Claude from picking 5 profession-matched cards.
+        sample_rng = rng or _random.Random(42)
+        sampled_archetypes = self.sample_archetypes(archetypes, sample_rng, BUNDLE_CARDS_REQUIRED)
 
         # Compact character summary for the narrator prompt.
         char_summary = {
@@ -100,7 +233,8 @@ class JobBundleScene:
             "task": "job_bundle_generate_v1",
             "guidelines_doc": "emergence/docs/job_bundle_guidelines.md",
             "post_emergence_location": location,
-            "archetype_pool": archetypes,
+            "archetype_pool": sampled_archetypes,
+            "archetype_pool_full": archetypes,
             "character": char_summary,
             "cards_required": BUNDLE_CARDS_REQUIRED,
             "schema_hint": {
@@ -184,6 +318,16 @@ class JobBundleScene:
             threats = card.get("threats")
             if not isinstance(threats, list) or not threats:
                 errors.append(f"{prefix}.threats: required non-empty list")
+            else:
+                # Require at least one combat-capable threat per card so the
+                # urgent quest can always draw its proxy antagonist from a
+                # combat source.
+                archetypes_on_card = {t.get("archetype") for t in threats if isinstance(t, dict)}
+                if not (archetypes_on_card & _COMBAT_CAPABLE_THREATS):
+                    errors.append(
+                        f"{prefix}.threats: at least one entry must use a "
+                        f"combat-capable archetype (got {sorted(a for a in archetypes_on_card if a)})"
+                    )
         return errors
 
     # ------------------------------------------------------------------

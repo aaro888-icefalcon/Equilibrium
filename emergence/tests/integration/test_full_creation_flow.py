@@ -82,7 +82,10 @@ def _bundle_output() -> Dict[str, Any]:
                  "relation": "colleague", "bond": {"trust": 0, "loyalty": 0, "tension": 3},
                  "hook": "Passed over for attending; quietly furious."},
             ],
-            "threats": [{"archetype": "debt_holder", "hook": "A Tower Lord captain is owed a favor."}],
+            "threats": [
+                {"archetype": "named_rival_human", "hook": "A rival lieutenant wants your post."},
+                {"archetype": "debt_holder", "hook": "A Tower Lord captain is owed a favor."},
+            ],
             "starting_location": "rittenhouse_square_philadelphia",
             "opening_vignette_seed": "The bell rings three times — an Iron Crown summons.",
         })
