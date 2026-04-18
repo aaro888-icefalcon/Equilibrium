@@ -126,3 +126,10 @@ v3-H: save reset; ready to commit
 4.1.a-f done: MediaResScene fully built — selects highest-pressure threat with encounter_template, maps threat archetype to combat register + enemy template, builds EncounterSpec with terrain/win/loss/escape/parley/world_context, fallback synthesizes scavenger ambush at starting_location when no threat has encounter_template.
 4.2.a-c deferred: finalize ordering change. MediaResScene currently reads from CreationState (same as other scenes); works because scene-finalize still runs after scene 5. Reordering finalize to run before MediaResScene.prepare deferred to follow-up; EncounterSpec is valid with CreationState inputs. combat-begin primitive verified to exist via step combat-start.
 4.3.a-b done: test_v4_arc_end_to_end.py — full OnsetScene -> V1 -> V2 -> V3 -> V4 -> MediaResScene flow with golden payloads. Assertions: 2 powers, tier=3/ceiling=5, region locked at V2 (stay_nyc), starting_location at V4, >=3 named NPCs, >=2 threats, >=2 goals, EncounterSpec valid (location + enemies + register).
+4.4.a done: Phase 4 closed. Full suite 1094 tests; 10 legacy failures unchanged (all target v3 scene classes/ids retained for now); 84 new v4 tests green.
+
+=== Phase 4 complete. v4 arc is end-to-end playable. ===
+
+Final counts:
+  v4 tests: 11 (threats) + 12 (seed_pools) + 4 (reaction_tags) + 7 (location_minting) + 20 (vignette_contract) + 8 (apply_vignette_choice) + 7 (scaffolds) + 7 (vignette_prompts) + 11 (onset_scene) + 2 (year_one_vignettes integration) + 1 (v4_arc end-to-end) = 90 tests
+  Commits: ~40 across Phases 1-4
