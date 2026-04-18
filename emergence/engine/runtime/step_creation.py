@@ -390,12 +390,31 @@ def step_bridge(args: Any, save_root: str) -> Dict[str, Any]:
         state = scene.apply_bridge_output(payload, state, quest_state)
         save_creation_state(save_root, state)
         save_quest_state(save_root, quest_state)
+        hooked = state.scene_choices.get("hooked_npcs") or []
+        # Build a roster block from structured emissions. The engine renders
+        # this after the opening scene prose so the player has a clear list
+        # of who they know, without parsing the prose.
+        npc_by_id = {npc.get("npc_id"): npc for npc in state.generated_npcs}
+        roster_lines: List[str] = []
+        for h in hooked:
+            nid = h.get("npc_id", "")
+            npc = npc_by_id.get(nid, {})
+            name = npc.get("display_name") or nid
+            rel = h.get("relation", "")
+            roster_lines.append(f"- {name} ({rel})" if rel else f"- {name}")
+        roster_block = (
+            "People you know here:\n" + "\n".join(roster_lines)
+            if roster_lines else ""
+        )
         return {
             "status": "ok",
             "phase": scene.phase(state),
             "bridge_prose": state.scene_choices.get("bridge_prose"),
             "opening_scene": state.scene_choices.get("opening_scene"),
             "opening_scene_meta": state.scene_choices.get("opening_scene_meta"),
+            "hooked_npcs": hooked,
+            "mentioned_factions": state.scene_choices.get("mentioned_factions") or [],
+            "roster_block": roster_block,
             "message": "Session zero complete. Run step scene-finalize to mint the CharacterSheet, then step preamble.",
         }
 
