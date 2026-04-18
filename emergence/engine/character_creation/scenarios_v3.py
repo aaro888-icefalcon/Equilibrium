@@ -1766,11 +1766,37 @@ class StandingAndVowsScene(_V3Scene):
 # ---------------------------------------------------------------------------
 
 def make_v3_scenes() -> List[Scene]:
-    """Return the 5 v3 session zero scenes in order."""
+    """v3 legacy builder — retained for tests that reference v3 scene
+    classes directly.  Runtime now uses make_v4_scenes via
+    _make_all_scenes (see runtime/main.py).
+    """
     return [
         OnsetAndBiographyScene(),
         AwakeningScene(),
         PowersConfigScene(),
         FirstYearScene(),
         StandingAndVowsScene(),
+    ]
+
+
+def make_v4_scenes() -> List[Scene]:
+    """Return the 6 v4 session zero scenes in order.
+
+    Scene 0: OnsetScene — bio text + attention + engagement + 2-of-10 slate.
+    Scenes 1-4: YearOneVignetteScene — one per vignette index, binding
+                one cast/rider slot plus seed bundle.
+    Scene 5: MediaResScene — EncounterSpec handoff to combat.
+    """
+    from emergence.engine.character_creation.onset_scene import OnsetScene
+    from emergence.engine.character_creation.year_one_vignette_scene import (
+        YearOneVignetteScene,
+    )
+    from emergence.engine.character_creation.media_res_scene import MediaResScene
+    return [
+        OnsetScene(),
+        YearOneVignetteScene(1),
+        YearOneVignetteScene(2),
+        YearOneVignetteScene(3),
+        YearOneVignetteScene(4),
+        MediaResScene(),
     ]

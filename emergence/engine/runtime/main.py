@@ -239,9 +239,10 @@ def main_session_loop(state: GameState) -> int:
 
 
 def _make_all_scenes() -> list:
-    """Assemble the v3 session zero scenes (5 long-form scenes)."""
-    from emergence.engine.character_creation.scenarios_v3 import make_v3_scenes
-    return make_v3_scenes()
+    """Assemble the v4 session zero scenes (6 scenes: OnsetScene + 4
+    YearOneVignetteScene + MediaResScene)."""
+    from emergence.engine.character_creation.scenarios_v3 import make_v4_scenes
+    return make_v4_scenes()
 
 
 def _run_session_zero(state: GameState, narrator: Any) -> Optional[str]:
