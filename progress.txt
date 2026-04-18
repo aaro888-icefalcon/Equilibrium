@@ -124,3 +124,4 @@ v3-H: save reset; ready to commit
 
 === Phase 4 — Ignition ===
 4.1.a-f done: MediaResScene fully built — selects highest-pressure threat with encounter_template, maps threat archetype to combat register + enemy template, builds EncounterSpec with terrain/win/loss/escape/parley/world_context, fallback synthesizes scavenger ambush at starting_location when no threat has encounter_template.
+4.2.a-c deferred: finalize ordering change. MediaResScene currently reads from CreationState (same as other scenes); works because scene-finalize still runs after scene 5. Reordering finalize to run before MediaResScene.prepare deferred to follow-up; EncounterSpec is valid with CreationState inputs. combat-begin primitive verified to exist via step combat-start.
