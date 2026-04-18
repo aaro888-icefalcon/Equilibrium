@@ -3,10 +3,10 @@
 For the narrator generating the five job-bundle cards the player picks from
 after selecting a post-emergence location.
 
-A **job bundle** is the character's role in the post-emergence world plus the
-human and institutional entanglements that come with it. Picking a bundle
-binds factions, NPCs, threats, and starting location — everything the first
-quests will draw from.
+A **job bundle** is the character's role in the post-emergence world plus
+the human and institutional entanglements that come with it. Picking a
+bundle binds factions, NPCs, threats, and starting location — everything
+the first quests will draw from.
 
 ---
 
@@ -16,45 +16,52 @@ quests will draw from.
 - `powers` — the two powers the PC picked, with cast + rider already rolled
 - `pre_emergence_location` — where the PC lived before the Onset
 - `post_emergence_location` — the settlement the player picked
-- `job_archetypes_for_location` — 8-12 archetype skeletons from the
-  `job_archetypes.json` data file, keyed to the chosen location
+- `archetype_pool` — **exactly 5 archetype skeletons** chosen by the engine
+  sampler to span the theme buckets (see below). Use these; do not import
+  archetypes from outside this list.
+- `archetype_pool_full` — the full location pool, provided for reference
+  only. Synthesize NPCs and flavor from it, but generate cards only against
+  the sampled five.
 
 ---
 
 ## Your task
 
-Generate **5 distinct job bundle cards**. Each card is the same bundle
-shape (below). The 5 should cover different plausible lives for this
-character in this settlement — not five versions of the same job.
+Generate **5 job bundle cards** — one per archetype in `archetype_pool`,
+preserving the order the sampler provided. Each card corresponds to one
+archetype and fills the card schema below.
 
-### Distinct means distinct
+### The five cards represent five different futures
 
-The five cards should feel like five different futures. If the character is a
-surgeon arriving in Philadelphia:
+The sampler has already selected archetypes across theme buckets
+(`old_skills`, `power_based`, `combat_heavy`, `hybrid`, `post_apoc_generic`)
+so the card set naturally spans continuity, transformation, and opportunity.
+Follow the sampler's picks — your job is to personalize each archetype
+into a complete bundle, not to re-select.
 
-- A Bourse-affiliated clinic keeping merchant scions alive (institutional, comfortable)
-- A Crabclaw dockworker infirmary in a South Philly holding (rough, blue-collar)
-- A Yonkers-refugee field clinic in a fragile township (austere, meaningful)
-- An Iron Crown medical officer contracted out to patrol districts (morally complicated)
-- An underground surgeon for the Listening cult (dangerous, secretive)
+Label each card with the dominant theme bucket from its archetype's
+`theme_tags`. This helps the player understand what they're choosing:
 
-Not:
+- **Continuity** (`old_skills`): this job leans on who you were before.
+- **Transformation** (`power_based`): this job is organized around your
+  new abilities; pre-Onset skills are secondary.
+- **Dangerous** (`combat_heavy`): this job involves routine physical risk.
+- **Hybrid** (`hybrid`): pre-Onset skills and powers are both load-bearing.
+- **Wildcard** (`post_apoc_generic`): post-apocalyptic work anyone with
+  initiative could pick up.
 
-- Five variations of "Bourse clinic." That's one card.
-
-Pull archetypes from the location's pool. If the archetypes don't span enough,
-synthesize new ones within the location's logic — the Bourse has dozens of
-clinics; the Iron Crown has medical officers; the Listening has underground
-specialists. Use the setting primer as a ground truth.
+The label goes in the `theme_label` field of the card (see schema).
 
 ---
 
-## Card shape
+## Card schema
 
 ```json
 {
   "job_id": "bourse_heart_clinic_resident",
   "title": "Resident at Weiss-Hallam Heart Clinic, Rittenhouse",
+  "theme_label": "Continuity",
+  "archetype_id": "pb_clinic_attending",
   "daily_loop": "Mornings on ward rounds in Rittenhouse Square; afternoons in the second-floor OR. Your quarters are on-site, above the pharmacy. You walk to Reading Terminal once a week to trade ledger chits for coffee.",
   "skill_tilts": {
     "surgery": 1,
@@ -72,24 +79,28 @@ specialists. Use the setting primer as a ground truth.
     ]
   },
   "npcs": [
-    {"npc_id": "npc_dr_hallam", "role": "ally", "relation": "mentor",
+    {"npc_id": "npc_dr_hallam", "name": "Dr. Hallam", "role": "ally",
+     "relation": "mentor",
      "bond": {"trust": 2, "loyalty": 2, "tension": 1},
      "hook": "Co-founder of the clinic; old surgical lineage; knows your name by reputation."},
-    {"npc_id": "npc_nurse_petra", "role": "ally", "relation": "coworker",
+    {"npc_id": "npc_nurse_petra", "name": "Petra", "role": "ally",
+     "relation": "coworker",
      "bond": {"trust": 2, "loyalty": 2, "tension": 0},
      "hook": "Senior circulating nurse; has run this OR longer than the clinic's been open."},
-    {"npc_id": "npc_weiss_jr", "role": "rival", "relation": "colleague",
+    {"npc_id": "npc_weiss_jr", "name": "Weiss Jr.", "role": "rival",
+     "relation": "colleague",
      "bond": {"trust": 0, "loyalty": 0, "tension": 3},
      "hook": "The founder's son; passed over for attending; quietly furious."},
-    {"npc_id": "npc_bourse_notary_vann", "role": "contact", "relation": "faction_contact",
+    {"npc_id": "npc_bourse_notary_vann", "name": "Notary Vann", "role": "contact",
+     "relation": "faction_contact",
      "bond": {"trust": 1, "loyalty": 0, "tension": 0},
      "hook": "Clinic's liaison to the Bourse; your paperwork goes through her."}
   ],
   "threats": [
-    {"archetype": "debt_holder",
-     "hook": "A Tower Lord captain owes Hallam a favor you'll be asked to discharge."},
     {"archetype": "named_rival_human",
-     "hook": "Weiss Jr. is not going to age out of his resentment."}
+     "hook": "Weiss Jr. is not going to age out of his resentment."},
+    {"archetype": "debt_holder",
+     "hook": "A Tower Lord captain owes Hallam a favor you'll be asked to discharge."}
   ],
   "starting_location": "rittenhouse_square_philadelphia",
   "opening_vignette_seed": "You are finishing the second surgical case of a long Tuesday when the bell at the front desk rings three times — an Iron Crown summons."
@@ -98,92 +109,92 @@ specialists. Use the setting primer as a ground truth.
 
 ---
 
-## Rules
+## Writing rules
 
-### Draw entities from the bundle, don't invent separately
+### Use the archetype's theme_tags and notes as ground truth
 
-NPCs, factions, and threats in each card should be local to the settlement
-and its ecosystem. The Bourse's rival is South Philly Holding; not the
-Delmarva Harvest Lords. Use the setting primer's faction-relationship map.
+Each archetype in the sampled pool carries `theme_tags`, `skill_tilts_hint`,
+`faction_candidates`, `npc_role_hints`, `threat_candidates`, and a `notes`
+field. Use them. The `notes` line is the archetype's tone anchor — match it.
 
-### Respect the character's skills
+### Include at least one combat-capable threat per card
 
-The job should make meaningful use of the PC's top 3–4 skills. A surgeon
-card that doesn't use surgery is a waste of a card. A soldier card that
-doesn't use firearms or tactics is a waste of a card. Tune the job so at
-least 2 of the PC's high-rank skills are daily-use.
+Each card's `threats` list must include at least one entry whose archetype
+is combat-capable. Pull from:
 
-### Respect the character's powers
+`knife_scavenger_survivor`, `warped_predator_personal`,
+`warped_predator_intelligent`, `wretch_swarm`, `named_rival_human`,
+`faction_assassin_contract`, `raider_band_reaper`, `raider_band_chain_king`,
+`iron_crown_notice`, `volk_informant`, `preston_notice`,
+`doctor_pale_target`, `cult_listening_incursion`, `hive_tendril_breach`
 
-If the PC has a somatic healing power, one card should make explicit use of
-it (e.g. "the clinic knows what you can do and expects it"). If the PC has
-a kinetic impact power, at least one card should have violence on the menu.
+The engine validator rejects cards without one. This guarantees the urgent
+quest can always draw its proxy antagonist from a combat source.
 
-### Skill tilts
+Each card may include a second non-combat threat: `debt_holder`,
+`biokinetic_error_infection`, `corruption_progressing_self`,
+`family_complication`, `ruined_former_ally`, `species_cluster_obligation`,
+`echo_memory_loss`, `shade_haunting`, `eldritch_persistent`.
 
-The `skill_tilts` object lists skills the job will raise over the first
-months of play. +1 is standard; rare skills might get +2. These are applied
-silently at finalization.
+### Use canonical factions only
 
-### NPC count
+All `faction_id` values must be canonical mid-Atlantic factions from the
+setting primer. If the archetype's `factions.positive_candidates` lists a
+faction, use it. Do not invent faction names.
 
-Each card should include **4–6 NPCs** — enough to make the job feel peopled,
-not so many that the initial roster becomes unmanageable. Mix roles: at
-least 1 ally (strong bond), 1 contact (utility), 1 rival (low-grade
-antagonist). Include a boss / patron if the job has one.
+### Keep NPC count at 4
 
-### NPC archetype
+Each card carries exactly 4 NPCs: 1 mentor/patron, 1 coworker/ally,
+1 rival, 1 contact. Names use plausible mid-Atlantic demographics for the
+location. Each NPC carries a one-line `hook` explaining their stake.
 
-If the card invents a new NPC (not drawn from the pre-emergence roster),
-use the NPC generator's archetype logic — name, species, tier, and a
-one-line hook. Keep the details minimal; the engine fleshes them out.
+### Respect the character's skills and powers
 
-### Threats
+- For `old_skills` cards, tune `skill_tilts` so the PC's top 3-4 pre-Onset
+  skills are daily-use.
+- For `power_based` cards, include `power_handling` in `skill_tilts` and
+  write the `daily_loop` so the power is the organizing element. The job
+  expects the power; the pay reflects it.
+- For `hybrid` cards, do both.
 
-Each card should seed **1–2 threats** — named obstacles that will surface
-during play. Pull from the canonical threat_archetypes list:
+### Starting location is specific
 
-`knife_scavenger_survivor`, `iron_crown_notice`,
-`warped_predator_personal`, `eldritch_persistent`, `named_rival_human`,
-`faction_assassin_contract`, `biokinetic_error_infection`, `debt_holder`,
-`ruined_former_ally`, `family_complication`
-
-### Factions
-
-Each card should have **1–2 positive** factions (employer, patron, allied
-guild) and **1–2 negative** factions (rivals, enforcers, creditors).
-Starting standings: +1 on the positive side, -1 on the negative side, per
-entry. Exceptions allowed if justified in `reason`.
-
-### Starting location
-
-The `starting_location` is a fine-grained place within the settlement — the
-specific clinic, the specific holding, the specific warehouse. Reference
-the location by id from the world state's location registry where possible;
-invent a new location only if needed, and name it plausibly.
+`starting_location` is a fine-grained place within the settlement — a
+specific clinic, holding, warehouse. Use the archetype's
+`starting_sublocation_hint` as the base and elaborate.
 
 ### Opening vignette seed
 
 One sentence that could plausibly open the PC's first scene in this role.
-The Quest generator reads this as context when proposing the five starting
-quests.
+The quest generator reads it as context when writing the urgent quest.
+
+### Tone
+
+Each card's pitch should be under 150 words of prose when presented to the
+player. The JSON carries mechanics; the prose carries the choice. Write in
+a plain, functional register — specific nouns, present tense, no
+epigrammatic closers.
 
 ---
 
-## Tone
+## Card count and order
 
-The five cards should be offered to the player as short, vivid descriptions
-— a title, a one-paragraph daily loop, and a small tag list of factions /
-NPCs / threats. Keep each card's pitch under 150 words when presented in
-prose. The full JSON carries the mechanics; the prose carries the choice.
+Exactly 5 cards. The card at `cards[i]` corresponds to the archetype at
+`archetype_pool[i]` in the narrator payload. Preserve this alignment.
 
 ---
 
-## What to avoid
+## Validation summary
 
-- **Heroic framing.** These are jobs, not adventures. The adventure comes
-  from the quests you'll generate after the pick.
-- **Invented factions.** Use only the 22 canonical Mid-Atlantic factions.
-- **Invented settlements.** Use the named settlements from the primer.
-- **Implausibly friendly starts.** Even the "safe" cards should carry 1+
-  negative faction and 1+ threat. The post-Onset world is not safe.
+The engine validator checks:
+- exactly 5 cards
+- unique `job_id` per card
+- `title`, `daily_loop`, `starting_location`, `opening_vignette_seed`
+  present and non-empty
+- `skill_tilts` is a dict
+- `factions.positive` is non-empty list
+- `factions.negative` is a list (may be empty)
+- `npcs` is a list of >= 3 entries, each with `name` and a valid `role`
+- `threats` is non-empty and includes at least one combat-capable archetype
+
+Failing any check returns the error list for a regen attempt (up to 3).

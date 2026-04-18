@@ -35,3 +35,46 @@ Phase E: Response pacing rules in CLAUDE.md
   [step 2] located insertion point after Hard Limits — ok
   [step 3] inserted "Response Pacing (Applies to All Tasks)" section (7 bullets + preamble + caveat) — ok
   [step 4] verified rendered markdown; no other sections disturbed — ok
+
+Phase F: Job archetype overhaul (branch=claude/emergence-game-fixes-DMkTM)
+  Goal: grounded superhero post-apocalyptic pool; cut medical bloat; add power-based jobs; add wide-sighted + raider locations; expand threat vocabulary; add theme_tags.
+  [done] wrote stub (schema + threat list + 20 empty location keys)
+  [done] filled 10 locations; mid-validation passed
+  [done] filled 10 more locations incl. wide_sighted_diaspora + raider_warband_cross_bronx
+  [done] final validation:
+    - 20 locations, 121 archetypes
+    - 0 missing fields, 0 duplicate ids
+    - every location has >=2 power_based and >=1 combat_heavy
+    - medical-heavy archetypes: 21/121 (17%), down from 23/56 (41%)
+    - threat vocabulary expanded to 24 archetypes
+  [done] commit + push
+
+Phase G: Quest schema extension (1.2) — conflict_mode, physical_danger, hook_npcs, TACTICAL_VERBS
+  [done] commit f6e85be — schema fields + urgent validator + TACTICAL_VERBS + COMBAT_CAPABLE_THREATS + validate_quest_set
+
+Phase H: Bridge scene structured emissions (1.3)
+  [done] commit e20572e — hooked_npcs + mentioned_factions required; ids validated against bundle_npc_ids
+
+Phase I: Engine wiring (2.1 + 2.3)
+  [done] commit 4727a4c — bucket-balanced sampler + combat-threat bundle constraint + added pa_perceptual_examiner so Princeton Accord satisfies minimum
+
+Phase J: Quest set validator + roster block (2.2 + 2.4)
+  [done] commit 5fa5713 — urgent-offer simulation at validate_quest_output + roster_block in step bridge apply
+
+Phase K: Guideline rewrites (3.1, 3.2, 3.3)
+  [done] commit a00c6d4 — job_bundle_guidelines.md in positive voice
+  [done] commit b275452 — quest_design_guidelines.md with conflict_mode + urgent rules
+  [done] commit 18e5a3b — narration_style.md positive-voice directives
+
+Phase L: Primer rewrites (4.1, 4.2)
+  [done] commit 131713d — primer.md declarative rewrite (~1620 words) + primer_short.md (~285 words)
+
+Phase M: Onboarding (5.1, 5.2)
+  [done] commit 9f13e3e — about_preface in step init response + step about command
+
+Phase N: Phase 6 — test + smoke verify
+  [done] test_revision_behavior.py — 19 tests pass (urgent rules, backstory mode diversity, bundle combat threat, bridge hooked_npcs, about preface)
+  [done] full suite 980/980 (was 956)
+  [done] smoke: step init returns about_preface with banner + how-to-play
+  [done] smoke: sampler on 4 representative locations hits bucket minimums
+  [pending] commit tests + progress + push nine-commit branch

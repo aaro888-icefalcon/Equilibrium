@@ -174,8 +174,10 @@ During playtesting, show the full pipeline before narration:
 
 - See emergence/PLAY.md for player-facing game guide
 - See emergence/HANDOFF.md for technical architecture
+- See emergence/setting/narration_style.md for positive-voice style directives (register, scene-close rules, NPC introduction)
 - See emergence/setting/narration.md for full narration style guide and example vignettes
 - See emergence/setting/primer.md for world setting primer
+- See emergence/setting/primer_short.md for the 300-word onboarding primer
 - See saves/default/TRACKING.md for character narrative state and NPC mapping
 
 ## Testing

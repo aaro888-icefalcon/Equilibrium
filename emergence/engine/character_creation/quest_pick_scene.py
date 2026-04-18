@@ -31,6 +31,7 @@ from emergence.engine.quests.schema import (
     QuestState,
     QuestValidationError,
     validate_quest,
+    validate_quest_set,
 )
 
 
@@ -149,6 +150,43 @@ class QuestPickScene:
             for bid in backstory_ids:
                 if bid not in seen_ids:
                     errors.append(f"backstory_ids: {bid!r} not found among quests")
+
+        # Simulate is_urgent=True on each non-backstory quest and verify it
+        # passes urgent-quest validation. This catches tactical-verb and
+        # physical_danger mistakes before the player picks.
+        if isinstance(backstory_ids, list) and isinstance(quests, list):
+            bset = set(backstory_ids)
+            for i, q_dict in enumerate(quests):
+                if not isinstance(q_dict, dict) or q_dict.get("id") in bset:
+                    continue
+                try:
+                    sim = Quest.from_dict({**q_dict, "is_urgent": True, "is_background": False})
+                except Exception:
+                    continue
+                for e in validate_quest(sim):
+                    if "is_urgent=True" in e or "TACTICAL_VERBS" in e:
+                        errors.append(f"quests[{i}] (urgent-offer): {e}")
+
+        # Backstory quests must span >= 3 distinct conflict_modes. Simulate
+        # is_background=True on them and run the set-level validator.
+        if isinstance(backstory_ids, list) and isinstance(quests, list):
+            bset = set(backstory_ids)
+            bg_objs: List[Quest] = []
+            for q_dict in quests:
+                if isinstance(q_dict, dict) and q_dict.get("id") in bset:
+                    try:
+                        bg_objs.append(Quest.from_dict({**q_dict, "is_background": True, "is_urgent": False}))
+                    except Exception:
+                        continue
+            if bg_objs:
+                # Include a placeholder urgent so validate_quest_set's urgent-count
+                # check doesn't spuriously fire.
+                placeholder = Quest(id="__placeholder__", archetype="x", goal="Extract it now",
+                                    is_urgent=True)
+                set_errors = validate_quest_set(bg_objs + [placeholder])
+                for e in set_errors:
+                    if "conflict_modes" in e:
+                        errors.append(f"backstory set: {e}")
 
         return errors
 

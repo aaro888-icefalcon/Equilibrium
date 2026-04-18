@@ -1,89 +1,156 @@
 # Quest Design Guidelines
 
-For narrators composing Quest JSON objects that the engine will validate.
+For narrators composing Quest JSON objects the engine validates.
 
-A Quest is the unit of play. Exactly one active story, finishable, with a named
-failure state the engine can check. Not a plot. A situation.
-
----
-
-## The Angry Checklist
-
-A Quest must pass all of these. The engine validator enforces most of them; the
-rest are your responsibility.
-
-1. **Concrete goal** — a verb-the-noun imperative sentence, ≤25 words.
-2. **Externally verifiable done-state** — the engine can evaluate a predicate
-   that answers "did the PC succeed?" without ambiguity.
-3. **Player-facing** — the opening scene dramatizes the goal so the player can
-   state it in their own words after reading.
-4. **Achievable** — the goal is reachable through in-fiction PC action.
-5. **At least one Bright Line** — a named non-death failure state the engine
-   can check. Every Bright Line has a `telegraph_text` that the opening scene
-   weaves in.
-6. **Macrostructure** — a single variable trending toward a threshold, driven
-   by named tick triggers. One variable per quest; if you need two, the quest
-   is too big.
-7. **Opposition with a plan** — the central_conflict names a proxy antagonist
-   (an NPC id from the bundle). The antagonist's plan advances on clock ticks
-   whether or not the PC acts.
-8. **Stakes on both sides** — `resolution.world_deltas_on_success` and a
-   `world_deltas_on_failure` branch for every Bright Line. Failure deltas
-   should produce a new situation (threat, clock, lost standing), not a stall.
+A Quest is the unit of play: one story, finishable, with a named failure
+state the engine can check. Not a plot. A situation.
 
 ---
 
-## Goal form: verb the noun
+## What the engine expects
 
-```
-Extract Varin from the Corvid corridor before the Northbound sweep
-Keep Old Meren's stall standing through market week
-Identify the skimmer in the Brinker corridor before the cull
-Disable the Iron Crown's supply caravan before it clears the tunnel
-Deliver Weaver's testimony to the Accord Hall before the council rises
-```
+Generate **8 Quest JSON objects** plus a `backstory_ids` list of 4 quest
+ids. Split:
 
-Not goals:
+- **4 backstory quests** (narrator-flagged): establish what the PC has been
+  doing for the past year. Enrich the bridge narrative.
+- **4 urgent-offer quests** (remaining): the player picks one. This quest
+  opens active play.
 
-```
-Help Varin                          ← state, not action
-Survive the corridor                ← condition, not action
-Deal with the Iron Crown            ← too vague, no done-state
-Something about the skimmer         ← no verb, no noun
-```
-
-The heuristic: an outsider reading the goal must be able to sketch a finish
-line in one sentence. If they'd need follow-up questions, the goal is soft.
+The **urgent quest must be physically dangerous**. All four urgent-offer
+quests must pass urgent-quest validation so any of them can be picked.
 
 ---
 
-## Bright Lines
+## Quest schema (required fields)
 
-A Bright Line is a named non-death failure state. Every quest has at least one;
-most have two or three.
+Every quest passes `validate_quest`. Missing or malformed fields return
+errors for a regen attempt (up to 3 attempts total).
 
-Each Bright Line object carries:
+### Core fields
 
-- `id` — unique within the quest (e.g. `bl_sweep_arrives`, `bl_varin_dies`)
-- `description` — short prose stating the failure
-- `check_condition` — a Predicate the engine evaluates each tick
-- `telegraph_text` — how the opening scene cues this failure state in fiction
+- **`id`** — unique string across the 8 quests.
+- **`archetype`** — one of the registered quest archetypes.
+- **`goal`** — verb-the-noun imperative sentence, ≤ 25 words.
+- **`hook_scene`** — `{established_on_turn, inciting_event}`.
+- **`central_conflict`** — `{nature, proxy_antagonist_id}` where the
+  antagonist id is a named NPC from the job bundle.
+- **`bright_lines`** — list of named non-death failure states (see below).
+- **`macrostructure`** — one variable trending toward a threshold.
+- **`success_condition`** — a Predicate the engine evaluates.
+- **`resolution`** — success deltas plus a failure branch for every
+  bright line.
+- **`progress_track`** — `{ticks_filled, ticks_required, source}`.
+- **`scope`** — `{expected_scenes, expected_session_equivalents}`.
 
-**The telegraph is non-optional.** If the player can't infer the failure state
-from the opening scene, the line is hidden, and the player acts at random.
-Angry's rule: *the player must know or be able to discover the failure state*.
+### Required new fields (Phase G schema extension)
 
-**Canonical failure frames:**
+- **`conflict_mode`** — one of: `combat`, `social`, `investigation`,
+  `escape`, `heist`. See mode definitions below.
+- **`physical_danger`** — `{armed_opposition: bool, expected_combat_scenes: int}`.
+- **`hook_npcs`** — list of NPC ids this quest introduces into the player's
+  relationship roster. Must be drawn from the job bundle's generated NPCs.
 
-- Time expires (macrostructure crosses threshold)
-- Target dies or is captured
-- PC captured or exiled
-- Standing collapses below threshold
-- Rival/threat reaches a milestone first
-- PC's cover exposed
+---
 
-Keep check_conditions simple. Use the predicate DSL (see schema.py). Do not
-invent new predicate types — if you need one, flag it for engine work.
+## Conflict modes
+
+Every quest declares exactly one conflict_mode.
+
+### `combat`
+
+Armed opposition is the core obstacle. The PC is expected to fight,
+threaten, or kill their way through one or more scenes.
+
+Example goal: *Repel the Iron Crown patrol breaking the blockade at
+Burlington before dawn.*
+
+### `escape`
+
+The PC is being hunted, pursued, cornered, or must exfiltrate under
+pressure. Armed opposition is present and closing.
+
+Example goal: *Extract Varin from the Corvid corridor before the
+Northbound sweep.*
+
+### `social`
+
+Conversation, negotiation, and standing are the load-bearing obstacles.
+Violence is possible but not central.
+
+Example goal: *Broker the truce between the Three Judges and the Bear-House
+before the next council.*
+
+### `investigation`
+
+The PC is finding something hidden: a culprit, a mechanism, a location.
+Clues and deductions are the load-bearing work.
+
+Example goal: *Identify the skimmer draining the Bourse copper ledgers
+before the quarterly audit.*
+
+### `heist`
+
+A multi-step plan with setup, infiltration, extraction. Planning and
+stealth dominate; violence is a fallback.
+
+Example goal: *Steal the Iron Crown's grain ledgers from the Newark
+customs house during the Tuesday audit cycle.*
+
+---
+
+## Urgent-quest rules (strictly enforced)
+
+The urgent-quest must satisfy **all** of these. The engine validator
+simulates `is_urgent=True` on each of the four urgent-offer quests and
+rejects the quest-output if any of them would fail:
+
+1. **`conflict_mode` is `combat` or `escape`.** Urgent quests are
+   physically dangerous by design.
+2. **`physical_danger.armed_opposition = true`.**
+3. **`physical_danger.expected_combat_scenes >= 1`.**
+4. **Goal opens with a tactical verb** from:
+   `extract, disable, intercept, breach, hunt, rescue, destroy, ambush,
+   sabotage, capture, free, kill, eliminate, repel, escort, defend, guard,
+   smuggle, steal, evacuate, assassinate, burn, stop`
+5. **Proxy antagonist comes from a combat-capable threat** in the job
+   bundle. Combat-capable threat archetypes:
+   `knife_scavenger_survivor, warped_predator_personal,
+   warped_predator_intelligent, wretch_swarm, named_rival_human,
+   faction_assassin_contract, raider_band_reaper, raider_band_chain_king,
+   iron_crown_notice, volk_informant, preston_notice, doctor_pale_target,
+   cult_listening_incursion, hive_tendril_breach`.
+
+---
+
+## Backstory-set rules
+
+The four backstory quests together must span **≥ 3 distinct
+`conflict_mode` values**. This keeps the PC's past year textured and
+avoids a four-quest stack of nothing but `social` drama.
+
+Good distribution examples:
+- combat, social, investigation, heist
+- escape, social, investigation, combat
+- combat, social, heist, investigation
+
+Backstory quests are not required to use tactical verbs or armed
+opposition. They can be meditative, diplomatic, or investigative.
+
+---
+
+## Bright lines
+
+A Bright Line is a named non-death failure state. Every quest has ≥ 1.
+
+Each bright-line object carries:
+- `id` — unique within the quest.
+- `description` — short prose stating the failure.
+- `check_condition` — Predicate evaluated each tick.
+- `telegraph_text` — how the opening scene cues this failure in fiction.
+
+The telegraph is not optional. The opening scene must let the player
+infer the failure state from prose alone.
 
 ---
 
@@ -101,29 +168,10 @@ One variable. One direction. Engine-evaluable.
 }
 ```
 
-**Rules:**
-
-- `current` must start on the "good" side of `threshold` (decrement: `current >
-  threshold`; increment: `current < threshold`). A quest that starts already
-  failed fails validation.
-- `tick_triggers` list only events that should advance this particular quest.
-  A Ceremony quest that only advances when the astronomical window narrows
-  should list a narrow trigger set, not `world_pulse`.
-- Macrostructure is visible to the player. Narration must convey it — a bell,
-  a horizon, a ledger line — never via meta-language (never say "your clock is
-  at 3 segments").
-
----
-
-## Proxy antagonist
-
-Systemic antagonists (the Iron Crown, the Northbound sweep, the plague) need
-a named NPC face. The proxy makes the opposition dramatizable — you can show
-their plan, their patience, their moves.
-
-The proxy is almost always drawn from the job bundle's NPCs (usually a rival
-or threat). If the bundle has no candidate, the Quest generator should flag
-it and add one, not invent one in isolation.
+- `current` starts on the good side of `threshold`.
+- `tick_triggers` list the events that should advance this quest.
+- Narration conveys the macrostructure through in-fiction cues (a bell, a
+  horizon, a ledger line). No meta-language.
 
 ---
 
@@ -141,17 +189,22 @@ it and add one, not invent one in isolation.
 }
 ```
 
-**Required:** every Bright Line must have a corresponding failure branch. An
-empty list is allowed, but the key must exist — the validator enforces that
-you considered each failure mode.
+Every bright line must have a corresponding failure branch key (list may
+be empty, but the key must exist). Failure branches should generate
+follow-on situations: a captured NPC becomes a rescue quest seed; a
+burned location becomes a clock that now ticks.
 
-**Failure should generate follow-on situations.** A captured NPC is a new
-quest seed. A lost standing is a new threat. A burned location is a clock
-that now ticks. Use `{"op": "quest_seed", ...}` and `{"op": "threat_add", ...}`
-to wire the downstream.
+---
 
-**Narration cues are optional** — if present, the resolution narrator reads
-them as a guide, not a script.
+## Hook NPCs
+
+Each quest declares `hook_npcs: [npc_id, ...]` — NPCs the quest introduces
+to the player's relationship roster. Draw these from the job bundle's
+`npcs` list. The bridge scene uses this list to know which NPCs to
+introduce in the prose.
+
+Backstory quests typically hook 1-2 NPCs each; the urgent quest may hook
+more if its opening scene requires multiple named faces.
 
 ---
 
@@ -164,49 +217,50 @@ them as a guide, not a script.
 }
 ```
 
-- **1 scene / 0.2 sessions** — a minor quest; one decision, one outcome
-- **3 scenes / 1 session** — default; a standard arc
-- **5+ scenes / 2+ sessions** — a major thread; use sparingly
-
-Scope is a budget, not a contract. Scenes can run short or long; the number
-is a design intent for pacing purposes.
+Typical ranges:
+- 1 scene / 0.2 sessions — minor quest; one decision, one outcome.
+- 3 scenes / 1 session — default; standard arc.
+- 5+ scenes / 2+ sessions — major thread; use sparingly.
 
 ---
 
-## Progress track
+## Goal form: verb the noun
 
-```json
-"progress_track": {
-  "ticks_filled": 0,
-  "ticks_required": 10,
-  "source": "ironsworn_vow_dangerous"
-}
+Urgent-quest goals open with a tactical verb. Backstory goals may use
+any imperative verb.
+
+### Urgent (tactical):
+
+```
+Extract Varin from the Corvid corridor before the Northbound sweep
+Disable the Iron Crown supply caravan before it clears the tunnel
+Repel the Reaper's scouts from the Fordham checkpoint
+Hunt the Warped predator stalking the Cold Spring trail
+Escort Councilor Veldt to the Accord Hall before the session rises
 ```
 
-The progress track is the player-side engine: it fills as the PC makes moves
-that advance the goal. Filling the track completes the quest; a Bright Line
-firing ends it as failure. Different `source` values map to different tick
-economies (dangerous, formidable, extreme).
+### Backstory (any imperative):
 
----
+```
+Broker the grain accord between Edison and the Commonage last autumn
+Identify the clinic embezzler before the Bourse audit
+Negotiate the truce that ended the 34th Street fire
+```
 
-## Concurrency
+### Not goals:
 
-The save holds an unlimited number of concurrent quests. Writing one does not
-require coordinating with the others, but be aware:
-
-- Two quests sharing a proxy antagonist can play off each other; mark this in
-  `central_conflict.nature` so the narrator knows.
-- Two quests with overlapping macrostructure tick triggers will both advance
-  on the same world pulse. That's fine — the world imposes pressure on all
-  live threads simultaneously.
+```
+Help Varin                          ← state, not action
+Survive the corridor                ← condition, not action
+Deal with the Iron Crown            ← too vague, no done-state
+Something about the skimmer         ← no verb, no noun
+```
 
 ---
 
 ## Four-attempt rule
 
-If the quest JSON you produce fails validation, the orchestrator returns the
-error list and asks for a regeneration. You get three attempts. On the fourth,
-the engine falls back to a template-driven quest built from the archetype
-skeleton. Aim to pass on the first attempt by consulting the schema before you
-write.
+If the quest JSON fails validation, the orchestrator returns the error
+list and asks for regeneration (up to 3 regen attempts). On the fourth
+failure, the engine falls back to a template-driven quest built from the
+archetype skeleton. Aim to pass on the first attempt.

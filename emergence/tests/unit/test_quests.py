@@ -167,6 +167,9 @@ def _valid_quest_dict(quest_id: str = "q_test_1", **overrides: Any) -> Dict[str,
         "progress_track": {"ticks_filled": 0, "ticks_required": 10, "source": "ironsworn_vow_dangerous"},
         "scope": {"expected_scenes": 3, "expected_session_equivalents": 1.0},
         "is_urgent": True,
+        "conflict_mode": "combat",
+        "physical_danger": {"armed_opposition": True, "expected_combat_scenes": 2},
+        "hook_npcs": ["npc_varin"],
     }
     base.update(overrides)
     return base

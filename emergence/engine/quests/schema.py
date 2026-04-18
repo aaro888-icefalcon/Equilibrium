@@ -189,6 +189,43 @@ TICK_TRIGGERS = {
 }
 
 
+# Conflict modes classify what kind of pressure the quest applies. Urgent
+# quests are required to be 'combat' or 'escape'; backstory quests must span
+# at least three distinct modes as a set.
+CONFLICT_MODES = {"combat", "social", "investigation", "escape", "heist"}
+
+# Modes the urgent quest is allowed to use. Physical-danger-forward.
+URGENT_CONFLICT_MODES = {"combat", "escape"}
+
+# Verbs that a goal may open with when the quest is physically dangerous.
+# The urgent quest's goal must start with one of these.
+TACTICAL_VERBS = {
+    "extract", "disable", "intercept", "breach", "hunt", "rescue",
+    "destroy", "ambush", "sabotage", "capture", "free", "kill",
+    "eliminate", "repel", "escort", "defend", "guard", "smuggle",
+    "steal", "evacuate", "assassinate", "burn", "stop",
+}
+
+# Threat archetypes that imply armed opposition. Used to verify the urgent
+# quest's proxy antagonist comes from a combat-capable threat slot.
+COMBAT_CAPABLE_THREATS = {
+    "warped_predator_personal",
+    "warped_predator_intelligent",
+    "wretch_swarm",
+    "knife_scavenger_survivor",
+    "faction_assassin_contract",
+    "named_rival_human",
+    "raider_band_reaper",
+    "raider_band_chain_king",
+    "iron_crown_notice",
+    "volk_informant",
+    "preston_notice",
+    "doctor_pale_target",
+    "cult_listening_incursion",
+    "hive_tendril_breach",
+}
+
+
 @dataclass
 class Macrostructure:
     variable_name: str = ""
@@ -298,6 +335,28 @@ class Scope:
 
 
 @dataclass
+class PhysicalDanger:
+    """Whether the quest expects armed opposition and combat scenes.
+
+    The urgent quest must have `armed_opposition=True` and
+    `expected_combat_scenes >= 1`. Backstory quests are unconstrained.
+    """
+
+    armed_opposition: bool = False
+    expected_combat_scenes: int = 0
+
+    def to_dict(self) -> Dict[str, Any]:
+        return asdict(self)
+
+    @classmethod
+    def from_dict(cls, data: Dict[str, Any]) -> "PhysicalDanger":
+        return cls(
+            armed_opposition=bool(data.get("armed_opposition", False)),
+            expected_combat_scenes=int(data.get("expected_combat_scenes", 0)),
+        )
+
+
+@dataclass
 class Quest:
     id: str
     archetype: str
@@ -312,6 +371,11 @@ class Quest:
     scope: Scope = field(default_factory=Scope)
     is_urgent: bool = False  # True for the opening/player-picked quest
     is_background: bool = False  # True for narrator-picked backstory quests
+    conflict_mode: str = "combat"  # one of CONFLICT_MODES
+    physical_danger: PhysicalDanger = field(default_factory=PhysicalDanger)
+    # NPC ids this quest introduces into the player's relationship roster.
+    # These must exist in the job bundle's generated NPCs.
+    hook_npcs: List[str] = field(default_factory=list)
 
     def to_dict(self) -> Dict[str, Any]:
         return {
@@ -328,6 +392,9 @@ class Quest:
             "scope": self.scope.to_dict(),
             "is_urgent": self.is_urgent,
             "is_background": self.is_background,
+            "conflict_mode": self.conflict_mode,
+            "physical_danger": self.physical_danger.to_dict(),
+            "hook_npcs": list(self.hook_npcs),
         }
 
     @classmethod
@@ -346,6 +413,9 @@ class Quest:
             scope=Scope.from_dict(data.get("scope", {})),
             is_urgent=bool(data.get("is_urgent", False)),
             is_background=bool(data.get("is_background", False)),
+            conflict_mode=data.get("conflict_mode", "combat"),
+            physical_danger=PhysicalDanger.from_dict(data.get("physical_danger", {})),
+            hook_npcs=list(data.get("hook_npcs", [])),
         )
 
 
@@ -536,5 +606,63 @@ def validate_quest(quest: Quest) -> List[str]:
     # --- scope ---
     if quest.scope.expected_scenes <= 0:
         errors.append("scope.expected_scenes: must be > 0")
+
+    # --- conflict_mode ---
+    if quest.conflict_mode not in CONFLICT_MODES:
+        errors.append(
+            f"conflict_mode: must be one of {sorted(CONFLICT_MODES)} "
+            f"(got {quest.conflict_mode!r})"
+        )
+
+    # --- urgent-quest physical-danger rules ---
+    if quest.is_urgent:
+        if quest.conflict_mode not in URGENT_CONFLICT_MODES:
+            errors.append(
+                f"is_urgent=True but conflict_mode={quest.conflict_mode!r}; "
+                f"urgent quests must be one of {sorted(URGENT_CONFLICT_MODES)}"
+            )
+        if not quest.physical_danger.armed_opposition:
+            errors.append(
+                "is_urgent=True but physical_danger.armed_opposition=False; "
+                "urgent quests must feature armed opposition"
+            )
+        if quest.physical_danger.expected_combat_scenes < 1:
+            errors.append(
+                "is_urgent=True but physical_danger.expected_combat_scenes<1; "
+                "urgent quests must expect at least one combat scene"
+            )
+        first_word = (quest.goal.split()[0] if quest.goal.split() else "").lower().rstrip(",.")
+        if first_word and first_word not in TACTICAL_VERBS:
+            errors.append(
+                f"is_urgent=True but goal verb {first_word!r} is not in TACTICAL_VERBS; "
+                f"urgent-quest goals must open with a tactical verb"
+            )
+
+    return errors
+
+
+def validate_quest_set(quests: List[Quest]) -> List[str]:
+    """Validate a set of quests as a group.
+
+    Enforces:
+    - Exactly one urgent quest.
+    - Backstory quests span >= 3 distinct conflict_modes.
+    """
+    errors: List[str] = []
+    urgent = [q for q in quests if q.is_urgent]
+    background = [q for q in quests if q.is_background]
+
+    if len(urgent) != 1:
+        errors.append(
+            f"quest set must have exactly one urgent quest (got {len(urgent)})"
+        )
+
+    if background:
+        modes = {q.conflict_mode for q in background}
+        if len(modes) < 3:
+            errors.append(
+                f"backstory quests must span >=3 distinct conflict_modes "
+                f"(got {sorted(modes)})"
+            )
 
     return errors

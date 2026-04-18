@@ -82,7 +82,10 @@ def _bundle_output() -> Dict[str, Any]:
                  "relation": "colleague", "bond": {"trust": 0, "loyalty": 0, "tension": 3},
                  "hook": "Passed over for attending; quietly furious."},
             ],
-            "threats": [{"archetype": "debt_holder", "hook": "A Tower Lord captain is owed a favor."}],
+            "threats": [
+                {"archetype": "named_rival_human", "hook": "A rival lieutenant wants your post."},
+                {"archetype": "debt_holder", "hook": "A Tower Lord captain is owed a favor."},
+            ],
             "starting_location": "rittenhouse_square_philadelphia",
             "opening_vignette_seed": "The bell rings three times — an Iron Crown summons.",
         })
@@ -137,6 +140,11 @@ def _quest_output() -> Dict[str, Any]:
             },
             "progress_track": {"ticks_filled": 0, "ticks_required": 10, "source": "ironsworn_vow_dangerous"},
             "scope": {"expected_scenes": 3, "expected_session_equivalents": 1.0},
+            # Rotate backstory modes so the set spans >=3 distinct modes; the
+            # urgent-quest override is set after the flag split in the scene.
+            "conflict_mode": ["combat", "social", "investigation", "heist", "combat", "combat", "combat", "combat"][i],
+            "physical_danger": {"armed_opposition": True, "expected_combat_scenes": 1},
+            "hook_npcs": [f"npc_q{i}_target"],
         })
     return {
         "quests": quests,
@@ -144,19 +152,25 @@ def _quest_output() -> Dict[str, Any]:
     }
 
 
-def _bridge_output(urgent_id: str, antagonist_id: str) -> Dict[str, Any]:
+def _bridge_output(urgent_id: str, antagonist_id: str, bundle_npc_ids: List[str]) -> Dict[str, Any]:
     prose = " ".join(["lorem ipsum"] * 800)  # ~1600 words
     scene = " ".join(["dolor sit amet"] * 60)  # ~180 words
+    hooked = [
+        {"npc_id": nid, "relation": "coworker", "introduced_in": "bridge_present_day"}
+        for nid in bundle_npc_ids[:3]
+    ]
     return {
         "bridge_prose": prose,
         "opening_scene": scene,
         "opening_scene_meta": {
             "primary_quest_id": urgent_id,
             "antagonist_id": antagonist_id,
-            "hook_npc_id": "npc_akhil_rao",
+            "hook_npc_id": bundle_npc_ids[0] if bundle_npc_ids else "npc_akhil_rao",
             "location_id": "manhattan_fragment_clinic",
             "telegraph_bright_line_id": "bl_sweep",
         },
+        "hooked_npcs": hooked,
+        "mentioned_factions": ["brooklyn_tower_lords"],
     }
 
 
@@ -177,7 +191,12 @@ class MockNarrator:
     def bridge(self, payload: Dict[str, Any]) -> Dict[str, Any]:
         urgent = payload["urgent_quest"]
         self._urgent_id = urgent["id"]
-        return _bridge_output(urgent["id"], urgent["central_conflict"]["proxy_antagonist_id"])
+        bundle_npc_ids = list(payload.get("bundle_npc_ids", []))
+        return _bridge_output(
+            urgent["id"],
+            urgent["central_conflict"]["proxy_antagonist_id"],
+            bundle_npc_ids,
+        )
 
 
 # ---------------------------------------------------------------------------
