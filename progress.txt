@@ -121,3 +121,6 @@ v3-H: save reset; ready to commit
 3.8.a done: Phase 3 arc playable at Python level. OnsetScene + 4 vignettes + MediaResScene stub.
 
 === Phase 3 complete (pending test rewrites). v4 arc is runtime default. ===
+
+=== Phase 4 — Ignition ===
+4.1.a-f done: MediaResScene fully built — selects highest-pressure threat with encounter_template, maps threat archetype to combat register + enemy template, builds EncounterSpec with terrain/win/loss/escape/parley/world_context, fallback synthesizes scavenger ambush at starting_location when no threat has encounter_template.
