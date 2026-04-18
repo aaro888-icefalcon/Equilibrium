@@ -21,12 +21,26 @@ def dispatch_step(args: Any, save_root: str) -> Dict[str, Any]:
     """Route to the appropriate step handler."""
     action = getattr(args, "step_action", None)
 
+    from emergence.engine.runtime.step_creation import (
+        step_pre_emergence,
+        step_pick_power,
+        step_pick_location,
+        step_pick_job,
+        step_pick_quest,
+        step_bridge,
+    )
+
     handlers = {
         "init": step_init,
         "status": step_status,
-        "scene": step_scene,
-        "scene-apply": step_scene_apply,
-        "scene-ack": step_scene_ack,
+        # New six-scene character creation flow
+        "pre-emergence": step_pre_emergence,
+        "pick-power": step_pick_power,
+        "pick-location": step_pick_location,
+        "pick-job": step_pick_job,
+        "pick-quest": step_pick_quest,
+        "bridge": step_bridge,
+        # Sim + combat (unchanged)
         "scene-finalize": step_scene_finalize,
         "preamble": step_preamble,
         "tick": step_tick,
@@ -188,7 +202,7 @@ def step_init(args: Any, save_root: str) -> Dict[str, Any]:
         "npc_count": len(npcs),
         "location_count": len(locations),
         "save_root": save_root,
-        "message": "World initialized. Begin Session Zero with 'step scene --index 0'.",
+        "message": "World initialized. Begin Session Zero with 'step pre-emergence --mode prompt'.",
     }
 
 
@@ -971,6 +985,10 @@ def step_tick(args: Any, save_root: str) -> Dict[str, Any]:
         world_changes=[],
     )
 
+    # Tick all live quests whose tick_triggers include world_pulse.
+    from emergence.engine.runtime.step_creation import tick_all_quests
+    quest_reports = tick_all_quests(save_root, "world_pulse", magnitude=days, state_dict=state)
+
     return {
         "status": "ok",
         "mode": "SIM",
@@ -979,6 +997,7 @@ def step_tick(args: Any, save_root: str) -> Dict[str, Any]:
         "events": event_summaries[:20],
         "event_count": len(all_events),
         "narrator_payload": payload,
+        "quest_ticks": quest_reports,
     }
 
 
@@ -1406,11 +1425,16 @@ def step_scene_close(args: Any, save_root: str) -> Dict[str, Any]:
     except OSError:
         pass
 
+    # Tick quests whose tick_triggers include scene_close.
+    from emergence.engine.runtime.step_creation import tick_all_quests
+    quest_reports = tick_all_quests(save_root, "scene_close", magnitude=1.0, state_dict=state)
+
     return {
         "status": "ok",
         "mode": "SIM",
         "scene": scene.to_dict(),
         "narrator_payload": payload,
+        "quest_ticks": quest_reports,
     }
 
 

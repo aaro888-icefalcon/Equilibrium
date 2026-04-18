@@ -238,47 +238,30 @@ def main_session_loop(state: GameState) -> int:
     return 0
 
 
-def _make_all_scenes() -> list:
-    """Assemble the v4 session zero scenes (6 scenes: OnsetScene + 4
-    YearOneVignetteScene + MediaResScene)."""
-    from emergence.engine.character_creation.scenarios_v3 import make_v4_scenes
-    return make_v4_scenes()
-
-
 def _run_session_zero(state: GameState, narrator: Any) -> Optional[str]:
-    """Run session zero mode. Returns next mode or None."""
-    from emergence.engine.character_creation.session_zero import (
-        SessionZero,
-        FixedInputSource,
-        MockNarratorSink,
+    """Session zero now runs out-of-process via the step_cli named verbs.
+
+    The live flow requires a narrator (Claude) to author classifier, bundle,
+    quest, and bridge outputs; it is not executable from this in-process
+    main loop. Users should run:
+
+        step init
+        step pre-emergence   (text input + Claude classifier)
+        step pick-power      (subcategories then powers)
+        step pick-location
+        step pick-job        (Claude bundle + player pick)
+        step pick-quest      (Claude quest pool + player pick)
+        step bridge          (Claude bridge + opening scene)
+
+    This stub exists so that `main.py`'s mode switch remains coherent with
+    legacy call sites. New orchestration uses the step CLI.
+    """
+    print(
+        "Session zero must run via step CLI. Start with `step pre-emergence`.\n"
+        "See emergence/docs/quest_design_guidelines.md for the full flow."
     )
-
-    if state.narrator_mode == "mock":
-        inputs = FixedInputSource(
-            texts={"name": "Elena", "age": "28"},
-            default_choice=0,
-        )
-    else:
-        # Live mode: stdin input source
-        inputs = _StdinInputSource()
-
-    sink = MockNarratorSink()
-
-    scenes = _make_all_scenes()
-    sz = SessionZero(scenes=scenes)
-    try:
-        character = sz.run(inputs, sink, state.rng)
-        if hasattr(character, "to_dict"):
-            state.player = character.to_dict()
-        elif isinstance(character, dict):
-            state.player = character
-        else:
-            state.player = {"name": "Unknown"}
-        return "FRAMING"
-    except Exception as e:
-        print(f"Session zero error: {e}")
-        state.session_should_end = True
-        return None
+    state.session_should_end = True
+    return None
 
 
 class _StdinInputSource:
