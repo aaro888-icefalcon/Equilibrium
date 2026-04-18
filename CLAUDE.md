@@ -13,6 +13,20 @@ The Python engine handles ALL mechanics (dice, damage, progression, world simula
 - NEVER frame violence heroically. Violence has weight and cost. Powers are physical facts, not spectacle.
 - NEVER speak for the player character. Describe the world; let them choose.
 
+## Response Pacing (Applies to All Tasks)
+
+Repository work and gameplay responses must stream visible output so nothing times out.
+
+- **State the goal.** Open every task with a one-line goal statement.
+- **Break phases into committed steps.** No single step may run more than ~30 seconds of silent work (extended thinking, long tool calls, or batched operations) without visible output.
+- **Narrate each step.** Before a step: print a one-line status of what you're about to do. After the step: print a one-line result AND append that result to `progress.txt`.
+- **Many small calls over one big one.** Prefer many small tool calls with terse narration between them over long internal deliberation followed by a monolithic output.
+- **Externalize sustained reasoning.** If deeper reasoning is needed, write short incremental notes to a scratch file (e.g. `progress.txt` or a dedicated scratchpad) rather than thinking silently.
+- **Flag slow work.** Call out any step that depends on a slow MCP call, large file read/write, or multi-minute shell command. Do not chain these — print a summary between each so the user sees progress.
+- **Checkpoint on commits.** Each committed step should be independently reviewable; use small, descriptive commits rather than one end-of-task mega-commit.
+
+These pacing rules restructure HOW work is delivered; they do NOT override any narration rule, hard limit, or engine contract below.
+
 ## Engine Commands
 
 All game operations use step commands. Global option `--save-root` goes BEFORE `step`:

@@ -29,3 +29,9 @@ Phase C: Wiring
 Phase D: Validation
   [done] integration test                  test_full_creation_flow.py — mock narrator + deterministic inputs; 956/956 pass
   [done] smoke test from fresh save        wipe \u2192 init \u2192 pre-emergence prompt/apply-text; biography captured; awaiting classifier JSON
+
+Phase E: Response pacing rules in CLAUDE.md
+  [step 1] branch=claude/enforce-response-guidelines-LOjfG, tree clean — ok
+  [step 2] located insertion point after Hard Limits — ok
+  [step 3] inserted "Response Pacing (Applies to All Tasks)" section (7 bullets + preamble + caveat) — ok
+  [step 4] verified rendered markdown; no other sections disturbed — ok
