@@ -1,155 +1,301 @@
-# A SETTING PRIMER FOR PLAYERS
+# Setting Primer
 
-## The World Before
+Emergence is set in the mid-Atlantic United States, four years after a
+catastrophe called the Onset. This document is the reference for places,
+peoples, and factions. The prose is plain and declarative by design.
 
-Four years ago it was 2024 and the United States was a functioning country — frayed at the edges, overstressed, but functioning. Trains ran. Hospitals operated. Cellphones worked. The federal government met in Washington. The supermarkets were full. Your character's grandparents remembered World War II; your character's parents remembered 9/11; your character remembered the pandemic. None of those things were the worst that had happened. The worst that had happened was still coming.
+---
 
 ## The Onset
 
-On a Thursday afternoon in late May, at 14:23 UTC, every electronic device in the mid-Atlantic stopped working. Every car engine running, every aircraft flying, every traffic signal, every hospital ventilator. At the same moment, most people — about ninety-five out of every hundred — felt something change inside them. What it felt like varied. Some saw colors shift. Some felt their hands warm or their bones creak. Some heard a voice they did not recognize speaking inside their head. Over the next hours and days they discovered what had changed. Some of them could push things without touching them. Some of them could heal wounds with their hands. Some of them could see in the dark or sense another person's mood. A smaller number — about one in ten — changed more dramatically, became something that was no longer exactly human but was still recognizably a person. A smaller number still, one or two in a hundred, changed into something that was no longer a person at all.
+On a Thursday afternoon in late May 2024, at 14:23 UTC, every electronic
+device in the mid-Atlantic region stopped working. Cars, planes, phones,
+grids, hospital equipment — all of it failed simultaneously.
 
-Nobody knows what caused it. There are theories. None of them are supported by evidence. It happened; it has not happened again; it is called the Onset.
+At the same moment, roughly 95 percent of people in the region felt
+something change inside them. Over the following hours and days, most of
+them discovered they could do something they could not do before.
 
-The first day, perhaps a million people died in the mid-Atlantic alone. They died in plane crashes, in subway tunnels, in hospitals, in car accidents, in panicked crowds. The first week, three million more. The first month, eight million. The first year, thirty-four million — two-thirds of the region's pre-Onset population. The thirty-four million who died included most of the people who had kept the world running. The sixteen million who lived had to figure out how to keep a different, smaller, stranger world running. They have been figuring it out for four years. They are still figuring it out.
+Nobody knows what caused the Onset. No theory is supported by evidence.
+It has not happened again.
+
+### Casualties
+
+- First day: about 1 million dead in the mid-Atlantic (plane crashes,
+  stopped hospitals, panicked crowds, traffic).
+- First year: about 34 million dead, roughly two-thirds of the region's
+  pre-Onset population.
+- Surviving population today: about 16 million.
+
+### Date and scale
+
+Today is T+4 years. Federal authority survives only in residual form. The
+region is controlled by about 22 major factions and roughly 300 smaller
+polities.
+
+---
 
 ## Powers
 
-Most people can do something they could not do before. What they can do varies enormously. Seven broad categories are used to describe it.
+About 95 percent of survivors manifested some supernatural ability.
+Manifestations fall into seven categories. Most people have a mix,
+described as a "profile." Power strength is rated in tiers, T1 through T9.
+
+- **T1-T2** — visibly above human; most manifested people.
+- **T3-T4** — uncommon; noticeable in a crowd.
+- **T5-T6** — rare; a person of consequence in their home region.
+- **T7-T8** — very rare; faction-level capability.
+- **T9** — apocalyptically powerful; a few individuals per continent.
+
+Advancing tiers requires breakthroughs: acute crises that expand capacity.
+Breakthroughs leave marks — physical, cognitive, or behavioral.
+
+### The seven categories
+
+- **Physical** — enhanced strength, speed, kinetic force-projection,
+  flight, durability. Most common category.
+- **Perceptual** — enhanced senses, telepathy, emotion-reading, memory
+  manipulation, influence, foresight. Most socially dangerous because
+  many of these powers are hidden.
+- **Matter and energy** — reshaping metal, stone, wood; controlling heat,
+  electricity, light; projecting force as solid or energetic forms.
+- **Biological** — healing, enhancing plant growth, influencing animals,
+  reshaping one's own body. This category is why the region did not
+  starve in the first winter.
+- **Auratic** — zones cast around the user (trust, calm, dread). Invisible
+  at the source, visible in the effects.
+- **Temporal and spatial** — short-range teleportation, folded pockets of
+  space, remote viewing, brief foresight. Rarest category.
+- **Eldritch** — powers obtained through bargains with non-human entities.
+  Progressively transform the user.
+
+### Costs
+
+Using powers is tiring. Sustained heavy use reshapes the user's body and
+sometimes mind over years. A matter-manipulator's tissue slowly
+mineralizes. A biokinetic's scent and sleep reshape toward plant life. An
+auratic user's personality fixes toward whatever emotion their zone
+produces. Most manifested people use their abilities sparingly.
+
+### Colonel James Preston
+
+The most powerful person in the mid-Atlantic. T9, kinetic specialist.
+Lost the ability to feel fear in his third breakthrough. Controls the
+Catskill Throne and the Hudson Valley.
+
+---
+
+## The Ten Metahuman Species
+
+About 10 percent of survivors did not only manifest powers — their bodies
+changed in ways that are heritable, species-like, and permanent. Ten
+distinct transformations occurred, clustered by pre-Onset population
+geography.
+
+Species members usually have their own names for themselves. The names
+below are the outsider labels.
+
+### Clustered in the mid-Atlantic
+
+- **Silver-Hand** — metallic-sheened palms, innate matter-manipulation
+  through touch. Concentrated in Flushing, Sunset Park, Edison.
+- **Sun-Worn** — weathered skin, innate plant affinity; children tend
+  toward biokinetic work. Concentrated in central New Jersey and the
+  Lehigh Valley.
+- **Quick-Blooded** — accelerated metabolism, rapid healing, infection
+  resistance. Concentrated in North Jersey, Bucks County, outer Queens.
+- **Wide-Sighted** — enlarged irises, near-ultraviolet vision, long-range
+  mutual recognition. ~2 million in western Philadelphia and the DC
+  corridor. Largest metahuman presence in the region. May soon declare
+  themselves a formal polity.
+
+### Rare or scattered in the mid-Atlantic
+
+- **Hollow-Boned** — taller and lighter, micro-precognition of physical
+  danger. Primary population East Asia.
+- **Deep-Voiced** — expanded chest cavities, subsonic vocal effects.
+  Primary population South Asia.
+- **Pale-Eyed** — pale reflective eyes, dark-vision, reads intent.
+  Primary population Eastern Europe.
+- **Slow-Breath** — slowed metabolism, toxin resistance, days-long
+  conscious torpor. Primary population Amazon basin.
+- **Broad-Shouldered** — larger than baseline, enhanced strength and
+  durability. Primary population Western Europe. Valued as guards.
+- **Stone-Silent** — tall, dense, ambient calming zone. Primary
+  population Sub-Saharan Africa. Valued as mediators.
+
+Cross-species reproduction almost always fails. Baseline-metahuman
+pairings produce mostly baseline children. Metahuman-metahuman pairings
+across species almost never produce viable children.
+
+---
+
+## Major factions of the mid-Atlantic
+
+The major players. Smaller polities exist in the gaps.
 
-**Physical powers** cover the body and applied force. Enhanced strength, enhanced speed, kinetic force-projection, flight, durability. The most common category.
+### Washington DC corridor
+
+- **Fed Continuity Command** (General Sarah Alcott). ~1.9 million people
+  under nominal authority. Residual federal government. Scrip currency
+  losing value. Largest subordinate formation, the Potomac Irregulars
+  under Colonel Harlan Reeve, is functionally independent.
 
-**Perceptual powers** cover the senses, mind, and communication. Enhanced senses, telepathy, reading emotions, manipulating memories, influencing choices, foreseeing moments. The most dangerous category socially, because many of these powers are hidden.
+### Baltimore
 
-**Matter and energy powers** cover manipulation of non-living material. Reshaping metal, stone, or wood; controlling heat, electricity, light; producing solid or energetic projections.
+- **Crabclaw Confederation** — three warlords in uneasy alliance.
+  Biokinetic-altered fishery feeds a quarter of the region.
 
-**Biological powers** cover living things. Healing, enhancing agricultural growth, influencing animals, reshaping one's own body. The category that stopped the starvation.
+### Philadelphia
 
-**Auratic powers** are zones the user casts around themselves. A trust-zone where people find it harder to lie. A calm-zone where people find it harder to panic. A dread-zone where people find it harder to stand their ground. Invisible at their source. Visible in the effects they produce.
+- **Philadelphia Bourse** — merchant consortium of 31 trading houses.
+  Copper currency on its way to regional standard. No military; hires
+  enforcement from South Philly Holding.
+- **South Philly Holding** (Marcus Dreng) — Bourse's enforcement
+  contractor. Operates the Navy Yard and southern wards.
+- **Princeton Accord** — reopened university polity north of Philadelphia.
+  Legal, scholarly, diplomatic. Medical school and research archives.
 
-**Temporal and spatial powers** cover time and space. Short-range teleportation, hiding objects in folded pockets of space, remote viewing, brief foresight. The rarest category; specialists are scarce and valuable.
+### Central New Jersey
 
-**Eldritch powers** are not quite like the others. They come from bargains made with things that are not quite people. They transform the user progressively, in ways that do not reverse. Most users of eldritch powers are not baseline humans anymore by the time they're calling them powers.
+- **Central Jersey League** — federation of 15 townships under Dr. Maya
+  Okafor. Agricultural and biokinetic training capacity.
+- **Flushing-Edison C Cluster** — the Silver-Hand community. Straddles
+  Queens and central New Jersey.
 
-Most people have a mix. A kinetic specialist might also sense the emotional states of people they have harmed; a biokinetic farmer might also have a gentle calming presence that makes her fields easier to work. Powers come in profiles, not in single labels. What people mean when they say "so-and-so is a T6 kinetic" is that the person's dominant power is kinetic and their overall capability is at the sixth tier of strength.
+### Newark and harbor
 
-Tier runs from T1 (visibly above human) through T9 (apocalyptically powerful). Most manifested people are T1 or T2. T5+ is uncommon. T7+ is rare. T9+ is individual-level regional power. Advancement through tiers requires breakthroughs — acute crises that enable new capacity. Breakthroughs leave marks. The most powerful person in the mid-Atlantic is Colonel James Preston, T9, kinetic specialist, who lost the ability to feel fear in the third breakthrough that made him what he is.
+- **Iron Crown** (Antonín Volk) — rules Newark by fear. Controls Port
+  Newark. Aggressive, extractive.
+- **Staten Citadel** (Viktor Chen) — temporal-spatial specialist who
+  moves goods across the harbor without bridges. Preparing for war with
+  the Iron Crown.
 
-Powers cost something. Using them is tiring. Using them heavily for years changes the user's body and sometimes mind — a matter-manipulator's tissue slowly mineralizes; a biokinetic's presence affects plants around her; an auratic user's personality fixes toward whatever emotion her zone produces. The costs are real. Most manifested people use their abilities sparingly, the way pre-Onset people used their cars.
+### New York City
 
-## The New Peoples
+- **Brooklyn Tower Lords** — five or six lords controlling individual
+  districts. Shifting alliances. Extract Manhattan salvage.
+- **Queens Commonage** — horizontal commune coordinated by a telepathic
+  network of individuals called Voices.
+- **Manhattan fragment** — most of Manhattan is salvageable. Lower
+  Manhattan is lost to something that eats memory.
 
-About one in ten people who survived the Onset was not just manifested but transformed. Their bodies and biologies changed in ways that were heritable, species-like, and permanent. Ten different transformations occurred, clustered geographically based on pre-Onset population distribution. These are the ten metahuman species.
+### Hudson Valley
 
-**The Hollow-Boned** are taller and lighter than baseline humans, with micro-precognition of physical danger. Their primary population is in East Asia. Rare in the mid-Atlantic.
+- **Yonkers Compact** — mutual-aid commune under three biokinetic
+  healers known as the Three Judges.
+- **Peekskill Bear-House** (Dmitri Kostas) — runs the only functional
+  electrical grid in the region from a stabilized reactor.
+- **Catskill Throne** (Colonel James Preston, T9) — personal domain
+  encompassing the Catskills.
 
-**The Deep-Voiced** have expanded chest cavities and vocal apparatus; their voices carry at unusual distances; they can produce subsonic effects. Primary population South Asia. Rare here.
+### Lehigh Valley and Delmarva
 
-**The Silver-Hand** have metallic-sheened palms and innate matter-manipulation through touch; they are unmatched craftsmen. Primary population East Asia. A substantial cluster in Flushing, Sunset Park, and Edison.
+- **Lehigh Principalities** — twelve minor coal-country lords. Integrated
+  with the Sun-Worn community.
+- **Delmarva Harvest** — region's granary. Six major Harvest Lords plus
+  twelve minor ones, each with a biokinetic-enhanced demesne.
 
-**The Pale-Eyed** have pale eyes that catch light in darkness; they see in near-total dark and read others' intentions subtly. Primary population Eastern Europe. Scattered here.
+### The Wide-Sighted diaspora
 
-**The Slow-Breath** have slowed metabolism, high toxin resistance, and can enter conscious torpor for days. Primary population Amazon basin. Rare here.
+Not yet a polity. ~2 million across western Philadelphia, PG County
+Maryland, and scattered concentrations. The question of whether to
+declare itself a polity is under active debate in Wide-Sighted
+assemblies.
 
-**The Broad-Shouldered** are significantly larger than baseline humans, with enhanced strength and durability. Primary population Western Europe. Uncommon here; valued as guards.
+### Pine Barrens
 
-**The Sun-Worn** weather prematurely and have innate plant affinity; their children tend toward biokinetic work. Primary population Northern Europe. A substantial cluster in central New Jersey and the Lehigh Valley.
+- **The Listening** — cult around an entity called the One Who Waits.
+  Growing. Holds most of southern New Jersey. Allied with the Hive (see
+  Dangers).
 
-**The Quick-Blooded** have accelerated metabolism and rapid healing; they clear infections that would kill baseline humans. Primary population South America. A substantial cluster in North Jersey, Bucks County, and outer Queens.
+### Raider warbands
 
-**The Wide-Sighted** have enlarged irises, enhanced vision into near-ultraviolet, and long-range recognition of other Wide-Sighted. Primary population Central America. The largest metahuman presence in the mid-Atlantic — over two million, concentrated in western Philadelphia and the DC corridor.
+- **The Reaper** — cross-Bronx corridor.
+- **The Chain-King** — outer Brooklyn; keeps slaves.
+- **Doctor Pale** — Camden; conducts experiments.
 
-**The Stone-Silent** are taller and denser than baseline humans, with a zone of steadiness around them that eases panic in others. Primary population Sub-Saharan Africa. Uncommon here; valued as mediators.
+---
 
-The species names in this primer are the names outsiders use. Members of each species usually have their own names for themselves and for each other. The clustered species in the mid-Atlantic — the Silver-Hand, Sun-Worn, Quick-Blooded, and Wide-Sighted — maintain their own communities with their own internal structures. The Wide-Sighted are numerous enough that they may soon declare themselves a formal polity; the question is being debated in their assemblies.
+## Dangers
 
-Cross-species reproduction almost always fails. Pairings between baseline humans and a metahuman produce mostly baseline offspring, sometimes metahuman offspring. Pairings between two different metahuman species almost never produce viable children. The reasons are not clear.
+### Eldritch transformations
 
-## The Dangers
+About 1 percent of people who experienced the Onset transformed into
+something no longer human. Categories by size and threat:
 
-The wilderness is not what it was. Four years of manifestation has changed things in ways people are still cataloguing.
+- **Wretches** — small, twisted, hungry. Cluster in abandoned zones.
+  Attack isolated travelers. Still wear scraps of pre-Onset clothing.
+- **Hunters** — larger, smarter, pack-hunting.
+- **Aberrants** — individually dangerous, often territorial.
+- **Shades** — no body; haunt specific places.
 
-**The ordinary eldritch.** The one-in-a-hundred who transformed into something no longer human did so in various ways. Most became what people call Wretches — small, twisted, hungry shapes that sometimes still wear scraps of their pre-Onset clothing. Wretches cluster in abandoned zones and attack isolated travelers. Above them are Hunters, larger and smarter, who stalk in packs. Above them still are Aberrants, individually dangerous, often territorial. And there are Shades, which do not seem to have bodies at all but haunt specific places.
+### The Pine Barrens
 
-**The Pine Barrens.** Much of southern New Jersey has been lost to something. A cult called The Listening lives there, around an entity that calls itself The One Who Waits. The cult grows by welcoming desperate people and slowly changing them. The entity is old. Not old the way humans are old, but old in a way no human story accounts for. Stay north of the Black Pines Line and you are probably safe. Stay south of it and you are probably not.
+Lost to the Listening and its allied entity. Territory described as
+unreliable: the trees, the roads, the time itself. Stay north of the
+Black Pines Line for relative safety.
 
-**Manhattan.** Most of Manhattan is still salvageable. Lower Manhattan is not. Something in the Financial District eats memory. People who go in come out missing days. People who go in deep do not come out at all. The money and the records and the gold are still in the vaults. Almost nobody is rich enough or desperate enough to try for them.
+### Lower Manhattan
 
-**The Hive.** Plants that can move, and move with purpose. Clustered along root networks that span kilometers. The largest colony is in the Pine Barrens; it is allied with the cult. Smaller colonies are scattered through the region. They eat what they catch. They expand into abandoned land.
+The Financial District eats memory. People who enter come out missing
+days. People who go in deep do not come out. The money, records, and gold
+are still in the vaults.
 
-**The Warped.** Animals that manifested powers and, past a certain point, gained human-level minds. Some of them remember, or say they remember, things from before humans built cities — from before humans existed. A T9 wolf in the Poconos claims to remember the last ice age. A T10 doe in the Catskills is said to remember trees that no longer exist. Whether they are telling the truth is disputed. Most of them are not hostile. Some are. A few speak the languages of humans well and offer to teach what they remember, to anyone who will listen carefully enough.
+### The Hive
 
-**Raiders, warlords, and criminals.** Most of the people in the mid-Atlantic are not dangerous. A minority are. They have formed retinues and bands. They take what they want when they can take it. The Reaper's raider band operates in the Cross-Bronx. The Chain-King keeps slaves in outer Brooklyn. Doctor Pale conducts experiments in Camden. Antonín Volk rules Newark through the same fear that made him. The world is not lawless, but the laws that apply depend on whose territory you are in.
+Plants that move with purpose. Colonies connected by kilometer-long root
+networks. Largest colony in the Pine Barrens, allied with the Listening.
+Smaller colonies scattered through the region.
 
-## The Map at T+1
+### The Warped
 
-The mid-Atlantic has about twenty-two named major factions and perhaps three hundred smaller polities. What follows is the shape of the major players.
+Animals that manifested powers and gained human-level minds. Some claim
+to remember things from before human civilization. A T9 wolf in the
+Poconos. A T10 doe in the Catskills. Whether their memories are reliable
+is disputed. Most are not hostile. Some are.
 
-**Washington DC** is held by Fed Continuity Command under General Sarah Alcott, a residual of the pre-Onset federal government with about 1.9 million people under nominal authority. Its currency (scrip) is losing value. Its largest subordinate formation, the Potomac Irregulars under Colonel Harlan Reeve, is functionally independent and is expected to supplant it within a decade.
+### Raiders and criminal organizations
 
-**Baltimore** is held by the Crabclaw Confederation, three warlords in uneasy alliance, with a biokinetic-altered fishery that feeds a quarter of the region.
+Most people in the region are not dangerous. A minority are. They operate
+in retinues and bands. Named threats include the Reaper (Cross-Bronx),
+the Chain-King (outer Brooklyn), Doctor Pale (Camden), and Antonín Volk's
+Iron Crown in Newark.
 
-**Philadelphia** is held by the Philadelphia Bourse, a merchant consortium of 31 trading houses whose copper currency is on its way to being the regional standard. The Bourse has no military; it hires enforcement from the South Philly Holding under Marcus Dreng.
+---
 
-**Central New Jersey** is held by the Central Jersey League, a federation of 15 townships under Dr. Maya Okafor, coordinator. Its agricultural production and biokinetic training capacity make it a soft-power center.
+## Player characters
 
-**Newark** is held by the Iron Crown under Antonín Volk. It rules by fear. It controls the Port of Newark.
+Players start as survivors with at least one manifested ability. Most
+characters are T1 or T2; T3 is above average; T4 is noticeable; T5 is
+remarked upon; T6+ is consequential.
 
-**Staten Island** is held by the Staten Citadel under Viktor Chen, whose temporal-spatial capability lets him move goods across the harbor without bridges. He is preparing for war with Volk.
+If the character is a metahuman species member, they have the
+species-typical baseline capacity, possibly with additional individual
+manifestation.
 
-**Brooklyn** is divided among five or six Tower Lords, each controlling a district, shifting alliances constantly. They extract Manhattan salvage for the region.
+Characters are assumed to have lost people in the Onset or its
+aftermath. Grief is universal and four years old. Most people have moved
+forward; some have not.
 
-**Queens** is held by the Queens Commonage, a horizontal commune coordinated by a telepathic network of individuals called Voices, and alongside it the Flushing-Edison Cluster — the Silver-Hand community.
+Post-Onset careers are not fixed by pre-Onset training. A former
+physician may be a biokinetic healer, an underground surgeon for a
+cult, a caravan escort with a bag of scalpels, a warlord's house medic,
+or a raider's field medic. The bundle system presents five different
+futures per settlement.
 
-**The Hudson Valley** is held in tribute to the Catskill Throne under Colonel James Preston. The Bear-House of Peekskill under Dmitri Kostas runs the only functional electrical grid in the region from a stabilized reactor. The Yonkers Compact is a mutual-aid commune under three biokinetic healers.
+---
 
-**The Catskills** are Preston's personal domain.
+## Open questions
 
-**The Lehigh Valley** is held by twelve minor coal-country Principalities, deeply integrated with the Sun-Worn community and advised by Councilor Anna Veldt.
+These questions have no confirmed answer. They shape active debate and
+some characters' arcs.
 
-**The Delmarva Peninsula** is the region's granary. Six major Harvest Lords plus about twelve minor ones each hold a demesne of biokinetic-enhanced farmland. No unified command.
-
-**The Wide-Sighted diaspora** — two million across western Philadelphia, PG County Maryland, and scattered concentrations — is not yet a polity but may soon declare itself one. The debate is live and consequential.
-
-**The Pine Barrens** are held by The Listening and its associated entities. Human territory loses ground there year by year.
-
-## Your Character
-
-People new to the region or new to active faction life can plausibly begin in several ways.
-
-You might be a Bourse-affiliated merchant or courier, traveling between cities, carrying goods and messages. This role gives you plausible access to most major factions and a professional pretext for being anywhere. The Bourse pays in copper, which is accepted almost everywhere.
-
-You might be a biokinetic practitioner trained at Rutgers or by the Yonkers Three Judges. This role gives you a skill that every faction wants, and the ability to travel with a welcome. You will be pressed constantly to commit to one faction or another; maintaining independence requires care.
-
-You might be a member of a metahuman cluster community, running errands and work that takes you between your people's concentrations. If you are Wide-Sighted, you are at the center of a defining regional political question. If you are Silver-Hand, Sun-Worn, or Quick-Blooded, you are embedded in a specific community with specific obligations.
-
-You might be a scout, courier, or mercenary, hiring out services to factions that will pay. This role is viable and dangerous. Independent operators are tolerated by most factions but trusted by none.
-
-You might be an ex-soldier — former Fed Continuity, former Irregular, former retinue, former militia — trying to find a new place in a changed world. This role has built-in narrative weight: who you were, who you are now, who you are becoming.
-
-You might be something else. The world has room for refugees, apprentices, scholars, religious pilgrims, displaced farmers, skilled artisans, amateur diplomats, former police, former teachers, former anything. The pre-Onset structures that defined careers are mostly gone. What you do now is what you do now.
-
-Your character has powers, almost certainly. About ninety-five percent of survivors manifested. If you did not, that is unusual and worth noting. Your tier is most likely T1 or T2; T3 would be above average; T4 would be noticeable; T5 would be remarked upon regionally; T6+ would make you a person of consequence in your home area. If your character is a metahuman species member, you have the species-typical capacity as a baseline, possibly augmented by individual manifestation.
-
-Your character has almost certainly lost people in the Onset or the first year. Grief is universal. It is also four years old. Most people have absorbed it and moved forward. Characters who have not done so are distinctive in their community.
-
-## What Remains Unknown
-
-Several large questions have no answer.
-
-**What caused the Onset.** There are theories. None are supported.
-
-**Whether the Onset will happen again.** There is no evidence that it will. There is also no evidence that it will not. Some people watch for signs; most people do not.
-
-**What the anomalous eldritch actually are.** The fifteen percent of eldritch entities whose claims and knowledge cannot be explained by human origin — what they are, where they came from, what they want — is contested between multiple incompatible theories. No theory has proof.
-
-**Whether the Warped are telling the truth.** When a T9 bear says it remembers the last ice age, is it remembering, or is its cognition confabulating? The question is open.
-
-**Whether tier-advancement past T10 is possible.** Rumors exist of beyond-T10 individuals in East Asia, South Asia, and West Africa. None have been verified in the mid-Atlantic.
-
-**Whether the children of manifested parents can themselves produce new species-transformations.** The first post-Onset-born children are reaching puberty and beginning to manifest. Their patterns are being watched. It is too early to know.
-
-**Whether corruption from heavy power use can be reversed.** It has not been reversed in any observed case. But the cases are few and observation is young.
-
-**Whether Fed Continuity will survive the next decade as any recognized authority.** The evidence suggests no. But the Onset already happened; other unexpected things are possible.
-
-The region lives with these questions. The characters who move through it will accumulate their own answers, or will accumulate new questions. The world is not fixed. The world was fixed once and then it changed. It may change again.
+- What caused the Onset.
+- Whether it will happen again.
+- What the anomalous eldritch entities actually are.
+- Whether the Warped's ancient memories are real.
+- Whether tier-advancement past T10 is possible anywhere.
+- Whether children born after the Onset can transform into new species.
+- Whether corruption from heavy power use can be reversed.
+- Whether Fed Continuity will survive the next decade.
