@@ -137,6 +137,11 @@ def _quest_output() -> Dict[str, Any]:
             },
             "progress_track": {"ticks_filled": 0, "ticks_required": 10, "source": "ironsworn_vow_dangerous"},
             "scope": {"expected_scenes": 3, "expected_session_equivalents": 1.0},
+            # Rotate backstory modes so the set spans >=3 distinct modes; the
+            # urgent-quest override is set after the flag split in the scene.
+            "conflict_mode": ["combat", "social", "investigation", "heist", "combat", "combat", "combat", "combat"][i],
+            "physical_danger": {"armed_opposition": True, "expected_combat_scenes": 1},
+            "hook_npcs": [f"npc_q{i}_target"],
         })
     return {
         "quests": quests,
