@@ -33,6 +33,7 @@ def dispatch_step(args: Any, save_root: str) -> Dict[str, Any]:
     handlers = {
         "init": step_init,
         "status": step_status,
+        "about": step_about,
         # New six-scene character creation flow
         "pre-emergence": step_pre_emergence,
         "pick-power": step_pick_power,
@@ -147,6 +148,49 @@ def _player_summary(player: Dict[str, Any]) -> Dict[str, Any]:
     }
 
 
+# Path to the 300-word onboarding primer. Shown once on `step init`, and on
+# demand via `step about`.
+_SHORT_PRIMER_PATH = os.path.join(
+    os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))),
+    "setting", "primer_short.md",
+)
+
+_HOW_TO_PLAY = (
+    "How to play: you declare what your character tries. The engine rolls "
+    "dice and determines outcome. The narrator describes what happens. "
+    "Missions involve real risk, including combat. You will have powers. "
+    "Choices are free — no numbered menus. When in doubt, say what you "
+    "want to do in your own words."
+)
+
+
+def _load_short_primer() -> str:
+    try:
+        with open(_SHORT_PRIMER_PATH, "r", encoding="utf-8") as f:
+            return f.read().strip()
+    except OSError:
+        return ""
+
+
+def _build_about_preface() -> str:
+    """Render the meta-framed 'About Emergence' preface.
+
+    Shown once on `step init` and on demand via `step about`. Wrapped in
+    visible delimiters so it reads as out-of-frame onboarding rather than
+    in-fiction prose.
+    """
+    primer = _load_short_primer()
+    if not primer:
+        return ""
+    return (
+        "═══ ABOUT EMERGENCE ═══\n\n"
+        + primer
+        + "\n\n"
+        + _HOW_TO_PLAY
+        + "\n\n═══════════════════════"
+    )
+
+
 # ---------------------------------------------------------------------------
 # Step handlers
 # ---------------------------------------------------------------------------
@@ -202,7 +246,20 @@ def step_init(args: Any, save_root: str) -> Dict[str, Any]:
         "npc_count": len(npcs),
         "location_count": len(locations),
         "save_root": save_root,
+        "about_preface": _build_about_preface(),
         "message": "World initialized. Begin Session Zero with 'step pre-emergence --mode prompt'.",
+    }
+
+
+def step_about(args: Any, save_root: str) -> Dict[str, Any]:
+    """Return the 'About Emergence' preface on demand.
+
+    Available at any time, regardless of save state. Useful for re-reading
+    the setting overview or when starting a session mid-stream.
+    """
+    return {
+        "status": "ok",
+        "about_preface": _build_about_preface(),
     }
 
 

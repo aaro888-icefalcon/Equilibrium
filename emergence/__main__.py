@@ -97,6 +97,9 @@ def build_parser() -> argparse.ArgumentParser:
     # step status
     step_sub.add_parser("status", help="Show current game state")
 
+    # step about — print the 300-word onboarding primer + how-to-play
+    step_sub.add_parser("about", help="Print the onboarding primer ('About Emergence')")
+
     # step pre-emergence — text elicitation + classifier apply
     step_pre = step_sub.add_parser("pre-emergence", help="Pre-Onset biography elicitation + classifier")
     step_pre.add_argument("--mode", choices=["prompt", "apply-text", "apply-classifier"], default="prompt")
