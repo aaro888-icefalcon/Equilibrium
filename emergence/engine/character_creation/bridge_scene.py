@@ -76,15 +76,20 @@ class BridgeScene:
             "job_pick": state.scene_choices.get("job_pick"),
         }
 
+        # Flatten the bundle's NPCs to a lookup set for hook validation.
+        bundle_npc_ids = {npc.get("npc_id") for npc in state.generated_npcs if npc.get("npc_id")}
+
         return {
             "task": "bridge_narrative_v1",
             "guidelines_docs": [
                 "emergence/docs/opening_scene_guidelines.md",
+                "emergence/setting/narration_style.md",
                 "emergence/setting/narration.md",
             ],
             "character": char_summary,
             "urgent_quest": urgent.to_dict(),
             "background_quests": [q.to_dict() for q in background],
+            "bundle_npc_ids": sorted(bundle_npc_ids),
             "bridge_target_words": [BRIDGE_WORD_TARGET_MIN, BRIDGE_WORD_TARGET_MAX],
             "opening_target_words": [OPENING_SCENE_WORD_MIN, OPENING_SCENE_WORD_MAX],
             "schema_hint": {
@@ -97,6 +102,14 @@ class BridgeScene:
                     "location_id": "scene location",
                     "telegraph_bright_line_id": "id of the bright line the scene telegraphs",
                 },
+                "hooked_npcs": [
+                    {
+                        "npc_id": "must appear in bundle_npc_ids",
+                        "relation": "mentor | coworker | rival | patron | contact | other",
+                        "introduced_in": "backstory_q0..q3 | urgent | bridge_present_day",
+                    }
+                ],
+                "mentioned_factions": ["faction_id", "..."],
             },
             "three_questions_gate": (
                 "After reading the opening_scene, a reader must be able to answer: "
@@ -113,6 +126,7 @@ class BridgeScene:
     def validate_bridge_output(
         payload: Dict[str, Any],
         urgent_quest: Quest,
+        bundle_npc_ids: Optional[set] = None,
     ) -> List[str]:
         errors: List[str] = []
         if not isinstance(payload, dict):
@@ -165,6 +179,39 @@ class BridgeScene:
                     f"is not a bright line of the urgent quest"
                 )
 
+        # Structured relationship emissions. These let the engine render a
+        # roster block after the opening scene without parsing prose.
+        hooked = payload.get("hooked_npcs")
+        if not isinstance(hooked, list):
+            errors.append("hooked_npcs: required list")
+        else:
+            seen_hooks = set()
+            for i, h in enumerate(hooked):
+                prefix = f"hooked_npcs[{i}]"
+                if not isinstance(h, dict):
+                    errors.append(f"{prefix}: must be dict")
+                    continue
+                nid = h.get("npc_id")
+                if not nid:
+                    errors.append(f"{prefix}.npc_id: required")
+                elif nid in seen_hooks:
+                    errors.append(f"{prefix}.npc_id: duplicate {nid!r}")
+                elif bundle_npc_ids is not None and nid not in bundle_npc_ids:
+                    errors.append(
+                        f"{prefix}.npc_id: {nid!r} not in bundle_npc_ids; "
+                        f"the bridge can only hook NPCs present in the job bundle"
+                    )
+                else:
+                    seen_hooks.add(nid)
+                if not h.get("relation"):
+                    errors.append(f"{prefix}.relation: required")
+                if not h.get("introduced_in"):
+                    errors.append(f"{prefix}.introduced_in: required")
+
+        factions = payload.get("mentioned_factions")
+        if not isinstance(factions, list):
+            errors.append("mentioned_factions: required list (may be empty)")
+
         return errors
 
     # ------------------------------------------------------------------
@@ -180,12 +227,15 @@ class BridgeScene:
         urgent = _find_urgent(quest_state)
         if urgent is None:
             raise RuntimeError("no urgent quest to bridge into")
-        errors = self.validate_bridge_output(bridge_output, urgent)
+        bundle_npc_ids = {npc.get("npc_id") for npc in state.generated_npcs if npc.get("npc_id")}
+        errors = self.validate_bridge_output(bridge_output, urgent, bundle_npc_ids)
         if errors:
             raise BridgeOutputValidationError(errors)
         state.scene_choices["bridge_prose"] = bridge_output["bridge_prose"]
         state.scene_choices["opening_scene"] = bridge_output["opening_scene"]
         state.scene_choices["opening_scene_meta"] = dict(bridge_output["opening_scene_meta"])
+        state.scene_choices["hooked_npcs"] = list(bridge_output.get("hooked_npcs", []))
+        state.scene_choices["mentioned_factions"] = list(bridge_output.get("mentioned_factions", []))
         return state
 
     # ------------------------------------------------------------------

@@ -149,19 +149,25 @@ def _quest_output() -> Dict[str, Any]:
     }
 
 
-def _bridge_output(urgent_id: str, antagonist_id: str) -> Dict[str, Any]:
+def _bridge_output(urgent_id: str, antagonist_id: str, bundle_npc_ids: List[str]) -> Dict[str, Any]:
     prose = " ".join(["lorem ipsum"] * 800)  # ~1600 words
     scene = " ".join(["dolor sit amet"] * 60)  # ~180 words
+    hooked = [
+        {"npc_id": nid, "relation": "coworker", "introduced_in": "bridge_present_day"}
+        for nid in bundle_npc_ids[:3]
+    ]
     return {
         "bridge_prose": prose,
         "opening_scene": scene,
         "opening_scene_meta": {
             "primary_quest_id": urgent_id,
             "antagonist_id": antagonist_id,
-            "hook_npc_id": "npc_akhil_rao",
+            "hook_npc_id": bundle_npc_ids[0] if bundle_npc_ids else "npc_akhil_rao",
             "location_id": "manhattan_fragment_clinic",
             "telegraph_bright_line_id": "bl_sweep",
         },
+        "hooked_npcs": hooked,
+        "mentioned_factions": ["brooklyn_tower_lords"],
     }
 
 
@@ -182,7 +188,12 @@ class MockNarrator:
     def bridge(self, payload: Dict[str, Any]) -> Dict[str, Any]:
         urgent = payload["urgent_quest"]
         self._urgent_id = urgent["id"]
-        return _bridge_output(urgent["id"], urgent["central_conflict"]["proxy_antagonist_id"])
+        bundle_npc_ids = list(payload.get("bundle_npc_ids", []))
+        return _bridge_output(
+            urgent["id"],
+            urgent["central_conflict"]["proxy_antagonist_id"],
+            bundle_npc_ids,
+        )
 
 
 # ---------------------------------------------------------------------------
