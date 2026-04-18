@@ -35,3 +35,16 @@ Phase E: Response pacing rules in CLAUDE.md
   [step 2] located insertion point after Hard Limits — ok
   [step 3] inserted "Response Pacing (Applies to All Tasks)" section (7 bullets + preamble + caveat) — ok
   [step 4] verified rendered markdown; no other sections disturbed — ok
+
+Phase F: Job archetype overhaul (branch=claude/emergence-game-fixes-DMkTM)
+  Goal: grounded superhero post-apocalyptic pool; cut medical bloat; add power-based jobs; add wide-sighted + raider locations; expand threat vocabulary; add theme_tags.
+  [done] wrote stub (schema + threat list + 20 empty location keys)
+  [done] filled 10 locations; mid-validation passed
+  [done] filled 10 more locations incl. wide_sighted_diaspora + raider_warband_cross_bronx
+  [done] final validation:
+    - 20 locations, 121 archetypes
+    - 0 missing fields, 0 duplicate ids
+    - every location has >=2 power_based and >=1 combat_heavy
+    - medical-heavy archetypes: 21/121 (17%), down from 23/56 (41%)
+    - threat vocabulary expanded to 24 archetypes
+  [pending] commit + push
