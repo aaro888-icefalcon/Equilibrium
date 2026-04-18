@@ -26,6 +26,7 @@ def dispatch_step(args: Any, save_root: str) -> Dict[str, Any]:
         "status": step_status,
         "scene": step_scene,
         "scene-apply": step_scene_apply,
+        "scene-ack": step_scene_ack,
         "scene-finalize": step_scene_finalize,
         "preamble": step_preamble,
         "tick": step_tick,
@@ -168,8 +169,15 @@ def step_init(args: Any, save_root: str) -> Dict[str, Any]:
 
     _save_full_state(save_root, state)
 
-    # Initialize session zero state
-    sz_state = {"current_scene": 0, "creation_state": {}, "completed": False}
+    # Initialize session zero state with a real entropy seed. Without this,
+    # CreationState.seed defaults to 0 and every character creation reuses
+    # Random(317) for the power slate and Random(101) for the vignette —
+    # making "random" fillers deterministic across players.
+    sz_state = {
+        "current_scene": 0,
+        "creation_state": {"seed": random.Random().getrandbits(64)},
+        "completed": False,
+    }
     _write_json_file(os.path.join(save_root, "session_zero_state.json"), sz_state)
 
     return {
@@ -256,6 +264,20 @@ def step_scene(args: Any, save_root: str) -> Dict[str, Any]:
         return {"status": "error", "message": "No session zero in progress. Run 'step init' first."}
 
     creation_state = CreationState(**(sz_data.get("creation_state", {})))
+
+    # v4 ack gate: if a prior scene is awaiting an ack beat, refuse to
+    # advance until 'step scene-ack --index <prior>' consumes the flag.
+    if creation_state.pending_ack and index > sz_data.get("current_scene", 0):
+        return {
+            "status": "error",
+            "message": (
+                f"pending ack for scene {sz_data.get('current_scene', 0)}. "
+                f"Run 'step scene-ack --index {sz_data.get('current_scene', 0)}' "
+                f"before advancing."
+            ),
+            "awaiting": "ack",
+            "pending_ack_for": sz_data.get("current_scene", 0),
+        }
 
     rng = _get_rng(args)
     scene.prepare(creation_state, rng)
@@ -371,6 +393,7 @@ def step_scene_apply(args: Any, save_root: str) -> Dict[str, Any]:
     index = getattr(args, "index", 0)
     input_choice = getattr(args, "input_choice", None)
     input_texts_raw = getattr(args, "input_text", None) or []
+    output_json_path = getattr(args, "output_json", None)
 
     from emergence.engine.runtime.main import _make_all_scenes
     from emergence.engine.character_creation.character_factory import (
@@ -393,6 +416,45 @@ def step_scene_apply(args: Any, save_root: str) -> Dict[str, Any]:
 
     creation_dict = sz_data.get("creation_state", {})
     creation_state = CreationState(**creation_dict)
+
+    # v4 --output-json route: narrator's VignetteOutput JSON is loaded
+    # here, validated against the scaffold, and the picked choice is
+    # applied via apply_vignette_choice.  This bypasses the legacy
+    # apply_text/apply_multi path for vignette scenes.
+    if output_json_path and hasattr(scene, "apply_vignette_output"):
+        try:
+            if output_json_path == "-":
+                raw = sys.stdin.read()
+            else:
+                with open(output_json_path, "r", encoding="utf-8") as f:
+                    raw = f.read()
+        except OSError as e:
+            return {"status": "error",
+                    "message": f"could not read --output-json: {e}"}
+        pick_idx = 0
+        if input_choice is not None:
+            try:
+                pick_idx = int(str(input_choice).split(",")[0])
+            except (TypeError, ValueError):
+                pick_idx = 0
+        result = scene.apply_vignette_output(
+            raw, pick_idx, creation_state, CharacterFactory(), rng,
+        )
+        if result.get("status") != "ok":
+            return result
+        creation_state = result["state"]
+        sz_data["creation_state"] = creation_state.__dict__
+        sz_data["current_scene"] = index  # stay here until ack clears
+        _write_json_file(sz_path, sz_data)
+        return {
+            "status": "ok",
+            "scene_index": index,
+            "scene_id": scene.scene_id,
+            "applied": True,
+            "picked_choice": pick_idx,
+            "next_step": "ack",
+            "awaiting": "ack",
+        }
     factory = CharacterFactory()
 
     scene.prepare(creation_state, rng)
@@ -428,8 +490,12 @@ def step_scene_apply(args: Any, save_root: str) -> Dict[str, Any]:
 
     # Advance rule: scenes that offer choices require a choice to advance.
     # Scenes that offer none advance as soon as apply_text has been called.
+    # Multi-phase scenes (e.g. AwakeningScene dilemma → power slate) can
+    # veto the advance via an is_complete() hook.
     has_choices = bool(available_choices)
     should_advance = applied_choice or (applied_text and not has_choices)
+    if should_advance and hasattr(scene, "is_complete"):
+        should_advance = bool(scene.is_complete(creation_state))
 
     current_scene = sz_data.get("current_scene", index)
     next_scene = index + 1 if should_advance else current_scene
@@ -440,9 +506,13 @@ def step_scene_apply(args: Any, save_root: str) -> Dict[str, Any]:
 
     # Build summary.  When the scene has not advanced we expose the
     # pending slate so the narrator can present the new 10-option list.
+    # Multi-phase scenes may have applied one phase (dilemma) but still
+    # need input for the next (power slate), so re-read choices post-apply
+    # and surface them when present.
     awaiting: Optional[str] = None
     if not should_advance:
-        if has_choices and not applied_choice:
+        post_choices = scene.get_choices(creation_state)
+        if post_choices:
             awaiting = "choice"
         elif not applied_text and not applied_choice:
             awaiting = "input"
@@ -569,6 +639,79 @@ def _materialize_npc_seeds(
         materialized.append(entry)
 
     return materialized
+
+
+def step_scene_ack(args: Any, save_root: str) -> Dict[str, Any]:
+    """Emit the post-pick acknowledgment beat for a vignette scene.
+
+    Reads state.pending_ack.  If set, builds a summary narration payload
+    describing what the just-applied choice seeded, clears the flag,
+    and returns the payload.  Next `step scene --index N+1` will be
+    allowed because the gate is cleared.
+    """
+    from emergence.engine.character_creation.character_factory import CreationState
+
+    index = getattr(args, "index", 0)
+    sz_path = os.path.join(save_root, "session_zero_state.json")
+    sz_data = _read_json_file(sz_path)
+    if sz_data is None:
+        return {"status": "error", "message": "No session zero in progress."}
+
+    creation_state = CreationState(**(sz_data.get("creation_state", {})))
+    if not creation_state.pending_ack:
+        return {
+            "status": "ok",
+            "message": f"no pending ack for scene {index}.",
+            "skipped": True,
+        }
+
+    # Build ack summary payload.
+    recent_npc = creation_state.generated_npcs[-1] if creation_state.generated_npcs else None
+    recent_threat = creation_state.threats[-1] if creation_state.threats else None
+    recent_goal = creation_state.goals[-1] if creation_state.goals else None
+    recent_loc = creation_state.generated_locations[-1] if creation_state.generated_locations else None
+    recent_history = None
+    for h in reversed(creation_state.history):
+        if h.get("type") == "character_creation_vignette":
+            recent_history = h
+            break
+
+    ack_payload = {
+        "scene_type": "post_pick_summary",
+        "register_directive": "summary",
+        "scene_index": index,
+        "prose_target": {"min_words": 60, "max_words": 100},
+        "seeds": {
+            "npc": recent_npc.get("display_name") if recent_npc else None,
+            "threat": recent_threat.get("name") if recent_threat else None,
+            "goal": recent_goal.get("description") if recent_goal else None,
+            "location": (
+                (recent_loc.get("id") or (recent_loc.get("spec") or {}).get("id"))
+                if recent_loc else None
+            ),
+            "starting_location": creation_state.starting_location,
+            "history": recent_history.get("description") if recent_history else None,
+        },
+        "invitation": (
+            "In 60-100 words, recap what the pick cost and planted.  Single "
+            "paragraph of prose in the scene's register, then a bulleted "
+            "list of every seeded thread (mechanical binding, NPCs, "
+            "location, threats, goals).  No picks; player advances via "
+            "'step scene --index N+1'."
+        ),
+    }
+
+    # Clear the gate.
+    creation_state.pending_ack = False
+    sz_data["creation_state"] = creation_state.__dict__
+    _write_json_file(sz_path, sz_data)
+
+    return {
+        "status": "ok",
+        "scene_index": index,
+        "ack_payload": ack_payload,
+        "cleared_pending_ack": True,
+    }
 
 
 def step_scene_finalize(args: Any, save_root: str) -> Dict[str, Any]:

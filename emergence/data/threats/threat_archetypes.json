@@ -1,0 +1,112 @@
+{
+  "knife_scavenger_survivor": {
+    "id": "knife_scavenger_survivor",
+    "display_name": "the survivor with the knife",
+    "pressure_default": 2,
+    "pressure_range": [1, 4],
+    "escalation_hook": "reappears_if_region_matches",
+    "encounter_template": "human_scavenger_raider",
+    "resolution_conditions": ["killed", "bought_off", "relocated"],
+    "register_flavor": "patient, unfinished business",
+    "recurrable": true
+  },
+  "iron_crown_notice": {
+    "id": "iron_crown_notice",
+    "display_name": "Iron Crown attention",
+    "pressure_default": 3,
+    "pressure_range": [2, 5],
+    "escalation_hook": "tied_to_faction_heat",
+    "encounter_template": "iron_crown_squad",
+    "resolution_conditions": ["pledged", "killed_officer", "ransomed", "fled_region"],
+    "register_flavor": "bureaucratic, polite, implacable",
+    "recurrable": false
+  },
+  "warped_predator_personal": {
+    "id": "warped_predator_personal",
+    "display_name": "the Warped that hunts you",
+    "pressure_default": 3,
+    "pressure_range": [2, 5],
+    "escalation_hook": "tracks_across_regions",
+    "encounter_template": "warped_predator",
+    "resolution_conditions": ["killed", "warded_off", "ritual_severance"],
+    "register_flavor": "wrong, patient, recognizes you",
+    "recurrable": true
+  },
+  "eldritch_persistent": {
+    "id": "eldritch_persistent",
+    "display_name": "the thing that came through with you",
+    "pressure_default": 2,
+    "pressure_range": [1, 4],
+    "escalation_hook": "pressure_rises_on_paradoxic_use",
+    "encounter_template": "eldritch_fragment",
+    "resolution_conditions": ["severed", "bound", "fed_and_released"],
+    "register_flavor": "geometry_wrong, language_destabilizes",
+    "recurrable": true
+  },
+  "named_rival_human": {
+    "id": "named_rival_human",
+    "display_name": "a named rival",
+    "pressure_default": 2,
+    "pressure_range": [1, 3],
+    "escalation_hook": "social_pressure_and_heat",
+    "encounter_template": "rival_duel_human",
+    "resolution_conditions": ["killed", "publicly_humiliated", "reconciled", "exiled"],
+    "register_flavor": "history, grievance, watching",
+    "recurrable": true
+  },
+  "faction_assassin_contract": {
+    "id": "faction_assassin_contract",
+    "display_name": "a contract on your life",
+    "pressure_default": 4,
+    "pressure_range": [3, 5],
+    "escalation_hook": "timer_ticks_while_unpaid",
+    "encounter_template": "assassin_strike_team",
+    "resolution_conditions": ["contract_paid", "contracted_faction_broken", "killed_before_reach"],
+    "register_flavor": "procedural, unhurried, terminal",
+    "recurrable": false
+  },
+  "biokinetic_error_infection": {
+    "id": "biokinetic_error_infection",
+    "display_name": "the thing your power left in someone",
+    "pressure_default": 1,
+    "pressure_range": [1, 3],
+    "escalation_hook": "grows_if_ignored",
+    "encounter_template": "infected_host",
+    "resolution_conditions": ["cured", "burned_out", "contained"],
+    "register_flavor": "clinical, guilty, spreading",
+    "recurrable": true
+  },
+  "debt_holder": {
+    "id": "debt_holder",
+    "display_name": "someone you owe",
+    "pressure_default": 1,
+    "pressure_range": [1, 3],
+    "escalation_hook": "social_pressure_mounts_on_avoidance",
+    "encounter_template": "debt_collection",
+    "resolution_conditions": ["paid", "renegotiated", "killed_collector"],
+    "register_flavor": "friendly_until_not, ledger_precise",
+    "recurrable": true
+  },
+  "ruined_former_ally": {
+    "id": "ruined_former_ally",
+    "display_name": "someone you broke",
+    "pressure_default": 2,
+    "pressure_range": [1, 4],
+    "escalation_hook": "reappears_with_faction_backing",
+    "encounter_template": "former_ally_strike",
+    "resolution_conditions": ["killed", "reconciled", "exposed_as_broken"],
+    "register_flavor": "grief_then_anger, specific_harm",
+    "recurrable": true
+  },
+  "family_complication": {
+    "id": "family_complication",
+    "display_name": "family unfinished",
+    "pressure_default": 2,
+    "pressure_range": [1, 3],
+    "escalation_hook": "pressure_rises_without_contact",
+    "encounter_template": "family_situation_social",
+    "resolution_conditions": ["reunited", "buried", "severed_by_choice"],
+    "register_flavor": "love_and_obligation, no_clean_out",
+    "recurrable": true
+  }
+}

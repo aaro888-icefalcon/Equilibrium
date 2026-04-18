@@ -125,6 +125,34 @@ class CreationState:
     pending_slate: List[Dict[str, Any]] = dataclasses.field(default_factory=list)
     pending_slate_scene: str = ""
 
+    # Dilemma pick for the awakening vignette (scene 1).  Empty in phase 1
+    # (choose dilemma), set to the chosen option's id in phase 2 (pick 2
+    # powers from the slate computed off the dilemma tags).
+    pending_dilemma_choice: str = ""
+
+    # v4 Onset phase 2 — engagement pick.  Mirrors pending_dilemma_choice
+    # (attention pick) but for the second beat.  Scene advances when both
+    # are set and 2 powers are picked.
+    pending_engagement_choice: str = ""
+
+    # v4 arc — starting location locked in vignette 4.  Distinct from
+    # state.location (current location in the sim) because finalize
+    # copies starting_location into the world and into CharacterSheet's
+    # initial position.
+    starting_location: str = ""
+
+    # v4 arc — locations minted by vignette scenes (e.g. a new safehouse,
+    # a freshly-claimed ruin).  Each entry carries either an existing id
+    # or a full spec; the finalize step writes specs into the world
+    # locations dict.  Schema per entry:
+    #   {"id": str | None, "spec": {...} | None, "is_starting": bool}
+    generated_locations: List[Dict[str, Any]] = dataclasses.field(default_factory=list)
+
+    # v4 arc — ack beat gate.  When a vignette's apply seeds state, this
+    # flag is set.  step scene-ack clears it.  step scene for the next
+    # index refuses to advance until cleared.
+    pending_ack: bool = False
+
     # Threats — named NPCs or forces that press on the character. Entries
     # accumulate across scenes (survival raid, faction play, vow enemy) and
     # are finalized into the character sheet's relationships (negative
@@ -138,6 +166,72 @@ class CharacterFactory:
     BASE_ATTRIBUTE = 6  # d6 default
     MAX_SESSION_ZERO_ATTRIBUTE = 10  # d10 cap during session zero
     MAX_SESSION_ZERO_SKILL = 6  # cap per skill during session zero
+
+    # -----------------------------------------------------------------
+    # Threat floor
+    # -----------------------------------------------------------------
+
+    def _ensure_threat_floor(
+        self,
+        state: "CreationState",
+        rng: _random.Random,
+        floor: int = 2,
+        default_archetype: str = "named_rival_human",
+    ) -> "CreationState":
+        """Top up state.threats to *floor* using the default archetype.
+
+        Each generated filler creates a new "rival" NPC, registers it in
+        state.generated_npcs, and adds a threat entry carrying the
+        archetype id + pressure default.  Intended to be called at the
+        end of any vignette's apply so the player never enters the sim
+        with fewer than *floor* named pressures.
+        """
+        if len(state.threats) >= floor:
+            return state
+        from emergence.engine.sim.npc_generator import generate_npc
+        from emergence.engine.character_creation.threats import get_archetype
+
+        arc = get_archetype(default_archetype)
+        region = state.region or "unknown"
+        deficit = floor - len(state.threats)
+        for _ in range(deficit):
+            npc = generate_npc("rival", {}, rng)
+            npc_id = getattr(npc, "id", f"npc-threat-{rng.getrandbits(32):08x}")
+            npc_name = getattr(npc, "display_name", "a rival")
+            pressure = arc.pressure_default if arc else 2
+            state = self.apply_scene_result(
+                "threat_floor",
+                {
+                    "threats": [{
+                        "npc_id": npc_id,
+                        "name": npc_name,
+                        "standing": -2,
+                        "source": f"engine_floor:{region}",
+                        "summary": f"{npc_name} — local rival",
+                        "archetype": default_archetype,
+                        "pressure": pressure,
+                    }],
+                    "generated_npcs": [{
+                        "npc_id": npc_id,
+                        "display_name": npc_name,
+                        "scene_id": "threat_floor",
+                        "role": "rival",
+                        "standing": -2,
+                        "hooks": [],
+                    }],
+                    "relationship": {
+                        "npc_id": npc_id,
+                        "display_name": npc_name,
+                        "standing": -2,
+                        "current_state": "alive_present",
+                        "trust": 0,
+                        "archetype": "rival",
+                    },
+                },
+                state,
+                rng,
+            )
+        return state
 
     def apply_scene_result(
         self,
@@ -227,6 +321,22 @@ class CharacterFactory:
         if "region" in choice_data:
             state.region = choice_data["region"]
 
+        # v4 arc — locations minted by a vignette.  Each entry is either
+        # an existing location id to reference, or a full spec to mint.
+        # If `is_starting`, promote to state.starting_location.
+        for loc_entry in choice_data.get("locations", []):
+            normalized = dict(loc_entry)
+            state.generated_locations.append(normalized)
+            if normalized.get("is_starting"):
+                lid = normalized.get("id") or (normalized.get("spec") or {}).get("id", "")
+                if lid:
+                    state.starting_location = lid
+
+        # v4 arc — pending_ack flag, set by vignette applies and cleared
+        # by step scene-ack.
+        if "pending_ack" in choice_data:
+            state.pending_ack = bool(choice_data["pending_ack"])
+
         # Condition track maxes
         for track, max_val in choice_data.get("condition_track_maxes", {}).items():
             state.condition_track_maxes[track] = max_val
@@ -297,9 +407,35 @@ class CharacterFactory:
         if "pending_slate_scene" in choice_data:
             state.pending_slate_scene = choice_data["pending_slate_scene"]
 
-        # Threats — appended, never replaced.
+        # Awakening dilemma pick (phase 1 of AwakeningScene, phase 1 of OnsetScene).
+        if "pending_dilemma_choice" in choice_data:
+            state.pending_dilemma_choice = choice_data["pending_dilemma_choice"]
+        # OnsetScene phase 2 — engagement pick.
+        if "pending_engagement_choice" in choice_data:
+            state.pending_engagement_choice = choice_data["pending_engagement_choice"]
+
+        # Threats — appended, never replaced.  Each entry may carry an
+        # optional archetype id (key into data/threats/threat_archetypes.json)
+        # and a pressure rating (1-5, clamped to the archetype's range).
+        # Schema: {npc_id, name, standing, source, summary,
+        #          archetype, pressure}.
         for threat in choice_data.get("threats", []):
-            state.threats.append(threat)
+            normalized = dict(threat)
+            archetype_id = normalized.get("archetype", "")
+            if archetype_id:
+                from emergence.engine.character_creation.threats import (
+                    get_archetype,
+                    clamp_pressure,
+                )
+                arc = get_archetype(archetype_id)
+                if arc:
+                    # Default pressure to archetype default if absent.
+                    if "pressure" not in normalized:
+                        normalized["pressure"] = arc.pressure_default
+                    normalized["pressure"] = clamp_pressure(
+                        archetype_id, int(normalized["pressure"]),
+                    )
+            state.threats.append(normalized)
 
         state.beat_index += 1
         return state
