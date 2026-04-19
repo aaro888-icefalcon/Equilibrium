@@ -1,0 +1,357 @@
+{
+  "cards": [
+    {
+      "job_id": "ic_electric_interrogator",
+      "title": "Crown Interrogator, Essex County Detention",
+      "theme_label": "Transformation",
+      "archetype_id": "ic_auratic_interrogator",
+      "daily_loop": "You work the basement level of the Essex County courthouse annex. Sessions run two to four hours. You administer current at thresholds you've calibrated to the body's tolerance — surgeon's knowledge, new application. No marks. The captain gets names; you get a cot upstairs and a meal chit. You write nothing down.",
+      "post_onset_goal": "Reach Newark, Delaware and confirm his parents and brother Akhil are alive.",
+      "goal_conflicts_with_job": true,
+      "goal_conflict_note": "The Crown does not let its interrogators travel; your location is classified and your departure would be construed as defection.",
+      "skill_tilts": {
+        "intimidation": 2,
+        "perception_check": 1,
+        "faction_etiquette": 1,
+        "pharmacology": 1
+      },
+      "factions": {
+        "positive": [
+          {"faction_id": "iron_crown_newark", "standing": 1, "role": "contracted operative"}
+        ],
+        "negative": [
+          {"faction_id": "central_jersey_league", "standing": -1, "reason": "League contacts consider the Crown's detention apparatus a war crime waiting for documentation."}
+        ]
+      },
+      "npcs": [
+        {
+          "npc_id": "npc_captain_soraia_vaz",
+          "name": "Captain Soraia Vaz",
+          "role": "patron",
+          "relation": "boss",
+          "bond": {"trust": 1, "loyalty": 2, "tension": 1},
+          "hook": "Essex County detention commander; got Shake the work when his Crown transit papers stalled. Expects results, asks no questions you haven't been cleared to answer."
+        },
+        {
+          "npc_id": "npc_interrogator_dayo",
+          "name": "Dayo",
+          "role": "ally",
+          "relation": "coworker",
+          "bond": {"trust": 2, "loyalty": 2, "tension": 0},
+          "hook": "The other interrogator on the floor; former schoolteacher. Methodical. Has worked out which days Vaz checks the log and which she doesn't."
+        },
+        {
+          "npc_id": "npc_rival_interr_caruso",
+          "name": "Marco Caruso",
+          "role": "rival",
+          "relation": "colleague",
+          "bond": {"trust": -1, "loyalty": 0, "tension": 2},
+          "hook": "Crown intelligence officer who believes the interrogation program should produce more permanent outcomes. Has noted that Shake leaves subjects alive."
+        },
+        {
+          "npc_id": "npc_contact_detainee_kofi",
+          "name": "Kofi Mensah",
+          "role": "contact",
+          "relation": "contact",
+          "bond": {"trust": 1, "loyalty": 0, "tension": 1},
+          "hook": "Long-term detainee who knows where three Crown supply caches are hidden and has offered this to Shake in exchange for transit documents south."
+        }
+      ],
+      "threats": [
+        {
+          "archetype": "named_rival_human",
+          "hook": "Caruso is building a file on Shake's refusals; the right captain and it becomes an order to resolve the problem."
+        },
+        {
+          "archetype": "corruption_progressing_self",
+          "hook": "The work has a logic. The logic is seductive. You've started thinking in thresholds at night."
+        }
+      ],
+      "starting_location": "essex_county_courthouse_annex_basement_newark",
+      "opening_vignette_seed": "The fourth session of the week runs long; when you finally come upstairs the night guard tells you a transit runner came by with a note — handwriting you haven't seen in a year."
+    }
+    ,
+    {
+      "job_id": "ic_crown_enforcer",
+      "title": "Crown Collections Enforcer, Essex District",
+      "theme_label": "Transformation",
+      "archetype_id": "ic_kinetic_enforcer",
+      "daily_loop": "You ride out with four-person collection teams three mornings a week. Your presence is the argument — a surgeon who moves faster than a thrown bottle and can arc current through a doorframe. Most collections are peaceful. When they aren't, the captain files a use-of-force report and you don't. Afternoons you're free; the barracks has a room with a lock.",
+      "post_onset_goal": "Reach Newark, Delaware and confirm his parents and brother Akhil are alive.",
+      "goal_conflicts_with_job": true,
+      "goal_conflict_note": "The Crown logs manifested operatives by tier and tracks their movements; leaving the district without orders flags you as a deserter.",
+      "skill_tilts": {
+        "intimidation": 2,
+        "tactics": 1,
+        "urban_movement": 1,
+        "brawling": 1
+      },
+      "factions": {
+        "positive": [
+          {"faction_id": "iron_crown_newark", "standing": 2, "role": "manifested enforcer"}
+        ],
+        "negative": [
+          {"faction_id": "queens_commonage", "standing": -1, "reason": "Commonage couriers who pass through Essex County have been shaken down by Crown teams; Shake's name is on the rosters."},
+          {"faction_id": "central_jersey_league", "standing": -1, "reason": "League villages in the collection zone know the Crown's enforcer by description."}
+        ]
+      },
+      "npcs": [
+        {
+          "npc_id": "npc_captain_reuben_telles",
+          "name": "Captain Reuben Telles",
+          "role": "patron",
+          "relation": "boss",
+          "bond": {"trust": 2, "loyalty": 2, "tension": 0},
+          "hook": "Telles runs the Essex collection division. He values Shake for the same reason he fears him: a surgeon who doesn't need to hurt anyone twice."
+        },
+        {
+          "npc_id": "npc_enforcer_amara",
+          "name": "Amara Osei",
+          "role": "ally",
+          "relation": "coworker",
+          "bond": {"trust": 2, "loyalty": 2, "tension": 1},
+          "hook": "Team veteran, kinetic manifested — impact-adjacent. Keeps the squad alive. Has her own family situation two checkpoints south she doesn't discuss."
+        },
+        {
+          "npc_id": "npc_rival_enforcer_pena",
+          "name": "Luis Peña",
+          "role": "rival",
+          "relation": "colleague",
+          "bond": {"trust": 0, "loyalty": 0, "tension": 2},
+          "hook": "Senior enforcer who ran the route before Shake arrived. Resents the speed at which the Crown elevated a doctor-turned-manifested over men who bled for the seat."
+        },
+        {
+          "npc_id": "npc_contact_ironbound_elder",
+          "name": "Doña Carmen Rios",
+          "role": "contact",
+          "relation": "contact",
+          "bond": {"trust": 1, "loyalty": 0, "tension": 1},
+          "hook": "Ironbound block elder who pays the Crown in vegetables and keeps her mouth shut; has once warned Shake that Peña filed a complaint about his conduct."
+        }
+      ],
+      "threats": [
+        {
+          "archetype": "faction_assassin_contract",
+          "hook": "A League border council has put a quiet price on the enforcer who shocked a village headman's son last month — Shake or Peña, depending on who you ask."
+        },
+        {
+          "archetype": "corruption_progressing_self",
+          "hook": "Telles rewards reliability. The more reliable you become, the further south Delaware feels."
+        }
+      ],
+      "starting_location": "crown_enforcement_barracks_newark_governance_compound",
+      "opening_vignette_seed": "Telles hands you a route card for a collection run into the Ironbound — third week in a row the same block, and last week someone left a message on the door in ash."
+    },
+    {
+      "job_id": "ic_field_medic",
+      "title": "Contract Field Medic, Crown Enforcement Units",
+      "theme_label": "Continuity",
+      "archetype_id": "ic_contract_field_medic",
+      "daily_loop": "You rotate between three enforcement stations on a six-week cycle: Ironbound, Kearny Flats, and the rural outpost at Caldwell Ridge. You carry a surgical kit and a Crown-issue side arm you've fired twice. You patch the enforcers who come back wrong and the detainees the enforcers bring in. You sign the captain's reports. You've learned which details to omit.",
+      "post_onset_goal": "Reach Newark, Delaware and confirm his parents and brother Akhil are alive.",
+      "goal_conflicts_with_job": true,
+      "goal_conflict_note": "The Crown assigns your rotation; the Caldwell Ridge post is north, not south, and requesting reassignment to a station near the Delaware corridor will raise questions about your loyalties.",
+      "skill_tilts": {
+        "surgery": 1,
+        "field_medicine": 2,
+        "first_aid": 1,
+        "faction_etiquette": 1
+      },
+      "factions": {
+        "positive": [
+          {"faction_id": "iron_crown_newark", "standing": 1, "role": "contract medic"}
+        ],
+        "negative": [
+          {"faction_id": "central_jersey_league", "standing": -1, "reason": "You have patched men who hurt League villagers. The League's traveling healers have stopped acknowledging your existence."}
+        ]
+      },
+      "npcs": [
+        {
+          "npc_id": "npc_captain_medic_yolanda_ferreira",
+          "name": "Captain Yolanda Ferreira",
+          "role": "patron",
+          "relation": "boss",
+          "bond": {"trust": 2, "loyalty": 1, "tension": 1},
+          "hook": "Station commander at Ironbound, where Shake's rotation originates. Protects her medic's access to supplies; in return expects Shake to certify cause-of-death reports without comment."
+        },
+        {
+          "npc_id": "npc_medic_ally_pita",
+          "name": "Pita Faleolo",
+          "role": "ally",
+          "relation": "coworker",
+          "bond": {"trust": 2, "loyalty": 2, "tension": 0},
+          "hook": "Nurse-practitioner at Kearny Flats station. Pre-Onset ER background. Has quietly flagged two suspicious deaths to Shake that Ferreira told him to ignore."
+        },
+        {
+          "npc_id": "npc_rival_crown_doc_henriksen",
+          "name": "Dr. Henriksen",
+          "role": "rival",
+          "relation": "colleague",
+          "bond": {"trust": 0, "loyalty": 0, "tension": 2},
+          "hook": "The Crown's other contractor medic; older, slower, compliant. Doesn't appreciate the new arrival's reputation for questioning reports."
+        },
+        {
+          "npc_id": "npc_contact_league_healer_adaeze",
+          "name": "Adaeze Nwosu",
+          "role": "contact",
+          "relation": "contact",
+          "bond": {"trust": 1, "loyalty": 0, "tension": 1},
+          "hook": "Traveling healer from the Central Jersey League who resupplies at Kearny Flats; has quietly passed Shake information about road conditions south, in exchange for which Shake has quietly left the gate log short."
+        }
+      ],
+      "threats": [
+        {
+          "archetype": "ruined_former_ally",
+          "hook": "Pita is going to report the suspicious deaths to someone with authority — which will blow back on Shake as the signing medic."
+        },
+        {
+          "archetype": "iron_crown_notice",
+          "hook": "A Crown intelligence officer has noted that Shake's rotation requests consistently skew toward stations with southern road access."
+        }
+      ],
+      "starting_location": "ironbound_enforcement_station_medical_tent_newark",
+      "opening_vignette_seed": "Pita meets you at the gate before your shift starts and says, quietly, that there is a body in the cold room that didn't come in from the street."
+    },
+    {
+      "job_id": "ic_patrol_lt",
+      "title": "Patrol Lieutenant, Essex County Checkpoint Division",
+      "theme_label": "Dangerous",
+      "archetype_id": "ic_patrol_lieutenant",
+      "daily_loop": "Six-person patrol, three checkpoint rotations through Essex County — the Ironbound gate, the Kearny causeway, the ridge road toward Caldwell. You report to District Captain Morales every Thursday. You have direct authority over your squad and discretionary authority over checkpoint detentions up to seventy-two hours. The villages on your rotation don't love you. Your squad mostly does.",
+      "post_onset_goal": "Reach Newark, Delaware and confirm his parents and brother Akhil are alive.",
+      "goal_conflicts_with_job": false,
+      "skill_tilts": {
+        "command": 2,
+        "tactics": 1,
+        "intimidation": 1,
+        "urban_movement": 1
+      },
+      "factions": {
+        "positive": [
+          {"faction_id": "iron_crown_newark", "standing": 2, "role": "patrol officer"}
+        ],
+        "negative": [
+          {"faction_id": "yonkers_compact", "standing": -1, "reason": "Compact couriers carrying biokinetic trade goods have been detained at Shake's checkpoints for Crown duty assessment; the Compact has filed diplomatic objections."},
+          {"faction_id": "central_jersey_league", "standing": -1, "reason": "Essex border villages aligned with the League view the patrol as an occupation force."}
+        ]
+      },
+      "npcs": [
+        {
+          "npc_id": "npc_district_captain_morales",
+          "name": "District Captain Elena Morales",
+          "role": "patron",
+          "relation": "boss",
+          "bond": {"trust": 2, "loyalty": 2, "tension": 1},
+          "hook": "Essex district commander who gave Shake a lieutenant's tab because she needed someone who could think in a crisis and didn't need to be told twice. Has her own political pressures from above."
+        },
+        {
+          "npc_id": "npc_patrol_sgt_desouza",
+          "name": "Sergeant Marcus DeSouza",
+          "role": "ally",
+          "relation": "coworker",
+          "bond": {"trust": 3, "loyalty": 3, "tension": 0},
+          "hook": "Shake's squad sergeant, ten years older, pre-Onset construction foreman. Holds the squad together by sheer stubbornness. Loyalty is absolute; doesn't question orders he thinks are reasonable."
+        },
+        {
+          "npc_id": "npc_rival_lt_chen",
+          "name": "Lieutenant Chen",
+          "role": "rival",
+          "relation": "colleague",
+          "bond": {"trust": -1, "loyalty": 0, "tension": 2},
+          "hook": "The other patrol lieutenant in the district, longer-tenured and resentful that the tab went to a doctor-turned-manifested with six months of field experience."
+        },
+        {
+          "npc_id": "npc_contact_kearny_village_elder",
+          "name": "Elder Vasquez",
+          "role": "contact",
+          "relation": "contact",
+          "bond": {"trust": 1, "loyalty": 0, "tension": 1},
+          "hook": "Kearny causeway village headman who cooperates with the patrol in exchange for Crown medical access. Has quietly asked whether Shake knows a southern road that skips the main checkpoints."
+        }
+      ],
+      "threats": [
+        {
+          "archetype": "named_rival_human",
+          "hook": "Lt. Chen has submitted a formal complaint about Shake's 'permissive checkpoint protocol'; Morales is sitting on it but won't forever."
+        },
+        {
+          "archetype": "raider_band_reaper",
+          "hook": "A scavenger band working the ridge road has been escalating — two of Shake's squad came back with cuts last Thursday, and DeSouza says they're getting organized."
+        }
+      ],
+      "starting_location": "patrol_barracks_ironbound_district_newark",
+      "opening_vignette_seed": "DeSouza is waiting outside your door at 0500 with the week's route card and a look that means someone on the ridge road didn't go home last night."
+    },
+    {
+      "job_id": "ic_port_clerk",
+      "title": "Port Manifest Clerk, Newark Waterfront Authority",
+      "theme_label": "Continuity",
+      "archetype_id": "ic_port_clerk",
+      "daily_loop": "You process cargo manifests at a customs table on the Newark waterfront, dawn to midday. Apply Crown duty schedules, flag anomalies in declared cargo weights, refer suspected smuggling patterns upstairs to the intelligence desk. Afternoons are your own — the waterfront has a library of salvaged technical manuals you've started reading, and the port canteen makes a serviceable rice bowl. The work is boring and safe. Both of those things are lies.",
+      "post_onset_goal": "Reach Newark, Delaware and confirm his parents and brother Akhil are alive.",
+      "goal_conflicts_with_job": true,
+      "goal_conflict_note": "Manifests you write determine which cargo and passengers are cleared to move south; forging your own transit document would be discovered in the next audit cycle.",
+      "skill_tilts": {
+        "bureaucracy": 2,
+        "literacy": 1,
+        "perception_check": 2,
+        "negotiation": 1
+      },
+      "factions": {
+        "positive": [
+          {"faction_id": "iron_crown_newark", "standing": 1, "role": "customs clerk"}
+        ],
+        "negative": [
+          {"faction_id": "staten_citadel", "standing": -1, "reason": "Chen's harbor tolls and the Crown's port duties create double-jeopardy for trans-harbor cargo; Staten traders file routine complaints at Shake's desk."},
+          {"faction_id": "brooklyn_tower_lords", "standing": -1, "reason": "Tower Lord salvage boats frequently fail Crown manifest requirements; Shake has flagged three in his first month."}
+        ]
+      },
+      "npcs": [
+        {
+          "npc_id": "npc_port_captain_aldridge",
+          "name": "Port Captain Aldridge",
+          "role": "patron",
+          "relation": "boss",
+          "bond": {"trust": 1, "loyalty": 1, "tension": 1},
+          "hook": "Waterfront authority chief; former merchant navy, practical and incurious. Hired Shake because he can read a manifest without moving his lips. Will protect Shake exactly as long as Shake is useful."
+        },
+        {
+          "npc_id": "npc_port_ally_fumiko",
+          "name": "Fumiko Tanaka",
+          "role": "ally",
+          "relation": "coworker",
+          "bond": {"trust": 2, "loyalty": 2, "tension": 0},
+          "hook": "Senior clerk at the adjacent manifest table. Pre-Onset logistics analyst. Has quietly coached Shake on which discrepancies to escalate and which to file at the bottom of the tray."
+        },
+        {
+          "npc_id": "npc_rival_intel_officer_brett",
+          "name": "Intelligence Officer Brett",
+          "role": "rival",
+          "relation": "colleague",
+          "bond": {"trust": -1, "loyalty": 0, "tension": 2},
+          "hook": "Crown intel desk, second floor. Believes the manifest clerks downstairs are too independent in their flagging decisions. Has been CC'd on Shake's anomaly reports and has started adding his own annotations."
+        },
+        {
+          "npc_id": "npc_contact_brooklyn_trader_kwame",
+          "name": "Kwame Asante",
+          "role": "contact",
+          "relation": "contact",
+          "bond": {"trust": 1, "loyalty": 0, "tension": 1},
+          "hook": "Repeat Brooklyn trader whose salvage manifests always have one discrepancy Shake could action or not. Has quietly mentioned that his next run goes south past Elizabethtown — and he has room for a passenger."
+        }
+      ],
+      "threats": [
+        {
+          "archetype": "faction_assassin_contract",
+          "hook": "A Tower Lord whose three boats Shake flagged has put a complaint upstairs; whether it stays a complaint depends on Aldridge's mood."
+        },
+        {
+          "archetype": "debt_holder",
+          "hook": "Fumiko helped Shake pass his Crown civil registration — a favor she hasn't named a price for yet."
+        }
+      ],
+      "starting_location": "newark_waterfront_customs_office_port_newark",
+      "opening_vignette_seed": "Kwame's boat is third in the queue this morning and his manifest is, as always, one line short — except this time the missing line is a passenger declaration, and the passenger is watching you from the stern."
+    }
+  ]
+}

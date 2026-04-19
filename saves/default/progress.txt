@@ -1,0 +1,6 @@
+Card 1 (Interrogator) written.
+Card 2 (Enforcer) written.
+Card 3 (Field Medic) written.
+Card 4 (Patrol Lieutenant) written.
+Card 5 (Port Clerk) written.
+All 5 cards validated and accepted by engine.
