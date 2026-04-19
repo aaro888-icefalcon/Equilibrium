@@ -4,3 +4,13 @@ Card 3 (Field Medic) written.
 Card 4 (Patrol Lieutenant) written.
 Card 5 (Port Clerk) written.
 All 5 cards validated and accepted by engine.
+BS quest 1 (combat/counter_assault) written.
+BS quest 2 (social/negotiation) written.
+BS quest 3 (investigation) written.
+BS quest 4 (heist/infiltration) written. 4 distinct modes: combat, social, investigation, heist.
+Urgent quest 1 (combat/hunt/raiders) written.
+Urgent quest 2 (combat/counter_assault/raiders) written.
+Urgent quest 3 (escape/extraction/Chen) written.
+Urgent quest 4 (combat/hunt/captain) written. All 8 quests drafted.
+Writing backstory_prose: ~1500 words, weaving in 4 backstory quests, voice from narration_style.md.
+Quest bundle accepted. 4 backstory + 4 urgent quests validated.

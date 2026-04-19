@@ -1,0 +1,843 @@
+{
+  "quests": [
+    {
+      "id": "bs_first_blood",
+      "archetype": "counter_assault",
+      "conflict_mode": "combat",
+      "physical_danger": {
+        "armed_opposition": true,
+        "expected_combat_scenes": 2
+      },
+      "goal": "Repel the Reaper band's first probe at Caldwell Ridge before the night shift collapses",
+      "hook_scene": {
+        "established_on_turn": 0,
+        "inciting_event": "DeSouza reports two squad members came back from ridge patrol with cuts and a story that doesn't hold together; Shake rides out at dusk to see for himself."
+      },
+      "central_conflict": {
+        "nature": "A scavenger band probing the Caldwell Ridge outpost's defenses \u2014 testing shift schedules, looking for the soft hour.",
+        "proxy_antagonist_id": "threat_ic_patrol_lt_raider_band_reaper_1"
+      },
+      "hook_npcs": [
+        "npc_patrol_sgt_desouza"
+      ],
+      "bright_lines": [
+        {
+          "id": "outpost_overrun",
+          "description": "The Caldwell Ridge outpost falls before dawn; the Crown loses the position.",
+          "check_condition": {
+            "type": "macrostructure",
+            "op": "<=",
+            "value": 0
+          },
+          "telegraph_text": "The ridge road goes quiet the wrong way \u2014 no insects, no wind. DeSouza says that's not weather."
+        },
+        {
+          "id": "squad_member_lost",
+          "description": "A squad member is killed or taken during the probe.",
+          "check_condition": {
+            "type": "npc_status",
+            "npc_id": "npc_patrol_sgt_desouza",
+            "status": "incapacitated"
+          },
+          "telegraph_text": "The two who came back cut are already pale \u2014 one of them can't stop checking behind him."
+        }
+      ],
+      "macrostructure": {
+        "variable_name": "hours_until_main_probe",
+        "current": 6,
+        "threshold": 0,
+        "direction": "decrement",
+        "tick_triggers": [
+          "world_pulse",
+          "scene_close",
+          "rest_action"
+        ]
+      },
+      "success_condition": {
+        "type": "pc_status",
+        "status": "threat_repelled"
+      },
+      "resolution": {
+        "world_deltas_on_success": [
+          {
+            "op": "faction_standing_shift",
+            "faction_id": "iron_crown_newark",
+            "delta": 1
+          },
+          {
+            "op": "npc_trust_shift",
+            "npc_id": "npc_patrol_sgt_desouza",
+            "delta": 1
+          }
+        ],
+        "world_deltas_on_failure": {
+          "outpost_overrun": [
+            {
+              "op": "faction_standing_shift",
+              "faction_id": "iron_crown_newark",
+              "delta": -1
+            }
+          ],
+          "squad_member_lost": [
+            {
+              "op": "npc_trust_shift",
+              "npc_id": "npc_patrol_sgt_desouza",
+              "delta": -1
+            }
+          ]
+        },
+        "narration_cue_on_success": "The ridge goes quiet by the third hour \u2014 a different quiet, something withdrawn. DeSouza doesn't say anything. Neither do you.",
+        "narration_cue_on_failure": "The fire on the ridge is visible from the Ironbound gate. Morales doesn't file a complaint. That's almost worse."
+      },
+      "progress_track": {
+        "ticks_filled": 0,
+        "ticks_required": 3,
+        "source": "scene_close"
+      },
+      "scope": {
+        "expected_scenes": 3,
+        "expected_session_equivalents": 1.0
+      }
+    },
+    {
+      "id": "bs_village_accord",
+      "archetype": "negotiation",
+      "conflict_mode": "social",
+      "physical_danger": {
+        "armed_opposition": false,
+        "expected_combat_scenes": 0
+      },
+      "goal": "Broker emergency medical access for Kearny village after the Crown severed its supply route",
+      "hook_scene": {
+        "established_on_turn": 0,
+        "inciting_event": "Elder Vasquez meets Shake at the causeway gate with a list of names \u2014 three children, an elder \u2014 and a look that says he's not asking."
+      },
+      "central_conflict": {
+        "nature": "The Crown's supply cut is a district-level order Shake cannot override; getting aid to Kearny means trading something Morales will notice.",
+        "proxy_antagonist_id": "npc_contact_kearny_village_elder"
+      },
+      "hook_npcs": [
+        "npc_contact_kearny_village_elder",
+        "npc_district_captain_morales"
+      ],
+      "bright_lines": [
+        {
+          "id": "morales_blocks",
+          "description": "Morales revokes Shake's discretionary medical authorization after Shake routes aid without her sign-off.",
+          "check_condition": {
+            "type": "faction_standing",
+            "faction_id": "iron_crown_newark",
+            "op": "<=",
+            "value": 0
+          },
+          "telegraph_text": "Morales has been watching the supply logs. She hasn't said anything yet. The 'yet' is load-bearing."
+        },
+        {
+          "id": "village_refuses",
+          "description": "Vasquez's patience runs out and he closes the causeway to Crown patrols.",
+          "check_condition": {
+            "type": "npc_status",
+            "npc_id": "npc_contact_kearny_village_elder",
+            "status": "hostile"
+          },
+          "telegraph_text": "Vasquez is looking past Shake at the causeway gate when he talks \u2014 calculating how long it holds."
+        }
+      ],
+      "macrostructure": {
+        "variable_name": "days_until_crisis",
+        "current": 4,
+        "threshold": 0,
+        "direction": "decrement",
+        "tick_triggers": [
+          "world_pulse",
+          "scene_close"
+        ]
+      },
+      "success_condition": {
+        "type": "npc_status",
+        "npc_id": "npc_contact_kearny_village_elder",
+        "status": "cooperating"
+      },
+      "resolution": {
+        "world_deltas_on_success": [
+          {
+            "op": "npc_trust_shift",
+            "npc_id": "npc_contact_kearny_village_elder",
+            "delta": 1
+          },
+          {
+            "op": "faction_standing_shift",
+            "faction_id": "central_jersey_league",
+            "delta": 1
+          }
+        ],
+        "world_deltas_on_failure": {
+          "morales_blocks": [
+            {
+              "op": "faction_standing_shift",
+              "faction_id": "iron_crown_newark",
+              "delta": -1
+            }
+          ],
+          "village_refuses": [
+            {
+              "op": "npc_trust_shift",
+              "npc_id": "npc_contact_kearny_village_elder",
+              "delta": -1
+            }
+          ]
+        },
+        "narration_cue_on_success": "The medicines go through in an unmarked crate on the Thursday roster. Vasquez doesn't thank you. He just stops looking past you.",
+        "narration_cue_on_failure": "The causeway stays open. The children's names stay on the list. You stop asking about them."
+      },
+      "progress_track": {
+        "ticks_filled": 0,
+        "ticks_required": 3,
+        "source": "resolve_action_success"
+      },
+      "scope": {
+        "expected_scenes": 3,
+        "expected_session_equivalents": 1.0
+      }
+    },
+    {
+      "id": "bs_leak_hunt",
+      "archetype": "investigation",
+      "conflict_mode": "investigation",
+      "physical_danger": {
+        "armed_opposition": false,
+        "expected_combat_scenes": 0
+      },
+      "goal": "Identify who leaked Shake's patrol schedule to the ridge-road raiders before the next rotation is set",
+      "hook_scene": {
+        "established_on_turn": 0,
+        "inciting_event": "The raiders hit the exact window of Shake's lightest shift \u2014 an hour no one outside the barracks should know. DeSouza puts it on the table without saying it out loud."
+      },
+      "central_conflict": {
+        "nature": "Someone with access to internal patrol schedules is feeding them out; the candidates include squad members, the district clerk, and anyone with leverage on Lt. Chen.",
+        "proxy_antagonist_id": "threat_ic_patrol_lt_named_rival_human_0"
+      },
+      "hook_npcs": [
+        "npc_patrol_sgt_desouza",
+        "npc_rival_lt_chen"
+      ],
+      "bright_lines": [
+        {
+          "id": "wrong_accusation",
+          "description": "Shake names the wrong person; an innocent squad member is disciplined.",
+          "check_condition": {
+            "type": "pc_status",
+            "status": "accused_false"
+          },
+          "telegraph_text": "DeSouza keeps watching the new transfers \u2014 but his eyes drift back to one of the originals when he thinks Shake isn't looking."
+        },
+        {
+          "id": "leak_continues",
+          "description": "The leak continues into the next rotation; another patrol is ambushed.",
+          "check_condition": {
+            "type": "macrostructure",
+            "op": "<=",
+            "value": 0
+          },
+          "telegraph_text": "The new rotation sheet goes up Thursday. The raiders will have it by Friday if nothing changes."
+        }
+      ],
+      "macrostructure": {
+        "variable_name": "days_until_rotation",
+        "current": 5,
+        "threshold": 0,
+        "direction": "decrement",
+        "tick_triggers": [
+          "world_pulse",
+          "scene_close"
+        ]
+      },
+      "success_condition": {
+        "type": "pc_status",
+        "status": "culprit_identified"
+      },
+      "resolution": {
+        "world_deltas_on_success": [
+          {
+            "op": "npc_trust_shift",
+            "npc_id": "npc_patrol_sgt_desouza",
+            "delta": 1
+          },
+          {
+            "op": "npc_trust_shift",
+            "npc_id": "npc_district_captain_morales",
+            "delta": 1
+          }
+        ],
+        "world_deltas_on_failure": {
+          "wrong_accusation": [
+            {
+              "op": "npc_trust_shift",
+              "npc_id": "npc_patrol_sgt_desouza",
+              "delta": -1
+            },
+            {
+              "op": "faction_standing_shift",
+              "faction_id": "iron_crown_newark",
+              "delta": -1
+            }
+          ],
+          "leak_continues": [
+            {
+              "op": "faction_standing_shift",
+              "faction_id": "iron_crown_newark",
+              "delta": -1
+            }
+          ]
+        },
+        "narration_cue_on_success": "You put the name in writing and slide it to Morales without comment. She reads it twice. She nods once.",
+        "narration_cue_on_failure": "The new schedule goes up. Three days later DeSouza stops eating at the communal table. You don't ask him why."
+      },
+      "progress_track": {
+        "ticks_filled": 0,
+        "ticks_required": 4,
+        "source": "resolve_action_success"
+      },
+      "scope": {
+        "expected_scenes": 3,
+        "expected_session_equivalents": 1.0
+      }
+    },
+    {
+      "id": "bs_transit_gambit",
+      "archetype": "infiltration",
+      "conflict_mode": "heist",
+      "physical_danger": {
+        "armed_opposition": false,
+        "expected_combat_scenes": 0
+      },
+      "goal": "Forge a transit waiver and route it south before Crown intelligence flags the discrepancy",
+      "hook_scene": {
+        "established_on_turn": 0,
+        "inciting_event": "Eight months in and no word from Delaware. Shake finds a clerk who owes DeSouza a favor and a blank waiver form in the district records room."
+      },
+      "central_conflict": {
+        "nature": "The Crown's transit authorization process is designed to catch exactly what Shake is attempting; the waiver has to look routine, move through three desks, and not be in his handwriting.",
+        "proxy_antagonist_id": "threat_ic_patrol_lt_named_rival_human_0"
+      },
+      "hook_npcs": [
+        "npc_patrol_sgt_desouza",
+        "npc_rival_lt_chen"
+      ],
+      "bright_lines": [
+        {
+          "id": "document_flagged",
+          "description": "Crown intelligence flags the forged waiver; Shake's name appears in the investigation log.",
+          "check_condition": {
+            "type": "pc_status",
+            "status": "exposed"
+          },
+          "telegraph_text": "Intelligence officer Brett has been looking at the weekly waiver totals. He hasn't filed anything yet."
+        },
+        {
+          "id": "courier_intercepted",
+          "description": "The courier carrying the waiver south is stopped at checkpoint; the waiver is confiscated.",
+          "check_condition": {
+            "type": "macrostructure",
+            "op": "<=",
+            "value": 0
+          },
+          "telegraph_text": "The checkpoint at Elizabethtown is running double shifts this week \u2014 someone tipped them."
+        }
+      ],
+      "macrostructure": {
+        "variable_name": "courier_lead_hours",
+        "current": 18,
+        "threshold": 0,
+        "direction": "decrement",
+        "tick_triggers": [
+          "world_pulse",
+          "travel_segment",
+          "scene_close"
+        ]
+      },
+      "success_condition": {
+        "type": "pc_status",
+        "status": "document_delivered"
+      },
+      "resolution": {
+        "world_deltas_on_success": [
+          {
+            "op": "npc_trust_shift",
+            "npc_id": "npc_patrol_sgt_desouza",
+            "delta": 1
+          }
+        ],
+        "world_deltas_on_failure": {
+          "document_flagged": [
+            {
+              "op": "faction_standing_shift",
+              "faction_id": "iron_crown_newark",
+              "delta": -1
+            },
+            {
+              "op": "npc_trust_shift",
+              "npc_id": "npc_district_captain_morales",
+              "delta": -1
+            }
+          ],
+          "courier_intercepted": []
+        },
+        "narration_cue_on_success": "The waiver makes it. You don't know if anyone reads it. You don't know if anyone is there to read it.",
+        "narration_cue_on_failure": "The waiver comes back stamped VOID. No investigation opens. That means someone buried it as a favor, which means someone owns you now."
+      },
+      "progress_track": {
+        "ticks_filled": 0,
+        "ticks_required": 3,
+        "source": "scene_close"
+      },
+      "scope": {
+        "expected_scenes": 2,
+        "expected_session_equivalents": 0.5
+      }
+    },
+    {
+      "id": "urgent_intercept_scouts",
+      "archetype": "hunt",
+      "conflict_mode": "combat",
+      "physical_danger": {
+        "armed_opposition": true,
+        "expected_combat_scenes": 2
+      },
+      "goal": "Intercept the Reaper's forward scouts before they map the Kearny causeway for a full assault",
+      "hook_scene": {
+        "established_on_turn": 1,
+        "inciting_event": "DeSouza is at Shake's door at 0500 with the route card and a look that means someone on the ridge road didn't go home \u2014 and this time it wasn't one of the raiders."
+      },
+      "central_conflict": {
+        "nature": "A three-person Reaper scout team is mapping the causeway's blind spots; they have a day's lead and local knowledge. If they complete the map, the main band moves within 48 hours.",
+        "proxy_antagonist_id": "threat_ic_patrol_lt_raider_band_reaper_1"
+      },
+      "hook_npcs": [
+        "npc_patrol_sgt_desouza",
+        "npc_contact_kearny_village_elder"
+      ],
+      "bright_lines": [
+        {
+          "id": "map_completed",
+          "description": "Scouts complete and transmit the causeway map; the main band mobilizes.",
+          "check_condition": {
+            "type": "macrostructure",
+            "op": "<=",
+            "value": 0
+          },
+          "telegraph_text": "The ridge road is quiet in a way DeSouza says it wasn't before the last probe \u2014 like something has stopped moving."
+        },
+        {
+          "id": "pc_ambushed",
+          "description": "Shake's patrol walks into the scouts' prepared position and takes casualties.",
+          "check_condition": {
+            "type": "pc_status",
+            "status": "ambushed"
+          },
+          "telegraph_text": "The trail splits where it shouldn't. DeSouza crouches and reads it. He doesn't like what he reads."
+        }
+      ],
+      "macrostructure": {
+        "variable_name": "hours_until_map_complete",
+        "current": 24,
+        "threshold": 0,
+        "direction": "decrement",
+        "tick_triggers": [
+          "world_pulse",
+          "travel_segment",
+          "scene_close"
+        ]
+      },
+      "success_condition": {
+        "type": "pc_status",
+        "status": "threat_repelled"
+      },
+      "resolution": {
+        "world_deltas_on_success": [
+          {
+            "op": "faction_standing_shift",
+            "faction_id": "iron_crown_newark",
+            "delta": 1
+          },
+          {
+            "op": "npc_trust_shift",
+            "npc_id": "npc_patrol_sgt_desouza",
+            "delta": 1
+          },
+          {
+            "op": "npc_trust_shift",
+            "npc_id": "npc_contact_kearny_village_elder",
+            "delta": 1
+          }
+        ],
+        "world_deltas_on_failure": {
+          "map_completed": [
+            {
+              "op": "faction_standing_shift",
+              "faction_id": "iron_crown_newark",
+              "delta": -1
+            }
+          ],
+          "pc_ambushed": [
+            {
+              "op": "npc_trust_shift",
+              "npc_id": "npc_patrol_sgt_desouza",
+              "delta": -1
+            }
+          ]
+        },
+        "narration_cue_on_success": "Three scouts, no map, no signal. The main band waits two days and then moves somewhere else.",
+        "narration_cue_on_failure": "The main band hits the causeway on a Thursday morning. Vasquez doesn't send a runner this time."
+      },
+      "progress_track": {
+        "ticks_filled": 0,
+        "ticks_required": 3,
+        "source": "scene_close"
+      },
+      "scope": {
+        "expected_scenes": 3,
+        "expected_session_equivalents": 1.0
+      }
+    },
+    {
+      "id": "urgent_repel_assault",
+      "archetype": "counter_assault",
+      "conflict_mode": "combat",
+      "physical_danger": {
+        "armed_opposition": true,
+        "expected_combat_scenes": 3
+      },
+      "goal": "Repel the Reaper band's full assault on Caldwell Ridge before the outpost is overrun at dawn",
+      "hook_scene": {
+        "established_on_turn": 1,
+        "inciting_event": "DeSouza is at Shake's door at 0500 with the route card and a look that means someone on the ridge road didn't go home \u2014 and the runner from Caldwell came in on foot, without a horse."
+      },
+      "central_conflict": {
+        "nature": "The full Reaper band \u2014 twenty or more, coordinated, with someone who understands the Crown's defensive posture \u2014 is hitting Caldwell at first light. Shake has six people and twelve hours to reinforce or the outpost falls.",
+        "proxy_antagonist_id": "threat_ic_patrol_lt_raider_band_reaper_1"
+      },
+      "hook_npcs": [
+        "npc_patrol_sgt_desouza",
+        "npc_district_captain_morales"
+      ],
+      "bright_lines": [
+        {
+          "id": "outpost_falls",
+          "description": "Caldwell Ridge outpost is overrun; the Crown loses its northern checkpoint.",
+          "check_condition": {
+            "type": "macrostructure",
+            "op": "<=",
+            "value": 0
+          },
+          "telegraph_text": "The runner's eyes are wrong \u2014 the kind of wrong that means he didn't stop running from the moment the first wave hit."
+        },
+        {
+          "id": "squad_broken",
+          "description": "Shake's squad breaks under pressure; he faces the assault alone.",
+          "check_condition": {
+            "type": "pc_status",
+            "status": "allies_fled"
+          },
+          "telegraph_text": "DeSouza's voice is steady. Two of the others are not looking at the door."
+        }
+      ],
+      "macrostructure": {
+        "variable_name": "hours_until_dawn_assault",
+        "current": 12,
+        "threshold": 0,
+        "direction": "decrement",
+        "tick_triggers": [
+          "world_pulse",
+          "travel_segment",
+          "rest_action",
+          "scene_close"
+        ]
+      },
+      "success_condition": {
+        "type": "pc_status",
+        "status": "threat_repelled"
+      },
+      "resolution": {
+        "world_deltas_on_success": [
+          {
+            "op": "faction_standing_shift",
+            "faction_id": "iron_crown_newark",
+            "delta": 2
+          },
+          {
+            "op": "npc_trust_shift",
+            "npc_id": "npc_patrol_sgt_desouza",
+            "delta": 1
+          },
+          {
+            "op": "npc_trust_shift",
+            "npc_id": "npc_district_captain_morales",
+            "delta": 1
+          }
+        ],
+        "world_deltas_on_failure": {
+          "outpost_falls": [
+            {
+              "op": "faction_standing_shift",
+              "faction_id": "iron_crown_newark",
+              "delta": -2
+            }
+          ],
+          "squad_broken": [
+            {
+              "op": "npc_trust_shift",
+              "npc_id": "npc_patrol_sgt_desouza",
+              "delta": -1
+            },
+            {
+              "op": "faction_standing_shift",
+              "faction_id": "iron_crown_newark",
+              "delta": -1
+            }
+          ]
+        },
+        "narration_cue_on_success": "The band pulls back before full light. DeSouza counts the bodies and doesn't share the number.",
+        "narration_cue_on_failure": "The smoke from Caldwell Ridge is visible for two days. Morales reassigns the district boundary without a meeting."
+      },
+      "progress_track": {
+        "ticks_filled": 0,
+        "ticks_required": 4,
+        "source": "scene_close"
+      },
+      "scope": {
+        "expected_scenes": 4,
+        "expected_session_equivalents": 1.0
+      }
+    },
+    {
+      "id": "urgent_extract_desouza",
+      "archetype": "extraction",
+      "conflict_mode": "escape",
+      "physical_danger": {
+        "armed_opposition": true,
+        "expected_combat_scenes": 1
+      },
+      "goal": "Extract DeSouza from Crown holding before Lt. Chen files formal charges at Thursday's district report",
+      "hook_scene": {
+        "established_on_turn": 1,
+        "inciting_event": "DeSouza is at Shake's door at 0500 \u2014 except DeSouza isn't. A runner is. DeSouza was picked up at 0300 on a weapons-violation charge Shake has never heard of, and Chen signed the detention order."
+      },
+      "central_conflict": {
+        "nature": "Chen has manufactured a pretext to hold DeSouza until Thursday's district report, when the formal charge becomes Crown record and Morales is forced to act. Shake has 60 hours to either get DeSouza out legally or not legally.",
+        "proxy_antagonist_id": "threat_ic_patrol_lt_named_rival_human_0"
+      },
+      "hook_npcs": [
+        "npc_patrol_sgt_desouza",
+        "npc_rival_lt_chen",
+        "npc_district_captain_morales"
+      ],
+      "bright_lines": [
+        {
+          "id": "charges_filed",
+          "description": "Thursday arrives with DeSouza still held; formal charges enter Crown record and Morales moves to dismiss him.",
+          "check_condition": {
+            "type": "macrostructure",
+            "op": "<=",
+            "value": 0
+          },
+          "telegraph_text": "Thursday is two days out. Chen has been seen at the district clerk's office twice this week."
+        },
+        {
+          "id": "shake_flagged",
+          "description": "Crown intelligence opens an inquiry into Shake's conduct in DeSouza's extraction.",
+          "check_condition": {
+            "type": "pc_status",
+            "status": "exposed"
+          },
+          "telegraph_text": "Intelligence Officer Brett has been watching the holding facility roster. He hasn't asked Shake anything yet."
+        }
+      ],
+      "macrostructure": {
+        "variable_name": "hours_until_thursday_report",
+        "current": 60,
+        "threshold": 0,
+        "direction": "decrement",
+        "tick_triggers": [
+          "world_pulse",
+          "scene_close",
+          "rest_action"
+        ]
+      },
+      "success_condition": {
+        "type": "npc_status",
+        "npc_id": "npc_patrol_sgt_desouza",
+        "status": "extracted"
+      },
+      "resolution": {
+        "world_deltas_on_success": [
+          {
+            "op": "npc_trust_shift",
+            "npc_id": "npc_patrol_sgt_desouza",
+            "delta": 1
+          },
+          {
+            "op": "npc_trust_shift",
+            "npc_id": "npc_rival_lt_chen",
+            "delta": -1
+          }
+        ],
+        "world_deltas_on_failure": {
+          "charges_filed": [
+            {
+              "op": "npc_trust_shift",
+              "npc_id": "npc_patrol_sgt_desouza",
+              "delta": -1
+            },
+            {
+              "op": "faction_standing_shift",
+              "faction_id": "iron_crown_newark",
+              "delta": -1
+            }
+          ],
+          "shake_flagged": [
+            {
+              "op": "faction_standing_shift",
+              "faction_id": "iron_crown_newark",
+              "delta": -2
+            }
+          ]
+        },
+        "narration_cue_on_success": "DeSouza walks out of the holding facility on Wednesday afternoon. He doesn't ask how. You don't tell him.",
+        "narration_cue_on_failure": "The charge becomes record on Thursday at 0800. Morales calls Shake in at 0900. The conversation is short."
+      },
+      "progress_track": {
+        "ticks_filled": 0,
+        "ticks_required": 3,
+        "source": "scene_close"
+      },
+      "scope": {
+        "expected_scenes": 3,
+        "expected_session_equivalents": 1.0
+      }
+    },
+    {
+      "id": "urgent_hunt_captain",
+      "archetype": "hunt",
+      "conflict_mode": "combat",
+      "physical_danger": {
+        "armed_opposition": true,
+        "expected_combat_scenes": 2
+      },
+      "goal": "Hunt the Reaper captain before he leads the next raid out of the Caldwell hills",
+      "hook_scene": {
+        "established_on_turn": 1,
+        "inciting_event": "DeSouza is at Shake's door at 0500 with the route card and a look that means someone on the ridge road didn't go home \u2014 and the survivor says she saw the one who gives orders, close enough to describe him."
+      },
+      "central_conflict": {
+        "nature": "The Reaper band has a leader who has survived three encounters, knows Crown patrol patterns, and is moving deeper into the hills after each probe. He has two days before the snow closes the high trails and makes pursuit impossible until spring.",
+        "proxy_antagonist_id": "threat_ic_patrol_lt_raider_band_reaper_1"
+      },
+      "hook_npcs": [
+        "npc_patrol_sgt_desouza",
+        "npc_contact_kearny_village_elder"
+      ],
+      "bright_lines": [
+        {
+          "id": "captain_vanishes",
+          "description": "Snow closes the high trails; the captain retreats to the hills for winter and the threat continues into spring.",
+          "check_condition": {
+            "type": "macrostructure",
+            "op": "<=",
+            "value": 0
+          },
+          "telegraph_text": "The sky over Caldwell has the grey-green color DeSouza says means snow in two days. Maybe one."
+        },
+        {
+          "id": "ambush_reversed",
+          "description": "The captain lures Shake's patrol into a prepared position; the patrol takes serious casualties.",
+          "check_condition": {
+            "type": "pc_status",
+            "status": "ambushed"
+          },
+          "telegraph_text": "The survivor's description is too clean \u2014 detail no one notices under pressure. DeSouza reads it the same way."
+        }
+      ],
+      "macrostructure": {
+        "variable_name": "hours_before_snowfall",
+        "current": 48,
+        "threshold": 0,
+        "direction": "decrement",
+        "tick_triggers": [
+          "world_pulse",
+          "travel_segment",
+          "rest_action",
+          "scene_close"
+        ]
+      },
+      "success_condition": {
+        "type": "npc_status",
+        "npc_id": "threat_ic_patrol_lt_raider_band_reaper_1",
+        "status": "captured_or_dead"
+      },
+      "resolution": {
+        "world_deltas_on_success": [
+          {
+            "op": "faction_standing_shift",
+            "faction_id": "iron_crown_newark",
+            "delta": 2
+          },
+          {
+            "op": "npc_trust_shift",
+            "npc_id": "npc_patrol_sgt_desouza",
+            "delta": 1
+          },
+          {
+            "op": "npc_trust_shift",
+            "npc_id": "npc_district_captain_morales",
+            "delta": 1
+          },
+          {
+            "op": "npc_trust_shift",
+            "npc_id": "npc_contact_kearny_village_elder",
+            "delta": 1
+          }
+        ],
+        "world_deltas_on_failure": {
+          "captain_vanishes": [
+            {
+              "op": "faction_standing_shift",
+              "faction_id": "iron_crown_newark",
+              "delta": -1
+            }
+          ],
+          "ambush_reversed": [
+            {
+              "op": "npc_trust_shift",
+              "npc_id": "npc_patrol_sgt_desouza",
+              "delta": -1
+            },
+            {
+              "op": "faction_standing_shift",
+              "faction_id": "iron_crown_newark",
+              "delta": -1
+            }
+          ]
+        },
+        "narration_cue_on_success": "The band fragments without him. Some scatter south. Some give up the road entirely. The hills are quiet through March.",
+        "narration_cue_on_failure": "The first snow falls on Tuesday. By Wednesday the trails are closed. The band will come back in spring \u2014 better prepared."
+      },
+      "progress_track": {
+        "ticks_filled": 0,
+        "ticks_required": 3,
+        "source": "scene_close"
+      },
+      "scope": {
+        "expected_scenes": 3,
+        "expected_session_equivalents": 1.0
+      }
+    }
+  ],
+  "backstory_ids": [
+    "bs_first_blood",
+    "bs_village_accord",
+    "bs_leak_hunt",
+    "bs_transit_gambit"
+  ],
+  "backstory_prose": "The day the Onset happens you are scrubbed in at Tisch, fourth case of the afternoon, the patient's femoral artery open on the table in front of you when the lights go out. Not a flicker. Not a warning. The overheads die, the monitors flatline their tones, the ventilator exhales once and stops. A second of dark. Then the emergency generators come on at half-power and you finish the case in yellow half-light, your hands steady, your attending's voice steady beside you, both of you pretending that what happened outside the OR isn't happening.\n\nIt is happening.\n\nThe city comes apart slowly, then all at once. You spend the first seventy-two hours at the hospital \u2014 everyone does. Rounds without monitors. Improvised ventilation with bag-mask and rotating medical students. The intern Gordon, who you've barely spoken to, turns out to be very good at keeping calm in a collapsing system. You note that. You file it away. Then on the third day the administration sends everyone home who can go, and you go, and you discover that going home means getting in a line at the Holland Tunnel checkpoint that isn't moving.\n\nYou are trying to get to Delaware.\n\nYour parents are in Newark, Delaware \u2014 your father's vascular practice, your mother's retirement, a house you haven't slept in for four years. Your brother Akhil is at Mount Sinai, which is eleven blocks north. You go there first. You find the hospital functioning, barely, and Akhil at a workstation running on backup battery, calm in the way that means he's pushed everything else down until later. You tell him you're heading south. He says he'll follow when he can. You write your parents' address on a piece of paper and give it to him as if he doesn't know it.\n\nThen you go south.\n\nYou don't make it.\n\nThe checkpoint at Elizabethtown is Iron Crown. You don't know that at first \u2014 you know only that the gate is closed and the man explaining why has a uniform you don't recognize and a patience that says he's explained this many times today. Newark, Delaware is two hundred miles from Newark, New Jersey. Between them: a patchwork of jurisdictions, some of them functional, some of them contested, most of the roads unverified. The Iron Crown is not stopping you because it's hostile. It's stopping you because the road south requires documentation it doesn't currently issue, and the documentation office isn't open, and it won't be open until the district captain authorizes it, and the district captain is in the middle of a reorganization.\n\nSix weeks later you are still there. You have a cot in a building that used to be a community center. You've started doing medical assessments at the Crown's request because there is a shortage of anyone who knows what they're doing and you are, apparently, the kind of person who can't watch someone go without care and not do something about it. District Captain Elena Morales finds you setting a dislocated shoulder in the intake yard. She watches you finish. She asks if you've done field work before. You say residency is field work. She gives you a look that means she's going to make use of you.\n\nThree months after the Onset, you are a patrol lieutenant with a six-person squad and a route card you didn't ask for.\n\nDeSouza you trust within the first week. He is ten years older than you, pre-Onset construction foreman, built like someone who has moved concrete his whole life, and utterly uninterested in impressing anyone. He runs the squad the way you ran a busy OR: everyone has a role, everyone knows it, and the people who don't do their role get a single quiet conversation before something changes. He calls you \"Doc\" for the first two weeks before you ask him not to. He switches to \"LT\" without ceremony. You like him.\n\nThe ridge road is where you first understand what this job means.\n\nIt happens in the fourth month. Two of your squad come back from the Caldwell rotation with cuts they didn't have when they left, and a story about tripping on a gully that doesn't match the cuts' geometry. DeSouza reads the cuts. You read the story. You agree without speaking about it and that night you ride out to the ridge yourself.\n\nWhat you find is not a gully. What you find is a position \u2014 watching angles, approach lines mapped in scrape marks on the limestone. Someone is studying your outpost. Someone who knows what they're looking at.\n\nYou spend six hours on the ridge with DeSouza and two of the others and when the probe comes at 0200 you are ready for it. It's not a fight. It's not supposed to be. It's a test. It's not X. It's a question: are you paying attention? You answer it. The probe pulls back. The ridge goes quiet.\n\nDeSouza doesn't say anything afterward. Neither do you. You both understand that the question is going to be asked again, differently.\n\nKearny village comes up in the fifth month. Elder Vasquez, who runs the causeway settlement, has been giving you eyes-forward cooperation since you arrived \u2014 polite, transactional, not warm. Then the Crown's district logistics team cuts Kearny's medical supply line in a routing decision that saves two days of transport but eliminates the village's access to anything beyond basic wound care.\n\nVasquez meets you at the gate with a list of names.\n\nYou can't override a logistics decision. You don't have that authority and you know it. What you have is discretion over checkpoint clearance logs, and a relationship with the Thursday roster clerk, and a knowledge of which supply manifests get audited and which don't. You spend a week engineering a solution that isn't technically a forgery but that you would not describe out loud in front of Morales. The medicines arrive in an unmarked crate. Vasquez sees the crate. He doesn't thank you. He stops looking past you when he talks, which is a different thing.\n\nThe sixth month is when you find the leak.\n\nSomeone has been feeding your patrol schedule to the ridge-road band \u2014 the Reapers, DeSouza starts calling them, for reasons he doesn't explain. The probe in the fourth month had targeted your lightest shift. That's not intuition. That's information. You spend three weeks running a quiet investigation while running your patrol rotation, which means you spend three weeks saying nothing to anyone except DeSouza, who you trust, and watching everyone else, which is a kind of loneliness you're used to from residency but don't like any better here.\n\nIt resolves. A district transport clerk with a debt and a cousin in the hills. You put the name in writing and slide it to Morales without comment. She reads it twice. She nods once. The clerk disappears from the rotation. You don't ask where.\n\nEight months in, you try the papers.\n\nYou have been asking about transit documentation since month one. The answer has been the same: the corridor south is unsettled, the documentation process is under review, the captain will authorize when authorization is appropriate. You have stopped asking out loud. Internally you have never stopped.\n\nDeSouza knows a clerk. The clerk owes DeSouza something from before the Onset, the kind of debt that travels. You find a blank waiver form in the records room on a Thursday afternoon when the records room is empty, and you write in the details with your left hand, and you get it into a southbound courier bag through a channel that doesn't touch your name.\n\nYou don't know if it arrives. You've heard nothing. You've sent nothing. Your parents are two hundred miles away and you have not spoken to them in eight months and your brother Akhil texted you on the day of the Onset and nothing after because texting stopped working. You don't know if he got out of Manhattan. You don't know if he made it south. You don't know if your mother is still practicing her tai chi in the back garden at six in the morning or if the garden still exists.\n\nYou do the job. You run the rotation. You report to Morales on Thursdays. You eat in the barracks canteen and read on the evenings you have nothing assigned and count the days without quite counting them, which is a skill you learned in residency for managing call weeks that never seemed to end.\n\nThen, this morning: DeSouza isn't at your door at 0500.\n\nSomeone else is.\n"
+}
