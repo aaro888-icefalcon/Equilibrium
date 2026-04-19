@@ -48,7 +48,7 @@ def build_combat_turn_payload(
         "declared_action": declared_action or {},
         "passive_effects_triggered": passive_effects_triggered or [],
         "pool_state": pool_state or {},
-        "output_target": {"min_words": 25, "max_words": 60, "format": "prose"},
+        "output_target": {"min_words": 40, "max_words": 200, "format": "prose"},
         "constraints": _constraints(),
     }
 
@@ -92,7 +92,7 @@ def build_situation_payload(
         "choices": choices,
         "tension_level": tension_level,
         "location": location_name,
-        "output_target": {"min_words": 30, "max_words": 80, "format": "mixed"},
+        "output_target": {"min_words": 30, "max_words": 100, "format": "mixed"},
         "constraints": _constraints(),
     }
 
@@ -202,7 +202,7 @@ def build_dialogue_payload(
         "topic": topic,
         "standing": standing,
         "player_options": player_options,
-        "output_target": {"min_words": 20, "max_words": 100, "format": "dialogue"},
+        "output_target": {"min_words": 30, "max_words": 200, "format": "dialogue"},
         "constraints": _constraints(),
     }
 
@@ -261,7 +261,7 @@ def build_transition_payload(
         "to_location": to_location,
         "travel_time": travel_time,
         "hazards": hazards,
-        "output_target": {"min_words": 40, "max_words": 100, "format": "prose"},
+        "output_target": {"min_words": 40, "max_words": 240, "format": "prose"},
         "constraints": _constraints(),
     }
 
