@@ -153,21 +153,23 @@ def _normalize_em_dashes(s: str) -> str:
 def check_second_person_present(prose: str) -> List[str]:
     """Flag past-tense protagonist slippage.
 
-    Heuristic: a sentence that contains "he"/"she"/"they" immediately followed
-    by a past-tense verb (-ed ending, or the common irregulars) is suspect when
-    the scene's protagonist is addressed in second-person. Intentionally
-    conservative to avoid false positives on NPC third-person narration.
+    Canonical voice is second-person present throughout. NPCs are described
+    in present tense ("He looks at the pouch", "She turns"). A pronoun +
+    past-tense-verb construction is a protagonist-PC slip by definition,
+    since third-person NPC past-tense is not canonical. This check flags:
+
+      - "You <past-verb>"               (PC slipped to past tense)
+      - "He/She/They <past-verb>"       (PC slipped to third person)
     """
     violations: List[str] = []
     past_pronoun_verb = re.compile(
-        r"\b(he|she|they)\s+"
-        r"(was|were|had|did|went|came|saw|said|took|gave|rolled|drove|struck|bled)\b",
-        re.IGNORECASE,
+        r"\b(He|She|They)\s+"
+        r"(was|were|had|did|went|came|saw|said|took|gave|rolled|drove|struck|bled"
+        r"|gasped|fell|caught|turned|pivoted|dropped|punched)\b"
     )
-    # "You <past-tense-verb>" is also a tense slip for the protagonist.
     you_past = re.compile(
         r"\byou\s+"
-        r"(drove|struck|rolled|gasped|turned|caught|fell|came|went|saw|said|had|was|were)\b",
+        r"(drove|struck|rolled\s+a|gasped|turned|caught|fell|came|went|saw|said|had|was|were)\b",
         re.IGNORECASE,
     )
     for sent in _sentences(prose.replace("\n", " ")):
@@ -175,15 +177,10 @@ def check_second_person_present(prose: str) -> List[str]:
             violations.append(
                 f"second-person present violation (past-tense 'you'): '{sent[:80]}'"
             )
-        # Skip NPC-third-person sentences that clearly have a named subject.
-        if past_pronoun_verb.search(sent) and not re.search(
-            r"\b[A-Z][a-z]{2,}\s+(he|she|they)\b", sent
-        ):
-            # Accept past-tense narration for named NPCs but flag raw pronouns.
-            if not re.search(r"\b[A-Z][a-z]+\b", sent):
-                violations.append(
-                    f"second-person present violation (third-person pronoun + past): '{sent[:80]}'"
-                )
+        if past_pronoun_verb.search(sent):
+            violations.append(
+                f"second-person present violation (third-person pronoun + past): '{sent[:80]}'"
+            )
     return violations
 
 
@@ -272,26 +269,15 @@ def check_typography(text: str, scene_type: str) -> List[str]:
 
 def check_no_rhetorical_questions(prose: str) -> List[str]:
     """Prose sentences ending in '?' outside quoted dialogue are flagged."""
+    # Strip quoted runs first so "Is that so?" in dialogue does not fire.
+    without_quotes = re.sub(r'"[^"]*"', "", prose)
     violations: List[str] = []
-    quote_tracker = 0
-    current = ""
-    in_quote = False
-    # Very light parser: split text into segments outside quotes.
-    for ch in prose:
-        if ch == '"':
-            if not in_quote and current.rstrip().endswith("?"):
-                violations.append(
-                    f"rhetorical question in narrator prose: '{current.strip()[-60:]}'"
-                )
-            current = ""
-            in_quote = not in_quote
-            continue
-        current += ch
-        quote_tracker += 0
-    if not in_quote and current.strip().endswith("?"):
-        violations.append(
-            f"rhetorical question in narrator prose: '{current.strip()[-60:]}'"
-        )
+    for sent in _sentences(without_quotes.replace("\n", " ")):
+        stripped = sent.rstrip()
+        if stripped.endswith("?"):
+            violations.append(
+                f"rhetorical question in narrator prose: '{stripped[:80]}'"
+            )
     return violations
 
 
