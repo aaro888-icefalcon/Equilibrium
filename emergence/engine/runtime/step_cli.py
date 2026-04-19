@@ -1527,10 +1527,8 @@ def step_combat_start(args: Any, save_root: str) -> Dict[str, Any]:
         # Create a minimal situation for encounter generation
         situation = Situation(
             id=f"encounter_{int(time.time())}",
-            description="A sudden encounter",
-            tension_level="tense",
-            choices=[],
-            location_id=player_location_id,
+            tension="tense",
+            location=player_location_id,
             encounter_probability=1.0,
         )
 
