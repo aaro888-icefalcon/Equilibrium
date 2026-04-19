@@ -82,3 +82,20 @@ Phase N: Phase 6 — test + smoke verify
 [02:23:49] Step 1 done: read prompts.py, validation.py, payloads.py, test_narrator.py, combat_turn.md, scene_framing.md, CLAUDE.md hard limits. Per-scene .md files are currently unused by composer (only hardcoded PROMPT_TEMPLATES); will keep them in sync.
 [02:30:21] Step PLAN-REWRITE-1: read plan length for surgical edits
 [02:32:07] Plan rewrite: added Implementation Sequence with 59 micro-steps across phases A-I; added pacing preamble; linked Verification back to Phase I
+[02:34:13] Phase A-5: read 6 remaining per-scene .md templates. All ~12 lines, parallel to PROMPT_TEMPLATES strings in prompts.py. Safe to rewrite independently.
+[02:34:47] Phase A-6: SLOW reads of narration_style.md (181 L) + narration.md (301 L) complete.
+  Stoic-voice claims to replace:
+    - narration_style.md: plain declarative register, skip epigrammatic closer, avoid triplets, length discipline matches canonical but register does not
+    - narration.md: "Stoic. Tactile. Unsentimental" core, "plain and load-bearing" prose, "short sentences alternate with longer" (kept), "skip typography/ROLL/UI" (replace), "skip epigrammatic closer" (replace — we require it)
+  Keep: §Example Vignettes (7 passages — diction input), §Sensory Palette (smells/sounds/textures/light/temp/weather), §Dialogue Register by Faction, §Description Templates by Location Type, §Anti-Patterns (most still apply except Emotional close-up + no-epigrammatic-closer)
+[02:35:00] Phase A-6b: prompt-management.md surveyed via heading grep. Canonical-voice edit targets: §1.2 hard limits (L17-30), §2.1-2.8 per-scene examples (L82-605), §3.2 tone register (L622-647), §3.3 anti-patterns (L648-741), §6 forbidden behaviors (L901-950), §7.2 pattern checks (L973-982). Phase A orientation COMPLETE.
+[02:35:34] Phase B-8: canonical_voice.md skeleton written (9 sections, ~62 L, placeholders only)
+[02:36:00] Phase B-9: filled Role + Passage 1 (combat, PARTIAL SUCCESS, Thornwolf/trauma-shears, ROLL block with Dice/Modifiers/Total/Result, italic damage line, 'You roll to your feet, gasping.' cap)
+[02:36:20] Phase B-10: filled Passage 2 (transition, 'Then, it stops', 'It's not a blackout' pivot, 'death of physics', em-dash FDR appositive, scene-cap 'NYC no longer on Earth')
+[02:36:38] Phase B-11: filled Passage 3 (negotiation, Vayek/Ironbound, SUCCESS, 'Intent:' label, 'It's not a greeting. It's a measurement', bully-a-refugee/supplier antithetical semicolon, 'You don't look desperate. You look like a man with options.' diptych cap)
+[02:37:30] Phase B-13: filled STANCE + ARGUMENT + FIGURATIVE bullets (4+4+4)
+[02:37:47] Phase B-14: filled TYPOGRAPHY + SCENE-CAPPING + DEEP PRINCIPLE bullets
+[02:38:18] Phase B-15,16: filled signatures (9 items), recognizability_test (3-part), priority_rule (4-tier, rhythm named priority)
+[02:39:01] Phase B-17,18: filled mechanism_rule (5-item engine-fact list + smuggling guard) and self_audit (10 checks + recognizability test + 2-cap)
+[02:39:26] Phase B-19: filled two json_to_prose_example blocks (Thornwolf combat + Ironbound first contact)
+[02:39:40] Phase B-20: end-to-end grep verified ordering (Role→3 Samples→Voice Spec [8 dims]→Signatures→Recog→Priority→Mechanism→Self-Audit→2 Examples). All canonical phrases present. Phase B COMPLETE.
