@@ -82,14 +82,23 @@ class FixedInputSource:
     def get_choice(self, prompt: str, options: List[Any]) -> int:
         for key, idx in self.choices.items():
             if key.lower() in prompt.lower():
-                return min(idx, len(options) - 1)
+                return self._normalize(idx, len(options))
         return 0
 
     def get_choices(self, prompt: str, options: List[Any], count: int) -> List[int]:
         for key, picks in self.multi.items():
             if key.lower() in prompt.lower():
-                return picks[:count]
+                return [self._normalize(p, len(options)) for p in picks[:count]]
         return list(range(count))
+
+    @staticmethod
+    def _normalize(idx: int, total: int) -> int:
+        """Clamp and wrap an index so tests can use -1 for 'last option'."""
+        if total <= 0:
+            return 0
+        if idx < 0:
+            return max(0, total + idx)
+        return min(idx, total - 1)
 
 
 # ---------------------------------------------------------------------------
@@ -151,7 +160,7 @@ class SessionZero:
         return {
             "character_sheet": sheet,
             "quest_state": quest_state,
-            "bridge_prose": state.scene_choices.get("bridge_prose", ""),
+            "backstory_prose": state.scene_choices.get("backstory_prose", ""),
             "opening_scene": state.scene_choices.get("opening_scene", ""),
             "opening_scene_meta": state.scene_choices.get("opening_scene_meta", {}),
         }

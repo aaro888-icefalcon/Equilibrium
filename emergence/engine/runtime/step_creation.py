@@ -170,8 +170,9 @@ def step_pre_emergence(args: Any, save_root: str) -> Dict[str, Any]:
 def step_pick_power(args: Any, save_root: str) -> Dict[str, Any]:
     """Power pick with phase-inferred modes:
 
-        phase = subcategories_pending → offer 6 subcats; accept --picks "0,3"
-        phase = powers_pending        → offer 3x2 powers; accept --picks "1,4"
+        phase = subcategories_pending → offer 12 subcats; accept --picks "0,3"
+        phase = powers_pending        → offer all powers in the two picked
+                                        subcats; accept --picks "1,4"
         phase = complete              → return summary
     """
     scene = PowerPickScene()
@@ -191,7 +192,7 @@ def step_pick_power(args: Any, save_root: str) -> Dict[str, Any]:
                 "status": "ok",
                 "phase": "subcategories_pending",
                 "subcategory_offer": offer,
-                "message": "Re-run with --picks i,j to pick two of six subcategories.",
+                "message": "Re-run with --picks i,j to pick two of twelve subcategories.",
             }
         state = scene.apply_subcategory_picks(picks, state, factory, rng)
         offer = scene.prepare_power_offer(state, rng)
@@ -315,7 +316,8 @@ def step_pick_job(args: Any, save_root: str) -> Dict[str, Any]:
 def step_pick_quest(args: Any, save_root: str) -> Dict[str, Any]:
     """Quest pick with three modes:
 
-        --mode prompt → return narrator_payload (8 quests + 4 backstory ids requested)
+        --mode prompt → return narrator_payload (8 quests + 4 backstory ids
+                         + bundled backstory prose requested)
         --mode apply  → accept --input-json with Claude's quest pool
         --mode pick   → accept --index N into the remaining 4 for urgent quest
     """
@@ -340,8 +342,12 @@ def step_pick_quest(args: Any, save_root: str) -> Dict[str, Any]:
         return {
             "status": "ok",
             "phase": scene.phase(state),
+            "backstory_prose": state.scene_choices.get("backstory_prose", ""),
             "urgent_offer": state.scene_choices.get("quest_urgent_offer", []),
-            "message": "Re-run with --mode pick --index N for the urgent quest.",
+            "message": (
+                "Backstory narration stored. Present it to the player alongside "
+                "the four urgent-quest options; re-run with --mode pick --index N."
+            ),
         }
 
     if mode == "pick":
@@ -368,10 +374,12 @@ def step_pick_quest(args: Any, save_root: str) -> Dict[str, Any]:
 
 
 def step_bridge(args: Any, save_root: str) -> Dict[str, Any]:
-    """Bridge scene — 1500w bridge + opening scene.
+    """Bridge scene — opening scene only (backstory prose already
+    generated and stored in the previous pick-quest step).
 
         --mode prompt → return narrator_payload
-        --mode apply  → accept --input-json with Claude's bridge output; finalize session zero
+        --mode apply  → accept --input-json with Claude's bridge output;
+                         finalize session zero
     """
     mode = getattr(args, "mode", None)
     scene = BridgeScene()
@@ -409,7 +417,7 @@ def step_bridge(args: Any, save_root: str) -> Dict[str, Any]:
         return {
             "status": "ok",
             "phase": scene.phase(state),
-            "bridge_prose": state.scene_choices.get("bridge_prose"),
+            "backstory_prose": state.scene_choices.get("backstory_prose", ""),
             "opening_scene": state.scene_choices.get("opening_scene"),
             "opening_scene_meta": state.scene_choices.get("opening_scene_meta"),
             "hooked_npcs": hooked,

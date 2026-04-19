@@ -63,6 +63,9 @@ The label goes in the `theme_label` field of the card (see schema).
   "theme_label": "Continuity",
   "archetype_id": "pb_clinic_attending",
   "daily_loop": "Mornings on ward rounds in Rittenhouse Square; afternoons in the second-floor OR. Your quarters are on-site, above the pharmacy. You walk to Reading Terminal once a week to trade ledger chits for coffee.",
+  "post_onset_goal": "Reach Mount Sinai and find your brother Akhil, last heard from on Onset day.",
+  "goal_conflicts_with_job": true,
+  "goal_conflict_note": "Residency keeps you tethered to Rittenhouse; every week at the OR is a week you are not walking north.",
   "skill_tilts": {
     "surgery": 1,
     "pharmacology": 1,
@@ -110,6 +113,33 @@ The label goes in the `theme_label` field of the card (see schema).
 ---
 
 ## Writing rules
+
+### Give every card a post-Onset goal; make at least two conflict with the job
+
+Every card must carry a `post_onset_goal` — a single concrete aim the PC
+was pursuing for themselves in the year since the Onset. Not a career
+plan, not a mood. A specific thing they are trying to reach, fix, or
+protect. Examples:
+
+- "Reach Mount Sinai and find my sister Priya."
+- "Keep the clinic open through the next winter."
+- "Pay off the debt my father left with the Iron Crown."
+- "Get word across the river to the children in Camden."
+
+For at least **two of the five cards**, set `goal_conflicts_with_job: true`
+and provide a one-sentence `goal_conflict_note` that names the friction.
+A goal conflicts when the daily loop actively obstructs the goal —
+geography, time, factional loyalty, workload, debt. Examples:
+
+- Goal is "find my sister in the Manhattan Fragment"; job is "night guard
+  on the Rittenhouse wall." The wall anchors you south; every shift is a
+  week you do not walk north.
+- Goal is "keep the clinic running"; job is "contract courier for the Iron
+  Crown." Every Iron Crown run means the clinic reopens a day late.
+
+Cards where goal and job are aligned set `goal_conflicts_with_job: false`
+(the `goal_conflict_note` may be omitted). The engine validator rejects
+bundles with fewer than two conflicting cards.
 
 ### Use the archetype's theme_tags and notes as ground truth
 
@@ -189,8 +219,11 @@ Exactly 5 cards. The card at `cards[i]` corresponds to the archetype at
 The engine validator checks:
 - exactly 5 cards
 - unique `job_id` per card
-- `title`, `daily_loop`, `starting_location`, `opening_vignette_seed`
-  present and non-empty
+- `title`, `daily_loop`, `starting_location`, `opening_vignette_seed`,
+  `post_onset_goal` present and non-empty
+- `goal_conflicts_with_job` is a bool; `goal_conflict_note` is present
+  whenever it is true
+- at least 2 of the 5 cards set `goal_conflicts_with_job: true`
 - `skill_tilts` is a dict
 - `factions.positive` is non-empty list
 - `factions.negative` is a list (may be empty)

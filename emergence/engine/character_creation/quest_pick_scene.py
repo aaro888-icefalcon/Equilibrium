@@ -1,19 +1,26 @@
-"""Quest pick scene — AI generates 8 quests, narrator picks 4 for backstory,
-player picks 1 urgent from the remaining 4.
+"""Quest pick scene — AI generates 8 quests + the backstory prose in a
+single bundled prompt; player picks 1 urgent from the four non-backstory
+quests.
 
 Flow:
-  1. Engine builds a narrator_payload with character + bundle + archetype catalog.
+  1. Engine builds a narrator_payload with character + bundle + archetype
+     catalog + word budget for the backstory prose.
   2. Narrator (Claude) returns a quest_output JSON containing:
        - 8 full Quest objects
        - a list of 4 ids flagged as "backstory" (narrator's pick)
-  3. Engine validates each quest with `validate_quest`. Up to 3 regen attempts.
+       - `backstory_prose` — ~1500-word narration of the past year that
+         weaves in the 4 backstory quests as lived history
+  3. Engine validates each quest with `validate_quest` and checks the
+     backstory word count. Up to 3 regen attempts.
   4. Engine splits: 4 background quests into QuestState.quests with
-     is_background=True; remaining 4 presented to player.
+     is_background=True; remaining 4 presented to the player next to the
+     backstory prose.
   5. Player picks 1 urgent from the 4 remaining; engine adds it with
      is_urgent=True.
 
 Final state after the scene:
   - QuestState.quests holds exactly 5 quests (4 background + 1 urgent)
+  - CreationState.scene_choices["backstory_prose"] holds the narration
 """
 
 from __future__ import annotations
@@ -40,6 +47,12 @@ QUEST_BACKGROUND_COUNT = 4
 QUEST_URGENT_COUNT = 1  # player picks exactly one
 MAX_REGEN_ATTEMPTS = 3
 
+# Word budget for the bundled backstory prose. Same target as the bridge
+# scene used to enforce before the prose moved here.
+BACKSTORY_WORD_TARGET_MIN = 1200
+BACKSTORY_WORD_TARGET_MAX = 1800
+BACKSTORY_WORD_SOFT_SLACK = 300
+
 
 class QuestOutputValidationError(ValueError):
     def __init__(self, errors: List[str]) -> None:
@@ -64,6 +77,7 @@ class QuestPickScene:
             "name": state.name,
             "age_at_onset": state.age_at_onset,
             "species": state.species,
+            "pre_emergence_location": state.region,
             "starting_location": state.starting_location,
             "self_description": state.self_description,
             "attributes": {
@@ -82,11 +96,20 @@ class QuestPickScene:
             ],
             "npcs": list(state.generated_npcs),
             "threats": list(state.threats),
+            "post_onset_goal": state.scene_choices.get("post_onset_goal", ""),
+            "goal_conflicts_with_job": bool(
+                state.scene_choices.get("goal_conflicts_with_job", False)
+            ),
+            "goal_conflict_note": state.scene_choices.get("goal_conflict_note", ""),
         }
 
         return {
             "task": "quest_generate_v1",
             "guidelines_doc": "emergence/docs/quest_design_guidelines.md",
+            "style_docs": [
+                "emergence/setting/narration_style.md",
+                "emergence/setting/narration.md",
+            ],
             "character": char_summary,
             "job_card": job_card,
             "archetype_catalog": list_archetypes(),
@@ -94,10 +117,27 @@ class QuestPickScene:
             "background_count": QUEST_BACKGROUND_COUNT,
             "urgent_offer_count": QUEST_CARDS_TOTAL - QUEST_BACKGROUND_COUNT,
             "regen_allowed": MAX_REGEN_ATTEMPTS,
+            "backstory_target_words": [
+                BACKSTORY_WORD_TARGET_MIN, BACKSTORY_WORD_TARGET_MAX,
+            ],
             "schema_hint": {
                 "quests": "list of 8 validated Quest JSON objects (see quests/schema.py)",
                 "backstory_ids": "list of 4 quest ids flagged as backstory (narrator's pick)",
+                "backstory_prose": (
+                    "str (~1200-1800 words): narration of the past year since "
+                    "the Onset. Weave in the 4 backstory quests as lived "
+                    "history — not plot summaries, but the kind of season-to-"
+                    "season texture the PC remembers. Reference the PC's "
+                    "post-Onset goal and, where the job conflicts with it, "
+                    "show the friction. Do not describe the urgent quest; "
+                    "that belongs to the opening scene."
+                ),
             },
+            "bundling_note": (
+                "The player reads the backstory prose together with the four "
+                "urgent-quest options. The prose is what they know about "
+                "their past; the urgent options are what now forces action."
+            ),
         }
 
     # ------------------------------------------------------------------
@@ -121,6 +161,18 @@ class QuestPickScene:
                 f"backstory_ids: must be list of {QUEST_BACKGROUND_COUNT} ids "
                 f"(got {backstory_ids!r})"
             )
+
+        prose = payload.get("backstory_prose")
+        if not isinstance(prose, str) or not prose.strip():
+            errors.append("backstory_prose: required non-empty string")
+        else:
+            wc = len(prose.split())
+            lo = BACKSTORY_WORD_TARGET_MIN - BACKSTORY_WORD_SOFT_SLACK
+            hi = BACKSTORY_WORD_TARGET_MAX + BACKSTORY_WORD_SOFT_SLACK
+            if wc < lo or wc > hi:
+                errors.append(
+                    f"backstory_prose: word count {wc} outside [{lo}, {hi}]"
+                )
 
         # Per-quest validation + uniqueness
         seen_ids: set = set()
@@ -209,6 +261,7 @@ class QuestPickScene:
         state.scene_choices["quest_urgent_offer"] = [
             q for q in quests if q["id"] not in backstory_ids
         ]
+        state.scene_choices["backstory_prose"] = quest_output["backstory_prose"]
         return state
 
     # ------------------------------------------------------------------
