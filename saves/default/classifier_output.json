@@ -1,0 +1,193 @@
+{
+  "attributes": {
+    "strength": 6,
+    "agility": 8,
+    "perception": 8,
+    "will": 8,
+    "insight": 8,
+    "might": 6,
+    "rationale": "PGY-4 vascular surgery resident, academic chief. Agility d8 for fine-motor microsurgery (anastomoses, endarterectomies) reinforced by lapsed TKD. Insight d8 for diagnostic pattern recognition and explicit system-builder temperament. Perception d8 for OR vigilance and clinical noticing (pulses, warm feet, ulcers). Will d8 for chief-of-residents command, schedule-building, and mediating attendings/juniors. Strength and Might held at baseline d6: 5'11\" 140lb slim build, not an endurance athlete; long shifts notwithstanding, the profession's load is cognitive and fine-motor, not muscular. No d10 — selected academic chief is professionalism, not the genuine outlier excellence the d10 reserves."
+  },
+  "skills": {
+    "surgery": 5,
+    "first_aid": 5,
+    "pharmacology": 4,
+    "field_medicine": 3,
+    "literacy": 4,
+    "bureaucracy": 3,
+    "command": 3,
+    "instruction": 3,
+    "negotiation": 2,
+    "brawling": 2,
+    "history": 2,
+    "tactics": 2,
+    "urban_movement": 1,
+    "rationale": "Vascular surgery cluster at professional ceiling: surgery 5, first_aid 5, pharmacology 4, field_medicine 3 (vascular emergencies and trauma exposure at Bellevue/VA). Literacy 4 and bureaucracy 3 from academic chief duties — curriculum, charting, publication-adjacent work. Command 3 and instruction 3 from running the resident education curriculum and mediating between attendings and juniors. Negotiation 2 from the same mediator role. Brawling 2 from lapsed Tae Kwon Do. History 2 and tactics 2 from stated military history reading and action RPG interest. Urban_movement 1 from Manhattan daily life."
+  },
+  "npcs": [
+    {
+      "name": "Dr. Rao (father)",
+      "relation": "parent",
+      "role": "bond",
+      "bond": {"trust": 3, "loyalty": 3, "tension": 1},
+      "distance": "regional",
+      "notes": "Vascular surgeon in Newark, Delaware. Inventive, scattered, entrepreneurial. Same specialty as Shake — admiration mixed with the friction of two surgeons in one family."
+    },
+    {
+      "name": "Dr. Rao (mother)",
+      "relation": "parent",
+      "role": "bond",
+      "bond": {"trust": 3, "loyalty": 3, "tension": 0},
+      "distance": "regional",
+      "notes": "Retired general surgeon, Newark, Delaware. Grounded counterweight to the father."
+    },
+    {
+      "name": "Akhil Rao",
+      "relation": "sibling",
+      "role": "bond",
+      "bond": {"trust": 3, "loyalty": 3, "tension": 0},
+      "distance": "near",
+      "notes": "Younger brother. Medical student at Mount Sinai — also in Manhattan."
+    },
+    {
+      "name": "Grandmother (paternal/maternal)",
+      "relation": "extended_family",
+      "role": "bond",
+      "bond": {"trust": 2, "loyalty": 2, "tension": 0},
+      "distance": "regional",
+      "notes": "Lives with extended family in Bergen County, NJ."
+    },
+    {
+      "name": "Cousin (Bergen County)",
+      "relation": "extended_family",
+      "role": "contact",
+      "bond": {"trust": 1, "loyalty": 1, "tension": 0},
+      "distance": "regional",
+      "notes": "Bergen County, NJ."
+    },
+    {
+      "name": "Aunt (Bergen County)",
+      "relation": "extended_family",
+      "role": "contact",
+      "bond": {"trust": 1, "loyalty": 1, "tension": 0},
+      "distance": "regional",
+      "notes": "Bergen County, NJ — sibling of one of Shake's parents."
+    },
+    {
+      "name": "Uncle (Bergen County)",
+      "relation": "extended_family",
+      "role": "contact",
+      "bond": {"trust": 1, "loyalty": 1, "tension": 0},
+      "distance": "regional",
+      "notes": "Bergen County, NJ — partner of the aunt."
+    },
+    {
+      "name": "Denice",
+      "relation": "friend",
+      "role": "bond",
+      "bond": {"trust": 2, "loyalty": 2, "tension": 0},
+      "distance": "distant",
+      "notes": "College friend. OBGYN in Chicago. Kind, quiet, iconoclastic."
+    },
+    {
+      "name": "Alex",
+      "relation": "friend",
+      "role": "bond",
+      "bond": {"trust": 2, "loyalty": 2, "tension": 0},
+      "distance": "regional",
+      "notes": "College friend. Radiologist in Philadelphia. Laconic, fearless."
+    },
+    {
+      "name": "Bella",
+      "relation": "friend",
+      "role": "contact",
+      "bond": {"trust": 1, "loyalty": 1, "tension": 0},
+      "distance": "distant",
+      "notes": "College friend. Finance career. Organized, busy."
+    },
+    {
+      "name": "Henry",
+      "relation": "friend",
+      "role": "bond",
+      "bond": {"trust": 2, "loyalty": 2, "tension": 0},
+      "distance": "distant",
+      "notes": "Med school friend. Ophthalmologist in Boston. Gregarious."
+    },
+    {
+      "name": "Saurabh",
+      "relation": "friend",
+      "role": "bond",
+      "bond": {"trust": 2, "loyalty": 2, "tension": 0},
+      "distance": "distant",
+      "notes": "Med school friend. Cardiologist in San Diego. Analytical."
+    },
+    {
+      "name": "Jason",
+      "relation": "coworker",
+      "role": "bond",
+      "bond": {"trust": 2, "loyalty": 2, "tension": 0},
+      "distance": "near",
+      "notes": "Senior co-resident at NYU. Wry, joking, blunt. Closest among coworkers."
+    },
+    {
+      "name": "Jessica",
+      "relation": "coworker",
+      "role": "contact",
+      "bond": {"trust": 1, "loyalty": 1, "tension": 0},
+      "distance": "near",
+      "notes": "Junior co-resident at NYU. Kind, blunt, efficient."
+    },
+    {
+      "name": "Zyra",
+      "relation": "coworker",
+      "role": "contact",
+      "bond": {"trust": 0, "loyalty": 0, "tension": 0},
+      "distance": "near",
+      "notes": "Peer co-resident. Bubbly. Shake doesn't know her well."
+    },
+    {
+      "name": "Kyle",
+      "relation": "coworker",
+      "role": "contact",
+      "bond": {"trust": 1, "loyalty": 1, "tension": 1},
+      "distance": "near",
+      "notes": "Senior co-resident. Anxious and fiery, but protective of his juniors."
+    },
+    {
+      "name": "Karthik",
+      "relation": "coworker",
+      "role": "contact",
+      "bond": {"trust": 1, "loyalty": 1, "tension": 0},
+      "distance": "near",
+      "notes": "Junior co-resident. Analytical, friendly."
+    },
+    {
+      "name": "Gordon",
+      "relation": "coworker",
+      "role": "contact",
+      "bond": {"trust": 0, "loyalty": 0, "tension": 0},
+      "distance": "near",
+      "notes": "Surgical intern. Suave."
+    }
+  ],
+  "inventory_seeds": [
+    {
+      "id": "inv_shake_loupes",
+      "name": "Surgical loupes",
+      "description": "2.5x magnification, custom-fit, well-worn case. The single most personal piece of professional kit Shake owns.",
+      "quantity": 1
+    },
+    {
+      "id": "inv_shake_penlight",
+      "name": "Penlight",
+      "description": "Aluminum, scratched. Pupillary check, throat, the dark inside a wound.",
+      "quantity": 1
+    },
+    {
+      "id": "inv_shake_history_paperback",
+      "name": "Battered military history paperback",
+      "description": "Spine cracked, dog-eared. Half-read on call-room nights.",
+      "quantity": 1
+    }
+  ]
+}
