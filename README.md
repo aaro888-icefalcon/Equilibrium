@@ -4,19 +4,19 @@ A solo AI-narrated tactical RPG and life simulation set one year after the Onset
 
 ## Overview
 
-Emergence is a complete game engine built in Python 3.10+ with no external dependencies. The engine handles all mechanics (combat, simulation, progression, persistence) while Claude acts as the narrator, transforming structured game payloads into grounded, tactile prose.
+Emergence is a complete game engine built in Python 3.10+ with no external dependencies. The engine handles all mechanics (combat, simulation, progression, persistence) while Codex acts as the narrator, transforming structured game payloads into grounded, tactile prose.
 
-The game runs inside a Claude Code session. Type `/play` to start.
+The game runs inside a Codex session. Type `/play` to start.
 
 ## Requirements
 
 - Python 3.10 or later
-- Claude Code (CLI, desktop, or web)
+- Codex (CLI, IDE, desktop, or web)
 - No pip install needed -- stdlib only
 
 ## Quick Start
 
-1. Open this repository in Claude Code
+1. Open this repository in Codex
 2. Type `/play` to start or resume a game
 3. Follow the narrator's lead
 
