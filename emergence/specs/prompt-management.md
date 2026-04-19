@@ -16,17 +16,20 @@ The narrator's job is to make structured state into a scene the player can inhab
 
 ### 1.2 Hard limits
 
+> **Canonical voice:** the authoritative spec lives in `emergence/prompts/canonical_voice.md` and is prepended to every narrator prompt. The rules below remain load-bearing; the canonical voice preamble adds cadence, signature, and mechanism-channel rules on top.
+
 The narrator must not, under any circumstances:
 
 1. Invent state. Names, wounds, deaths, appearances, outcomes, decisions, damage numbers, faction positions, clock states — if it is not in the payload, it does not happen in the prose.
 2. Resolve an anomalous eldritch question. The causes of the Onset, what the Warped remember, what the Pine Barrens presence wants — these are live mysteries per `gm-primer.md §How to Read This Book`. The narrator preserves them.
 3. Adjudicate mechanics. The narrator does not roll, does not apply damage, does not modify tracks. Mechanics are the engine's.
-4. Break frame. No meta-commentary, no "in a world where," no winking, no GM voice speaking to the player.
+4. Break frame. No meta-commentary, no "in a world where," no AI-assistant voice, no GM voice speaking to the player.
 5. Frame violence heroically. Violence is weight, not pose.
 6. Console. Bad things are not balanced within the scene by goodness.
 7. Moralize. The reader judges; the narrator shows.
 8. Describe characters not listed as present in the payload.
 9. Produce more or less prose than the `desired_length` tolerance permits.
+10. **Collapse mechanism into prose.** Dice values, DCs, damage numbers, HP/SP, and tier labels live in `**ROLL:**` blocks and ASCII UI boxes. Narrator prose absorbs the system language diegetically but does not smuggle numbers out of the boxes.
 
 ### 1.3 Inputs
 
@@ -42,8 +45,8 @@ The narrator reads one payload at a time, in order from the queue. Each payload 
 
 ### 1.4 Outputs
 
-- Prose only. No list, no bullet points, no code blocks, no headers, no markdown formatting other than paragraph breaks.
-- The prose is the narrator's entire output for a payload. Nothing else: no preface, no "Here is the scene:", no meta-explanation.
+- Canonical-voice prose in the shape dictated by the scene template. Narrator prose may be interleaved with `**ROLL:**` blocks, italic damage lines, and ASCII UI boxes per the scene-specific contract; mechanism lives in those boxes, voice lives in the prose. Bold/italic/ALL-CAPS typographical emphasis is expected where the canonical voice spec calls for it.
+- The output is the narrator's entire response for a payload. Nothing else: no preface, no "Here is the scene:", no meta-explanation.
 - The narrator appends a single completion record to the queue after producing the prose (see §5).
 
 ### 1.5 Interaction with state
@@ -972,13 +975,17 @@ validate(narration: str, payload: NarratorPayload) -> ValidationResult:
 
 ### 7.2 Pattern checks
 
+> **Source of truth:** `emergence/engine/narrator/validation.py`. The checks below are the specification; the Python implementation is authoritative for regex exactness and accepted shapes. Canonical-voice checks were added in the voice-enforcement revision.
+
 - **Length check**: word_count within `desired_length.min_words * (1 - tol)` to `max_words * (1 + tol)` where `tol = config.narrator.word_count_tolerance`. Outside: `retry` flag.
+- **Frame-break check**: `as an AI`, `as a language model`, `in this scene we`, `dear player`, `dear reader`, `let me narrate`, `I'll narrate`, `I will narrate`, `in a world where`: presence adds `retry` flag. (Note: `hit points`, `d20`, `saving throw`, `dice roll`, `level up`, `experience points` are **no longer forbidden** — they appear legitimately inside ROLL blocks and UI boxes.)
 - **Blacklist word check**: `mighty|epic|devastating|triumph|vanquish|undaunted|valor|blinding speed|suddenly|in a flash|unleashed|...`: presence adds `warn` flag.
 - **Pacing phrase check**: `then, suddenly`, `with shocking`, `in an instant`: presence adds `warn`.
-- **Formatting check**: any `#`, `*`, `-` at line start, triple backticks, or bullet markers: `retry` flag.
+- **Formatting check**: markdown formatting is now **allowed where the canonical voice spec requires it**: `**bold**` for tactical entities and named NPCs, `*italics*` for the damage line and interior emphasis, `ALL CAPS` inside `**ROLL:**` headers and result tiers, ASCII-bordered UI boxes flush against prose. Disallowed only: code fences outside ROLL/UI contexts, bullet-list markdown (`- `, `* `, `1. `) outside payload-listed choices, `#`-prefixed headers.
 - **Prefacing check**: narration begins with "Here", "The following", "This", "In this scene": `retry` flag.
-- **Second-person density**: `you/your` words > 4% of total (outside explicit intimate register): `warn`.
+- **Second-person density**: `you/your` words > 6% of total (canonical voice is second-person present — density is the signal, not a smell). Flag only on extreme density > 12% as `warn`.
 - **Power-name check**: any `power_id` or formal name from the payload's `powers` list appears verbatim in prose: `warn`.
+- **Canonical voice checks** (implemented in `validation.py`): second-person present tense on protagonist, fragment paragraph (1-3 words) required in structured scenes, sentence-length stdev ≥ 3.0 with ≥ 4 sentences, paragraph shape (6+ sentences flagged), em-dash presence in combat/transition/scene_framing ≥ 3 sentences, `**bold**` presence in combat/transition prose, no rhetorical questions in narrator prose, no ellipses in narrator prose, mechanism-smuggling guard (DC N, rolled, damage: N, HP/SP outside boxes). Signature hints (non-fatal, prefixed `hint:`): `"It's not X. It's Y."` negative-definition pivot, `"Then,"` beat-hinge in transitions, scene-capping aphorism ≤ 12 words as the last paragraph.
 
 ### 7.3 Content checks
 
