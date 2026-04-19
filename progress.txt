@@ -101,3 +101,4 @@ Phase N: Phase 6 — test + smoke verify
 [02:39:40] Phase B-20: end-to-end grep verified ordering (Role→3 Samples→Voice Spec [8 dims]→Signatures→Recog→Priority→Mechanism→Self-Audit→2 Examples). All canonical phrases present. Phase B COMPLETE.
 [02:40:24] Phase C-21,22,23: prompts.py now loads _CANONICAL_PREAMBLE at import, format_prompt prepends it, compose_narrator_prompt added as canonical entry point
 [02:42:09] Phase C-24: all 8 PROMPT_TEMPLATES rewritten for canonical voice. Smoke test: import OK, preamble 18365 chars, sample combat prompt 19390 chars. Phase C COMPLETE.
+[02:43:39] Phase D-25..32: all 8 per-scene markdown templates rewritten for canonical voice (ROLL block + UI box contracts, signature references, self-audit footers)
