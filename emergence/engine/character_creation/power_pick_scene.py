@@ -78,6 +78,8 @@ class PowerPickScene:
     def phase(self, state: CreationState) -> str:
         if not state.scene_choices.get("subcategory_offer"):
             return "subcategories_pending"
+        if not state.scene_choices.get("subcategories_picked"):
+            return "subcategories_pending"
         if not state.scene_choices.get("power_offer"):
             return "powers_pending"
         if not state.powers:
