@@ -43,7 +43,7 @@ python -m unittest discover -s emergence/tests -v
 
 # Build Orchestration (Original Prompt)
 
-You are Claude Code. You will build a complete, playable, AAA-quality vertical slice of Emergence — a solo AI-narrated tactical RPG and life simulation set in a post-collapse Earth where most of humanity manifested supernatural abilities one year ago.
+You are Codex. You will build a complete, playable, AAA-quality vertical slice of Emergence — a solo AI-narrated tactical RPG and life simulation set in a post-collapse Earth where most of humanity manifested supernatural abilities one year ago.
 
 The user is not actively supervising. You are working autonomously across an extended session. Your job is to be a rigorous, restrained, agentic implementer who follows the specifications precisely while iterating, testing, integrating, and refining your own work.
 
@@ -424,7 +424,7 @@ Fix identified issues. Document gaps.
 - Defer additions you'd like to make to deferred.md. Do not implement them.
 - After every phase, append to build-log.md: files created, line counts, test results, refinements made, integration verifications, deferrals, design questions raised.
 - Standard library only. No pip installs.
-- Narration is produced by you (Claude Code) reading prompts and generating prose during the build process for testing, and during runtime for play. No external API calls.
+- Narration is produced by you (Codex) reading prompts and generating prose during the build process for testing, and during runtime for play. No external API calls.
 - Test continuously. Integrate continuously. Refine continuously.
 
 ## How to handle stuck states
