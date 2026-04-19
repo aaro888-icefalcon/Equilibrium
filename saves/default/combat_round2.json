@@ -1,0 +1,54 @@
+{
+  "status": "ok",
+  "mode": "COMBAT",
+  "round": 2,
+  "combat_over": false,
+  "verb": "Power",
+  "target": "raider_scout_1",
+  "available_verbs": [
+    "Attack",
+    "Power",
+    "Assess",
+    "Maneuver",
+    "Parley",
+    "Disengage",
+    "Finisher",
+    "Defend"
+  ],
+  "narrator_payload": {
+    "scene_type": "combat_turn",
+    "register_directive": "action",
+    "round": 2,
+    "actor": "Abhishek Rao",
+    "action_type": "Power",
+    "action_result": "uses Power on raider_scout_1",
+    "damage_dealt": 0,
+    "status_applied": "",
+    "enemies_remaining": 0,
+    "player_condition": {},
+    "current_postures": {},
+    "armed_posture_riders": {},
+    "hidden_combatants": [],
+    "declared_action": {},
+    "passive_effects_triggered": [],
+    "pool_state": {},
+    "output_target": {
+      "min_words": 40,
+      "max_words": 200,
+      "format": "prose"
+    },
+    "constraints": {
+      "forbidden": [
+        "as an ai",
+        "as a language model",
+        "in this scene we",
+        "dear player",
+        "dear reader",
+        "let me narrate",
+        "i'll narrate",
+        "i will narrate",
+        "in a world where"
+      ]
+    }
+  }
+}
