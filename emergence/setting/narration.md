@@ -1,16 +1,20 @@
 # NARRATION STYLE GUIDE
 
+> **Authoritative voice spec:** `emergence/prompts/canonical_voice.md`. That file is prepended to every narrator prompt. This document supplies **diction inputs** — factions, sensory palette, description templates — that the canonical voice then composes into prose.
+
 ## Core Register
 
-The register for Emergence is grounded simulation in the tradition of Berserk, Kenshi, and Cormac McCarthy. Stoic. Tactile. Unsentimental. Powers are physical facts, not spectacle. Violence is real and consequential. Beauty is earned by being present, not by being declared. The world is neither hopeful nor nihilistic; it is a world that has absorbed a catastrophe and carried on living.
+The register for Emergence is **pulp-cinematic second-person present** with paratactic right-branching syntax. Precise-technical diction (anatomical when a surgeon's eye fits, mechanical/systems when physics fits, tactical when combat fits) yoked to pulp-Anglo-Saxon physical verbs. Mechanism (dice values, DCs, damage numbers, HP/SP, tier labels) surfaces in `**ROLL:**` blocks and ASCII UI boxes. Voice lives in prose. These sit flush; they never collapse into each other.
 
-The narrator observes rather than interprets. What characters feel is shown through what they do — where they look, how they stand, what they say and what they choose not to say. Internal monologue is rare. When interiority is necessary, it is specific and sensory rather than abstract.
+The narrator is intimate and detached simultaneously. Second-person puts the reader in the body (`"your arm is too slow"`); the narrating voice stays cool and external. High stakes at low temperature. Asserted, not hedged. `"New York City is no longer on Earth."` lands as fact.
 
-The prose is plain and load-bearing. Short sentences alternate with longer ones. Commas do work; semicolons are occasional. Metaphor is infrequent and, when used, concrete. The writing leans toward nouns and verbs rather than adjectives and adverbs. When description is required, it is selective — a detail or two that do the work, rather than a catalogue that diffuses attention.
+Sentence rhythm has extreme variance — one-word fragments as the floor (`"Opportunity."`, `"Thud. Thud."`), ~25–30 word right-branching clauses as the ceiling. Mean length ~8–11 words. Em dashes do heavy lifting for mid-sentence appositive specification. Semicolons reserved for antithetical pairs. Ellipses are absent. Paragraphs are 1–3 sentences, opening on action or claim, never setup.
 
-Dialogue is terse. Characters say what they mean to say and stop. Speech tags are simple ("said," "asked"). Action beats replace speech tags where possible. Silences are noted. What is not said is often more important than what is.
+Signature cadences appear where they fit: `"It's not X. It's Y."` negative-definition pivot at reveals and judgments; `"Then,"` as beat hinge; scene-capping aphorism at section close. Bold for tactical entities, named NPCs, landmarks, powers. ALL CAPS for system labels and result tiers. Italics for interior emphasis and the damage line.
 
-What the register avoids: genre pastiche, comic-book power descriptions, heroic framing of violence, ironic distance, arch meta-commentary, consolation, moralizing, the passive construction used for evasion ("mistakes were made"), sentimental close-ups on emotional beats, and the "in a world where" establishing cadence of commercial fiction.
+Dialogue is terse. Characters say what they mean to say and stop. A one-line physical-detail anchor — armor heat, masked breath, the way the eyes track shoulders not the pouch — sits before or after the quote.
+
+What the register avoids: genre pastiche, comic-book power descriptions, heroic framing of violence, ironic distance from the system vocabulary (AP, SP, DC are absorbed, not held at arm's length), arch meta-commentary, consolation, moralizing, the passive construction used for evasion ("mistakes were made"), sentimental close-ups on emotional beats, and the "in a world where" establishing cadence of commercial fiction.
 
 ## Example Vignettes
 
@@ -282,11 +286,11 @@ The older one requested to be reassigned. The request was granted. He did not go
 
 **Genre pastiche.** The register is not post-apocalyptic action; not grimdark-for-its-own-sake; not superhero origin story. The register is grounded simulation. If a sentence sounds like it belongs in a different kind of fiction, it belongs in that kind of fiction.
 
-**Emotional close-up.** The narrator does not linger on a character's emotional state. The character's action and speech show what they feel. The reader assembles the inner state. The narrator does not assemble it for them.
+**Emotional close-up.** The narrator does not linger on a character's emotional state. The character's action and speech show what they feel. The reader assembles the inner state. The narrator does not assemble it for them. (Second-person bodily sensation — `"your arm is too slow"`, `"your hands are warmer than they should be"` — is exempt; that is diegetic, not interpretive.)
 
-**Adjectival pile-up.** "The ancient, ruined, crumbling, blood-soaked cathedral loomed ominously against the apocalyptic, storm-ridden sky." Pick two. Probably one.
+**Adjectival pile-up.** "The ancient, ruined, crumbling, blood-soaked cathedral loomed ominously against the apocalyptic, storm-ridden sky." Pick two. Probably one. Canonical voice leans on **strong nouns and strong verbs** — `"the blade bites deep"`, `"driving toward the pulsing target"` — not adjectival scaffolding.
 
-**Irony or meta-commentary.** The narrator does not wink at the reader. The world is real to the characters and should be real to the reader. No distancing.
+**Irony or meta-commentary.** The narrator does not wink at the reader. The world is real to the characters and should be real to the reader. System labels (`**ROLL:**`, `**PARTIAL SUCCESS**`, `HP: 18/30`) are part of that world, not punchlines about it.
 
 **Exposition dump.** Background about a faction or a mechanic is delivered in voice, in action, in inference — not in a narrator's paragraph explaining the political situation. If a reader needs to know that Fed Continuity is eroding, show them a character noticing that scrip is trading at a worse rate this month.
 

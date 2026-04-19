@@ -78,3 +78,33 @@ Phase N: Phase 6 — test + smoke verify
   [done] smoke: step init returns about_preface with banner + how-to-play
   [done] smoke: sampler on 4 representative locations hits bucket minimums
   [pending] commit tests + progress + push nine-commit branch
+[02:23:03] START: enforce canonical voice; branch claude/enforce-canonical-voice-OLJZc
+[02:23:49] Step 1 done: read prompts.py, validation.py, payloads.py, test_narrator.py, combat_turn.md, scene_framing.md, CLAUDE.md hard limits. Per-scene .md files are currently unused by composer (only hardcoded PROMPT_TEMPLATES); will keep them in sync.
+[02:30:21] Step PLAN-REWRITE-1: read plan length for surgical edits
+[02:32:07] Plan rewrite: added Implementation Sequence with 59 micro-steps across phases A-I; added pacing preamble; linked Verification back to Phase I
+[02:34:13] Phase A-5: read 6 remaining per-scene .md templates. All ~12 lines, parallel to PROMPT_TEMPLATES strings in prompts.py. Safe to rewrite independently.
+[02:34:47] Phase A-6: SLOW reads of narration_style.md (181 L) + narration.md (301 L) complete.
+  Stoic-voice claims to replace:
+    - narration_style.md: plain declarative register, skip epigrammatic closer, avoid triplets, length discipline matches canonical but register does not
+    - narration.md: "Stoic. Tactile. Unsentimental" core, "plain and load-bearing" prose, "short sentences alternate with longer" (kept), "skip typography/ROLL/UI" (replace), "skip epigrammatic closer" (replace — we require it)
+  Keep: §Example Vignettes (7 passages — diction input), §Sensory Palette (smells/sounds/textures/light/temp/weather), §Dialogue Register by Faction, §Description Templates by Location Type, §Anti-Patterns (most still apply except Emotional close-up + no-epigrammatic-closer)
+[02:35:00] Phase A-6b: prompt-management.md surveyed via heading grep. Canonical-voice edit targets: §1.2 hard limits (L17-30), §2.1-2.8 per-scene examples (L82-605), §3.2 tone register (L622-647), §3.3 anti-patterns (L648-741), §6 forbidden behaviors (L901-950), §7.2 pattern checks (L973-982). Phase A orientation COMPLETE.
+[02:35:34] Phase B-8: canonical_voice.md skeleton written (9 sections, ~62 L, placeholders only)
+[02:36:00] Phase B-9: filled Role + Passage 1 (combat, PARTIAL SUCCESS, Thornwolf/trauma-shears, ROLL block with Dice/Modifiers/Total/Result, italic damage line, 'You roll to your feet, gasping.' cap)
+[02:36:20] Phase B-10: filled Passage 2 (transition, 'Then, it stops', 'It's not a blackout' pivot, 'death of physics', em-dash FDR appositive, scene-cap 'NYC no longer on Earth')
+[02:36:38] Phase B-11: filled Passage 3 (negotiation, Vayek/Ironbound, SUCCESS, 'Intent:' label, 'It's not a greeting. It's a measurement', bully-a-refugee/supplier antithetical semicolon, 'You don't look desperate. You look like a man with options.' diptych cap)
+[02:37:30] Phase B-13: filled STANCE + ARGUMENT + FIGURATIVE bullets (4+4+4)
+[02:37:47] Phase B-14: filled TYPOGRAPHY + SCENE-CAPPING + DEEP PRINCIPLE bullets
+[02:38:18] Phase B-15,16: filled signatures (9 items), recognizability_test (3-part), priority_rule (4-tier, rhythm named priority)
+[02:39:01] Phase B-17,18: filled mechanism_rule (5-item engine-fact list + smuggling guard) and self_audit (10 checks + recognizability test + 2-cap)
+[02:39:26] Phase B-19: filled two json_to_prose_example blocks (Thornwolf combat + Ironbound first contact)
+[02:39:40] Phase B-20: end-to-end grep verified ordering (Role→3 Samples→Voice Spec [8 dims]→Signatures→Recog→Priority→Mechanism→Self-Audit→2 Examples). All canonical phrases present. Phase B COMPLETE.
+[02:40:24] Phase C-21,22,23: prompts.py now loads _CANONICAL_PREAMBLE at import, format_prompt prepends it, compose_narrator_prompt added as canonical entry point
+[02:42:09] Phase C-24: all 8 PROMPT_TEMPLATES rewritten for canonical voice. Smoke test: import OK, preamble 18365 chars, sample combat prompt 19390 chars. Phase C COMPLETE.
+[02:43:39] Phase D-25..32: all 8 per-scene markdown templates rewritten for canonical voice (ROLL block + UI box contracts, signature references, self-audit footers)
+[02:49:05] Phase E-33..41: validation.py rewritten. Relaxed forbidden list (keep assistant-speak frame-breaks, drop meta-gaming). Added prose-region extractor (strips ROLL blocks, UI boxes, inline backticks, code fences). Added 8 positive checks (2p-present, fragment, variance, paragraph-shape, em-dash, typography, no-questions, no-ellipses). Added mechanism-smuggling guard. Added 3 signature hints (neg-def, Then-hinge, scene-cap). All 3 canonical samples validate with 0 violations.
+[02:49:47] Phase F-42..44: payloads.py output_target bounds widened: combat 25-60→40-200, dialogue 20-100→30-200, transition 40-100→40-240, situation 30-80→30-100. _constraints() mirrors new forbidden list via inherited import.
+[02:52:33] Phase G-45..48: docs alignment. CLAUDE.md Hard Limits updated; narration_style.md collapsed to 36L pointer; narration.md Core Register + Anti-Patterns rewritten; prompt-management.md §1.2/§1.4/§7.2 updated to reference canonical voice and validation.py as source of truth.
+[02:57:04] Phase H-49..53: test_canonical_voice.py complete. 28 tests covering: preamble presence (5), canonical sample acceptance (5), voice violation rejection (8), signature hints (8), forbidden-list relaxation (2). All green via unittest (pytest not installed on this env).
+[02:59:27] Phase I-56,57: full suite run. 969 tests pass. Only error is pre-existing pytest-import issue in test_quests.py (commit f6e85be, environmental). Narrator-adjacent suites (narrator, canonical_voice, resolution, damage, abstract_combat) all green: 108 tests.
+[02:59:59] Phase I-58,59: git status clean. Pushed 8 commits 4a54ffe..0e5cb9c to origin/claude/enforce-canonical-voice-OLJZc. EXECUTION COMPLETE.
