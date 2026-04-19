@@ -78,3 +78,7 @@ Phase N: Phase 6 — test + smoke verify
   [done] smoke: step init returns about_preface with banner + how-to-play
   [done] smoke: sampler on 4 representative locations hits bucket minimums
   [pending] commit tests + progress + push nine-commit branch
+[02:23:03] START: enforce canonical voice; branch claude/enforce-canonical-voice-OLJZc
+[02:23:49] Step 1 done: read prompts.py, validation.py, payloads.py, test_narrator.py, combat_turn.md, scene_framing.md, CLAUDE.md hard limits. Per-scene .md files are currently unused by composer (only hardcoded PROMPT_TEMPLATES); will keep them in sync.
+[02:30:21] Step PLAN-REWRITE-1: read plan length for surgical edits
+[02:32:07] Plan rewrite: added Implementation Sequence with 59 micro-steps across phases A-I; added pacing preamble; linked Verification back to Phase I
