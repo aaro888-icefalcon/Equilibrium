@@ -1,18 +1,19 @@
-"""Bridge scene — 1500-word bridge narrative + opening scene payload.
+"""Bridge scene — opening scene payload anchored by the urgent quest.
 
 Flow:
-  1. Engine builds a narrator_payload carrying the full CreationState + all 5
-     quests + the urgent quest flagged for the opening scene.
+  1. Engine builds a narrator_payload carrying the full CreationState + all
+     5 quests + the urgent quest flagged for the opening scene + the
+     already-generated backstory_prose (from QuestPickScene) for context.
   2. Narrator (Claude) returns a bridge_output JSON containing:
-       - bridge_prose: ~1500 words from Onset day through the past year,
-         weaving in the 4 background quests as life history
-       - opening_scene: the frozen-tableau scene (150-300 words) that drops
+       - opening_scene: the frozen-tableau scene (150-400 words) that drops
          the player into the urgent quest
        - opening_scene_meta: ids referencing the urgent quest, its hook NPC,
          antagonist, location, and telegraphed bright line
-  3. Engine validates opening_scene_meta against the urgent quest's state
-  4. Engine writes the final prose artifacts to CreationState and exits
-     session zero.
+       - hooked_npcs / mentioned_factions for the roster block
+  3. Engine validates opening_scene_meta against the urgent quest's state.
+  4. Engine writes the opening-scene artifacts to CreationState and exits
+     session zero. The backstory_prose continues to live where it was
+     stored by QuestPickScene.
 
 This scene does not mutate QuestState. The quests are already registered by
 QuestPickScene.
@@ -26,8 +27,6 @@ from emergence.engine.character_creation.character_factory import CreationState
 from emergence.engine.quests.schema import Quest, QuestState
 
 
-BRIDGE_WORD_TARGET_MIN = 1200
-BRIDGE_WORD_TARGET_MAX = 1800
 OPENING_SCENE_WORD_MIN = 150
 OPENING_SCENE_WORD_MAX = 400
 
@@ -74,13 +73,18 @@ class BridgeScene:
             "npcs": list(state.generated_npcs),
             "threats": list(state.threats),
             "job_pick": state.scene_choices.get("job_pick"),
+            "post_onset_goal": state.scene_choices.get("post_onset_goal", ""),
+            "goal_conflicts_with_job": bool(
+                state.scene_choices.get("goal_conflicts_with_job", False)
+            ),
+            "goal_conflict_note": state.scene_choices.get("goal_conflict_note", ""),
         }
 
         # Flatten the bundle's NPCs to a lookup set for hook validation.
         bundle_npc_ids = {npc.get("npc_id") for npc in state.generated_npcs if npc.get("npc_id")}
 
         return {
-            "task": "bridge_narrative_v1",
+            "task": "opening_scene_v1",
             "guidelines_docs": [
                 "emergence/docs/opening_scene_guidelines.md",
                 "emergence/setting/narration_style.md",
@@ -89,11 +93,10 @@ class BridgeScene:
             "character": char_summary,
             "urgent_quest": urgent.to_dict(),
             "background_quests": [q.to_dict() for q in background],
+            "backstory_prose": state.scene_choices.get("backstory_prose", ""),
             "bundle_npc_ids": sorted(bundle_npc_ids),
-            "bridge_target_words": [BRIDGE_WORD_TARGET_MIN, BRIDGE_WORD_TARGET_MAX],
             "opening_target_words": [OPENING_SCENE_WORD_MIN, OPENING_SCENE_WORD_MAX],
             "schema_hint": {
-                "bridge_prose": "str (~1500 words)",
                 "opening_scene": "str (150-400 words; the frozen tableau opening the urgent quest)",
                 "opening_scene_meta": {
                     "primary_quest_id": "urgent quest id",
@@ -131,17 +134,6 @@ class BridgeScene:
         errors: List[str] = []
         if not isinstance(payload, dict):
             return ["root: must be dict"]
-
-        prose = payload.get("bridge_prose") or ""
-        if not isinstance(prose, str) or not prose.strip():
-            errors.append("bridge_prose: required non-empty string")
-        else:
-            wc = len(prose.split())
-            if wc < BRIDGE_WORD_TARGET_MIN - 300 or wc > BRIDGE_WORD_TARGET_MAX + 300:
-                errors.append(
-                    f"bridge_prose: word count {wc} outside "
-                    f"[{BRIDGE_WORD_TARGET_MIN - 300}, {BRIDGE_WORD_TARGET_MAX + 300}]"
-                )
 
         scene = payload.get("opening_scene") or ""
         if not isinstance(scene, str) or not scene.strip():
@@ -231,7 +223,6 @@ class BridgeScene:
         errors = self.validate_bridge_output(bridge_output, urgent, bundle_npc_ids)
         if errors:
             raise BridgeOutputValidationError(errors)
-        state.scene_choices["bridge_prose"] = bridge_output["bridge_prose"]
         state.scene_choices["opening_scene"] = bridge_output["opening_scene"]
         state.scene_choices["opening_scene_meta"] = dict(bridge_output["opening_scene_meta"])
         state.scene_choices["hooked_npcs"] = list(bridge_output.get("hooked_npcs", []))

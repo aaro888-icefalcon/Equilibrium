@@ -1,9 +1,10 @@
 """Power pick scene — two-phase: subcategories → powers → auto-roll cast/rider.
 
-Phase 1: engine offers 6 random sub-categories (of 30) → player picks 2
-Phase 2: engine offers 3 random powers per picked sub-category (6 total) →
-         player picks 1 from each (= 2 powers) → engine auto-rolls 1 cast_mode
-         + 1 rider_slot per power, deterministically from state.seed.
+Phase 1: engine offers 12 random sub-categories (of 30) → player picks 2
+Phase 2: engine offers ALL powers in each picked sub-category (typically
+         6-8 per category) → player picks 1 from each (= 2 powers) →
+         engine auto-rolls 1 cast_mode + 1 rider_slot per power,
+         deterministically from state.seed.
 
 The scene phase is inferred from CreationState:
   - pending_subcategory_offer absent                    → offer subcategories
@@ -30,9 +31,8 @@ POWERS_DATA_DIR = os.path.join(
 )
 
 # Number of options at each phase.
-SUBCATEGORY_OFFER_COUNT = 6
+SUBCATEGORY_OFFER_COUNT = 12
 SUBCATEGORY_PICK_COUNT = 2
-POWERS_PER_SUBCATEGORY = 3
 POWER_PICK_PER_SUBCATEGORY = 1
 
 DEFAULT_TIER = 3
@@ -127,10 +127,12 @@ class PowerPickScene:
     def prepare_power_offer(
         self, state: CreationState, rng: _random.Random,
     ) -> List[Dict[str, Any]]:
-        """Sample N powers from each picked subcategory.
+        """Offer every power in each picked subcategory.
 
-        Returns a flat list of offered power dicts, grouped by subcategory.
-        Each entry carries a `sub_category` field for UI grouping.
+        Returns a flat list of offered power dicts, grouped by subcategory
+        (first subcategory's powers, then the second's). Each entry carries
+        a `sub_category` field for UI grouping. Within each subcategory the
+        powers are sorted by id for stable ordering across calls.
         """
         picked_subs = state.scene_choices.get("subcategories_picked") or []
         if not picked_subs:
@@ -138,9 +140,10 @@ class PowerPickScene:
         all_powers = self._load_all_powers()
         offer: List[Dict[str, Any]] = []
         for sub in picked_subs:
-            in_sub = [p for p in all_powers if p.get("sub_category") == sub]
-            n = min(POWERS_PER_SUBCATEGORY, len(in_sub))
-            chosen = rng.sample(in_sub, n) if n else []
+            in_sub = sorted(
+                (p for p in all_powers if p.get("sub_category") == sub),
+                key=lambda p: p.get("id", ""),
+            )
             offer.extend({
                 "id": p["id"],
                 "name": p["name"],
@@ -149,7 +152,7 @@ class PowerPickScene:
                 "description": p.get("description", ""),
                 "playstyles": list(p.get("playstyles", [])),
                 "tier": p.get("tier", 1),
-            } for p in chosen)
+            } for p in in_sub)
         state.scene_choices["power_offer"] = offer
         return offer
 

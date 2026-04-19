@@ -30,6 +30,9 @@ JOB_ARCHETYPES_PATH = os.path.join(
 )
 
 BUNDLE_CARDS_REQUIRED = 5
+# At least this many of the 5 cards must carry a post-Onset goal that
+# conflicts with the daily job (e.g. guard duty vs. hunting for family).
+BUNDLE_MIN_GOAL_CONFLICTS = 2
 VALID_NPC_ROLES = frozenset(["ally", "contact", "rival", "patron"])
 
 # Theme buckets recognized by the sampler. These match the tags on every
@@ -237,12 +240,30 @@ class JobBundleScene:
             "archetype_pool_full": archetypes,
             "character": char_summary,
             "cards_required": BUNDLE_CARDS_REQUIRED,
+            "min_goal_conflicts": BUNDLE_MIN_GOAL_CONFLICTS,
             "schema_hint": {
                 "cards": [
                     {
                         "job_id": "str",
                         "title": "str",
                         "daily_loop": "str",
+                        "post_onset_goal": (
+                            "str — what the PC wanted to do for themselves "
+                            "after the Onset (e.g. 'find my sister in the "
+                            "Manhattan Fragment')"
+                        ),
+                        "goal_conflicts_with_job": (
+                            "bool — true if the post_onset_goal is in direct "
+                            "tension with the daily_loop (e.g. goal is "
+                            "'find sister' but job is 'guard duty on the "
+                            "wall'). At least 2 of the 5 cards must set this "
+                            "to true."
+                        ),
+                        "goal_conflict_note": (
+                            "str — one short sentence explaining the friction "
+                            "between goal and job (required when "
+                            "goal_conflicts_with_job is true)"
+                        ),
                         "skill_tilts": {"<skill>": "int 0-2"},
                         "factions": {
                             "positive": [{"faction_id": "str", "standing": "int", "role": "str"}],
@@ -277,6 +298,7 @@ class JobBundleScene:
         if len(cards) != BUNDLE_CARDS_REQUIRED:
             errors.append(f"cards: must contain exactly {BUNDLE_CARDS_REQUIRED} cards (got {len(cards)})")
         seen_ids: set = set()
+        goal_conflict_count = 0
         for i, card in enumerate(cards):
             prefix = f"cards[{i}]"
             if not isinstance(card, dict):
@@ -289,9 +311,21 @@ class JobBundleScene:
                 errors.append(f"{prefix}.job_id: duplicate {jid!r}")
             else:
                 seen_ids.add(jid)
-            for key in ("title", "daily_loop", "starting_location", "opening_vignette_seed"):
+            for key in ("title", "daily_loop", "starting_location",
+                        "opening_vignette_seed", "post_onset_goal"):
                 if not card.get(key):
                     errors.append(f"{prefix}.{key}: required")
+            conflict = card.get("goal_conflicts_with_job")
+            if not isinstance(conflict, bool):
+                errors.append(f"{prefix}.goal_conflicts_with_job: required bool")
+            else:
+                if conflict:
+                    goal_conflict_count += 1
+                    if not card.get("goal_conflict_note"):
+                        errors.append(
+                            f"{prefix}.goal_conflict_note: required when "
+                            f"goal_conflicts_with_job is true"
+                        )
             if not isinstance(card.get("skill_tilts"), dict):
                 errors.append(f"{prefix}.skill_tilts: required dict")
             factions = card.get("factions")
@@ -328,6 +362,14 @@ class JobBundleScene:
                         f"{prefix}.threats: at least one entry must use a "
                         f"combat-capable archetype (got {sorted(a for a in archetypes_on_card if a)})"
                     )
+        if isinstance(cards, list) and len(cards) == BUNDLE_CARDS_REQUIRED:
+            if goal_conflict_count < BUNDLE_MIN_GOAL_CONFLICTS:
+                errors.append(
+                    f"cards: at least {BUNDLE_MIN_GOAL_CONFLICTS} of "
+                    f"{BUNDLE_CARDS_REQUIRED} must set goal_conflicts_with_job=true "
+                    f"(got {goal_conflict_count}); the bundle must include real "
+                    f"tension between the PC's post-Onset goal and the job"
+                )
         return errors
 
     # ------------------------------------------------------------------
@@ -407,6 +449,14 @@ class JobBundleScene:
         state = factory.apply_scene_result(self.scene_id, scene_result, state, rng)
         state.starting_location = card.get("starting_location", state.starting_location)
         state.scene_choices["job_pick"] = card
+        # Surface the post-Onset goal + conflict flag at the top of scene_choices
+        # so downstream scenes (quest pick, bridge) can reference them without
+        # digging into the job card blob.
+        state.scene_choices["post_onset_goal"] = card.get("post_onset_goal", "")
+        state.scene_choices["goal_conflicts_with_job"] = bool(
+            card.get("goal_conflicts_with_job", False)
+        )
+        state.scene_choices["goal_conflict_note"] = card.get("goal_conflict_note", "")
         return state
 
     # ------------------------------------------------------------------

@@ -13,7 +13,7 @@ from __future__ import annotations
 
 import random
 import unittest
-from typing import Any, Dict
+from typing import Any, Dict, List
 
 from emergence.engine.character_creation.session_zero import (
     FixedInputSource,
@@ -55,17 +55,24 @@ CLASSIFIER_OUTPUT: Dict[str, Any] = {
 def _bundle_output() -> Dict[str, Any]:
     """Five distinct Manhattan-Fragment job cards."""
     cards = []
-    for i, (jid, title) in enumerate([
-        ("job_mf_echo_watcher", "Echo-Watcher for a Tower Lord"),
-        ("job_mf_clinic_runner", "Street Clinic Runner"),
-        ("job_mf_salvage_broker", "Salvage Broker — Midtown"),
-        ("job_mf_tower_medic", "Tower-Lord House Medic"),
-        ("job_mf_visiting_surgeon", "Visiting Surgeon to the Commonage"),
-    ]):
+    entries = [
+        ("job_mf_echo_watcher", "Echo-Watcher for a Tower Lord", True),
+        ("job_mf_clinic_runner", "Street Clinic Runner", True),
+        ("job_mf_salvage_broker", "Salvage Broker — Midtown", False),
+        ("job_mf_tower_medic", "Tower-Lord House Medic", False),
+        ("job_mf_visiting_surgeon", "Visiting Surgeon to the Commonage", False),
+    ]
+    for i, (jid, title, conflicts) in enumerate(entries):
         cards.append({
             "job_id": jid,
             "title": title,
             "daily_loop": f"Working out of a {title.lower()} post in Lower Manhattan.",
+            "post_onset_goal": "Reach Mount Sinai and find Akhil.",
+            "goal_conflicts_with_job": conflicts,
+            "goal_conflict_note": (
+                "Every shift at this post is a week you are not walking north."
+                if conflicts else ""
+            ),
             "skill_tilts": {"surgery": 1, "first_aid": 1},
             "factions": {
                 "positive": [{"faction_id": "brooklyn_tower_lords", "standing": 1, "role": "employer"}],
@@ -149,18 +156,18 @@ def _quest_output() -> Dict[str, Any]:
     return {
         "quests": quests,
         "backstory_ids": [quests[0]["id"], quests[1]["id"], quests[2]["id"], quests[3]["id"]],
+        # ~1600 words of placeholder prose; satisfies the backstory word budget.
+        "backstory_prose": " ".join(["lorem ipsum"] * 800),
     }
 
 
 def _bridge_output(urgent_id: str, antagonist_id: str, bundle_npc_ids: List[str]) -> Dict[str, Any]:
-    prose = " ".join(["lorem ipsum"] * 800)  # ~1600 words
     scene = " ".join(["dolor sit amet"] * 60)  # ~180 words
     hooked = [
         {"npc_id": nid, "relation": "coworker", "introduced_in": "bridge_present_day"}
         for nid in bundle_npc_ids[:3]
     ]
     return {
-        "bridge_prose": prose,
         "opening_scene": scene,
         "opening_scene_meta": {
             "primary_quest_id": urgent_id,
@@ -223,9 +230,10 @@ class TestFullCreationFlow(unittest.TestCase):
             },
             multi={
                 "subcategories": [0, 1],
-                # Power offer is 3 from subcat A (indices 0-2) + 3 from subcat B (3-5);
-                # must pick one from each band.
-                "powers": [0, 3],
+                # Power offer is ALL powers from picked subcat A followed by
+                # ALL powers from subcat B. Index 0 lies in the first band;
+                # index -1 (the final offered power) lies in the second band.
+                "powers": [0, -1],
             },
         )
         narrator = MockNarrator()
@@ -263,9 +271,9 @@ class TestFullCreationFlow(unittest.TestCase):
         self.assertEqual(len(backgrounds), 4)
         self.assertEqual(len(urgents), 1)
 
-        # Bridge prose + opening scene present
-        self.assertIn("bridge_prose", result)
-        self.assertTrue(result["bridge_prose"])
+        # Backstory prose (generated during pick-quest) + opening scene present.
+        self.assertIn("backstory_prose", result)
+        self.assertTrue(result["backstory_prose"])
         self.assertTrue(result["opening_scene"])
         meta = result["opening_scene_meta"]
         self.assertEqual(meta["primary_quest_id"], urgents[0].id)

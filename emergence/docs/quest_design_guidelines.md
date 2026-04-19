@@ -9,16 +9,40 @@ state the engine can check. Not a plot. A situation.
 
 ## What the engine expects
 
-Generate **8 Quest JSON objects** plus a `backstory_ids` list of 4 quest
-ids. Split:
+Generate, in a single bundled response:
 
-- **4 backstory quests** (narrator-flagged): establish what the PC has been
-  doing for the past year. Enrich the bridge narrative.
+- **8 Quest JSON objects** (see schema below).
+- **`backstory_ids`** — list of 4 quest ids flagged as backstory.
+- **`backstory_prose`** — a ~1200-1800-word narration of the PC's year
+  since the Onset that weaves the four backstory quests into lived
+  history. The player reads this **alongside** the four urgent-quest
+  options and makes the urgent pick with the backstory fresh in mind.
+
+Split by role:
+
+- **4 backstory quests** (narrator-flagged): establish what the PC has
+  been doing for the past year. These are the quests you narrate through
+  `backstory_prose`.
 - **4 urgent-offer quests** (remaining): the player picks one. This quest
   opens active play.
 
 The **urgent quest must be physically dangerous**. All four urgent-offer
 quests must pass urgent-quest validation so any of them can be picked.
+
+### Backstory prose rules
+
+- Word count: 1200-1800 (soft slack 300).
+- Weave the four backstory quests in as remembered seasons, not
+  blow-by-blow summaries. Show texture: weather, sleep, rooms, people.
+- Reference the job bundle's `post_onset_goal` explicitly. Where
+  `goal_conflicts_with_job` is true, show the friction in fiction (not
+  as a bullet list).
+- Do **not** preview the urgent quest. The urgent options are a separate
+  field the player reads immediately after. Describing any of them here
+  pre-decides the choice.
+- Follow the positive-voice style directives in
+  `emergence/setting/narration_style.md`. No meta-language, no numbered
+  choices, no AI-assistant voice.
 
 ---
 

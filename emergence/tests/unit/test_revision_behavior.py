@@ -138,9 +138,14 @@ class TestBackstoryModeDiversity(unittest.TestCase):
 
 
 class TestBundleCombatThreatConstraint(unittest.TestCase):
-    def _card(self, threat_archetypes) -> dict:
+    def _card(self, threat_archetypes, conflicts: bool = True) -> dict:
         return {
             "job_id": "j1", "title": "T", "daily_loop": "loop",
+            "post_onset_goal": "Find my sister in the north.",
+            "goal_conflicts_with_job": conflicts,
+            "goal_conflict_note": (
+                "The job keeps me south while she's north." if conflicts else ""
+            ),
             "skill_tilts": {"surgery": 1},
             "factions": {"positive": [{"faction_id": "f1", "standing": 1}],
                          "negative": []},
@@ -170,6 +175,26 @@ class TestBundleCombatThreatConstraint(unittest.TestCase):
         errors = JobBundleScene.validate_bundle_output(payload)
         self.assertFalse(any("combat-capable" in e for e in errors))
 
+    def test_fewer_than_two_goal_conflicts_fails(self) -> None:
+        cards = [self._card(["named_rival_human"], conflicts=False) for _ in range(5)]
+        # Mark just one card as conflicting; need at least two.
+        cards[0]["goal_conflicts_with_job"] = True
+        cards[0]["goal_conflict_note"] = "tension between goal and job"
+        for i in range(5):
+            cards[i]["job_id"] = f"j{i}"
+        errors = JobBundleScene.validate_bundle_output(self._wrap(cards))
+        self.assertTrue(any("goal_conflicts_with_job" in e for e in errors))
+
+    def test_two_goal_conflicts_passes(self) -> None:
+        cards = [self._card(["named_rival_human"], conflicts=False) for _ in range(5)]
+        for i in (0, 3):
+            cards[i]["goal_conflicts_with_job"] = True
+            cards[i]["goal_conflict_note"] = "tension between goal and job"
+        for i in range(5):
+            cards[i]["job_id"] = f"j{i}"
+        errors = JobBundleScene.validate_bundle_output(self._wrap(cards))
+        self.assertFalse(any("goal_conflicts_with_job" in e for e in errors))
+
 
 class TestBridgeHookedNpcs(unittest.TestCase):
     def _quest(self) -> Quest:
@@ -193,7 +218,6 @@ class TestBridgeHookedNpcs(unittest.TestCase):
 
     def _payload(self, **overrides) -> dict:
         p = {
-            "bridge_prose": " ".join(["lorem"] * 1500),
             "opening_scene": " ".join(["ipsum"] * 200),
             "opening_scene_meta": {
                 "primary_quest_id": "u", "antagonist_id": "npc_a",
