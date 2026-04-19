@@ -217,9 +217,18 @@ class TestPrompts(unittest.TestCase):
 class TestValidation(unittest.TestCase):
 
     def test_valid_narration_passes(self):
-        text = "The blade sang as it arced. " * 5  # ~30 words
+        # Canonical-voice combat beat — second-person present, bold entity,
+        # em-dash appositive, fragment paragraph, scene-capping aphorism.
+        text = (
+            "The **Thornwolf** drives at you from the flank. Your arm is too slow.\n\n"
+            "It's not a graceful intercept. It's a kinetic wreck — shoulder into "
+            "ribs, your spine torquing against the asphalt.\n\n"
+            "**Opportunity.**\n\n"
+            "You drop your weight and punch the trauma shears up under the jaw.\n\n"
+            "You roll to your feet, gasping."
+        )
         violations = validate_narration(text, {"scene_type": "combat_turn"})
-        self.assertEqual(len(violations), 0)
+        self.assertEqual(len(violations), 0, f"expected no violations; got: {violations}")
 
     def test_too_short_flagged(self):
         text = "A hit."
