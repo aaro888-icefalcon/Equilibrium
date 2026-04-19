@@ -3531,5 +3531,8 @@
     }
   ],
   "current_location": "loc-port-newark-compound",
-  "home_region": "iron_crown_newark"
+  "home_region": "iron_crown_newark",
+  "harm_dealt": {
+    "physical": 1
+  }
 }
