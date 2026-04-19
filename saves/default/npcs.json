@@ -121,7 +121,16 @@
       "Preston suspects a captain's loyalty and wants quiet verification"
     ],
     "status": "alive",
-    "social_block": null
+    "social_block": {
+      "disposition": -1,
+      "patience": 2,
+      "patience_max": 2,
+      "motivation": "rarely engages directly; would request specific tactical missions through Whelan; Hollow Choir intelligence; reliable Hudson-pass route reports",
+      "source_of_conflict": "busy with own affairs",
+      "mood": "neutral",
+      "disposition_shift_cap": 1,
+      "disposition_shifted": 0
+    }
   },
   "npc-alcott": {
     "id": "npc-alcott",
@@ -1193,7 +1202,16 @@
       "Hudson-pass anomaly requires investigation"
     ],
     "status": "alive",
-    "social_block": null
+    "social_block": {
+      "disposition": 0,
+      "patience": 3,
+      "patience_max": 3,
+      "motivation": "tactical errands Preston has authorized; assessment of subordinate captains; Hudson-pass route security",
+      "source_of_conflict": "busy with own affairs",
+      "mood": "neutral",
+      "disposition_shift_cap": 1,
+      "disposition_shifted": 0
+    }
   },
   "npc-shadow": {
     "id": "npc-shadow",
@@ -1379,7 +1397,16 @@
       "she requests escort for a Throne-loyalist child to Mount Tremper"
     ],
     "status": "alive",
-    "social_block": null
+    "social_block": {
+      "disposition": 0,
+      "patience": 3,
+      "patience_max": 3,
+      "motivation": "delicate hall-business errands; tributary negotiations she cannot conduct personally",
+      "source_of_conflict": "busy with own affairs",
+      "mood": "neutral",
+      "disposition_shift_cap": 1,
+      "disposition_shifted": 0
+    }
   },
   "npc-brick": {
     "id": "npc-brick",
@@ -5565,9 +5592,10 @@
     "species": "human",
     "age": 30,
     "manifestation": {
+      "category": "",
       "tier": 0,
-      "has_powers": false,
-      "powers": []
+      "specific_abilities": [],
+      "circumstance_of_manifestation": ""
     },
     "role": "parent",
     "goals": [],
@@ -5599,9 +5627,10 @@
     "species": "human",
     "age": 30,
     "manifestation": {
+      "category": "",
       "tier": 0,
-      "has_powers": false,
-      "powers": []
+      "specific_abilities": [],
+      "circumstance_of_manifestation": ""
     },
     "role": "parent",
     "goals": [],
@@ -5633,9 +5662,10 @@
     "species": "human",
     "age": 30,
     "manifestation": {
+      "category": "",
       "tier": 0,
-      "has_powers": false,
-      "powers": []
+      "specific_abilities": [],
+      "circumstance_of_manifestation": ""
     },
     "role": "sibling",
     "goals": [],
@@ -5667,9 +5697,10 @@
     "species": "human",
     "age": 30,
     "manifestation": {
+      "category": "",
       "tier": 0,
-      "has_powers": false,
-      "powers": []
+      "specific_abilities": [],
+      "circumstance_of_manifestation": ""
     },
     "role": "extended_family",
     "goals": [],
@@ -5701,9 +5732,10 @@
     "species": "human",
     "age": 30,
     "manifestation": {
+      "category": "",
       "tier": 0,
-      "has_powers": false,
-      "powers": []
+      "specific_abilities": [],
+      "circumstance_of_manifestation": ""
     },
     "role": "extended_family",
     "goals": [],
@@ -5735,9 +5767,10 @@
     "species": "human",
     "age": 30,
     "manifestation": {
+      "category": "",
       "tier": 0,
-      "has_powers": false,
-      "powers": []
+      "specific_abilities": [],
+      "circumstance_of_manifestation": ""
     },
     "role": "extended_family",
     "goals": [],
@@ -5769,9 +5802,10 @@
     "species": "human",
     "age": 30,
     "manifestation": {
+      "category": "",
       "tier": 0,
-      "has_powers": false,
-      "powers": []
+      "specific_abilities": [],
+      "circumstance_of_manifestation": ""
     },
     "role": "extended_family",
     "goals": [],
@@ -5803,9 +5837,10 @@
     "species": "human",
     "age": 30,
     "manifestation": {
+      "category": "",
       "tier": 0,
-      "has_powers": false,
-      "powers": []
+      "specific_abilities": [],
+      "circumstance_of_manifestation": ""
     },
     "role": "friend",
     "goals": [],
@@ -5837,9 +5872,10 @@
     "species": "human",
     "age": 30,
     "manifestation": {
+      "category": "",
       "tier": 0,
-      "has_powers": false,
-      "powers": []
+      "specific_abilities": [],
+      "circumstance_of_manifestation": ""
     },
     "role": "friend",
     "goals": [],
@@ -5871,9 +5907,10 @@
     "species": "human",
     "age": 30,
     "manifestation": {
+      "category": "",
       "tier": 0,
-      "has_powers": false,
-      "powers": []
+      "specific_abilities": [],
+      "circumstance_of_manifestation": ""
     },
     "role": "friend",
     "goals": [],
@@ -5905,9 +5942,10 @@
     "species": "human",
     "age": 30,
     "manifestation": {
+      "category": "",
       "tier": 0,
-      "has_powers": false,
-      "powers": []
+      "specific_abilities": [],
+      "circumstance_of_manifestation": ""
     },
     "role": "friend",
     "goals": [],
@@ -5939,9 +5977,10 @@
     "species": "human",
     "age": 30,
     "manifestation": {
+      "category": "",
       "tier": 0,
-      "has_powers": false,
-      "powers": []
+      "specific_abilities": [],
+      "circumstance_of_manifestation": ""
     },
     "role": "friend",
     "goals": [],
@@ -5973,9 +6012,10 @@
     "species": "human",
     "age": 30,
     "manifestation": {
+      "category": "",
       "tier": 0,
-      "has_powers": false,
-      "powers": []
+      "specific_abilities": [],
+      "circumstance_of_manifestation": ""
     },
     "role": "coworker",
     "goals": [],
@@ -6007,9 +6047,10 @@
     "species": "human",
     "age": 30,
     "manifestation": {
+      "category": "",
       "tier": 0,
-      "has_powers": false,
-      "powers": []
+      "specific_abilities": [],
+      "circumstance_of_manifestation": ""
     },
     "role": "coworker",
     "goals": [],
@@ -6041,9 +6082,10 @@
     "species": "human",
     "age": 30,
     "manifestation": {
+      "category": "",
       "tier": 0,
-      "has_powers": false,
-      "powers": []
+      "specific_abilities": [],
+      "circumstance_of_manifestation": ""
     },
     "role": "coworker",
     "goals": [],
@@ -6075,9 +6117,10 @@
     "species": "human",
     "age": 30,
     "manifestation": {
+      "category": "",
       "tier": 0,
-      "has_powers": false,
-      "powers": []
+      "specific_abilities": [],
+      "circumstance_of_manifestation": ""
     },
     "role": "coworker",
     "goals": [],
@@ -6109,9 +6152,10 @@
     "species": "human",
     "age": 30,
     "manifestation": {
+      "category": "",
       "tier": 0,
-      "has_powers": false,
-      "powers": []
+      "specific_abilities": [],
+      "circumstance_of_manifestation": ""
     },
     "role": "coworker",
     "goals": [],
@@ -6143,9 +6187,10 @@
     "species": "human",
     "age": 30,
     "manifestation": {
+      "category": "",
       "tier": 0,
-      "has_powers": false,
-      "powers": []
+      "specific_abilities": [],
+      "circumstance_of_manifestation": ""
     },
     "role": "coworker",
     "goals": [],

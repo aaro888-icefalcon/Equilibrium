@@ -380,7 +380,7 @@
       "mechanical_effect": null
     }
   ],
-  "location": "iron_crown_newark",
+  "location": "loc-port-newark-compound",
   "history": [],
   "statuses": [],
   "skills": {
@@ -3530,6 +3530,6 @@
       "summary": "A scavenger band working the ridge road has been escalating \u2014 two of Shake's squad came back with cuts last Thursday, and DeSouza says they're getting organized."
     }
   ],
-  "current_location": "iron_crown_newark",
+  "current_location": "loc-port-newark-compound",
   "home_region": "iron_crown_newark"
 }
