@@ -1,0 +1,1554 @@
+{
+  "status": "ok",
+  "mode": "SIM",
+  "scene": {
+    "id": "bcf23c6b-56dd-4968-95d0-0533833c626f",
+    "scene_type": "social",
+    "scene_phase": "close",
+    "dramatic_question": "Will Abhishek give Colonel James Preston what they want?",
+    "source_of_conflict": "rarely engages directly; would request specific tactical missions through Whelan; Hollow Choir intelligence; reliable Hudson-pass route reports",
+    "yes_outcome": "Agreement reached, disposition improves, new options open.",
+    "no_outcome": "Request refused, disposition drops, alternatives force themselves.",
+    "transition_hint": "After resolution: new scene based on outcome and NPC reactions.",
+    "location_id": "loc-mount-tremper",
+    "location_display": "Mount Tremper Command Site",
+    "tension": "uneasy",
+    "npcs": [
+      {
+        "id": "npc-preston",
+        "display_name": "Colonel James Preston",
+        "role": "sovereign of the Catskill Throne",
+        "voice": "Preston speaks briefly and stands too still. He does not raise his voice. When he asks a question, he looks at the answer rather than the person giving it. The breakthrough cost has stripped what most people would recognize as personality from his manner; what remains is exact attention and an unsettling absence of the small social anxieties that govern other lives. He is courteous. He is not warm.",
+        "social_block": {
+          "disposition": -1,
+          "patience": 2,
+          "patience_max": 2,
+          "motivation": "rarely engages directly; would request specific tactical missions through Whelan; Hollow Choir intelligence; reliable Hudson-pass route reports",
+          "source_of_conflict": "busy with own affairs",
+          "mood": "neutral",
+          "disposition_shift_cap": 1,
+          "disposition_shifted": 0
+        },
+        "knowledge_topics": [
+          "topic_0",
+          "topic_1",
+          "topic_2"
+        ],
+        "hooks": [
+          "Whelan summons the player on Preston's behalf",
+          "the player witnesses one of Preston's Warped meetings by accident",
+          "tribute caravan to Mount Tremper requires escort",
+          "Preston suspects a captain's loyalty and wants quiet verification"
+        ]
+      },
+      {
+        "id": "npc-whelan",
+        "display_name": "Marshal Thomas Whelan",
+        "role": "de facto military commander of Catskill Throne",
+        "voice": "Whelan speaks like the senior officer he was. He gives instructions with timeline, deliverable, and contingency. He answers questions if they are operationally relevant and declines to speculate beyond his authority. He is competent and unembellished.",
+        "social_block": {
+          "disposition": 0,
+          "patience": 3,
+          "patience_max": 3,
+          "motivation": "tactical errands Preston has authorized; assessment of subordinate captains; Hudson-pass route security",
+          "source_of_conflict": "busy with own affairs",
+          "mood": "neutral",
+          "disposition_shift_cap": 1,
+          "disposition_shifted": 0
+        },
+        "knowledge_topics": [
+          "topic_0",
+          "topic_1"
+        ],
+        "hooks": [
+          "tactical mission briefing on Preston's behalf",
+          "the player witnesses Whelan's quiet preparations",
+          "retinue captain dispute requires arbitration",
+          "Hudson-pass anomaly requires investigation"
+        ]
+      },
+      {
+        "id": "npc-amar",
+        "display_name": "Beatrice Amar",
+        "role": "hall-mistress of the Throne",
+        "voice": "Amar is courteous and exact. Within seven meters of her, lying becomes strenuous. She uses this lightly \u2014 she does not interrogate; she simply lets the field do its work. She speaks in soft, level tones. She is one of the few Throne figures who occasionally smiles.",
+        "social_block": {
+          "disposition": 0,
+          "patience": 3,
+          "patience_max": 3,
+          "motivation": "delicate hall-business errands; tributary negotiations she cannot conduct personally",
+          "source_of_conflict": "busy with own affairs",
+          "mood": "neutral",
+          "disposition_shift_cap": 1,
+          "disposition_shifted": 0
+        },
+        "knowledge_topics": [
+          "topic_0",
+          "topic_1"
+        ],
+        "hooks": [
+          "Amar requests a delicate tributary negotiation",
+          "the player needs to lie within her field and must find a workaround",
+          "she warns privately about a Throne internal matter",
+          "she requests escort for a Throne-loyalist child to Mount Tremper"
+        ]
+      }
+    ],
+    "hidden_elements": [
+      {
+        "source_type": "clock_state",
+        "source_id": "bourse-currency-stability",
+        "content": "Bourse Currency Stability is 5/6 complete.",
+        "priority": 5,
+        "tags": [
+          "clock",
+          "approaching"
+        ]
+      },
+      {
+        "source_type": "location_danger",
+        "source_id": "loc-mount-tremper",
+        "content": "Danger at Mount Tremper Command Site: Preston's own presence (for those who displease him)",
+        "priority": 4,
+        "tags": [
+          "danger",
+          "location"
+        ]
+      },
+      {
+        "source_type": "location_danger",
+        "source_id": "loc-mount-tremper",
+        "content": "Danger at Mount Tremper Command Site: retinue discipline strict",
+        "priority": 4,
+        "tags": [
+          "danger",
+          "location"
+        ]
+      },
+      {
+        "source_type": "clock_state",
+        "source_id": "biokinetic-ag-saturation",
+        "content": "Biokinetic Agriculture Saturation is 5/8 complete.",
+        "priority": 4,
+        "tags": [
+          "clock",
+          "approaching"
+        ]
+      },
+      {
+        "source_type": "clock_state",
+        "source_id": "fed-continuity-erosion",
+        "content": "Fed Continuity Erosion is 4/8 complete.",
+        "priority": 4,
+        "tags": [
+          "clock",
+          "approaching"
+        ]
+      },
+      {
+        "source_type": "clock_state",
+        "source_id": "iron-crown-vs-staten",
+        "content": "Iron Crown vs. Staten Citadel is 3/6 complete.",
+        "priority": 4,
+        "tags": [
+          "clock",
+          "approaching"
+        ]
+      },
+      {
+        "source_type": "clock_state",
+        "source_id": "crabclaw-fed-war",
+        "content": "Crabclaw Confederation \u2013 Fed Continuity War is 3/6 complete.",
+        "priority": 4,
+        "tags": [
+          "clock",
+          "approaching"
+        ]
+      },
+      {
+        "source_type": "npc_knowledge",
+        "source_id": "npc-whelan",
+        "content": "Marshal Thomas Whelan knows: Preston's reclusiveness conceals his lack of named successor",
+        "priority": 3,
+        "tags": [
+          "npc_secret",
+          "topic_0"
+        ]
+      },
+      {
+        "source_type": "npc_knowledge",
+        "source_id": "npc-whelan",
+        "content": "Marshal Thomas Whelan knows: the retinue would likely follow him if Preston dies; he has not solicited this",
+        "priority": 3,
+        "tags": [
+          "npc_secret",
+          "topic_1"
+        ]
+      },
+      {
+        "source_type": "npc_knowledge",
+        "source_id": "npc-amar",
+        "content": "Beatrice Amar knows: what tributaries actually said vs. what they were comfortable saying",
+        "priority": 3,
+        "tags": [
+          "npc_secret",
+          "topic_0"
+        ]
+      },
+      {
+        "source_type": "npc_knowledge",
+        "source_id": "npc-amar",
+        "content": "Beatrice Amar knows: the truth-zone effect's limits",
+        "priority": 3,
+        "tags": [
+          "npc_secret",
+          "topic_1"
+        ]
+      },
+      {
+        "source_type": "location_opportunity",
+        "source_id": "loc-mount-tremper",
+        "content": "Opportunity at Mount Tremper Command Site: audience with Preston (rare; granted for specific causes)",
+        "priority": 3,
+        "tags": [
+          "opportunity",
+          "location"
+        ]
+      },
+      {
+        "source_type": "location_opportunity",
+        "source_id": "loc-mount-tremper",
+        "content": "Opportunity at Mount Tremper Command Site: commissions from Whelan, Amar, or the Shadow",
+        "priority": 3,
+        "tags": [
+          "opportunity",
+          "location"
+        ]
+      },
+      {
+        "source_type": "location_event",
+        "source_id": "loc-mount-tremper",
+        "content": "At Mount Tremper Command Site: tribute-to-vassalage clock advancing",
+        "priority": 3,
+        "tags": [
+          "event",
+          "location"
+        ]
+      },
+      {
+        "source_type": "location_event",
+        "source_id": "loc-mount-tremper",
+        "content": "At Mount Tremper Command Site: recent visit from Grey Walker emissary",
+        "priority": 3,
+        "tags": [
+          "event",
+          "location"
+        ]
+      },
+      {
+        "source_type": "faction_scheme",
+        "source_id": "fed-continuity",
+        "content": "Federal Continuity Command is pursuing: formal territorial recognition offered to Species I in exchange for skilled-practitioner levies",
+        "priority": 3,
+        "tags": [
+          "faction",
+          "scheme"
+        ]
+      },
+      {
+        "source_type": "faction_scheme",
+        "source_id": "fed-continuity",
+        "content": "Federal Continuity Command is pursuing: covert arbitrage of scrip against Bourse copper via House Beltran",
+        "priority": 3,
+        "tags": [
+          "faction",
+          "scheme"
+        ]
+      },
+      {
+        "source_type": "faction_scheme",
+        "source_id": "potomac-irregulars",
+        "content": "The Potomac Irregulars is pursuing: quiet loyalty-assessment of Fed Continuity flag officers (60% favorable)",
+        "priority": 3,
+        "tags": [
+          "faction",
+          "scheme"
+        ]
+      },
+      {
+        "source_type": "faction_scheme",
+        "source_id": "potomac-irregulars",
+        "content": "The Potomac Irregulars is pursuing: waiting for Alcott political misstep or health failure",
+        "priority": 3,
+        "tags": [
+          "faction",
+          "scheme"
+        ]
+      },
+      {
+        "source_type": "faction_scheme",
+        "source_id": "bear-house",
+        "content": "The Bear-House of Peekskill is pursuing: quiet research into replacement matter-specialists for post-Kostas era",
+        "priority": 3,
+        "tags": [
+          "faction",
+          "scheme"
+        ]
+      },
+      {
+        "source_type": "faction_scheme",
+        "source_id": "bear-house",
+        "content": "The Bear-House of Peekskill is pursuing: negotiating formal trade agreements with Yonkers Compact",
+        "priority": 3,
+        "tags": [
+          "faction",
+          "scheme"
+        ]
+      },
+      {
+        "source_type": "faction_scheme",
+        "source_id": "yonkers-compact",
+        "content": "The Yonkers Compact is pursuing: negotiating special-status arrangement with Catskill Throne short of formal vassalage",
+        "priority": 3,
+        "tags": [
+          "faction",
+          "scheme"
+        ]
+      },
+      {
+        "source_type": "faction_scheme",
+        "source_id": "yonkers-compact",
+        "content": "The Yonkers Compact is pursuing: expanding apprenticeship intake to prepare for Three Judges succession",
+        "priority": 3,
+        "tags": [
+          "faction",
+          "scheme"
+        ]
+      },
+      {
+        "source_type": "faction_scheme",
+        "source_id": "catskill-throne",
+        "content": "The Catskill Throne is pursuing: ritualizing tribute collection to normalize subordination",
+        "priority": 3,
+        "tags": [
+          "faction",
+          "scheme"
+        ]
+      },
+      {
+        "source_type": "faction_scheme",
+        "source_id": "catskill-throne",
+        "content": "The Catskill Throne is pursuing: negotiating with Warped leaders (Grey-on-Grey wolf, Grey Walker bear)",
+        "priority": 3,
+        "tags": [
+          "faction",
+          "scheme"
+        ]
+      },
+      {
+        "source_type": "faction_scheme",
+        "source_id": "tower-lords-brooklyn",
+        "content": "The Tower Lords of Brooklyn is pursuing: shifting alliances among the 5-6 Lords (perpetual)",
+        "priority": 3,
+        "tags": [
+          "faction",
+          "scheme"
+        ]
+      },
+      {
+        "source_type": "faction_scheme",
+        "source_id": "tower-lords-brooklyn",
+        "content": "The Tower Lords of Brooklyn is pursuing: quiet succession jockeying (38% 5-year leadership-change probability per Lord)",
+        "priority": 3,
+        "tags": [
+          "faction",
+          "scheme"
+        ]
+      },
+      {
+        "source_type": "faction_scheme",
+        "source_id": "queens-commonage",
+        "content": "The Queens Commonage is pursuing: quiet extension of biokinetic agriculture into former Tower Lord-adjacent lots",
+        "priority": 3,
+        "tags": [
+          "faction",
+          "scheme"
+        ]
+      },
+      {
+        "source_type": "faction_scheme",
+        "source_id": "queens-commonage",
+        "content": "The Queens Commonage is pursuing: formalizing alliance with Flushing-Edison Cluster",
+        "priority": 3,
+        "tags": [
+          "faction",
+          "scheme"
+        ]
+      },
+      {
+        "source_type": "faction_scheme",
+        "source_id": "staten-citadel",
+        "content": "The Staten Citadel is pursuing: preparing for Iron Crown war (clock at 3/6)",
+        "priority": 3,
+        "tags": [
+          "faction",
+          "scheme"
+        ]
+      },
+      {
+        "source_type": "faction_scheme",
+        "source_id": "staten-citadel",
+        "content": "The Staten Citadel is pursuing: discreet recruitment of temporal-spatial manifesters from other polities",
+        "priority": 3,
+        "tags": [
+          "faction",
+          "scheme"
+        ]
+      },
+      {
+        "source_type": "faction_scheme",
+        "source_id": "iron-crown",
+        "content": "The Iron Crown of Newark is pursuing: positioning for Iron Crown-Staten war (clock 3/6)",
+        "priority": 3,
+        "tags": [
+          "faction",
+          "scheme"
+        ]
+      },
+      {
+        "source_type": "faction_scheme",
+        "source_id": "iron-crown",
+        "content": "The Iron Crown of Newark is pursuing: intimidation campaigns against Species I Herrera-kin (Camden)",
+        "priority": 3,
+        "tags": [
+          "faction",
+          "scheme"
+        ]
+      },
+      {
+        "source_type": "faction_scheme",
+        "source_id": "philadelphia-bourse",
+        "content": "The Philadelphia Bourse is pursuing: final push to complete Currency Stability (clock 5/6)",
+        "priority": 3,
+        "tags": [
+          "faction",
+          "scheme"
+        ]
+      },
+      {
+        "source_type": "faction_scheme",
+        "source_id": "philadelphia-bourse",
+        "content": "The Philadelphia Bourse is pursuing: covert backing of Central Jersey League, Species I Reyes-kin, Delmarva Harvest Lords",
+        "priority": 3,
+        "tags": [
+          "faction",
+          "scheme"
+        ]
+      },
+      {
+        "source_type": "faction_scheme",
+        "source_id": "south-philly-holding",
+        "content": "The South Philly Holding is pursuing: quiet negotiation with Bourse for expanded enforcement mandate",
+        "priority": 3,
+        "tags": [
+          "faction",
+          "scheme"
+        ]
+      },
+      {
+        "source_type": "faction_scheme",
+        "source_id": "south-philly-holding",
+        "content": "The South Philly Holding is pursuing: fortifying Navy Yard perimeter",
+        "priority": 3,
+        "tags": [
+          "faction",
+          "scheme"
+        ]
+      },
+      {
+        "source_type": "faction_scheme",
+        "source_id": "central-jersey-league",
+        "content": "Central Jersey League is pursuing: quiet absorption of peripheral townships from collapsing Fed Continuity districts",
+        "priority": 3,
+        "tags": [
+          "faction",
+          "scheme"
+        ]
+      },
+      {
+        "source_type": "faction_scheme",
+        "source_id": "central-jersey-league",
+        "content": "Central Jersey League is pursuing: formal Warped diplomacy (Warped relations subcommittee; White Horse of Princeton treaty)",
+        "priority": 3,
+        "tags": [
+          "faction",
+          "scheme"
+        ]
+      },
+      {
+        "source_type": "faction_scheme",
+        "source_id": "lehigh-principalities",
+        "content": "Lehigh Principalities is pursuing: seeking Bourse burn-crew contract for Susquehanna Crown containment",
+        "priority": 3,
+        "tags": [
+          "faction",
+          "scheme"
+        ]
+      },
+      {
+        "source_type": "faction_scheme",
+        "source_id": "lehigh-principalities",
+        "content": "Lehigh Principalities is pursuing: quiet arrangement with Old Badger (T8 warped, npc-old-badger) for territorial boundary",
+        "priority": 3,
+        "tags": [
+          "faction",
+          "scheme"
+        ]
+      },
+      {
+        "source_type": "faction_scheme",
+        "source_id": "crabclaw-confederation",
+        "content": "The Crabclaw Confederation is pursuing: preparing for Fed Continuity war (clock 3/6)",
+        "priority": 3,
+        "tags": [
+          "faction",
+          "scheme"
+        ]
+      },
+      {
+        "source_type": "faction_scheme",
+        "source_id": "crabclaw-confederation",
+        "content": "The Crabclaw Confederation is pursuing: Inner Harbor lord courting Dundalk to prevent Towson alliance",
+        "priority": 3,
+        "tags": [
+          "faction",
+          "scheme"
+        ]
+      },
+      {
+        "source_type": "faction_scheme",
+        "source_id": "delmarva-harvest-lords",
+        "content": "The Delmarva Harvest Lords is pursuing: informal Harvest Council as needed",
+        "priority": 3,
+        "tags": [
+          "faction",
+          "scheme"
+        ]
+      },
+      {
+        "source_type": "faction_scheme",
+        "source_id": "delmarva-harvest-lords",
+        "content": "The Delmarva Harvest Lords is pursuing: Bourse relationship management",
+        "priority": 3,
+        "tags": [
+          "faction",
+          "scheme"
+        ]
+      },
+      {
+        "source_type": "faction_scheme",
+        "source_id": "species-i-diaspora",
+        "content": "Species I Diaspora is pursuing: quarterly assemblies processing Reyes' consolidation arguments",
+        "priority": 3,
+        "tags": [
+          "faction",
+          "scheme"
+        ]
+      },
+      {
+        "source_type": "faction_scheme",
+        "source_id": "species-i-diaspora",
+        "content": "Species I Diaspora is pursuing: negotiating with Fed Continuity for formal territorial recognition",
+        "priority": 3,
+        "tags": [
+          "faction",
+          "scheme"
+        ]
+      },
+      {
+        "source_type": "faction_scheme",
+        "source_id": "flushing-edison-cluster",
+        "content": "The Flushing-Edison Cluster (Species C) is pursuing: expanding apprentice intake (post-Onset-born cohort)",
+        "priority": 3,
+        "tags": [
+          "faction",
+          "scheme"
+        ]
+      },
+      {
+        "source_type": "faction_scheme",
+        "source_id": "flushing-edison-cluster",
+        "content": "The Flushing-Edison Cluster (Species C) is pursuing: formalizing Bourse commercial relationship",
+        "priority": 3,
+        "tags": [
+          "faction",
+          "scheme"
+        ]
+      },
+      {
+        "source_type": "faction_scheme",
+        "source_id": "north-jersey-hs",
+        "content": "The North Jersey Hs (Species H) is pursuing: courier network optimization across 20+ enclaves",
+        "priority": 3,
+        "tags": [
+          "faction",
+          "scheme"
+        ]
+      },
+      {
+        "source_type": "faction_scheme",
+        "source_id": "north-jersey-hs",
+        "content": "The North Jersey Hs (Species H) is pursuing: quiet arms accumulation",
+        "priority": 3,
+        "tags": [
+          "faction",
+          "scheme"
+        ]
+      },
+      {
+        "source_type": "faction_scheme",
+        "source_id": "lehigh-jersey-gs",
+        "content": "The Lehigh-Jersey Gs (Species G) is pursuing: seed exchange expansion",
+        "priority": 3,
+        "tags": [
+          "faction",
+          "scheme"
+        ]
+      },
+      {
+        "source_type": "faction_scheme",
+        "source_id": "lehigh-jersey-gs",
+        "content": "The Lehigh-Jersey Gs (Species G) is pursuing: Lehigh-CJL agricultural coordination",
+        "priority": 3,
+        "tags": [
+          "faction",
+          "scheme"
+        ]
+      },
+      {
+        "source_type": "faction_scheme",
+        "source_id": "the-listening",
+        "content": "The Listening (Cult) is pursuing: proselytization through transformed messengers",
+        "priority": 3,
+        "tags": [
+          "faction",
+          "scheme"
+        ]
+      },
+      {
+        "source_type": "faction_scheme",
+        "source_id": "the-listening",
+        "content": "The Listening (Cult) is pursuing: quiet recruitment in southern NJ townships",
+        "priority": 3,
+        "tags": [
+          "faction",
+          "scheme"
+        ]
+      },
+      {
+        "source_type": "faction_scheme",
+        "source_id": "the-three-judges-yonkers",
+        "content": "The Three Judges (Yonkers governing council) is pursuing: Villanueva retirement deliberation",
+        "priority": 3,
+        "tags": [
+          "faction",
+          "scheme"
+        ]
+      },
+      {
+        "source_type": "faction_scheme",
+        "source_id": "the-three-judges-yonkers",
+        "content": "The Three Judges (Yonkers governing council) is pursuing: apprentice expansion",
+        "priority": 3,
+        "tags": [
+          "faction",
+          "scheme"
+        ]
+      },
+      {
+        "source_type": "npc_knowledge",
+        "source_id": "npc-preston",
+        "content": "Colonel James Preston knows: regional faction movements (via The Shadow's network)",
+        "priority": 2,
+        "tags": [
+          "npc_secret",
+          "topic_0"
+        ]
+      },
+      {
+        "source_type": "npc_knowledge",
+        "source_id": "npc-preston",
+        "content": "Colonel James Preston knows: Warped pre-cycle theology (takes it seriously)",
+        "priority": 2,
+        "tags": [
+          "npc_secret",
+          "topic_1"
+        ]
+      },
+      {
+        "source_type": "npc_knowledge",
+        "source_id": "npc-preston",
+        "content": "Colonel James Preston knows: {'his own breakthrough cost': 'he cannot feel fear'}",
+        "priority": 2,
+        "tags": [
+          "npc_secret",
+          "topic_2"
+        ]
+      }
+    ],
+    "environmental_detail": [
+      "The site was a Cold War continuity-of-government bunker built into the mountain above the town. Preston seized it in the first month; his first act of governance was to reinforce its walls. A Species C artisan extended the audience hall with matter-manipulated stone that does not weather. The hall smells of cold air and machine oil. Preston rarely appears in it. Outside, the approach road is patrolled at three checkpoints. Visitors who pass the checkpoints are received at the outer barracks and processed through a series of formalities before the audience chamber. The formalities are not intimidation \u2014 they are calibration, and Whelan and Amar run them together.",
+      "Current event: tribute-to-vassalage clock advancing",
+      "Current event: recent visit from Grey Walker emissary"
+    ],
+    "constraints": [
+      "Colonel James Preston wants: rarely engages directly; would request specific tactical missions through Whelan; Hollow Choir intelligence; reliable Hudson-pass route reports",
+      "Marshal Thomas Whelan wants: tactical errands Preston has authorized; assessment of subordinate captains; Hudson-pass route security",
+      "Beatrice Amar wants: delicate hall-business errands; tributary negotiations she cannot conduct personally"
+    ],
+    "relevant_player_goals": [],
+    "available_approaches": [
+      "persuade",
+      "intimidate",
+      "reason",
+      "deceive",
+      "wait"
+    ],
+    "encounter_probability": 0.08,
+    "scene_continues": false
+  },
+  "narrator_payload": {
+    "scene_type": "scene_close",
+    "register_directive": "standard",
+    "scene_code": {
+      "id": "bcf23c6b-56dd-4968-95d0-0533833c626f",
+      "scene_type": "social",
+      "scene_phase": "close",
+      "dramatic_question": "Will Abhishek give Colonel James Preston what they want?",
+      "source_of_conflict": "rarely engages directly; would request specific tactical missions through Whelan; Hollow Choir intelligence; reliable Hudson-pass route reports",
+      "yes_outcome": "Agreement reached, disposition improves, new options open.",
+      "no_outcome": "Request refused, disposition drops, alternatives force themselves.",
+      "transition_hint": "After resolution: new scene based on outcome and NPC reactions.",
+      "location_id": "loc-mount-tremper",
+      "location_display": "Mount Tremper Command Site",
+      "tension": "uneasy",
+      "npcs": [
+        {
+          "id": "npc-preston",
+          "display_name": "Colonel James Preston",
+          "role": "sovereign of the Catskill Throne",
+          "voice": "Preston speaks briefly and stands too still. He does not raise his voice. When he asks a question, he looks at the answer rather than the person giving it. The breakthrough cost has stripped what most people would recognize as personality from his manner; what remains is exact attention and an unsettling absence of the small social anxieties that govern other lives. He is courteous. He is not warm.",
+          "social_block": {
+            "disposition": -1,
+            "patience": 2,
+            "patience_max": 2,
+            "motivation": "rarely engages directly; would request specific tactical missions through Whelan; Hollow Choir intelligence; reliable Hudson-pass route reports",
+            "source_of_conflict": "busy with own affairs",
+            "mood": "neutral",
+            "disposition_shift_cap": 1,
+            "disposition_shifted": 0
+          },
+          "knowledge_topics": [
+            "topic_0",
+            "topic_1",
+            "topic_2"
+          ],
+          "hooks": [
+            "Whelan summons the player on Preston's behalf",
+            "the player witnesses one of Preston's Warped meetings by accident",
+            "tribute caravan to Mount Tremper requires escort",
+            "Preston suspects a captain's loyalty and wants quiet verification"
+          ]
+        },
+        {
+          "id": "npc-whelan",
+          "display_name": "Marshal Thomas Whelan",
+          "role": "de facto military commander of Catskill Throne",
+          "voice": "Whelan speaks like the senior officer he was. He gives instructions with timeline, deliverable, and contingency. He answers questions if they are operationally relevant and declines to speculate beyond his authority. He is competent and unembellished.",
+          "social_block": {
+            "disposition": 0,
+            "patience": 3,
+            "patience_max": 3,
+            "motivation": "tactical errands Preston has authorized; assessment of subordinate captains; Hudson-pass route security",
+            "source_of_conflict": "busy with own affairs",
+            "mood": "neutral",
+            "disposition_shift_cap": 1,
+            "disposition_shifted": 0
+          },
+          "knowledge_topics": [
+            "topic_0",
+            "topic_1"
+          ],
+          "hooks": [
+            "tactical mission briefing on Preston's behalf",
+            "the player witnesses Whelan's quiet preparations",
+            "retinue captain dispute requires arbitration",
+            "Hudson-pass anomaly requires investigation"
+          ]
+        },
+        {
+          "id": "npc-amar",
+          "display_name": "Beatrice Amar",
+          "role": "hall-mistress of the Throne",
+          "voice": "Amar is courteous and exact. Within seven meters of her, lying becomes strenuous. She uses this lightly \u2014 she does not interrogate; she simply lets the field do its work. She speaks in soft, level tones. She is one of the few Throne figures who occasionally smiles.",
+          "social_block": {
+            "disposition": 0,
+            "patience": 3,
+            "patience_max": 3,
+            "motivation": "delicate hall-business errands; tributary negotiations she cannot conduct personally",
+            "source_of_conflict": "busy with own affairs",
+            "mood": "neutral",
+            "disposition_shift_cap": 1,
+            "disposition_shifted": 0
+          },
+          "knowledge_topics": [
+            "topic_0",
+            "topic_1"
+          ],
+          "hooks": [
+            "Amar requests a delicate tributary negotiation",
+            "the player needs to lie within her field and must find a workaround",
+            "she warns privately about a Throne internal matter",
+            "she requests escort for a Throne-loyalist child to Mount Tremper"
+          ]
+        }
+      ],
+      "hidden_elements": [
+        {
+          "source_type": "clock_state",
+          "source_id": "bourse-currency-stability",
+          "content": "Bourse Currency Stability is 5/6 complete.",
+          "priority": 5,
+          "tags": [
+            "clock",
+            "approaching"
+          ]
+        },
+        {
+          "source_type": "location_danger",
+          "source_id": "loc-mount-tremper",
+          "content": "Danger at Mount Tremper Command Site: Preston's own presence (for those who displease him)",
+          "priority": 4,
+          "tags": [
+            "danger",
+            "location"
+          ]
+        },
+        {
+          "source_type": "location_danger",
+          "source_id": "loc-mount-tremper",
+          "content": "Danger at Mount Tremper Command Site: retinue discipline strict",
+          "priority": 4,
+          "tags": [
+            "danger",
+            "location"
+          ]
+        },
+        {
+          "source_type": "clock_state",
+          "source_id": "biokinetic-ag-saturation",
+          "content": "Biokinetic Agriculture Saturation is 5/8 complete.",
+          "priority": 4,
+          "tags": [
+            "clock",
+            "approaching"
+          ]
+        },
+        {
+          "source_type": "clock_state",
+          "source_id": "fed-continuity-erosion",
+          "content": "Fed Continuity Erosion is 4/8 complete.",
+          "priority": 4,
+          "tags": [
+            "clock",
+            "approaching"
+          ]
+        },
+        {
+          "source_type": "clock_state",
+          "source_id": "iron-crown-vs-staten",
+          "content": "Iron Crown vs. Staten Citadel is 3/6 complete.",
+          "priority": 4,
+          "tags": [
+            "clock",
+            "approaching"
+          ]
+        },
+        {
+          "source_type": "clock_state",
+          "source_id": "crabclaw-fed-war",
+          "content": "Crabclaw Confederation \u2013 Fed Continuity War is 3/6 complete.",
+          "priority": 4,
+          "tags": [
+            "clock",
+            "approaching"
+          ]
+        },
+        {
+          "source_type": "npc_knowledge",
+          "source_id": "npc-whelan",
+          "content": "Marshal Thomas Whelan knows: Preston's reclusiveness conceals his lack of named successor",
+          "priority": 3,
+          "tags": [
+            "npc_secret",
+            "topic_0"
+          ]
+        },
+        {
+          "source_type": "npc_knowledge",
+          "source_id": "npc-whelan",
+          "content": "Marshal Thomas Whelan knows: the retinue would likely follow him if Preston dies; he has not solicited this",
+          "priority": 3,
+          "tags": [
+            "npc_secret",
+            "topic_1"
+          ]
+        },
+        {
+          "source_type": "npc_knowledge",
+          "source_id": "npc-amar",
+          "content": "Beatrice Amar knows: what tributaries actually said vs. what they were comfortable saying",
+          "priority": 3,
+          "tags": [
+            "npc_secret",
+            "topic_0"
+          ]
+        },
+        {
+          "source_type": "npc_knowledge",
+          "source_id": "npc-amar",
+          "content": "Beatrice Amar knows: the truth-zone effect's limits",
+          "priority": 3,
+          "tags": [
+            "npc_secret",
+            "topic_1"
+          ]
+        },
+        {
+          "source_type": "location_opportunity",
+          "source_id": "loc-mount-tremper",
+          "content": "Opportunity at Mount Tremper Command Site: audience with Preston (rare; granted for specific causes)",
+          "priority": 3,
+          "tags": [
+            "opportunity",
+            "location"
+          ]
+        },
+        {
+          "source_type": "location_opportunity",
+          "source_id": "loc-mount-tremper",
+          "content": "Opportunity at Mount Tremper Command Site: commissions from Whelan, Amar, or the Shadow",
+          "priority": 3,
+          "tags": [
+            "opportunity",
+            "location"
+          ]
+        },
+        {
+          "source_type": "location_event",
+          "source_id": "loc-mount-tremper",
+          "content": "At Mount Tremper Command Site: tribute-to-vassalage clock advancing",
+          "priority": 3,
+          "tags": [
+            "event",
+            "location"
+          ]
+        },
+        {
+          "source_type": "location_event",
+          "source_id": "loc-mount-tremper",
+          "content": "At Mount Tremper Command Site: recent visit from Grey Walker emissary",
+          "priority": 3,
+          "tags": [
+            "event",
+            "location"
+          ]
+        },
+        {
+          "source_type": "faction_scheme",
+          "source_id": "fed-continuity",
+          "content": "Federal Continuity Command is pursuing: formal territorial recognition offered to Species I in exchange for skilled-practitioner levies",
+          "priority": 3,
+          "tags": [
+            "faction",
+            "scheme"
+          ]
+        },
+        {
+          "source_type": "faction_scheme",
+          "source_id": "fed-continuity",
+          "content": "Federal Continuity Command is pursuing: covert arbitrage of scrip against Bourse copper via House Beltran",
+          "priority": 3,
+          "tags": [
+            "faction",
+            "scheme"
+          ]
+        },
+        {
+          "source_type": "faction_scheme",
+          "source_id": "potomac-irregulars",
+          "content": "The Potomac Irregulars is pursuing: quiet loyalty-assessment of Fed Continuity flag officers (60% favorable)",
+          "priority": 3,
+          "tags": [
+            "faction",
+            "scheme"
+          ]
+        },
+        {
+          "source_type": "faction_scheme",
+          "source_id": "potomac-irregulars",
+          "content": "The Potomac Irregulars is pursuing: waiting for Alcott political misstep or health failure",
+          "priority": 3,
+          "tags": [
+            "faction",
+            "scheme"
+          ]
+        },
+        {
+          "source_type": "faction_scheme",
+          "source_id": "bear-house",
+          "content": "The Bear-House of Peekskill is pursuing: quiet research into replacement matter-specialists for post-Kostas era",
+          "priority": 3,
+          "tags": [
+            "faction",
+            "scheme"
+          ]
+        },
+        {
+          "source_type": "faction_scheme",
+          "source_id": "bear-house",
+          "content": "The Bear-House of Peekskill is pursuing: negotiating formal trade agreements with Yonkers Compact",
+          "priority": 3,
+          "tags": [
+            "faction",
+            "scheme"
+          ]
+        },
+        {
+          "source_type": "faction_scheme",
+          "source_id": "yonkers-compact",
+          "content": "The Yonkers Compact is pursuing: negotiating special-status arrangement with Catskill Throne short of formal vassalage",
+          "priority": 3,
+          "tags": [
+            "faction",
+            "scheme"
+          ]
+        },
+        {
+          "source_type": "faction_scheme",
+          "source_id": "yonkers-compact",
+          "content": "The Yonkers Compact is pursuing: expanding apprenticeship intake to prepare for Three Judges succession",
+          "priority": 3,
+          "tags": [
+            "faction",
+            "scheme"
+          ]
+        },
+        {
+          "source_type": "faction_scheme",
+          "source_id": "catskill-throne",
+          "content": "The Catskill Throne is pursuing: ritualizing tribute collection to normalize subordination",
+          "priority": 3,
+          "tags": [
+            "faction",
+            "scheme"
+          ]
+        },
+        {
+          "source_type": "faction_scheme",
+          "source_id": "catskill-throne",
+          "content": "The Catskill Throne is pursuing: negotiating with Warped leaders (Grey-on-Grey wolf, Grey Walker bear)",
+          "priority": 3,
+          "tags": [
+            "faction",
+            "scheme"
+          ]
+        },
+        {
+          "source_type": "faction_scheme",
+          "source_id": "tower-lords-brooklyn",
+          "content": "The Tower Lords of Brooklyn is pursuing: shifting alliances among the 5-6 Lords (perpetual)",
+          "priority": 3,
+          "tags": [
+            "faction",
+            "scheme"
+          ]
+        },
+        {
+          "source_type": "faction_scheme",
+          "source_id": "tower-lords-brooklyn",
+          "content": "The Tower Lords of Brooklyn is pursuing: quiet succession jockeying (38% 5-year leadership-change probability per Lord)",
+          "priority": 3,
+          "tags": [
+            "faction",
+            "scheme"
+          ]
+        },
+        {
+          "source_type": "faction_scheme",
+          "source_id": "queens-commonage",
+          "content": "The Queens Commonage is pursuing: quiet extension of biokinetic agriculture into former Tower Lord-adjacent lots",
+          "priority": 3,
+          "tags": [
+            "faction",
+            "scheme"
+          ]
+        },
+        {
+          "source_type": "faction_scheme",
+          "source_id": "queens-commonage",
+          "content": "The Queens Commonage is pursuing: formalizing alliance with Flushing-Edison Cluster",
+          "priority": 3,
+          "tags": [
+            "faction",
+            "scheme"
+          ]
+        },
+        {
+          "source_type": "faction_scheme",
+          "source_id": "staten-citadel",
+          "content": "The Staten Citadel is pursuing: preparing for Iron Crown war (clock at 3/6)",
+          "priority": 3,
+          "tags": [
+            "faction",
+            "scheme"
+          ]
+        },
+        {
+          "source_type": "faction_scheme",
+          "source_id": "staten-citadel",
+          "content": "The Staten Citadel is pursuing: discreet recruitment of temporal-spatial manifesters from other polities",
+          "priority": 3,
+          "tags": [
+            "faction",
+            "scheme"
+          ]
+        },
+        {
+          "source_type": "faction_scheme",
+          "source_id": "iron-crown",
+          "content": "The Iron Crown of Newark is pursuing: positioning for Iron Crown-Staten war (clock 3/6)",
+          "priority": 3,
+          "tags": [
+            "faction",
+            "scheme"
+          ]
+        },
+        {
+          "source_type": "faction_scheme",
+          "source_id": "iron-crown",
+          "content": "The Iron Crown of Newark is pursuing: intimidation campaigns against Species I Herrera-kin (Camden)",
+          "priority": 3,
+          "tags": [
+            "faction",
+            "scheme"
+          ]
+        },
+        {
+          "source_type": "faction_scheme",
+          "source_id": "philadelphia-bourse",
+          "content": "The Philadelphia Bourse is pursuing: final push to complete Currency Stability (clock 5/6)",
+          "priority": 3,
+          "tags": [
+            "faction",
+            "scheme"
+          ]
+        },
+        {
+          "source_type": "faction_scheme",
+          "source_id": "philadelphia-bourse",
+          "content": "The Philadelphia Bourse is pursuing: covert backing of Central Jersey League, Species I Reyes-kin, Delmarva Harvest Lords",
+          "priority": 3,
+          "tags": [
+            "faction",
+            "scheme"
+          ]
+        },
+        {
+          "source_type": "faction_scheme",
+          "source_id": "south-philly-holding",
+          "content": "The South Philly Holding is pursuing: quiet negotiation with Bourse for expanded enforcement mandate",
+          "priority": 3,
+          "tags": [
+            "faction",
+            "scheme"
+          ]
+        },
+        {
+          "source_type": "faction_scheme",
+          "source_id": "south-philly-holding",
+          "content": "The South Philly Holding is pursuing: fortifying Navy Yard perimeter",
+          "priority": 3,
+          "tags": [
+            "faction",
+            "scheme"
+          ]
+        },
+        {
+          "source_type": "faction_scheme",
+          "source_id": "central-jersey-league",
+          "content": "Central Jersey League is pursuing: quiet absorption of peripheral townships from collapsing Fed Continuity districts",
+          "priority": 3,
+          "tags": [
+            "faction",
+            "scheme"
+          ]
+        },
+        {
+          "source_type": "faction_scheme",
+          "source_id": "central-jersey-league",
+          "content": "Central Jersey League is pursuing: formal Warped diplomacy (Warped relations subcommittee; White Horse of Princeton treaty)",
+          "priority": 3,
+          "tags": [
+            "faction",
+            "scheme"
+          ]
+        },
+        {
+          "source_type": "faction_scheme",
+          "source_id": "lehigh-principalities",
+          "content": "Lehigh Principalities is pursuing: seeking Bourse burn-crew contract for Susquehanna Crown containment",
+          "priority": 3,
+          "tags": [
+            "faction",
+            "scheme"
+          ]
+        },
+        {
+          "source_type": "faction_scheme",
+          "source_id": "lehigh-principalities",
+          "content": "Lehigh Principalities is pursuing: quiet arrangement with Old Badger (T8 warped, npc-old-badger) for territorial boundary",
+          "priority": 3,
+          "tags": [
+            "faction",
+            "scheme"
+          ]
+        },
+        {
+          "source_type": "faction_scheme",
+          "source_id": "crabclaw-confederation",
+          "content": "The Crabclaw Confederation is pursuing: preparing for Fed Continuity war (clock 3/6)",
+          "priority": 3,
+          "tags": [
+            "faction",
+            "scheme"
+          ]
+        },
+        {
+          "source_type": "faction_scheme",
+          "source_id": "crabclaw-confederation",
+          "content": "The Crabclaw Confederation is pursuing: Inner Harbor lord courting Dundalk to prevent Towson alliance",
+          "priority": 3,
+          "tags": [
+            "faction",
+            "scheme"
+          ]
+        },
+        {
+          "source_type": "faction_scheme",
+          "source_id": "delmarva-harvest-lords",
+          "content": "The Delmarva Harvest Lords is pursuing: informal Harvest Council as needed",
+          "priority": 3,
+          "tags": [
+            "faction",
+            "scheme"
+          ]
+        },
+        {
+          "source_type": "faction_scheme",
+          "source_id": "delmarva-harvest-lords",
+          "content": "The Delmarva Harvest Lords is pursuing: Bourse relationship management",
+          "priority": 3,
+          "tags": [
+            "faction",
+            "scheme"
+          ]
+        },
+        {
+          "source_type": "faction_scheme",
+          "source_id": "species-i-diaspora",
+          "content": "Species I Diaspora is pursuing: quarterly assemblies processing Reyes' consolidation arguments",
+          "priority": 3,
+          "tags": [
+            "faction",
+            "scheme"
+          ]
+        },
+        {
+          "source_type": "faction_scheme",
+          "source_id": "species-i-diaspora",
+          "content": "Species I Diaspora is pursuing: negotiating with Fed Continuity for formal territorial recognition",
+          "priority": 3,
+          "tags": [
+            "faction",
+            "scheme"
+          ]
+        },
+        {
+          "source_type": "faction_scheme",
+          "source_id": "flushing-edison-cluster",
+          "content": "The Flushing-Edison Cluster (Species C) is pursuing: expanding apprentice intake (post-Onset-born cohort)",
+          "priority": 3,
+          "tags": [
+            "faction",
+            "scheme"
+          ]
+        },
+        {
+          "source_type": "faction_scheme",
+          "source_id": "flushing-edison-cluster",
+          "content": "The Flushing-Edison Cluster (Species C) is pursuing: formalizing Bourse commercial relationship",
+          "priority": 3,
+          "tags": [
+            "faction",
+            "scheme"
+          ]
+        },
+        {
+          "source_type": "faction_scheme",
+          "source_id": "north-jersey-hs",
+          "content": "The North Jersey Hs (Species H) is pursuing: courier network optimization across 20+ enclaves",
+          "priority": 3,
+          "tags": [
+            "faction",
+            "scheme"
+          ]
+        },
+        {
+          "source_type": "faction_scheme",
+          "source_id": "north-jersey-hs",
+          "content": "The North Jersey Hs (Species H) is pursuing: quiet arms accumulation",
+          "priority": 3,
+          "tags": [
+            "faction",
+            "scheme"
+          ]
+        },
+        {
+          "source_type": "faction_scheme",
+          "source_id": "lehigh-jersey-gs",
+          "content": "The Lehigh-Jersey Gs (Species G) is pursuing: seed exchange expansion",
+          "priority": 3,
+          "tags": [
+            "faction",
+            "scheme"
+          ]
+        },
+        {
+          "source_type": "faction_scheme",
+          "source_id": "lehigh-jersey-gs",
+          "content": "The Lehigh-Jersey Gs (Species G) is pursuing: Lehigh-CJL agricultural coordination",
+          "priority": 3,
+          "tags": [
+            "faction",
+            "scheme"
+          ]
+        },
+        {
+          "source_type": "faction_scheme",
+          "source_id": "the-listening",
+          "content": "The Listening (Cult) is pursuing: proselytization through transformed messengers",
+          "priority": 3,
+          "tags": [
+            "faction",
+            "scheme"
+          ]
+        },
+        {
+          "source_type": "faction_scheme",
+          "source_id": "the-listening",
+          "content": "The Listening (Cult) is pursuing: quiet recruitment in southern NJ townships",
+          "priority": 3,
+          "tags": [
+            "faction",
+            "scheme"
+          ]
+        },
+        {
+          "source_type": "faction_scheme",
+          "source_id": "the-three-judges-yonkers",
+          "content": "The Three Judges (Yonkers governing council) is pursuing: Villanueva retirement deliberation",
+          "priority": 3,
+          "tags": [
+            "faction",
+            "scheme"
+          ]
+        },
+        {
+          "source_type": "faction_scheme",
+          "source_id": "the-three-judges-yonkers",
+          "content": "The Three Judges (Yonkers governing council) is pursuing: apprentice expansion",
+          "priority": 3,
+          "tags": [
+            "faction",
+            "scheme"
+          ]
+        },
+        {
+          "source_type": "npc_knowledge",
+          "source_id": "npc-preston",
+          "content": "Colonel James Preston knows: regional faction movements (via The Shadow's network)",
+          "priority": 2,
+          "tags": [
+            "npc_secret",
+            "topic_0"
+          ]
+        },
+        {
+          "source_type": "npc_knowledge",
+          "source_id": "npc-preston",
+          "content": "Colonel James Preston knows: Warped pre-cycle theology (takes it seriously)",
+          "priority": 2,
+          "tags": [
+            "npc_secret",
+            "topic_1"
+          ]
+        },
+        {
+          "source_type": "npc_knowledge",
+          "source_id": "npc-preston",
+          "content": "Colonel James Preston knows: {'his own breakthrough cost': 'he cannot feel fear'}",
+          "priority": 2,
+          "tags": [
+            "npc_secret",
+            "topic_2"
+          ]
+        }
+      ],
+      "environmental_detail": [
+        "The site was a Cold War continuity-of-government bunker built into the mountain above the town. Preston seized it in the first month; his first act of governance was to reinforce its walls. A Species C artisan extended the audience hall with matter-manipulated stone that does not weather. The hall smells of cold air and machine oil. Preston rarely appears in it. Outside, the approach road is patrolled at three checkpoints. Visitors who pass the checkpoints are received at the outer barracks and processed through a series of formalities before the audience chamber. The formalities are not intimidation \u2014 they are calibration, and Whelan and Amar run them together.",
+        "Current event: tribute-to-vassalage clock advancing",
+        "Current event: recent visit from Grey Walker emissary"
+      ],
+      "constraints": [
+        "Colonel James Preston wants: rarely engages directly; would request specific tactical missions through Whelan; Hollow Choir intelligence; reliable Hudson-pass route reports",
+        "Marshal Thomas Whelan wants: tactical errands Preston has authorized; assessment of subordinate captains; Hudson-pass route security",
+        "Beatrice Amar wants: delicate hall-business errands; tributary negotiations she cannot conduct personally"
+      ],
+      "relevant_player_goals": [],
+      "available_approaches": [
+        "persuade",
+        "intimidate",
+        "reason",
+        "deceive",
+        "wait"
+      ],
+      "encounter_probability": 0.08,
+      "scene_continues": false
+    },
+    "final_state": {
+      "declaration": {
+        "action_type": "travel",
+        "approach": "direct",
+        "target_id": null,
+        "skill_id": "command",
+        "free_text": ""
+      },
+      "gate_result": "roll",
+      "outcome_tier": "marginal",
+      "tn": 11,
+      "primary_die": 8,
+      "secondary_die": 6,
+      "modifiers": [
+        {
+          "source": "skill:command",
+          "proficiency": 1,
+          "tn_effect": -1
+        }
+      ],
+      "complications": [
+        {
+          "move_id": "study_weakness",
+          "severity": "soft",
+          "category": "faction",
+          "description": "Someone is watching you carefully \u2014 looking for leverage.",
+          "mechanical_effects": [],
+          "narrative_seed": "study_weakness"
+        }
+      ],
+      "state_deltas": {},
+      "narrative_hints": [],
+      "time_cost_days": 0,
+      "new_location": null,
+      "encounter_triggered": false,
+      "scene_state_changes": {},
+      "check_result": {
+        "d1": 5,
+        "d2": 6,
+        "total": 11,
+        "tn": 11,
+        "margin": 0,
+        "tier": "marginal",
+        "is_crit": false,
+        "is_fumble": false
+      }
+    },
+    "transition_hint": "After resolution: new scene based on outcome and NPC reactions.",
+    "output_target": {
+      "min_words": 40,
+      "max_words": 80,
+      "format": "prose"
+    },
+    "constraints": {
+      "forbidden": [
+        "as an ai",
+        "as a language model",
+        "in this scene we",
+        "dear player",
+        "dear reader",
+        "let me narrate",
+        "i'll narrate",
+        "i will narrate",
+        "in a world where"
+      ]
+    },
+    "format_instructions": "Summarize the resolution of the dramatic question. Introduce forward momentum to the next scene. Do not drag past the answer."
+  },
+  "quest_ticks": [
+    {
+      "quest_id": "bs_first_blood",
+      "variable_name": "hours_until_main_probe",
+      "before": 6.0,
+      "after": 5.0,
+      "direction": "decrement",
+      "bright_line_fired": null,
+      "resolved_as": null
+    },
+    {
+      "quest_id": "bs_village_accord",
+      "variable_name": "days_until_crisis",
+      "before": 4.0,
+      "after": 3.0,
+      "direction": "decrement",
+      "bright_line_fired": null,
+      "resolved_as": null
+    },
+    {
+      "quest_id": "bs_leak_hunt",
+      "variable_name": "days_until_rotation",
+      "before": 5.0,
+      "after": 4.0,
+      "direction": "decrement",
+      "bright_line_fired": null,
+      "resolved_as": null
+    },
+    {
+      "quest_id": "bs_transit_gambit",
+      "variable_name": "courier_lead_hours",
+      "before": 18.0,
+      "after": 17.0,
+      "direction": "decrement",
+      "bright_line_fired": null,
+      "resolved_as": null
+    },
+    {
+      "quest_id": "urgent_intercept_scouts",
+      "variable_name": "hours_until_map_complete",
+      "before": 24.0,
+      "after": 23.0,
+      "direction": "decrement",
+      "bright_line_fired": null,
+      "resolved_as": null
+    }
+  ]
+}
