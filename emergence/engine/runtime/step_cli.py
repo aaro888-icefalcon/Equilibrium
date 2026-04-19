@@ -789,16 +789,17 @@ def step_scene_finalize(args: Any, save_root: str) -> Dict[str, Any]:
     """Finalize character from session zero state."""
     from emergence.engine.character_creation.character_factory import (
         CharacterFactory,
-        CreationState,
+    )
+    from emergence.engine.runtime.creation_store import (
+        clear_creation_state,
+        load_creation_state,
     )
 
     sz_path = os.path.join(save_root, "session_zero_state.json")
-    sz_data = _read_json_file(sz_path)
-    if sz_data is None:
+    if not os.path.exists(sz_path):
         return {"status": "error", "message": "No session zero in progress."}
 
-    creation_dict = sz_data.get("creation_state", {})
-    creation_state = CreationState(**creation_dict)
+    creation_state = load_creation_state(save_root)
     factory = CharacterFactory()
 
     sheet = factory.finalize(creation_state)

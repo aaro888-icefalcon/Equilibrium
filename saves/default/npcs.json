@@ -5551,5 +5551,617 @@
     ],
     "status": "alive",
     "social_block": null
+  },
+  "npc-tie-dr-rao-father-00": {
+    "id": "npc-tie-dr-rao-father-00",
+    "schema_version": "1.0",
+    "display_name": "Dr. Rao (father)",
+    "faction_affiliation": {
+      "primary": null,
+      "secondary": []
+    },
+    "location": "regional",
+    "schedule": {},
+    "species": "human",
+    "age": 30,
+    "manifestation": {
+      "tier": 0,
+      "has_powers": false,
+      "powers": []
+    },
+    "role": "parent",
+    "goals": [],
+    "relationships": {},
+    "resources": [],
+    "knowledge": [],
+    "personality_traits": [],
+    "current_concerns": [
+      "Vascular surgeon in Newark, Delaware. Inventive, scattered, entrepreneurial. Same specialty as Shake \u2014 admiration mixed with the friction of two surgeons in one family."
+    ],
+    "memory": [],
+    "standing_with_player_default": 2,
+    "what_they_want_from_player": "",
+    "voice": "Vascular surgeon in Newark, Delaware. Inventive, scattered, entrepreneurial. Same specialty as Shake \u2014 admiration mixed with the friction of two surgeons in one family.",
+    "hooks": [],
+    "status": "alive",
+    "social_block": null
+  },
+  "npc-tie-dr-rao-mother-01": {
+    "id": "npc-tie-dr-rao-mother-01",
+    "schema_version": "1.0",
+    "display_name": "Dr. Rao (mother)",
+    "faction_affiliation": {
+      "primary": null,
+      "secondary": []
+    },
+    "location": "regional",
+    "schedule": {},
+    "species": "human",
+    "age": 30,
+    "manifestation": {
+      "tier": 0,
+      "has_powers": false,
+      "powers": []
+    },
+    "role": "parent",
+    "goals": [],
+    "relationships": {},
+    "resources": [],
+    "knowledge": [],
+    "personality_traits": [],
+    "current_concerns": [
+      "Retired general surgeon, Newark, Delaware. Grounded counterweight to the father."
+    ],
+    "memory": [],
+    "standing_with_player_default": 2,
+    "what_they_want_from_player": "",
+    "voice": "Retired general surgeon, Newark, Delaware. Grounded counterweight to the father.",
+    "hooks": [],
+    "status": "alive",
+    "social_block": null
+  },
+  "npc-tie-akhil-rao-02": {
+    "id": "npc-tie-akhil-rao-02",
+    "schema_version": "1.0",
+    "display_name": "Akhil Rao",
+    "faction_affiliation": {
+      "primary": null,
+      "secondary": []
+    },
+    "location": "near",
+    "schedule": {},
+    "species": "human",
+    "age": 30,
+    "manifestation": {
+      "tier": 0,
+      "has_powers": false,
+      "powers": []
+    },
+    "role": "sibling",
+    "goals": [],
+    "relationships": {},
+    "resources": [],
+    "knowledge": [],
+    "personality_traits": [],
+    "current_concerns": [
+      "Younger brother. Medical student at Mount Sinai \u2014 also in Manhattan."
+    ],
+    "memory": [],
+    "standing_with_player_default": 2,
+    "what_they_want_from_player": "",
+    "voice": "Younger brother. Medical student at Mount Sinai \u2014 also in Manhattan.",
+    "hooks": [],
+    "status": "alive",
+    "social_block": null
+  },
+  "npc-tie-grandmother-paternal-maternal-03": {
+    "id": "npc-tie-grandmother-paternal-maternal-03",
+    "schema_version": "1.0",
+    "display_name": "Grandmother (paternal/maternal)",
+    "faction_affiliation": {
+      "primary": null,
+      "secondary": []
+    },
+    "location": "regional",
+    "schedule": {},
+    "species": "human",
+    "age": 30,
+    "manifestation": {
+      "tier": 0,
+      "has_powers": false,
+      "powers": []
+    },
+    "role": "extended_family",
+    "goals": [],
+    "relationships": {},
+    "resources": [],
+    "knowledge": [],
+    "personality_traits": [],
+    "current_concerns": [
+      "Lives with extended family in Bergen County, NJ."
+    ],
+    "memory": [],
+    "standing_with_player_default": 2,
+    "what_they_want_from_player": "",
+    "voice": "Lives with extended family in Bergen County, NJ.",
+    "hooks": [],
+    "status": "alive",
+    "social_block": null
+  },
+  "npc-tie-cousin-bergen-county-04": {
+    "id": "npc-tie-cousin-bergen-county-04",
+    "schema_version": "1.0",
+    "display_name": "Cousin (Bergen County)",
+    "faction_affiliation": {
+      "primary": null,
+      "secondary": []
+    },
+    "location": "regional",
+    "schedule": {},
+    "species": "human",
+    "age": 30,
+    "manifestation": {
+      "tier": 0,
+      "has_powers": false,
+      "powers": []
+    },
+    "role": "extended_family",
+    "goals": [],
+    "relationships": {},
+    "resources": [],
+    "knowledge": [],
+    "personality_traits": [],
+    "current_concerns": [
+      "Bergen County, NJ."
+    ],
+    "memory": [],
+    "standing_with_player_default": 2,
+    "what_they_want_from_player": "",
+    "voice": "Bergen County, NJ.",
+    "hooks": [],
+    "status": "alive",
+    "social_block": null
+  },
+  "npc-tie-aunt-bergen-county-05": {
+    "id": "npc-tie-aunt-bergen-county-05",
+    "schema_version": "1.0",
+    "display_name": "Aunt (Bergen County)",
+    "faction_affiliation": {
+      "primary": null,
+      "secondary": []
+    },
+    "location": "regional",
+    "schedule": {},
+    "species": "human",
+    "age": 30,
+    "manifestation": {
+      "tier": 0,
+      "has_powers": false,
+      "powers": []
+    },
+    "role": "extended_family",
+    "goals": [],
+    "relationships": {},
+    "resources": [],
+    "knowledge": [],
+    "personality_traits": [],
+    "current_concerns": [
+      "Bergen County, NJ \u2014 sibling of one of Shake's parents."
+    ],
+    "memory": [],
+    "standing_with_player_default": 2,
+    "what_they_want_from_player": "",
+    "voice": "Bergen County, NJ \u2014 sibling of one of Shake's parents.",
+    "hooks": [],
+    "status": "alive",
+    "social_block": null
+  },
+  "npc-tie-uncle-bergen-county-06": {
+    "id": "npc-tie-uncle-bergen-county-06",
+    "schema_version": "1.0",
+    "display_name": "Uncle (Bergen County)",
+    "faction_affiliation": {
+      "primary": null,
+      "secondary": []
+    },
+    "location": "regional",
+    "schedule": {},
+    "species": "human",
+    "age": 30,
+    "manifestation": {
+      "tier": 0,
+      "has_powers": false,
+      "powers": []
+    },
+    "role": "extended_family",
+    "goals": [],
+    "relationships": {},
+    "resources": [],
+    "knowledge": [],
+    "personality_traits": [],
+    "current_concerns": [
+      "Bergen County, NJ \u2014 partner of the aunt."
+    ],
+    "memory": [],
+    "standing_with_player_default": 2,
+    "what_they_want_from_player": "",
+    "voice": "Bergen County, NJ \u2014 partner of the aunt.",
+    "hooks": [],
+    "status": "alive",
+    "social_block": null
+  },
+  "npc-tie-denice-07": {
+    "id": "npc-tie-denice-07",
+    "schema_version": "1.0",
+    "display_name": "Denice",
+    "faction_affiliation": {
+      "primary": null,
+      "secondary": []
+    },
+    "location": "distant",
+    "schedule": {},
+    "species": "human",
+    "age": 30,
+    "manifestation": {
+      "tier": 0,
+      "has_powers": false,
+      "powers": []
+    },
+    "role": "friend",
+    "goals": [],
+    "relationships": {},
+    "resources": [],
+    "knowledge": [],
+    "personality_traits": [],
+    "current_concerns": [
+      "College friend. OBGYN in Chicago. Kind, quiet, iconoclastic."
+    ],
+    "memory": [],
+    "standing_with_player_default": 2,
+    "what_they_want_from_player": "",
+    "voice": "College friend. OBGYN in Chicago. Kind, quiet, iconoclastic.",
+    "hooks": [],
+    "status": "alive",
+    "social_block": null
+  },
+  "npc-tie-alex-08": {
+    "id": "npc-tie-alex-08",
+    "schema_version": "1.0",
+    "display_name": "Alex",
+    "faction_affiliation": {
+      "primary": null,
+      "secondary": []
+    },
+    "location": "regional",
+    "schedule": {},
+    "species": "human",
+    "age": 30,
+    "manifestation": {
+      "tier": 0,
+      "has_powers": false,
+      "powers": []
+    },
+    "role": "friend",
+    "goals": [],
+    "relationships": {},
+    "resources": [],
+    "knowledge": [],
+    "personality_traits": [],
+    "current_concerns": [
+      "College friend. Radiologist in Philadelphia. Laconic, fearless."
+    ],
+    "memory": [],
+    "standing_with_player_default": 2,
+    "what_they_want_from_player": "",
+    "voice": "College friend. Radiologist in Philadelphia. Laconic, fearless.",
+    "hooks": [],
+    "status": "alive",
+    "social_block": null
+  },
+  "npc-tie-bella-09": {
+    "id": "npc-tie-bella-09",
+    "schema_version": "1.0",
+    "display_name": "Bella",
+    "faction_affiliation": {
+      "primary": null,
+      "secondary": []
+    },
+    "location": "distant",
+    "schedule": {},
+    "species": "human",
+    "age": 30,
+    "manifestation": {
+      "tier": 0,
+      "has_powers": false,
+      "powers": []
+    },
+    "role": "friend",
+    "goals": [],
+    "relationships": {},
+    "resources": [],
+    "knowledge": [],
+    "personality_traits": [],
+    "current_concerns": [
+      "College friend. Finance career. Organized, busy."
+    ],
+    "memory": [],
+    "standing_with_player_default": 2,
+    "what_they_want_from_player": "",
+    "voice": "College friend. Finance career. Organized, busy.",
+    "hooks": [],
+    "status": "alive",
+    "social_block": null
+  },
+  "npc-tie-henry-10": {
+    "id": "npc-tie-henry-10",
+    "schema_version": "1.0",
+    "display_name": "Henry",
+    "faction_affiliation": {
+      "primary": null,
+      "secondary": []
+    },
+    "location": "distant",
+    "schedule": {},
+    "species": "human",
+    "age": 30,
+    "manifestation": {
+      "tier": 0,
+      "has_powers": false,
+      "powers": []
+    },
+    "role": "friend",
+    "goals": [],
+    "relationships": {},
+    "resources": [],
+    "knowledge": [],
+    "personality_traits": [],
+    "current_concerns": [
+      "Med school friend. Ophthalmologist in Boston. Gregarious."
+    ],
+    "memory": [],
+    "standing_with_player_default": 2,
+    "what_they_want_from_player": "",
+    "voice": "Med school friend. Ophthalmologist in Boston. Gregarious.",
+    "hooks": [],
+    "status": "alive",
+    "social_block": null
+  },
+  "npc-tie-saurabh-11": {
+    "id": "npc-tie-saurabh-11",
+    "schema_version": "1.0",
+    "display_name": "Saurabh",
+    "faction_affiliation": {
+      "primary": null,
+      "secondary": []
+    },
+    "location": "distant",
+    "schedule": {},
+    "species": "human",
+    "age": 30,
+    "manifestation": {
+      "tier": 0,
+      "has_powers": false,
+      "powers": []
+    },
+    "role": "friend",
+    "goals": [],
+    "relationships": {},
+    "resources": [],
+    "knowledge": [],
+    "personality_traits": [],
+    "current_concerns": [
+      "Med school friend. Cardiologist in San Diego. Analytical."
+    ],
+    "memory": [],
+    "standing_with_player_default": 2,
+    "what_they_want_from_player": "",
+    "voice": "Med school friend. Cardiologist in San Diego. Analytical.",
+    "hooks": [],
+    "status": "alive",
+    "social_block": null
+  },
+  "npc-tie-jason-12": {
+    "id": "npc-tie-jason-12",
+    "schema_version": "1.0",
+    "display_name": "Jason",
+    "faction_affiliation": {
+      "primary": null,
+      "secondary": []
+    },
+    "location": "near",
+    "schedule": {},
+    "species": "human",
+    "age": 30,
+    "manifestation": {
+      "tier": 0,
+      "has_powers": false,
+      "powers": []
+    },
+    "role": "coworker",
+    "goals": [],
+    "relationships": {},
+    "resources": [],
+    "knowledge": [],
+    "personality_traits": [],
+    "current_concerns": [
+      "Senior co-resident at NYU. Wry, joking, blunt. Closest among coworkers."
+    ],
+    "memory": [],
+    "standing_with_player_default": 2,
+    "what_they_want_from_player": "",
+    "voice": "Senior co-resident at NYU. Wry, joking, blunt. Closest among coworkers.",
+    "hooks": [],
+    "status": "alive",
+    "social_block": null
+  },
+  "npc-tie-jessica-13": {
+    "id": "npc-tie-jessica-13",
+    "schema_version": "1.0",
+    "display_name": "Jessica",
+    "faction_affiliation": {
+      "primary": null,
+      "secondary": []
+    },
+    "location": "near",
+    "schedule": {},
+    "species": "human",
+    "age": 30,
+    "manifestation": {
+      "tier": 0,
+      "has_powers": false,
+      "powers": []
+    },
+    "role": "coworker",
+    "goals": [],
+    "relationships": {},
+    "resources": [],
+    "knowledge": [],
+    "personality_traits": [],
+    "current_concerns": [
+      "Junior co-resident at NYU. Kind, blunt, efficient."
+    ],
+    "memory": [],
+    "standing_with_player_default": 2,
+    "what_they_want_from_player": "",
+    "voice": "Junior co-resident at NYU. Kind, blunt, efficient.",
+    "hooks": [],
+    "status": "alive",
+    "social_block": null
+  },
+  "npc-tie-zyra-14": {
+    "id": "npc-tie-zyra-14",
+    "schema_version": "1.0",
+    "display_name": "Zyra",
+    "faction_affiliation": {
+      "primary": null,
+      "secondary": []
+    },
+    "location": "near",
+    "schedule": {},
+    "species": "human",
+    "age": 30,
+    "manifestation": {
+      "tier": 0,
+      "has_powers": false,
+      "powers": []
+    },
+    "role": "coworker",
+    "goals": [],
+    "relationships": {},
+    "resources": [],
+    "knowledge": [],
+    "personality_traits": [],
+    "current_concerns": [
+      "Peer co-resident. Bubbly. Shake doesn't know her well."
+    ],
+    "memory": [],
+    "standing_with_player_default": 2,
+    "what_they_want_from_player": "",
+    "voice": "Peer co-resident. Bubbly. Shake doesn't know her well.",
+    "hooks": [],
+    "status": "alive",
+    "social_block": null
+  },
+  "npc-tie-kyle-15": {
+    "id": "npc-tie-kyle-15",
+    "schema_version": "1.0",
+    "display_name": "Kyle",
+    "faction_affiliation": {
+      "primary": null,
+      "secondary": []
+    },
+    "location": "near",
+    "schedule": {},
+    "species": "human",
+    "age": 30,
+    "manifestation": {
+      "tier": 0,
+      "has_powers": false,
+      "powers": []
+    },
+    "role": "coworker",
+    "goals": [],
+    "relationships": {},
+    "resources": [],
+    "knowledge": [],
+    "personality_traits": [],
+    "current_concerns": [
+      "Senior co-resident. Anxious and fiery, but protective of his juniors."
+    ],
+    "memory": [],
+    "standing_with_player_default": 2,
+    "what_they_want_from_player": "",
+    "voice": "Senior co-resident. Anxious and fiery, but protective of his juniors.",
+    "hooks": [],
+    "status": "alive",
+    "social_block": null
+  },
+  "npc-tie-karthik-16": {
+    "id": "npc-tie-karthik-16",
+    "schema_version": "1.0",
+    "display_name": "Karthik",
+    "faction_affiliation": {
+      "primary": null,
+      "secondary": []
+    },
+    "location": "near",
+    "schedule": {},
+    "species": "human",
+    "age": 30,
+    "manifestation": {
+      "tier": 0,
+      "has_powers": false,
+      "powers": []
+    },
+    "role": "coworker",
+    "goals": [],
+    "relationships": {},
+    "resources": [],
+    "knowledge": [],
+    "personality_traits": [],
+    "current_concerns": [
+      "Junior co-resident. Analytical, friendly."
+    ],
+    "memory": [],
+    "standing_with_player_default": 2,
+    "what_they_want_from_player": "",
+    "voice": "Junior co-resident. Analytical, friendly.",
+    "hooks": [],
+    "status": "alive",
+    "social_block": null
+  },
+  "npc-tie-gordon-17": {
+    "id": "npc-tie-gordon-17",
+    "schema_version": "1.0",
+    "display_name": "Gordon",
+    "faction_affiliation": {
+      "primary": null,
+      "secondary": []
+    },
+    "location": "near",
+    "schedule": {},
+    "species": "human",
+    "age": 30,
+    "manifestation": {
+      "tier": 0,
+      "has_powers": false,
+      "powers": []
+    },
+    "role": "coworker",
+    "goals": [],
+    "relationships": {},
+    "resources": [],
+    "knowledge": [],
+    "personality_traits": [],
+    "current_concerns": [
+      "Surgical intern. Suave."
+    ],
+    "memory": [],
+    "standing_with_player_default": 2,
+    "what_they_want_from_player": "",
+    "voice": "Surgical intern. Suave.",
+    "hooks": [],
+    "status": "alive",
+    "social_block": null
   }
 }

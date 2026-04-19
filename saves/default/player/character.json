@@ -1,1 +1,3535 @@
-{}
+{
+  "id": "aa38390d-932f-4880-96f7-6f3429573cb4",
+  "schema_version": "1.0",
+  "name": "Abhishek Rao",
+  "species": "baseline",
+  "age_at_onset": 30,
+  "current_age": 31,
+  "attributes": {
+    "strength": 6,
+    "agility": 8,
+    "perception": 8,
+    "will": 8,
+    "insight": 8,
+    "might": 6
+  },
+  "condition_tracks": {
+    "physical": 5,
+    "mental": 5,
+    "social": 5
+  },
+  "harm": [],
+  "powers": [
+    {
+      "power_id": "material_elemental_electrokinesis",
+      "name": "Electrokinesis",
+      "category": "material",
+      "sub_category": "elemental",
+      "slot": "primary",
+      "cast_mode": {
+        "slot_id": "cast_1",
+        "action_cost": "minor",
+        "pool_cost": 1,
+        "additional_cost": {},
+        "effect_families": [
+          "damage",
+          "status"
+        ],
+        "targeting_scope": "enemy_single",
+        "range_band": "touch",
+        "duration": "instant",
+        "effect_description": "shock \u2014 melee: 1 electric + stunned on Crit.",
+        "effect_parameters": {
+          "damage": "1_electric",
+          "status_on_crit": "stunned_1r"
+        },
+        "posture_sensitive": false,
+        "playstyles": [
+          "Brawler."
+        ],
+        "hook": "spike status"
+      },
+      "rider_slot": {
+        "slot_id": "rider_a",
+        "rider_type": "strike",
+        "sub_category": "",
+        "pool_cost": 1,
+        "restrictions": {},
+        "compatible_postures": [],
+        "effect_description": "on_Full +1 electric; on_Crit stunned.",
+        "effect_parameters": {},
+        "playstyles": [
+          "Artillery."
+        ],
+        "combo_note": "electric_strike"
+      },
+      "tier": 1
+    },
+    {
+      "power_id": "somatic_augmentation_super_speed_body",
+      "name": "Super Speed (body)",
+      "category": "somatic",
+      "sub_category": "augmentation",
+      "slot": "secondary",
+      "cast_mode": {
+        "slot_id": "cast_2",
+        "action_cost": "major",
+        "pool_cost": 2,
+        "additional_cost": {},
+        "effect_families": [
+          "stat_alteration",
+          "defense"
+        ],
+        "targeting_scope": "self",
+        "range_band": "close",
+        "duration": "scene",
+        "effect_description": "sustained speed \u2014 +1 agi, +1 defense rolls.",
+        "effect_parameters": {
+          "duration": "scene"
+        },
+        "posture_sensitive": false,
+        "playstyles": [
+          "Skirmisher",
+          "Hybrid."
+        ],
+        "hook": "mobility buff"
+      },
+      "rider_slot": {
+        "slot_id": "rider_a",
+        "rider_type": "maneuver",
+        "sub_category": "",
+        "pool_cost": 1,
+        "restrictions": {},
+        "compatible_postures": [],
+        "effect_description": "on_Full Reposition passes through enemies; +1 next attack roll.",
+        "effect_parameters": {},
+        "playstyles": [
+          "Skirmisher."
+        ],
+        "combo_note": "pass_and_strike"
+      },
+      "tier": 1
+    }
+  ],
+  "power_category_primary": "material",
+  "power_category_secondary": "somatic",
+  "tier": 3,
+  "tier_ceiling": 5,
+  "breakthroughs": [],
+  "heat": {
+    "current": 0,
+    "faction_modifiers": {}
+  },
+  "corruption": 0,
+  "relationships": {
+    "npc_pre_parent_dr__rao__father": {
+      "standing": 3,
+      "history": [],
+      "current_state": "alive_present",
+      "trust": 3
+    },
+    "npc_pre_parent_dr__rao__mother": {
+      "standing": 3,
+      "history": [],
+      "current_state": "alive_present",
+      "trust": 3
+    },
+    "npc_pre_sibling_akhil_rao": {
+      "standing": 3,
+      "history": [],
+      "current_state": "alive_present",
+      "trust": 3
+    },
+    "npc_pre_extended_family_grandmother__paternal_maternal": {
+      "standing": 2,
+      "history": [],
+      "current_state": "alive_present",
+      "trust": 2
+    },
+    "npc_pre_extended_family_cousin__bergen_county": {
+      "standing": 1,
+      "history": [],
+      "current_state": "alive_present",
+      "trust": 1
+    },
+    "npc_pre_extended_family_aunt__bergen_county": {
+      "standing": 1,
+      "history": [],
+      "current_state": "alive_present",
+      "trust": 1
+    },
+    "npc_pre_extended_family_uncle__bergen_county": {
+      "standing": 1,
+      "history": [],
+      "current_state": "alive_present",
+      "trust": 1
+    },
+    "npc_pre_friend_denice": {
+      "standing": 2,
+      "history": [],
+      "current_state": "alive_present",
+      "trust": 2
+    },
+    "npc_pre_friend_alex": {
+      "standing": 2,
+      "history": [],
+      "current_state": "alive_present",
+      "trust": 2
+    },
+    "npc_pre_friend_bella": {
+      "standing": 1,
+      "history": [],
+      "current_state": "alive_present",
+      "trust": 1
+    },
+    "npc_pre_friend_henry": {
+      "standing": 2,
+      "history": [],
+      "current_state": "alive_present",
+      "trust": 2
+    },
+    "npc_pre_friend_saurabh": {
+      "standing": 2,
+      "history": [],
+      "current_state": "alive_present",
+      "trust": 2
+    },
+    "npc_pre_coworker_jason": {
+      "standing": 2,
+      "history": [],
+      "current_state": "alive_present",
+      "trust": 2
+    },
+    "npc_pre_coworker_jessica": {
+      "standing": 1,
+      "history": [],
+      "current_state": "alive_present",
+      "trust": 1
+    },
+    "npc_pre_coworker_zyra": {
+      "standing": 0,
+      "history": [],
+      "current_state": "alive_present",
+      "trust": 0
+    },
+    "npc_pre_coworker_kyle": {
+      "standing": 1,
+      "history": [],
+      "current_state": "alive_present",
+      "trust": 1
+    },
+    "npc_pre_coworker_karthik": {
+      "standing": 1,
+      "history": [],
+      "current_state": "alive_present",
+      "trust": 1
+    },
+    "npc_pre_coworker_gordon": {
+      "standing": 0,
+      "history": [],
+      "current_state": "alive_present",
+      "trust": 0
+    },
+    "npc_district_captain_morales": {
+      "standing": 2,
+      "history": [],
+      "current_state": "alive_present",
+      "trust": 2
+    },
+    "npc_patrol_sgt_desouza": {
+      "standing": 3,
+      "history": [],
+      "current_state": "alive_present",
+      "trust": 3
+    },
+    "npc_rival_lt_chen": {
+      "standing": 0,
+      "history": [],
+      "current_state": "alive_present",
+      "trust": 0
+    },
+    "npc_contact_kearny_village_elder": {
+      "standing": 0,
+      "history": [],
+      "current_state": "alive_present",
+      "trust": 0
+    },
+    "threat_ic_patrol_lt_named_rival_human_0": {
+      "standing": -2,
+      "history": [],
+      "current_state": "alive_present",
+      "trust": 0
+    },
+    "threat_ic_patrol_lt_raider_band_reaper_1": {
+      "standing": -2,
+      "history": [],
+      "current_state": "alive_present",
+      "trust": 0
+    },
+    "npc-tie-dr-rao-father-00": {
+      "standing": 2,
+      "current_state": "alive_present",
+      "trust": 2
+    },
+    "npc-tie-dr-rao-mother-01": {
+      "standing": 2,
+      "current_state": "alive_present",
+      "trust": 2
+    },
+    "npc-tie-akhil-rao-02": {
+      "standing": 2,
+      "current_state": "alive_present",
+      "trust": 2
+    },
+    "npc-tie-grandmother-paternal-maternal-03": {
+      "standing": 2,
+      "current_state": "alive_present",
+      "trust": 2
+    },
+    "npc-tie-cousin-bergen-county-04": {
+      "standing": 2,
+      "current_state": "alive_present",
+      "trust": 2
+    },
+    "npc-tie-aunt-bergen-county-05": {
+      "standing": 2,
+      "current_state": "alive_present",
+      "trust": 2
+    },
+    "npc-tie-uncle-bergen-county-06": {
+      "standing": 2,
+      "current_state": "alive_present",
+      "trust": 2
+    },
+    "npc-tie-denice-07": {
+      "standing": 2,
+      "current_state": "alive_present",
+      "trust": 2
+    },
+    "npc-tie-alex-08": {
+      "standing": 2,
+      "current_state": "alive_present",
+      "trust": 2
+    },
+    "npc-tie-bella-09": {
+      "standing": 2,
+      "current_state": "alive_present",
+      "trust": 2
+    },
+    "npc-tie-henry-10": {
+      "standing": 2,
+      "current_state": "alive_present",
+      "trust": 2
+    },
+    "npc-tie-saurabh-11": {
+      "standing": 2,
+      "current_state": "alive_present",
+      "trust": 2
+    },
+    "npc-tie-jason-12": {
+      "standing": 2,
+      "current_state": "alive_present",
+      "trust": 2
+    },
+    "npc-tie-jessica-13": {
+      "standing": 2,
+      "current_state": "alive_present",
+      "trust": 2
+    },
+    "npc-tie-zyra-14": {
+      "standing": 2,
+      "current_state": "alive_present",
+      "trust": 2
+    },
+    "npc-tie-kyle-15": {
+      "standing": 2,
+      "current_state": "alive_present",
+      "trust": 2
+    },
+    "npc-tie-karthik-16": {
+      "standing": 2,
+      "current_state": "alive_present",
+      "trust": 2
+    },
+    "npc-tie-gordon-17": {
+      "standing": 2,
+      "current_state": "alive_present",
+      "trust": 2
+    }
+  },
+  "inventory": [
+    {
+      "id": "inv_shake_loupes",
+      "name": "Surgical loupes",
+      "description": "2.5x magnification, custom-fit, well-worn case. The single most personal piece of professional kit Shake owns.",
+      "quantity": 1,
+      "mechanical_effect": null
+    },
+    {
+      "id": "inv_shake_penlight",
+      "name": "Penlight",
+      "description": "Aluminum, scratched. Pupillary check, throat, the dark inside a wound.",
+      "quantity": 1,
+      "mechanical_effect": null
+    },
+    {
+      "id": "inv_shake_history_paperback",
+      "name": "Battered military history paperback",
+      "description": "Spine cracked, dog-eared. Half-read on call-room nights.",
+      "quantity": 1,
+      "mechanical_effect": null
+    }
+  ],
+  "location": "iron_crown_newark",
+  "history": [],
+  "statuses": [],
+  "skills": {
+    "surgery": 5,
+    "first_aid": 5,
+    "pharmacology": 4,
+    "field_medicine": 3,
+    "literacy": 4,
+    "bureaucracy": 3,
+    "command": 5,
+    "instruction": 3,
+    "negotiation": 2,
+    "brawling": 2,
+    "history": 2,
+    "tactics": 3,
+    "urban_movement": 2,
+    "intimidation": 1
+  },
+  "resources": {},
+  "goals": [],
+  "session_zero_choices": {
+    "pre_emergence_raw": {
+      "name": "Abhishek Rao",
+      "age": 30,
+      "species": "baseline",
+      "profession": "Vascular surgery resident at NYU, PGY-4 academic chief. Rotates Tisch/Bellevue/VA. Carotid endarterectomies, AAA repairs, dialysis access, emergency limb revasc. Clinic. Chief runs resident ed curriculum, call schedule, mediates attendings/juniors. Goes by Shake.",
+      "personality": "Diplomatic but direct. Patient and fair, not gentle. Curious, builds frameworks. Loose with paperwork, tight on high-stakes. Overthinks resolved situations. Values loyalty and dependability. Calm, decisive under pressure. Heavy reader. Military history, action RPGs. Lapsed TKD.",
+      "npcs_text": "",
+      "pre_emergence_location": "pre_manhattan"
+    },
+    "pre_emergence": {
+      "name": "Abhishek Rao",
+      "age_at_onset": 30,
+      "species": "baseline",
+      "self_description": "[Profession] Vascular surgery resident at NYU, PGY-4 academic chief. Rotates Tisch/Bellevue/VA. Carotid endarterectomies, AAA repairs, dialysis access, emergency limb revasc. Clinic. Chief runs resident ed curriculum, call schedule, mediates attendings/juniors. Goes by Shake.\n\n[Personality] Diplomatic but direct. Patient and fair, not gentle. Curious, builds frameworks. Loose with paperwork, tight on high-stakes. Overthinks resolved situations. Values loyalty and dependability. Calm, decisive under pressure. Heavy reader. Military history, action RPGs. Lapsed TKD.",
+      "attribute_deltas": {
+        "strength": 0,
+        "agility": 2,
+        "perception": 2,
+        "will": 2,
+        "insight": 2,
+        "might": 0
+      },
+      "skills": {
+        "surgery": 5,
+        "first_aid": 5,
+        "pharmacology": 4,
+        "field_medicine": 3,
+        "literacy": 4,
+        "bureaucracy": 3,
+        "command": 3,
+        "instruction": 3,
+        "negotiation": 2,
+        "brawling": 2,
+        "history": 2,
+        "tactics": 2,
+        "urban_movement": 1
+      },
+      "generated_npcs": [
+        {
+          "npc_id": "npc_pre_parent_dr__rao__father",
+          "display_name": "Dr. Rao (father)",
+          "scene_id": "pre_emergence",
+          "role": "bond",
+          "standing": 3,
+          "trust": 3,
+          "relation": "parent",
+          "distance": "regional",
+          "tension": 1,
+          "hooks": [
+            "Vascular surgeon in Newark, Delaware. Inventive, scattered, entrepreneurial. Same specialty as Shake \u2014 admiration mixed with the friction of two surgeons in one family."
+          ]
+        },
+        {
+          "npc_id": "npc_pre_parent_dr__rao__mother",
+          "display_name": "Dr. Rao (mother)",
+          "scene_id": "pre_emergence",
+          "role": "bond",
+          "standing": 3,
+          "trust": 3,
+          "relation": "parent",
+          "distance": "regional",
+          "tension": 0,
+          "hooks": [
+            "Retired general surgeon, Newark, Delaware. Grounded counterweight to the father."
+          ]
+        },
+        {
+          "npc_id": "npc_pre_sibling_akhil_rao",
+          "display_name": "Akhil Rao",
+          "scene_id": "pre_emergence",
+          "role": "bond",
+          "standing": 3,
+          "trust": 3,
+          "relation": "sibling",
+          "distance": "near",
+          "tension": 0,
+          "hooks": [
+            "Younger brother. Medical student at Mount Sinai \u2014 also in Manhattan."
+          ]
+        },
+        {
+          "npc_id": "npc_pre_extended_family_grandmother__paternal_maternal",
+          "display_name": "Grandmother (paternal/maternal)",
+          "scene_id": "pre_emergence",
+          "role": "bond",
+          "standing": 2,
+          "trust": 2,
+          "relation": "extended_family",
+          "distance": "regional",
+          "tension": 0,
+          "hooks": [
+            "Lives with extended family in Bergen County, NJ."
+          ]
+        },
+        {
+          "npc_id": "npc_pre_extended_family_cousin__bergen_county",
+          "display_name": "Cousin (Bergen County)",
+          "scene_id": "pre_emergence",
+          "role": "contact",
+          "standing": 1,
+          "trust": 1,
+          "relation": "extended_family",
+          "distance": "regional",
+          "tension": 0,
+          "hooks": [
+            "Bergen County, NJ."
+          ]
+        },
+        {
+          "npc_id": "npc_pre_extended_family_aunt__bergen_county",
+          "display_name": "Aunt (Bergen County)",
+          "scene_id": "pre_emergence",
+          "role": "contact",
+          "standing": 1,
+          "trust": 1,
+          "relation": "extended_family",
+          "distance": "regional",
+          "tension": 0,
+          "hooks": [
+            "Bergen County, NJ \u2014 sibling of one of Shake's parents."
+          ]
+        },
+        {
+          "npc_id": "npc_pre_extended_family_uncle__bergen_county",
+          "display_name": "Uncle (Bergen County)",
+          "scene_id": "pre_emergence",
+          "role": "contact",
+          "standing": 1,
+          "trust": 1,
+          "relation": "extended_family",
+          "distance": "regional",
+          "tension": 0,
+          "hooks": [
+            "Bergen County, NJ \u2014 partner of the aunt."
+          ]
+        },
+        {
+          "npc_id": "npc_pre_friend_denice",
+          "display_name": "Denice",
+          "scene_id": "pre_emergence",
+          "role": "bond",
+          "standing": 2,
+          "trust": 2,
+          "relation": "friend",
+          "distance": "distant",
+          "tension": 0,
+          "hooks": [
+            "College friend. OBGYN in Chicago. Kind, quiet, iconoclastic."
+          ]
+        },
+        {
+          "npc_id": "npc_pre_friend_alex",
+          "display_name": "Alex",
+          "scene_id": "pre_emergence",
+          "role": "bond",
+          "standing": 2,
+          "trust": 2,
+          "relation": "friend",
+          "distance": "regional",
+          "tension": 0,
+          "hooks": [
+            "College friend. Radiologist in Philadelphia. Laconic, fearless."
+          ]
+        },
+        {
+          "npc_id": "npc_pre_friend_bella",
+          "display_name": "Bella",
+          "scene_id": "pre_emergence",
+          "role": "contact",
+          "standing": 1,
+          "trust": 1,
+          "relation": "friend",
+          "distance": "distant",
+          "tension": 0,
+          "hooks": [
+            "College friend. Finance career. Organized, busy."
+          ]
+        },
+        {
+          "npc_id": "npc_pre_friend_henry",
+          "display_name": "Henry",
+          "scene_id": "pre_emergence",
+          "role": "bond",
+          "standing": 2,
+          "trust": 2,
+          "relation": "friend",
+          "distance": "distant",
+          "tension": 0,
+          "hooks": [
+            "Med school friend. Ophthalmologist in Boston. Gregarious."
+          ]
+        },
+        {
+          "npc_id": "npc_pre_friend_saurabh",
+          "display_name": "Saurabh",
+          "scene_id": "pre_emergence",
+          "role": "bond",
+          "standing": 2,
+          "trust": 2,
+          "relation": "friend",
+          "distance": "distant",
+          "tension": 0,
+          "hooks": [
+            "Med school friend. Cardiologist in San Diego. Analytical."
+          ]
+        },
+        {
+          "npc_id": "npc_pre_coworker_jason",
+          "display_name": "Jason",
+          "scene_id": "pre_emergence",
+          "role": "bond",
+          "standing": 2,
+          "trust": 2,
+          "relation": "coworker",
+          "distance": "near",
+          "tension": 0,
+          "hooks": [
+            "Senior co-resident at NYU. Wry, joking, blunt. Closest among coworkers."
+          ]
+        },
+        {
+          "npc_id": "npc_pre_coworker_jessica",
+          "display_name": "Jessica",
+          "scene_id": "pre_emergence",
+          "role": "contact",
+          "standing": 1,
+          "trust": 1,
+          "relation": "coworker",
+          "distance": "near",
+          "tension": 0,
+          "hooks": [
+            "Junior co-resident at NYU. Kind, blunt, efficient."
+          ]
+        },
+        {
+          "npc_id": "npc_pre_coworker_zyra",
+          "display_name": "Zyra",
+          "scene_id": "pre_emergence",
+          "role": "contact",
+          "standing": 0,
+          "trust": 0,
+          "relation": "coworker",
+          "distance": "near",
+          "tension": 0,
+          "hooks": [
+            "Peer co-resident. Bubbly. Shake doesn't know her well."
+          ]
+        },
+        {
+          "npc_id": "npc_pre_coworker_kyle",
+          "display_name": "Kyle",
+          "scene_id": "pre_emergence",
+          "role": "contact",
+          "standing": 1,
+          "trust": 1,
+          "relation": "coworker",
+          "distance": "near",
+          "tension": 1,
+          "hooks": [
+            "Senior co-resident. Anxious and fiery, but protective of his juniors."
+          ]
+        },
+        {
+          "npc_id": "npc_pre_coworker_karthik",
+          "display_name": "Karthik",
+          "scene_id": "pre_emergence",
+          "role": "contact",
+          "standing": 1,
+          "trust": 1,
+          "relation": "coworker",
+          "distance": "near",
+          "tension": 0,
+          "hooks": [
+            "Junior co-resident. Analytical, friendly."
+          ]
+        },
+        {
+          "npc_id": "npc_pre_coworker_gordon",
+          "display_name": "Gordon",
+          "scene_id": "pre_emergence",
+          "role": "contact",
+          "standing": 0,
+          "trust": 0,
+          "relation": "coworker",
+          "distance": "near",
+          "tension": 0,
+          "hooks": [
+            "Surgical intern. Suave."
+          ]
+        }
+      ],
+      "npc_seeds": [
+        {
+          "name": "Dr. Rao (father)",
+          "relation": "parent",
+          "location": "regional",
+          "descriptor": "Vascular surgeon in Newark, Delaware. Inventive, scattered, entrepreneurial. Same specialty as Shake \u2014 admiration mixed with the friction of two surgeons in one family.",
+          "status": "alive",
+          "npc_id": "npc_pre_parent_dr__rao__father"
+        },
+        {
+          "name": "Dr. Rao (mother)",
+          "relation": "parent",
+          "location": "regional",
+          "descriptor": "Retired general surgeon, Newark, Delaware. Grounded counterweight to the father.",
+          "status": "alive",
+          "npc_id": "npc_pre_parent_dr__rao__mother"
+        },
+        {
+          "name": "Akhil Rao",
+          "relation": "sibling",
+          "location": "near",
+          "descriptor": "Younger brother. Medical student at Mount Sinai \u2014 also in Manhattan.",
+          "status": "alive",
+          "npc_id": "npc_pre_sibling_akhil_rao"
+        },
+        {
+          "name": "Grandmother (paternal/maternal)",
+          "relation": "extended_family",
+          "location": "regional",
+          "descriptor": "Lives with extended family in Bergen County, NJ.",
+          "status": "alive",
+          "npc_id": "npc_pre_extended_family_grandmother__paternal_maternal"
+        },
+        {
+          "name": "Cousin (Bergen County)",
+          "relation": "extended_family",
+          "location": "regional",
+          "descriptor": "Bergen County, NJ.",
+          "status": "alive",
+          "npc_id": "npc_pre_extended_family_cousin__bergen_county"
+        },
+        {
+          "name": "Aunt (Bergen County)",
+          "relation": "extended_family",
+          "location": "regional",
+          "descriptor": "Bergen County, NJ \u2014 sibling of one of Shake's parents.",
+          "status": "alive",
+          "npc_id": "npc_pre_extended_family_aunt__bergen_county"
+        },
+        {
+          "name": "Uncle (Bergen County)",
+          "relation": "extended_family",
+          "location": "regional",
+          "descriptor": "Bergen County, NJ \u2014 partner of the aunt.",
+          "status": "alive",
+          "npc_id": "npc_pre_extended_family_uncle__bergen_county"
+        },
+        {
+          "name": "Denice",
+          "relation": "friend",
+          "location": "distant",
+          "descriptor": "College friend. OBGYN in Chicago. Kind, quiet, iconoclastic.",
+          "status": "alive",
+          "npc_id": "npc_pre_friend_denice"
+        },
+        {
+          "name": "Alex",
+          "relation": "friend",
+          "location": "regional",
+          "descriptor": "College friend. Radiologist in Philadelphia. Laconic, fearless.",
+          "status": "alive",
+          "npc_id": "npc_pre_friend_alex"
+        },
+        {
+          "name": "Bella",
+          "relation": "friend",
+          "location": "distant",
+          "descriptor": "College friend. Finance career. Organized, busy.",
+          "status": "alive",
+          "npc_id": "npc_pre_friend_bella"
+        },
+        {
+          "name": "Henry",
+          "relation": "friend",
+          "location": "distant",
+          "descriptor": "Med school friend. Ophthalmologist in Boston. Gregarious.",
+          "status": "alive",
+          "npc_id": "npc_pre_friend_henry"
+        },
+        {
+          "name": "Saurabh",
+          "relation": "friend",
+          "location": "distant",
+          "descriptor": "Med school friend. Cardiologist in San Diego. Analytical.",
+          "status": "alive",
+          "npc_id": "npc_pre_friend_saurabh"
+        },
+        {
+          "name": "Jason",
+          "relation": "coworker",
+          "location": "near",
+          "descriptor": "Senior co-resident at NYU. Wry, joking, blunt. Closest among coworkers.",
+          "status": "alive",
+          "npc_id": "npc_pre_coworker_jason"
+        },
+        {
+          "name": "Jessica",
+          "relation": "coworker",
+          "location": "near",
+          "descriptor": "Junior co-resident at NYU. Kind, blunt, efficient.",
+          "status": "alive",
+          "npc_id": "npc_pre_coworker_jessica"
+        },
+        {
+          "name": "Zyra",
+          "relation": "coworker",
+          "location": "near",
+          "descriptor": "Peer co-resident. Bubbly. Shake doesn't know her well.",
+          "status": "alive",
+          "npc_id": "npc_pre_coworker_zyra"
+        },
+        {
+          "name": "Kyle",
+          "relation": "coworker",
+          "location": "near",
+          "descriptor": "Senior co-resident. Anxious and fiery, but protective of his juniors.",
+          "status": "alive",
+          "npc_id": "npc_pre_coworker_kyle"
+        },
+        {
+          "name": "Karthik",
+          "relation": "coworker",
+          "location": "near",
+          "descriptor": "Junior co-resident. Analytical, friendly.",
+          "status": "alive",
+          "npc_id": "npc_pre_coworker_karthik"
+        },
+        {
+          "name": "Gordon",
+          "relation": "coworker",
+          "location": "near",
+          "descriptor": "Surgical intern. Suave.",
+          "status": "alive",
+          "npc_id": "npc_pre_coworker_gordon"
+        }
+      ],
+      "history": [],
+      "inventory": [
+        {
+          "id": "inv_shake_loupes",
+          "name": "Surgical loupes",
+          "description": "2.5x magnification, custom-fit, well-worn case. The single most personal piece of professional kit Shake owns.",
+          "quantity": 1
+        },
+        {
+          "id": "inv_shake_penlight",
+          "name": "Penlight",
+          "description": "Aluminum, scratched. Pupillary check, throat, the dark inside a wound.",
+          "quantity": 1
+        },
+        {
+          "id": "inv_shake_history_paperback",
+          "name": "Battered military history paperback",
+          "description": "Spine cracked, dog-eared. Half-read on call-room nights.",
+          "quantity": 1
+        }
+      ],
+      "region": "pre_manhattan"
+    },
+    "pre_emergence_classifier": {
+      "attributes": {
+        "strength": 6,
+        "agility": 8,
+        "perception": 8,
+        "will": 8,
+        "insight": 8,
+        "might": 6,
+        "rationale": "PGY-4 vascular surgery resident, academic chief. Agility d8 for fine-motor microsurgery (anastomoses, endarterectomies) reinforced by lapsed TKD. Insight d8 for diagnostic pattern recognition and explicit system-builder temperament. Perception d8 for OR vigilance and clinical noticing (pulses, warm feet, ulcers). Will d8 for chief-of-residents command, schedule-building, and mediating attendings/juniors. Strength and Might held at baseline d6: 5'11\" 140lb slim build, not an endurance athlete; long shifts notwithstanding, the profession's load is cognitive and fine-motor, not muscular. No d10 \u2014 selected academic chief is professionalism, not the genuine outlier excellence the d10 reserves."
+      },
+      "skills": {
+        "surgery": 5,
+        "first_aid": 5,
+        "pharmacology": 4,
+        "field_medicine": 3,
+        "literacy": 4,
+        "bureaucracy": 3,
+        "command": 3,
+        "instruction": 3,
+        "negotiation": 2,
+        "brawling": 2,
+        "history": 2,
+        "tactics": 2,
+        "urban_movement": 1,
+        "rationale": "Vascular surgery cluster at professional ceiling: surgery 5, first_aid 5, pharmacology 4, field_medicine 3 (vascular emergencies and trauma exposure at Bellevue/VA). Literacy 4 and bureaucracy 3 from academic chief duties \u2014 curriculum, charting, publication-adjacent work. Command 3 and instruction 3 from running the resident education curriculum and mediating between attendings and juniors. Negotiation 2 from the same mediator role. Brawling 2 from lapsed Tae Kwon Do. History 2 and tactics 2 from stated military history reading and action RPG interest. Urban_movement 1 from Manhattan daily life."
+      },
+      "npcs": [
+        {
+          "name": "Dr. Rao (father)",
+          "relation": "parent",
+          "role": "bond",
+          "bond": {
+            "trust": 3,
+            "loyalty": 3,
+            "tension": 1
+          },
+          "distance": "regional",
+          "notes": "Vascular surgeon in Newark, Delaware. Inventive, scattered, entrepreneurial. Same specialty as Shake \u2014 admiration mixed with the friction of two surgeons in one family."
+        },
+        {
+          "name": "Dr. Rao (mother)",
+          "relation": "parent",
+          "role": "bond",
+          "bond": {
+            "trust": 3,
+            "loyalty": 3,
+            "tension": 0
+          },
+          "distance": "regional",
+          "notes": "Retired general surgeon, Newark, Delaware. Grounded counterweight to the father."
+        },
+        {
+          "name": "Akhil Rao",
+          "relation": "sibling",
+          "role": "bond",
+          "bond": {
+            "trust": 3,
+            "loyalty": 3,
+            "tension": 0
+          },
+          "distance": "near",
+          "notes": "Younger brother. Medical student at Mount Sinai \u2014 also in Manhattan."
+        },
+        {
+          "name": "Grandmother (paternal/maternal)",
+          "relation": "extended_family",
+          "role": "bond",
+          "bond": {
+            "trust": 2,
+            "loyalty": 2,
+            "tension": 0
+          },
+          "distance": "regional",
+          "notes": "Lives with extended family in Bergen County, NJ."
+        },
+        {
+          "name": "Cousin (Bergen County)",
+          "relation": "extended_family",
+          "role": "contact",
+          "bond": {
+            "trust": 1,
+            "loyalty": 1,
+            "tension": 0
+          },
+          "distance": "regional",
+          "notes": "Bergen County, NJ."
+        },
+        {
+          "name": "Aunt (Bergen County)",
+          "relation": "extended_family",
+          "role": "contact",
+          "bond": {
+            "trust": 1,
+            "loyalty": 1,
+            "tension": 0
+          },
+          "distance": "regional",
+          "notes": "Bergen County, NJ \u2014 sibling of one of Shake's parents."
+        },
+        {
+          "name": "Uncle (Bergen County)",
+          "relation": "extended_family",
+          "role": "contact",
+          "bond": {
+            "trust": 1,
+            "loyalty": 1,
+            "tension": 0
+          },
+          "distance": "regional",
+          "notes": "Bergen County, NJ \u2014 partner of the aunt."
+        },
+        {
+          "name": "Denice",
+          "relation": "friend",
+          "role": "bond",
+          "bond": {
+            "trust": 2,
+            "loyalty": 2,
+            "tension": 0
+          },
+          "distance": "distant",
+          "notes": "College friend. OBGYN in Chicago. Kind, quiet, iconoclastic."
+        },
+        {
+          "name": "Alex",
+          "relation": "friend",
+          "role": "bond",
+          "bond": {
+            "trust": 2,
+            "loyalty": 2,
+            "tension": 0
+          },
+          "distance": "regional",
+          "notes": "College friend. Radiologist in Philadelphia. Laconic, fearless."
+        },
+        {
+          "name": "Bella",
+          "relation": "friend",
+          "role": "contact",
+          "bond": {
+            "trust": 1,
+            "loyalty": 1,
+            "tension": 0
+          },
+          "distance": "distant",
+          "notes": "College friend. Finance career. Organized, busy."
+        },
+        {
+          "name": "Henry",
+          "relation": "friend",
+          "role": "bond",
+          "bond": {
+            "trust": 2,
+            "loyalty": 2,
+            "tension": 0
+          },
+          "distance": "distant",
+          "notes": "Med school friend. Ophthalmologist in Boston. Gregarious."
+        },
+        {
+          "name": "Saurabh",
+          "relation": "friend",
+          "role": "bond",
+          "bond": {
+            "trust": 2,
+            "loyalty": 2,
+            "tension": 0
+          },
+          "distance": "distant",
+          "notes": "Med school friend. Cardiologist in San Diego. Analytical."
+        },
+        {
+          "name": "Jason",
+          "relation": "coworker",
+          "role": "bond",
+          "bond": {
+            "trust": 2,
+            "loyalty": 2,
+            "tension": 0
+          },
+          "distance": "near",
+          "notes": "Senior co-resident at NYU. Wry, joking, blunt. Closest among coworkers."
+        },
+        {
+          "name": "Jessica",
+          "relation": "coworker",
+          "role": "contact",
+          "bond": {
+            "trust": 1,
+            "loyalty": 1,
+            "tension": 0
+          },
+          "distance": "near",
+          "notes": "Junior co-resident at NYU. Kind, blunt, efficient."
+        },
+        {
+          "name": "Zyra",
+          "relation": "coworker",
+          "role": "contact",
+          "bond": {
+            "trust": 0,
+            "loyalty": 0,
+            "tension": 0
+          },
+          "distance": "near",
+          "notes": "Peer co-resident. Bubbly. Shake doesn't know her well."
+        },
+        {
+          "name": "Kyle",
+          "relation": "coworker",
+          "role": "contact",
+          "bond": {
+            "trust": 1,
+            "loyalty": 1,
+            "tension": 1
+          },
+          "distance": "near",
+          "notes": "Senior co-resident. Anxious and fiery, but protective of his juniors."
+        },
+        {
+          "name": "Karthik",
+          "relation": "coworker",
+          "role": "contact",
+          "bond": {
+            "trust": 1,
+            "loyalty": 1,
+            "tension": 0
+          },
+          "distance": "near",
+          "notes": "Junior co-resident. Analytical, friendly."
+        },
+        {
+          "name": "Gordon",
+          "relation": "coworker",
+          "role": "contact",
+          "bond": {
+            "trust": 0,
+            "loyalty": 0,
+            "tension": 0
+          },
+          "distance": "near",
+          "notes": "Surgical intern. Suave."
+        }
+      ],
+      "inventory_seeds": [
+        {
+          "id": "inv_shake_loupes",
+          "name": "Surgical loupes",
+          "description": "2.5x magnification, custom-fit, well-worn case. The single most personal piece of professional kit Shake owns.",
+          "quantity": 1
+        },
+        {
+          "id": "inv_shake_penlight",
+          "name": "Penlight",
+          "description": "Aluminum, scratched. Pupillary check, throat, the dark inside a wound.",
+          "quantity": 1
+        },
+        {
+          "id": "inv_shake_history_paperback",
+          "name": "Battered military history paperback",
+          "description": "Spine cracked, dog-eared. Half-read on call-room nights.",
+          "quantity": 1
+        }
+      ]
+    },
+    "subcategory_offer": [
+      "vitality",
+      "auratic",
+      "sympathetic",
+      "divinatory",
+      "machinal",
+      "probabilistic",
+      "reach",
+      "elemental",
+      "radiant",
+      "perceptive",
+      "sonic",
+      "augmentation"
+    ],
+    "subcategories_picked": [
+      "elemental",
+      "augmentation"
+    ],
+    "power_offer": [
+      {
+        "id": "material_elemental_aerokinesis",
+        "name": "Aerokinesis",
+        "category": "material",
+        "sub_category": "elemental",
+        "description": "Control wind.",
+        "playstyles": [
+          "Skirmisher",
+          "Controller"
+        ],
+        "tier": 1
+      },
+      {
+        "id": "material_elemental_charismatic_draw",
+        "name": "Charismatic Draw",
+        "category": "material",
+        "sub_category": "elemental",
+        "description": "Bystanders focus on you involuntarily.",
+        "playstyles": [
+          "Diplomat",
+          "Support"
+        ],
+        "tier": 1
+      },
+      {
+        "id": "material_elemental_cryokinesis",
+        "name": "Cryokinesis",
+        "category": "material",
+        "sub_category": "elemental",
+        "description": "Generate cold and ice.",
+        "playstyles": [
+          "Controller",
+          "Area Denier"
+        ],
+        "tier": 1
+      },
+      {
+        "id": "material_elemental_electrokinesis",
+        "name": "Electrokinesis",
+        "category": "material",
+        "sub_category": "elemental",
+        "description": "Generate electricity (material control, distinct from Electrical Anatomy).",
+        "playstyles": [
+          "Artillery",
+          "Area Denier"
+        ],
+        "tier": 1
+      },
+      {
+        "id": "material_elemental_geokinesis",
+        "name": "Geokinesis",
+        "category": "material",
+        "sub_category": "elemental",
+        "description": "Control earth and stone.",
+        "playstyles": [
+          "Tank",
+          "Area Denier"
+        ],
+        "tier": 1
+      },
+      {
+        "id": "material_elemental_hydrokinesis",
+        "name": "Hydrokinesis",
+        "category": "material",
+        "sub_category": "elemental",
+        "description": "Control water.",
+        "playstyles": [
+          "Controller",
+          "Area Denier",
+          "utility"
+        ],
+        "tier": 1
+      },
+      {
+        "id": "material_elemental_magmakinesis",
+        "name": "Magma-kinesis",
+        "category": "material",
+        "sub_category": "elemental",
+        "description": "Molten rock hybrid.",
+        "playstyles": [
+          "Area Denier",
+          "Eradicator"
+        ],
+        "tier": 1
+      },
+      {
+        "id": "material_elemental_pyrokinesis",
+        "name": "Pyrokinesis",
+        "category": "material",
+        "sub_category": "elemental",
+        "description": "Generate and control fire.",
+        "playstyles": [
+          "Artillery",
+          "Area Denier",
+          "Sustained Caster"
+        ],
+        "tier": 1
+      },
+      {
+        "id": "somatic_augmentation_enhanced_senses",
+        "name": "Enhanced Senses",
+        "category": "somatic",
+        "sub_category": "augmentation",
+        "description": "Hearing, smell, sight beyond human thresholds.",
+        "playstyles": [
+          "Support",
+          "Assassin (setup)",
+          "Investigator"
+        ],
+        "tier": 1
+      },
+      {
+        "id": "somatic_augmentation_hyper_agility",
+        "name": "Hyper Agility",
+        "category": "somatic",
+        "sub_category": "augmentation",
+        "description": "Impossible balance and acrobatic maneuvers.",
+        "playstyles": [
+          "Skirmisher",
+          "Trickster"
+        ],
+        "tier": 1
+      },
+      {
+        "id": "somatic_augmentation_iron_body",
+        "name": "Iron Body",
+        "category": "somatic",
+        "sub_category": "augmentation",
+        "description": "Skin resistant to piercing, impact, burns.",
+        "playstyles": [
+          "Tank"
+        ],
+        "tier": 1
+      },
+      {
+        "id": "somatic_augmentation_lung_capacity",
+        "name": "Lung Capacity",
+        "category": "somatic",
+        "sub_category": "augmentation",
+        "description": "Breath-adapted physiology.",
+        "playstyles": [
+          "Support",
+          "Tank (niche)",
+          "utility"
+        ],
+        "tier": 1
+      },
+      {
+        "id": "somatic_augmentation_plant_integration",
+        "name": "Plant Integration",
+        "category": "somatic",
+        "sub_category": "augmentation",
+        "description": "Fuse with vegetation; draw sustenance or control.",
+        "playstyles": [
+          "Controller",
+          "Area Denier",
+          "Support"
+        ],
+        "tier": 1
+      },
+      {
+        "id": "somatic_augmentation_super_reflexes",
+        "name": "Super Reflexes",
+        "category": "somatic",
+        "sub_category": "augmentation",
+        "description": "React faster than physical thresholds allow.",
+        "playstyles": [
+          "Skirmisher",
+          "Support",
+          "Tank"
+        ],
+        "tier": 1
+      },
+      {
+        "id": "somatic_augmentation_super_speed_body",
+        "name": "Super Speed (body)",
+        "category": "somatic",
+        "sub_category": "augmentation",
+        "description": "Move at multiplied rate; subjective time distortion.",
+        "playstyles": [
+          "Skirmisher",
+          "Hybrid",
+          "Brawler"
+        ],
+        "tier": 1
+      },
+      {
+        "id": "somatic_augmentation_super_strength_body",
+        "name": "Super Strength (body)",
+        "category": "somatic",
+        "sub_category": "augmentation",
+        "description": "Lift, crush, strike with force far beyond human.",
+        "playstyles": [
+          "Brawler",
+          "Tank"
+        ],
+        "tier": 1
+      }
+    ],
+    "power_pick": {
+      "powers": [
+        {
+          "power_id": "material_elemental_electrokinesis",
+          "name": "Electrokinesis",
+          "category": "material",
+          "sub_category": "elemental",
+          "slot": "primary",
+          "cast_mode": {
+            "slot_id": "cast_1",
+            "action_cost": "minor",
+            "pool_cost": 1,
+            "additional_cost": {},
+            "effect_families": [
+              "damage",
+              "status"
+            ],
+            "targeting_scope": "enemy_single",
+            "range_band": "touch",
+            "duration": "instant",
+            "effect_description": "shock \u2014 melee: 1 electric + stunned on Crit.",
+            "effect_parameters": {
+              "damage": "1_electric",
+              "status_on_crit": "stunned_1r"
+            },
+            "posture_sensitive": false,
+            "playstyles": [
+              "Brawler."
+            ],
+            "hook": "spike status"
+          },
+          "rider_slot": {
+            "slot_id": "rider_a",
+            "rider_type": "strike",
+            "sub_category": "",
+            "pool_cost": 1,
+            "restrictions": {},
+            "compatible_postures": [],
+            "effect_description": "on_Full +1 electric; on_Crit stunned.",
+            "effect_parameters": {},
+            "playstyles": [
+              "Artillery."
+            ],
+            "combo_note": "electric_strike"
+          },
+          "tier": 1
+        },
+        {
+          "power_id": "somatic_augmentation_super_speed_body",
+          "name": "Super Speed (body)",
+          "category": "somatic",
+          "sub_category": "augmentation",
+          "slot": "secondary",
+          "cast_mode": {
+            "slot_id": "cast_2",
+            "action_cost": "major",
+            "pool_cost": 2,
+            "additional_cost": {},
+            "effect_families": [
+              "stat_alteration",
+              "defense"
+            ],
+            "targeting_scope": "self",
+            "range_band": "close",
+            "duration": "scene",
+            "effect_description": "sustained speed \u2014 +1 agi, +1 defense rolls.",
+            "effect_parameters": {
+              "duration": "scene"
+            },
+            "posture_sensitive": false,
+            "playstyles": [
+              "Skirmisher",
+              "Hybrid."
+            ],
+            "hook": "mobility buff"
+          },
+          "rider_slot": {
+            "slot_id": "rider_a",
+            "rider_type": "maneuver",
+            "sub_category": "",
+            "pool_cost": 1,
+            "restrictions": {},
+            "compatible_postures": [],
+            "effect_description": "on_Full Reposition passes through enemies; +1 next attack roll.",
+            "effect_parameters": {},
+            "playstyles": [
+              "Skirmisher."
+            ],
+            "combo_note": "pass_and_strike"
+          },
+          "tier": 1
+        }
+      ],
+      "power_category_primary": "material",
+      "power_category_secondary": "somatic",
+      "tier": 3,
+      "tier_ceiling": 5
+    },
+    "powers_final": [
+      {
+        "power_id": "material_elemental_electrokinesis",
+        "name": "Electrokinesis",
+        "category": "material",
+        "sub_category": "elemental",
+        "slot": "primary",
+        "cast_mode": {
+          "slot_id": "cast_1",
+          "action_cost": "minor",
+          "pool_cost": 1,
+          "additional_cost": {},
+          "effect_families": [
+            "damage",
+            "status"
+          ],
+          "targeting_scope": "enemy_single",
+          "range_band": "touch",
+          "duration": "instant",
+          "effect_description": "shock \u2014 melee: 1 electric + stunned on Crit.",
+          "effect_parameters": {
+            "damage": "1_electric",
+            "status_on_crit": "stunned_1r"
+          },
+          "posture_sensitive": false,
+          "playstyles": [
+            "Brawler."
+          ],
+          "hook": "spike status"
+        },
+        "rider_slot": {
+          "slot_id": "rider_a",
+          "rider_type": "strike",
+          "sub_category": "",
+          "pool_cost": 1,
+          "restrictions": {},
+          "compatible_postures": [],
+          "effect_description": "on_Full +1 electric; on_Crit stunned.",
+          "effect_parameters": {},
+          "playstyles": [
+            "Artillery."
+          ],
+          "combo_note": "electric_strike"
+        },
+        "tier": 1
+      },
+      {
+        "power_id": "somatic_augmentation_super_speed_body",
+        "name": "Super Speed (body)",
+        "category": "somatic",
+        "sub_category": "augmentation",
+        "slot": "secondary",
+        "cast_mode": {
+          "slot_id": "cast_2",
+          "action_cost": "major",
+          "pool_cost": 2,
+          "additional_cost": {},
+          "effect_families": [
+            "stat_alteration",
+            "defense"
+          ],
+          "targeting_scope": "self",
+          "range_band": "close",
+          "duration": "scene",
+          "effect_description": "sustained speed \u2014 +1 agi, +1 defense rolls.",
+          "effect_parameters": {
+            "duration": "scene"
+          },
+          "posture_sensitive": false,
+          "playstyles": [
+            "Skirmisher",
+            "Hybrid."
+          ],
+          "hook": "mobility buff"
+        },
+        "rider_slot": {
+          "slot_id": "rider_a",
+          "rider_type": "maneuver",
+          "sub_category": "",
+          "pool_cost": 1,
+          "restrictions": {},
+          "compatible_postures": [],
+          "effect_description": "on_Full Reposition passes through enemies; +1 next attack roll.",
+          "effect_parameters": {},
+          "playstyles": [
+            "Skirmisher."
+          ],
+          "combo_note": "pass_and_strike"
+        },
+        "tier": 1
+      }
+    ],
+    "location": {
+      "location": "iron_crown_newark",
+      "starting_location": "iron_crown_newark"
+    },
+    "post_emergence_location": "iron_crown_newark",
+    "job_bundle_cards": [
+      {
+        "job_id": "ic_electric_interrogator",
+        "title": "Crown Interrogator, Essex County Detention",
+        "theme_label": "Transformation",
+        "archetype_id": "ic_auratic_interrogator",
+        "daily_loop": "You work the basement level of the Essex County courthouse annex. Sessions run two to four hours. You administer current at thresholds you've calibrated to the body's tolerance \u2014 surgeon's knowledge, new application. No marks. The captain gets names; you get a cot upstairs and a meal chit. You write nothing down.",
+        "post_onset_goal": "Reach Newark, Delaware and confirm his parents and brother Akhil are alive.",
+        "goal_conflicts_with_job": true,
+        "goal_conflict_note": "The Crown does not let its interrogators travel; your location is classified and your departure would be construed as defection.",
+        "skill_tilts": {
+          "intimidation": 2,
+          "perception_check": 1,
+          "faction_etiquette": 1,
+          "pharmacology": 1
+        },
+        "factions": {
+          "positive": [
+            {
+              "faction_id": "iron_crown_newark",
+              "standing": 1,
+              "role": "contracted operative"
+            }
+          ],
+          "negative": [
+            {
+              "faction_id": "central_jersey_league",
+              "standing": -1,
+              "reason": "League contacts consider the Crown's detention apparatus a war crime waiting for documentation."
+            }
+          ]
+        },
+        "npcs": [
+          {
+            "npc_id": "npc_captain_soraia_vaz",
+            "name": "Captain Soraia Vaz",
+            "role": "patron",
+            "relation": "boss",
+            "bond": {
+              "trust": 1,
+              "loyalty": 2,
+              "tension": 1
+            },
+            "hook": "Essex County detention commander; got Shake the work when his Crown transit papers stalled. Expects results, asks no questions you haven't been cleared to answer."
+          },
+          {
+            "npc_id": "npc_interrogator_dayo",
+            "name": "Dayo",
+            "role": "ally",
+            "relation": "coworker",
+            "bond": {
+              "trust": 2,
+              "loyalty": 2,
+              "tension": 0
+            },
+            "hook": "The other interrogator on the floor; former schoolteacher. Methodical. Has worked out which days Vaz checks the log and which she doesn't."
+          },
+          {
+            "npc_id": "npc_rival_interr_caruso",
+            "name": "Marco Caruso",
+            "role": "rival",
+            "relation": "colleague",
+            "bond": {
+              "trust": -1,
+              "loyalty": 0,
+              "tension": 2
+            },
+            "hook": "Crown intelligence officer who believes the interrogation program should produce more permanent outcomes. Has noted that Shake leaves subjects alive."
+          },
+          {
+            "npc_id": "npc_contact_detainee_kofi",
+            "name": "Kofi Mensah",
+            "role": "contact",
+            "relation": "contact",
+            "bond": {
+              "trust": 1,
+              "loyalty": 0,
+              "tension": 1
+            },
+            "hook": "Long-term detainee who knows where three Crown supply caches are hidden and has offered this to Shake in exchange for transit documents south."
+          }
+        ],
+        "threats": [
+          {
+            "archetype": "named_rival_human",
+            "hook": "Caruso is building a file on Shake's refusals; the right captain and it becomes an order to resolve the problem."
+          },
+          {
+            "archetype": "corruption_progressing_self",
+            "hook": "The work has a logic. The logic is seductive. You've started thinking in thresholds at night."
+          }
+        ],
+        "starting_location": "essex_county_courthouse_annex_basement_newark",
+        "opening_vignette_seed": "The fourth session of the week runs long; when you finally come upstairs the night guard tells you a transit runner came by with a note \u2014 handwriting you haven't seen in a year."
+      },
+      {
+        "job_id": "ic_crown_enforcer",
+        "title": "Crown Collections Enforcer, Essex District",
+        "theme_label": "Transformation",
+        "archetype_id": "ic_kinetic_enforcer",
+        "daily_loop": "You ride out with four-person collection teams three mornings a week. Your presence is the argument \u2014 a surgeon who moves faster than a thrown bottle and can arc current through a doorframe. Most collections are peaceful. When they aren't, the captain files a use-of-force report and you don't. Afternoons you're free; the barracks has a room with a lock.",
+        "post_onset_goal": "Reach Newark, Delaware and confirm his parents and brother Akhil are alive.",
+        "goal_conflicts_with_job": true,
+        "goal_conflict_note": "The Crown logs manifested operatives by tier and tracks their movements; leaving the district without orders flags you as a deserter.",
+        "skill_tilts": {
+          "intimidation": 2,
+          "tactics": 1,
+          "urban_movement": 1,
+          "brawling": 1
+        },
+        "factions": {
+          "positive": [
+            {
+              "faction_id": "iron_crown_newark",
+              "standing": 2,
+              "role": "manifested enforcer"
+            }
+          ],
+          "negative": [
+            {
+              "faction_id": "queens_commonage",
+              "standing": -1,
+              "reason": "Commonage couriers who pass through Essex County have been shaken down by Crown teams; Shake's name is on the rosters."
+            },
+            {
+              "faction_id": "central_jersey_league",
+              "standing": -1,
+              "reason": "League villages in the collection zone know the Crown's enforcer by description."
+            }
+          ]
+        },
+        "npcs": [
+          {
+            "npc_id": "npc_captain_reuben_telles",
+            "name": "Captain Reuben Telles",
+            "role": "patron",
+            "relation": "boss",
+            "bond": {
+              "trust": 2,
+              "loyalty": 2,
+              "tension": 0
+            },
+            "hook": "Telles runs the Essex collection division. He values Shake for the same reason he fears him: a surgeon who doesn't need to hurt anyone twice."
+          },
+          {
+            "npc_id": "npc_enforcer_amara",
+            "name": "Amara Osei",
+            "role": "ally",
+            "relation": "coworker",
+            "bond": {
+              "trust": 2,
+              "loyalty": 2,
+              "tension": 1
+            },
+            "hook": "Team veteran, kinetic manifested \u2014 impact-adjacent. Keeps the squad alive. Has her own family situation two checkpoints south she doesn't discuss."
+          },
+          {
+            "npc_id": "npc_rival_enforcer_pena",
+            "name": "Luis Pe\u00f1a",
+            "role": "rival",
+            "relation": "colleague",
+            "bond": {
+              "trust": 0,
+              "loyalty": 0,
+              "tension": 2
+            },
+            "hook": "Senior enforcer who ran the route before Shake arrived. Resents the speed at which the Crown elevated a doctor-turned-manifested over men who bled for the seat."
+          },
+          {
+            "npc_id": "npc_contact_ironbound_elder",
+            "name": "Do\u00f1a Carmen Rios",
+            "role": "contact",
+            "relation": "contact",
+            "bond": {
+              "trust": 1,
+              "loyalty": 0,
+              "tension": 1
+            },
+            "hook": "Ironbound block elder who pays the Crown in vegetables and keeps her mouth shut; has once warned Shake that Pe\u00f1a filed a complaint about his conduct."
+          }
+        ],
+        "threats": [
+          {
+            "archetype": "faction_assassin_contract",
+            "hook": "A League border council has put a quiet price on the enforcer who shocked a village headman's son last month \u2014 Shake or Pe\u00f1a, depending on who you ask."
+          },
+          {
+            "archetype": "corruption_progressing_self",
+            "hook": "Telles rewards reliability. The more reliable you become, the further south Delaware feels."
+          }
+        ],
+        "starting_location": "crown_enforcement_barracks_newark_governance_compound",
+        "opening_vignette_seed": "Telles hands you a route card for a collection run into the Ironbound \u2014 third week in a row the same block, and last week someone left a message on the door in ash."
+      },
+      {
+        "job_id": "ic_field_medic",
+        "title": "Contract Field Medic, Crown Enforcement Units",
+        "theme_label": "Continuity",
+        "archetype_id": "ic_contract_field_medic",
+        "daily_loop": "You rotate between three enforcement stations on a six-week cycle: Ironbound, Kearny Flats, and the rural outpost at Caldwell Ridge. You carry a surgical kit and a Crown-issue side arm you've fired twice. You patch the enforcers who come back wrong and the detainees the enforcers bring in. You sign the captain's reports. You've learned which details to omit.",
+        "post_onset_goal": "Reach Newark, Delaware and confirm his parents and brother Akhil are alive.",
+        "goal_conflicts_with_job": true,
+        "goal_conflict_note": "The Crown assigns your rotation; the Caldwell Ridge post is north, not south, and requesting reassignment to a station near the Delaware corridor will raise questions about your loyalties.",
+        "skill_tilts": {
+          "surgery": 1,
+          "field_medicine": 2,
+          "first_aid": 1,
+          "faction_etiquette": 1
+        },
+        "factions": {
+          "positive": [
+            {
+              "faction_id": "iron_crown_newark",
+              "standing": 1,
+              "role": "contract medic"
+            }
+          ],
+          "negative": [
+            {
+              "faction_id": "central_jersey_league",
+              "standing": -1,
+              "reason": "You have patched men who hurt League villagers. The League's traveling healers have stopped acknowledging your existence."
+            }
+          ]
+        },
+        "npcs": [
+          {
+            "npc_id": "npc_captain_medic_yolanda_ferreira",
+            "name": "Captain Yolanda Ferreira",
+            "role": "patron",
+            "relation": "boss",
+            "bond": {
+              "trust": 2,
+              "loyalty": 1,
+              "tension": 1
+            },
+            "hook": "Station commander at Ironbound, where Shake's rotation originates. Protects her medic's access to supplies; in return expects Shake to certify cause-of-death reports without comment."
+          },
+          {
+            "npc_id": "npc_medic_ally_pita",
+            "name": "Pita Faleolo",
+            "role": "ally",
+            "relation": "coworker",
+            "bond": {
+              "trust": 2,
+              "loyalty": 2,
+              "tension": 0
+            },
+            "hook": "Nurse-practitioner at Kearny Flats station. Pre-Onset ER background. Has quietly flagged two suspicious deaths to Shake that Ferreira told him to ignore."
+          },
+          {
+            "npc_id": "npc_rival_crown_doc_henriksen",
+            "name": "Dr. Henriksen",
+            "role": "rival",
+            "relation": "colleague",
+            "bond": {
+              "trust": 0,
+              "loyalty": 0,
+              "tension": 2
+            },
+            "hook": "The Crown's other contractor medic; older, slower, compliant. Doesn't appreciate the new arrival's reputation for questioning reports."
+          },
+          {
+            "npc_id": "npc_contact_league_healer_adaeze",
+            "name": "Adaeze Nwosu",
+            "role": "contact",
+            "relation": "contact",
+            "bond": {
+              "trust": 1,
+              "loyalty": 0,
+              "tension": 1
+            },
+            "hook": "Traveling healer from the Central Jersey League who resupplies at Kearny Flats; has quietly passed Shake information about road conditions south, in exchange for which Shake has quietly left the gate log short."
+          }
+        ],
+        "threats": [
+          {
+            "archetype": "ruined_former_ally",
+            "hook": "Pita is going to report the suspicious deaths to someone with authority \u2014 which will blow back on Shake as the signing medic."
+          },
+          {
+            "archetype": "iron_crown_notice",
+            "hook": "A Crown intelligence officer has noted that Shake's rotation requests consistently skew toward stations with southern road access."
+          }
+        ],
+        "starting_location": "ironbound_enforcement_station_medical_tent_newark",
+        "opening_vignette_seed": "Pita meets you at the gate before your shift starts and says, quietly, that there is a body in the cold room that didn't come in from the street."
+      },
+      {
+        "job_id": "ic_patrol_lt",
+        "title": "Patrol Lieutenant, Essex County Checkpoint Division",
+        "theme_label": "Dangerous",
+        "archetype_id": "ic_patrol_lieutenant",
+        "daily_loop": "Six-person patrol, three checkpoint rotations through Essex County \u2014 the Ironbound gate, the Kearny causeway, the ridge road toward Caldwell. You report to District Captain Morales every Thursday. You have direct authority over your squad and discretionary authority over checkpoint detentions up to seventy-two hours. The villages on your rotation don't love you. Your squad mostly does.",
+        "post_onset_goal": "Reach Newark, Delaware and confirm his parents and brother Akhil are alive.",
+        "goal_conflicts_with_job": false,
+        "skill_tilts": {
+          "command": 2,
+          "tactics": 1,
+          "intimidation": 1,
+          "urban_movement": 1
+        },
+        "factions": {
+          "positive": [
+            {
+              "faction_id": "iron_crown_newark",
+              "standing": 2,
+              "role": "patrol officer"
+            }
+          ],
+          "negative": [
+            {
+              "faction_id": "yonkers_compact",
+              "standing": -1,
+              "reason": "Compact couriers carrying biokinetic trade goods have been detained at Shake's checkpoints for Crown duty assessment; the Compact has filed diplomatic objections."
+            },
+            {
+              "faction_id": "central_jersey_league",
+              "standing": -1,
+              "reason": "Essex border villages aligned with the League view the patrol as an occupation force."
+            }
+          ]
+        },
+        "npcs": [
+          {
+            "npc_id": "npc_district_captain_morales",
+            "name": "District Captain Elena Morales",
+            "role": "patron",
+            "relation": "boss",
+            "bond": {
+              "trust": 2,
+              "loyalty": 2,
+              "tension": 1
+            },
+            "hook": "Essex district commander who gave Shake a lieutenant's tab because she needed someone who could think in a crisis and didn't need to be told twice. Has her own political pressures from above."
+          },
+          {
+            "npc_id": "npc_patrol_sgt_desouza",
+            "name": "Sergeant Marcus DeSouza",
+            "role": "ally",
+            "relation": "coworker",
+            "bond": {
+              "trust": 3,
+              "loyalty": 3,
+              "tension": 0
+            },
+            "hook": "Shake's squad sergeant, ten years older, pre-Onset construction foreman. Holds the squad together by sheer stubbornness. Loyalty is absolute; doesn't question orders he thinks are reasonable."
+          },
+          {
+            "npc_id": "npc_rival_lt_chen",
+            "name": "Lieutenant Chen",
+            "role": "rival",
+            "relation": "colleague",
+            "bond": {
+              "trust": -1,
+              "loyalty": 0,
+              "tension": 2
+            },
+            "hook": "The other patrol lieutenant in the district, longer-tenured and resentful that the tab went to a doctor-turned-manifested with six months of field experience."
+          },
+          {
+            "npc_id": "npc_contact_kearny_village_elder",
+            "name": "Elder Vasquez",
+            "role": "contact",
+            "relation": "contact",
+            "bond": {
+              "trust": 1,
+              "loyalty": 0,
+              "tension": 1
+            },
+            "hook": "Kearny causeway village headman who cooperates with the patrol in exchange for Crown medical access. Has quietly asked whether Shake knows a southern road that skips the main checkpoints."
+          }
+        ],
+        "threats": [
+          {
+            "archetype": "named_rival_human",
+            "hook": "Lt. Chen has submitted a formal complaint about Shake's 'permissive checkpoint protocol'; Morales is sitting on it but won't forever."
+          },
+          {
+            "archetype": "raider_band_reaper",
+            "hook": "A scavenger band working the ridge road has been escalating \u2014 two of Shake's squad came back with cuts last Thursday, and DeSouza says they're getting organized."
+          }
+        ],
+        "starting_location": "patrol_barracks_ironbound_district_newark",
+        "opening_vignette_seed": "DeSouza is waiting outside your door at 0500 with the week's route card and a look that means someone on the ridge road didn't go home last night."
+      },
+      {
+        "job_id": "ic_port_clerk",
+        "title": "Port Manifest Clerk, Newark Waterfront Authority",
+        "theme_label": "Continuity",
+        "archetype_id": "ic_port_clerk",
+        "daily_loop": "You process cargo manifests at a customs table on the Newark waterfront, dawn to midday. Apply Crown duty schedules, flag anomalies in declared cargo weights, refer suspected smuggling patterns upstairs to the intelligence desk. Afternoons are your own \u2014 the waterfront has a library of salvaged technical manuals you've started reading, and the port canteen makes a serviceable rice bowl. The work is boring and safe. Both of those things are lies.",
+        "post_onset_goal": "Reach Newark, Delaware and confirm his parents and brother Akhil are alive.",
+        "goal_conflicts_with_job": true,
+        "goal_conflict_note": "Manifests you write determine which cargo and passengers are cleared to move south; forging your own transit document would be discovered in the next audit cycle.",
+        "skill_tilts": {
+          "bureaucracy": 2,
+          "literacy": 1,
+          "perception_check": 2,
+          "negotiation": 1
+        },
+        "factions": {
+          "positive": [
+            {
+              "faction_id": "iron_crown_newark",
+              "standing": 1,
+              "role": "customs clerk"
+            }
+          ],
+          "negative": [
+            {
+              "faction_id": "staten_citadel",
+              "standing": -1,
+              "reason": "Chen's harbor tolls and the Crown's port duties create double-jeopardy for trans-harbor cargo; Staten traders file routine complaints at Shake's desk."
+            },
+            {
+              "faction_id": "brooklyn_tower_lords",
+              "standing": -1,
+              "reason": "Tower Lord salvage boats frequently fail Crown manifest requirements; Shake has flagged three in his first month."
+            }
+          ]
+        },
+        "npcs": [
+          {
+            "npc_id": "npc_port_captain_aldridge",
+            "name": "Port Captain Aldridge",
+            "role": "patron",
+            "relation": "boss",
+            "bond": {
+              "trust": 1,
+              "loyalty": 1,
+              "tension": 1
+            },
+            "hook": "Waterfront authority chief; former merchant navy, practical and incurious. Hired Shake because he can read a manifest without moving his lips. Will protect Shake exactly as long as Shake is useful."
+          },
+          {
+            "npc_id": "npc_port_ally_fumiko",
+            "name": "Fumiko Tanaka",
+            "role": "ally",
+            "relation": "coworker",
+            "bond": {
+              "trust": 2,
+              "loyalty": 2,
+              "tension": 0
+            },
+            "hook": "Senior clerk at the adjacent manifest table. Pre-Onset logistics analyst. Has quietly coached Shake on which discrepancies to escalate and which to file at the bottom of the tray."
+          },
+          {
+            "npc_id": "npc_rival_intel_officer_brett",
+            "name": "Intelligence Officer Brett",
+            "role": "rival",
+            "relation": "colleague",
+            "bond": {
+              "trust": -1,
+              "loyalty": 0,
+              "tension": 2
+            },
+            "hook": "Crown intel desk, second floor. Believes the manifest clerks downstairs are too independent in their flagging decisions. Has been CC'd on Shake's anomaly reports and has started adding his own annotations."
+          },
+          {
+            "npc_id": "npc_contact_brooklyn_trader_kwame",
+            "name": "Kwame Asante",
+            "role": "contact",
+            "relation": "contact",
+            "bond": {
+              "trust": 1,
+              "loyalty": 0,
+              "tension": 1
+            },
+            "hook": "Repeat Brooklyn trader whose salvage manifests always have one discrepancy Shake could action or not. Has quietly mentioned that his next run goes south past Elizabethtown \u2014 and he has room for a passenger."
+          }
+        ],
+        "threats": [
+          {
+            "archetype": "faction_assassin_contract",
+            "hook": "A Tower Lord whose three boats Shake flagged has put a complaint upstairs; whether it stays a complaint depends on Aldridge's mood."
+          },
+          {
+            "archetype": "debt_holder",
+            "hook": "Fumiko helped Shake pass his Crown civil registration \u2014 a favor she hasn't named a price for yet."
+          }
+        ],
+        "starting_location": "newark_waterfront_customs_office_port_newark",
+        "opening_vignette_seed": "Kwame's boat is third in the queue this morning and his manifest is, as always, one line short \u2014 except this time the missing line is a passenger declaration, and the passenger is watching you from the stern."
+      }
+    ],
+    "job_bundle": {
+      "skills": {
+        "command": 2,
+        "tactics": 1,
+        "intimidation": 1,
+        "urban_movement": 1
+      },
+      "faction_standing": {
+        "iron_crown_newark": 2,
+        "yonkers_compact": -1,
+        "central_jersey_league": -1
+      },
+      "generated_npcs": [
+        {
+          "npc_id": "npc_district_captain_morales",
+          "display_name": "District Captain Elena Morales",
+          "scene_id": "job_bundle",
+          "role": "patron",
+          "standing": 2,
+          "trust": 2,
+          "relation": "boss",
+          "hooks": [
+            "Essex district commander who gave Shake a lieutenant's tab because she needed someone who could think in a crisis and didn't need to be told twice. Has her own political pressures from above."
+          ]
+        },
+        {
+          "npc_id": "npc_patrol_sgt_desouza",
+          "display_name": "Sergeant Marcus DeSouza",
+          "scene_id": "job_bundle",
+          "role": "ally",
+          "standing": 3,
+          "trust": 3,
+          "relation": "coworker",
+          "hooks": [
+            "Shake's squad sergeant, ten years older, pre-Onset construction foreman. Holds the squad together by sheer stubbornness. Loyalty is absolute; doesn't question orders he thinks are reasonable."
+          ]
+        },
+        {
+          "npc_id": "npc_rival_lt_chen",
+          "display_name": "Lieutenant Chen",
+          "scene_id": "job_bundle",
+          "role": "rival",
+          "standing": 0,
+          "trust": 0,
+          "relation": "colleague",
+          "hooks": [
+            "The other patrol lieutenant in the district, longer-tenured and resentful that the tab went to a doctor-turned-manifested with six months of field experience."
+          ]
+        },
+        {
+          "npc_id": "npc_contact_kearny_village_elder",
+          "display_name": "Elder Vasquez",
+          "scene_id": "job_bundle",
+          "role": "contact",
+          "standing": 0,
+          "trust": 1,
+          "relation": "contact",
+          "hooks": [
+            "Kearny causeway village headman who cooperates with the patrol in exchange for Crown medical access. Has quietly asked whether Shake knows a southern road that skips the main checkpoints."
+          ]
+        }
+      ],
+      "threats": [
+        {
+          "npc_id": "threat_ic_patrol_lt_named_rival_human_0",
+          "archetype": "named_rival_human",
+          "name": "Named Rival Human",
+          "standing": -2,
+          "source": "job_bundle:ic_patrol_lt",
+          "summary": "Lt. Chen has submitted a formal complaint about Shake's 'permissive checkpoint protocol'; Morales is sitting on it but won't forever."
+        },
+        {
+          "npc_id": "threat_ic_patrol_lt_raider_band_reaper_1",
+          "archetype": "raider_band_reaper",
+          "name": "Raider Band Reaper",
+          "standing": -2,
+          "source": "job_bundle:ic_patrol_lt",
+          "summary": "A scavenger band working the ridge road has been escalating \u2014 two of Shake's squad came back with cuts last Thursday, and DeSouza says they're getting organized."
+        }
+      ],
+      "starting_location": "patrol_barracks_ironbound_district_newark",
+      "narrative_tag": "job:ic_patrol_lt"
+    },
+    "job_pick": {
+      "job_id": "ic_patrol_lt",
+      "title": "Patrol Lieutenant, Essex County Checkpoint Division",
+      "theme_label": "Dangerous",
+      "archetype_id": "ic_patrol_lieutenant",
+      "daily_loop": "Six-person patrol, three checkpoint rotations through Essex County \u2014 the Ironbound gate, the Kearny causeway, the ridge road toward Caldwell. You report to District Captain Morales every Thursday. You have direct authority over your squad and discretionary authority over checkpoint detentions up to seventy-two hours. The villages on your rotation don't love you. Your squad mostly does.",
+      "post_onset_goal": "Reach Newark, Delaware and confirm his parents and brother Akhil are alive.",
+      "goal_conflicts_with_job": false,
+      "skill_tilts": {
+        "command": 2,
+        "tactics": 1,
+        "intimidation": 1,
+        "urban_movement": 1
+      },
+      "factions": {
+        "positive": [
+          {
+            "faction_id": "iron_crown_newark",
+            "standing": 2,
+            "role": "patrol officer"
+          }
+        ],
+        "negative": [
+          {
+            "faction_id": "yonkers_compact",
+            "standing": -1,
+            "reason": "Compact couriers carrying biokinetic trade goods have been detained at Shake's checkpoints for Crown duty assessment; the Compact has filed diplomatic objections."
+          },
+          {
+            "faction_id": "central_jersey_league",
+            "standing": -1,
+            "reason": "Essex border villages aligned with the League view the patrol as an occupation force."
+          }
+        ]
+      },
+      "npcs": [
+        {
+          "npc_id": "npc_district_captain_morales",
+          "name": "District Captain Elena Morales",
+          "role": "patron",
+          "relation": "boss",
+          "bond": {
+            "trust": 2,
+            "loyalty": 2,
+            "tension": 1
+          },
+          "hook": "Essex district commander who gave Shake a lieutenant's tab because she needed someone who could think in a crisis and didn't need to be told twice. Has her own political pressures from above."
+        },
+        {
+          "npc_id": "npc_patrol_sgt_desouza",
+          "name": "Sergeant Marcus DeSouza",
+          "role": "ally",
+          "relation": "coworker",
+          "bond": {
+            "trust": 3,
+            "loyalty": 3,
+            "tension": 0
+          },
+          "hook": "Shake's squad sergeant, ten years older, pre-Onset construction foreman. Holds the squad together by sheer stubbornness. Loyalty is absolute; doesn't question orders he thinks are reasonable."
+        },
+        {
+          "npc_id": "npc_rival_lt_chen",
+          "name": "Lieutenant Chen",
+          "role": "rival",
+          "relation": "colleague",
+          "bond": {
+            "trust": -1,
+            "loyalty": 0,
+            "tension": 2
+          },
+          "hook": "The other patrol lieutenant in the district, longer-tenured and resentful that the tab went to a doctor-turned-manifested with six months of field experience."
+        },
+        {
+          "npc_id": "npc_contact_kearny_village_elder",
+          "name": "Elder Vasquez",
+          "role": "contact",
+          "relation": "contact",
+          "bond": {
+            "trust": 1,
+            "loyalty": 0,
+            "tension": 1
+          },
+          "hook": "Kearny causeway village headman who cooperates with the patrol in exchange for Crown medical access. Has quietly asked whether Shake knows a southern road that skips the main checkpoints."
+        }
+      ],
+      "threats": [
+        {
+          "archetype": "named_rival_human",
+          "hook": "Lt. Chen has submitted a formal complaint about Shake's 'permissive checkpoint protocol'; Morales is sitting on it but won't forever."
+        },
+        {
+          "archetype": "raider_band_reaper",
+          "hook": "A scavenger band working the ridge road has been escalating \u2014 two of Shake's squad came back with cuts last Thursday, and DeSouza says they're getting organized."
+        }
+      ],
+      "starting_location": "patrol_barracks_ironbound_district_newark",
+      "opening_vignette_seed": "DeSouza is waiting outside your door at 0500 with the week's route card and a look that means someone on the ridge road didn't go home last night."
+    },
+    "post_onset_goal": "Reach Newark, Delaware and confirm his parents and brother Akhil are alive.",
+    "goal_conflicts_with_job": false,
+    "goal_conflict_note": "",
+    "quest_pool": [
+      {
+        "id": "bs_first_blood",
+        "archetype": "counter_assault",
+        "conflict_mode": "combat",
+        "physical_danger": {
+          "armed_opposition": true,
+          "expected_combat_scenes": 2
+        },
+        "goal": "Repel the Reaper band's first probe at Caldwell Ridge before the night shift collapses",
+        "hook_scene": {
+          "established_on_turn": 0,
+          "inciting_event": "DeSouza reports two squad members came back from ridge patrol with cuts and a story that doesn't hold together; Shake rides out at dusk to see for himself."
+        },
+        "central_conflict": {
+          "nature": "A scavenger band probing the Caldwell Ridge outpost's defenses \u2014 testing shift schedules, looking for the soft hour.",
+          "proxy_antagonist_id": "threat_ic_patrol_lt_raider_band_reaper_1"
+        },
+        "hook_npcs": [
+          "npc_patrol_sgt_desouza"
+        ],
+        "bright_lines": [
+          {
+            "id": "outpost_overrun",
+            "description": "The Caldwell Ridge outpost falls before dawn; the Crown loses the position.",
+            "check_condition": {
+              "type": "macrostructure",
+              "op": "<=",
+              "value": 0
+            },
+            "telegraph_text": "The ridge road goes quiet the wrong way \u2014 no insects, no wind. DeSouza says that's not weather."
+          },
+          {
+            "id": "squad_member_lost",
+            "description": "A squad member is killed or taken during the probe.",
+            "check_condition": {
+              "type": "npc_status",
+              "npc_id": "npc_patrol_sgt_desouza",
+              "status": "incapacitated"
+            },
+            "telegraph_text": "The two who came back cut are already pale \u2014 one of them can't stop checking behind him."
+          }
+        ],
+        "macrostructure": {
+          "variable_name": "hours_until_main_probe",
+          "current": 6,
+          "threshold": 0,
+          "direction": "decrement",
+          "tick_triggers": [
+            "world_pulse",
+            "scene_close",
+            "rest_action"
+          ]
+        },
+        "success_condition": {
+          "type": "pc_status",
+          "status": "threat_repelled"
+        },
+        "resolution": {
+          "world_deltas_on_success": [
+            {
+              "op": "faction_standing_shift",
+              "faction_id": "iron_crown_newark",
+              "delta": 1
+            },
+            {
+              "op": "npc_trust_shift",
+              "npc_id": "npc_patrol_sgt_desouza",
+              "delta": 1
+            }
+          ],
+          "world_deltas_on_failure": {
+            "outpost_overrun": [
+              {
+                "op": "faction_standing_shift",
+                "faction_id": "iron_crown_newark",
+                "delta": -1
+              }
+            ],
+            "squad_member_lost": [
+              {
+                "op": "npc_trust_shift",
+                "npc_id": "npc_patrol_sgt_desouza",
+                "delta": -1
+              }
+            ]
+          },
+          "narration_cue_on_success": "The ridge goes quiet by the third hour \u2014 a different quiet, something withdrawn. DeSouza doesn't say anything. Neither do you.",
+          "narration_cue_on_failure": "The fire on the ridge is visible from the Ironbound gate. Morales doesn't file a complaint. That's almost worse."
+        },
+        "progress_track": {
+          "ticks_filled": 0,
+          "ticks_required": 3,
+          "source": "scene_close"
+        },
+        "scope": {
+          "expected_scenes": 3,
+          "expected_session_equivalents": 1.0
+        }
+      },
+      {
+        "id": "bs_village_accord",
+        "archetype": "negotiation",
+        "conflict_mode": "social",
+        "physical_danger": {
+          "armed_opposition": false,
+          "expected_combat_scenes": 0
+        },
+        "goal": "Broker emergency medical access for Kearny village after the Crown severed its supply route",
+        "hook_scene": {
+          "established_on_turn": 0,
+          "inciting_event": "Elder Vasquez meets Shake at the causeway gate with a list of names \u2014 three children, an elder \u2014 and a look that says he's not asking."
+        },
+        "central_conflict": {
+          "nature": "The Crown's supply cut is a district-level order Shake cannot override; getting aid to Kearny means trading something Morales will notice.",
+          "proxy_antagonist_id": "npc_contact_kearny_village_elder"
+        },
+        "hook_npcs": [
+          "npc_contact_kearny_village_elder",
+          "npc_district_captain_morales"
+        ],
+        "bright_lines": [
+          {
+            "id": "morales_blocks",
+            "description": "Morales revokes Shake's discretionary medical authorization after Shake routes aid without her sign-off.",
+            "check_condition": {
+              "type": "faction_standing",
+              "faction_id": "iron_crown_newark",
+              "op": "<=",
+              "value": 0
+            },
+            "telegraph_text": "Morales has been watching the supply logs. She hasn't said anything yet. The 'yet' is load-bearing."
+          },
+          {
+            "id": "village_refuses",
+            "description": "Vasquez's patience runs out and he closes the causeway to Crown patrols.",
+            "check_condition": {
+              "type": "npc_status",
+              "npc_id": "npc_contact_kearny_village_elder",
+              "status": "hostile"
+            },
+            "telegraph_text": "Vasquez is looking past Shake at the causeway gate when he talks \u2014 calculating how long it holds."
+          }
+        ],
+        "macrostructure": {
+          "variable_name": "days_until_crisis",
+          "current": 4,
+          "threshold": 0,
+          "direction": "decrement",
+          "tick_triggers": [
+            "world_pulse",
+            "scene_close"
+          ]
+        },
+        "success_condition": {
+          "type": "npc_status",
+          "npc_id": "npc_contact_kearny_village_elder",
+          "status": "cooperating"
+        },
+        "resolution": {
+          "world_deltas_on_success": [
+            {
+              "op": "npc_trust_shift",
+              "npc_id": "npc_contact_kearny_village_elder",
+              "delta": 1
+            },
+            {
+              "op": "faction_standing_shift",
+              "faction_id": "central_jersey_league",
+              "delta": 1
+            }
+          ],
+          "world_deltas_on_failure": {
+            "morales_blocks": [
+              {
+                "op": "faction_standing_shift",
+                "faction_id": "iron_crown_newark",
+                "delta": -1
+              }
+            ],
+            "village_refuses": [
+              {
+                "op": "npc_trust_shift",
+                "npc_id": "npc_contact_kearny_village_elder",
+                "delta": -1
+              }
+            ]
+          },
+          "narration_cue_on_success": "The medicines go through in an unmarked crate on the Thursday roster. Vasquez doesn't thank you. He just stops looking past you.",
+          "narration_cue_on_failure": "The causeway stays open. The children's names stay on the list. You stop asking about them."
+        },
+        "progress_track": {
+          "ticks_filled": 0,
+          "ticks_required": 3,
+          "source": "resolve_action_success"
+        },
+        "scope": {
+          "expected_scenes": 3,
+          "expected_session_equivalents": 1.0
+        }
+      },
+      {
+        "id": "bs_leak_hunt",
+        "archetype": "investigation",
+        "conflict_mode": "investigation",
+        "physical_danger": {
+          "armed_opposition": false,
+          "expected_combat_scenes": 0
+        },
+        "goal": "Identify who leaked Shake's patrol schedule to the ridge-road raiders before the next rotation is set",
+        "hook_scene": {
+          "established_on_turn": 0,
+          "inciting_event": "The raiders hit the exact window of Shake's lightest shift \u2014 an hour no one outside the barracks should know. DeSouza puts it on the table without saying it out loud."
+        },
+        "central_conflict": {
+          "nature": "Someone with access to internal patrol schedules is feeding them out; the candidates include squad members, the district clerk, and anyone with leverage on Lt. Chen.",
+          "proxy_antagonist_id": "threat_ic_patrol_lt_named_rival_human_0"
+        },
+        "hook_npcs": [
+          "npc_patrol_sgt_desouza",
+          "npc_rival_lt_chen"
+        ],
+        "bright_lines": [
+          {
+            "id": "wrong_accusation",
+            "description": "Shake names the wrong person; an innocent squad member is disciplined.",
+            "check_condition": {
+              "type": "pc_status",
+              "status": "accused_false"
+            },
+            "telegraph_text": "DeSouza keeps watching the new transfers \u2014 but his eyes drift back to one of the originals when he thinks Shake isn't looking."
+          },
+          {
+            "id": "leak_continues",
+            "description": "The leak continues into the next rotation; another patrol is ambushed.",
+            "check_condition": {
+              "type": "macrostructure",
+              "op": "<=",
+              "value": 0
+            },
+            "telegraph_text": "The new rotation sheet goes up Thursday. The raiders will have it by Friday if nothing changes."
+          }
+        ],
+        "macrostructure": {
+          "variable_name": "days_until_rotation",
+          "current": 5,
+          "threshold": 0,
+          "direction": "decrement",
+          "tick_triggers": [
+            "world_pulse",
+            "scene_close"
+          ]
+        },
+        "success_condition": {
+          "type": "pc_status",
+          "status": "culprit_identified"
+        },
+        "resolution": {
+          "world_deltas_on_success": [
+            {
+              "op": "npc_trust_shift",
+              "npc_id": "npc_patrol_sgt_desouza",
+              "delta": 1
+            },
+            {
+              "op": "npc_trust_shift",
+              "npc_id": "npc_district_captain_morales",
+              "delta": 1
+            }
+          ],
+          "world_deltas_on_failure": {
+            "wrong_accusation": [
+              {
+                "op": "npc_trust_shift",
+                "npc_id": "npc_patrol_sgt_desouza",
+                "delta": -1
+              },
+              {
+                "op": "faction_standing_shift",
+                "faction_id": "iron_crown_newark",
+                "delta": -1
+              }
+            ],
+            "leak_continues": [
+              {
+                "op": "faction_standing_shift",
+                "faction_id": "iron_crown_newark",
+                "delta": -1
+              }
+            ]
+          },
+          "narration_cue_on_success": "You put the name in writing and slide it to Morales without comment. She reads it twice. She nods once.",
+          "narration_cue_on_failure": "The new schedule goes up. Three days later DeSouza stops eating at the communal table. You don't ask him why."
+        },
+        "progress_track": {
+          "ticks_filled": 0,
+          "ticks_required": 4,
+          "source": "resolve_action_success"
+        },
+        "scope": {
+          "expected_scenes": 3,
+          "expected_session_equivalents": 1.0
+        }
+      },
+      {
+        "id": "bs_transit_gambit",
+        "archetype": "infiltration",
+        "conflict_mode": "heist",
+        "physical_danger": {
+          "armed_opposition": false,
+          "expected_combat_scenes": 0
+        },
+        "goal": "Forge a transit waiver and route it south before Crown intelligence flags the discrepancy",
+        "hook_scene": {
+          "established_on_turn": 0,
+          "inciting_event": "Eight months in and no word from Delaware. Shake finds a clerk who owes DeSouza a favor and a blank waiver form in the district records room."
+        },
+        "central_conflict": {
+          "nature": "The Crown's transit authorization process is designed to catch exactly what Shake is attempting; the waiver has to look routine, move through three desks, and not be in his handwriting.",
+          "proxy_antagonist_id": "threat_ic_patrol_lt_named_rival_human_0"
+        },
+        "hook_npcs": [
+          "npc_patrol_sgt_desouza",
+          "npc_rival_lt_chen"
+        ],
+        "bright_lines": [
+          {
+            "id": "document_flagged",
+            "description": "Crown intelligence flags the forged waiver; Shake's name appears in the investigation log.",
+            "check_condition": {
+              "type": "pc_status",
+              "status": "exposed"
+            },
+            "telegraph_text": "Intelligence officer Brett has been looking at the weekly waiver totals. He hasn't filed anything yet."
+          },
+          {
+            "id": "courier_intercepted",
+            "description": "The courier carrying the waiver south is stopped at checkpoint; the waiver is confiscated.",
+            "check_condition": {
+              "type": "macrostructure",
+              "op": "<=",
+              "value": 0
+            },
+            "telegraph_text": "The checkpoint at Elizabethtown is running double shifts this week \u2014 someone tipped them."
+          }
+        ],
+        "macrostructure": {
+          "variable_name": "courier_lead_hours",
+          "current": 18,
+          "threshold": 0,
+          "direction": "decrement",
+          "tick_triggers": [
+            "world_pulse",
+            "travel_segment",
+            "scene_close"
+          ]
+        },
+        "success_condition": {
+          "type": "pc_status",
+          "status": "document_delivered"
+        },
+        "resolution": {
+          "world_deltas_on_success": [
+            {
+              "op": "npc_trust_shift",
+              "npc_id": "npc_patrol_sgt_desouza",
+              "delta": 1
+            }
+          ],
+          "world_deltas_on_failure": {
+            "document_flagged": [
+              {
+                "op": "faction_standing_shift",
+                "faction_id": "iron_crown_newark",
+                "delta": -1
+              },
+              {
+                "op": "npc_trust_shift",
+                "npc_id": "npc_district_captain_morales",
+                "delta": -1
+              }
+            ],
+            "courier_intercepted": []
+          },
+          "narration_cue_on_success": "The waiver makes it. You don't know if anyone reads it. You don't know if anyone is there to read it.",
+          "narration_cue_on_failure": "The waiver comes back stamped VOID. No investigation opens. That means someone buried it as a favor, which means someone owns you now."
+        },
+        "progress_track": {
+          "ticks_filled": 0,
+          "ticks_required": 3,
+          "source": "scene_close"
+        },
+        "scope": {
+          "expected_scenes": 2,
+          "expected_session_equivalents": 0.5
+        }
+      },
+      {
+        "id": "urgent_intercept_scouts",
+        "archetype": "hunt",
+        "conflict_mode": "combat",
+        "physical_danger": {
+          "armed_opposition": true,
+          "expected_combat_scenes": 2
+        },
+        "goal": "Intercept the Reaper's forward scouts before they map the Kearny causeway for a full assault",
+        "hook_scene": {
+          "established_on_turn": 1,
+          "inciting_event": "DeSouza is at Shake's door at 0500 with the route card and a look that means someone on the ridge road didn't go home \u2014 and this time it wasn't one of the raiders."
+        },
+        "central_conflict": {
+          "nature": "A three-person Reaper scout team is mapping the causeway's blind spots; they have a day's lead and local knowledge. If they complete the map, the main band moves within 48 hours.",
+          "proxy_antagonist_id": "threat_ic_patrol_lt_raider_band_reaper_1"
+        },
+        "hook_npcs": [
+          "npc_patrol_sgt_desouza",
+          "npc_contact_kearny_village_elder"
+        ],
+        "bright_lines": [
+          {
+            "id": "map_completed",
+            "description": "Scouts complete and transmit the causeway map; the main band mobilizes.",
+            "check_condition": {
+              "type": "macrostructure",
+              "op": "<=",
+              "value": 0
+            },
+            "telegraph_text": "The ridge road is quiet in a way DeSouza says it wasn't before the last probe \u2014 like something has stopped moving."
+          },
+          {
+            "id": "pc_ambushed",
+            "description": "Shake's patrol walks into the scouts' prepared position and takes casualties.",
+            "check_condition": {
+              "type": "pc_status",
+              "status": "ambushed"
+            },
+            "telegraph_text": "The trail splits where it shouldn't. DeSouza crouches and reads it. He doesn't like what he reads."
+          }
+        ],
+        "macrostructure": {
+          "variable_name": "hours_until_map_complete",
+          "current": 24,
+          "threshold": 0,
+          "direction": "decrement",
+          "tick_triggers": [
+            "world_pulse",
+            "travel_segment",
+            "scene_close"
+          ]
+        },
+        "success_condition": {
+          "type": "pc_status",
+          "status": "threat_repelled"
+        },
+        "resolution": {
+          "world_deltas_on_success": [
+            {
+              "op": "faction_standing_shift",
+              "faction_id": "iron_crown_newark",
+              "delta": 1
+            },
+            {
+              "op": "npc_trust_shift",
+              "npc_id": "npc_patrol_sgt_desouza",
+              "delta": 1
+            },
+            {
+              "op": "npc_trust_shift",
+              "npc_id": "npc_contact_kearny_village_elder",
+              "delta": 1
+            }
+          ],
+          "world_deltas_on_failure": {
+            "map_completed": [
+              {
+                "op": "faction_standing_shift",
+                "faction_id": "iron_crown_newark",
+                "delta": -1
+              }
+            ],
+            "pc_ambushed": [
+              {
+                "op": "npc_trust_shift",
+                "npc_id": "npc_patrol_sgt_desouza",
+                "delta": -1
+              }
+            ]
+          },
+          "narration_cue_on_success": "Three scouts, no map, no signal. The main band waits two days and then moves somewhere else.",
+          "narration_cue_on_failure": "The main band hits the causeway on a Thursday morning. Vasquez doesn't send a runner this time."
+        },
+        "progress_track": {
+          "ticks_filled": 0,
+          "ticks_required": 3,
+          "source": "scene_close"
+        },
+        "scope": {
+          "expected_scenes": 3,
+          "expected_session_equivalents": 1.0
+        }
+      },
+      {
+        "id": "urgent_repel_assault",
+        "archetype": "counter_assault",
+        "conflict_mode": "combat",
+        "physical_danger": {
+          "armed_opposition": true,
+          "expected_combat_scenes": 3
+        },
+        "goal": "Repel the Reaper band's full assault on Caldwell Ridge before the outpost is overrun at dawn",
+        "hook_scene": {
+          "established_on_turn": 1,
+          "inciting_event": "DeSouza is at Shake's door at 0500 with the route card and a look that means someone on the ridge road didn't go home \u2014 and the runner from Caldwell came in on foot, without a horse."
+        },
+        "central_conflict": {
+          "nature": "The full Reaper band \u2014 twenty or more, coordinated, with someone who understands the Crown's defensive posture \u2014 is hitting Caldwell at first light. Shake has six people and twelve hours to reinforce or the outpost falls.",
+          "proxy_antagonist_id": "threat_ic_patrol_lt_raider_band_reaper_1"
+        },
+        "hook_npcs": [
+          "npc_patrol_sgt_desouza",
+          "npc_district_captain_morales"
+        ],
+        "bright_lines": [
+          {
+            "id": "outpost_falls",
+            "description": "Caldwell Ridge outpost is overrun; the Crown loses its northern checkpoint.",
+            "check_condition": {
+              "type": "macrostructure",
+              "op": "<=",
+              "value": 0
+            },
+            "telegraph_text": "The runner's eyes are wrong \u2014 the kind of wrong that means he didn't stop running from the moment the first wave hit."
+          },
+          {
+            "id": "squad_broken",
+            "description": "Shake's squad breaks under pressure; he faces the assault alone.",
+            "check_condition": {
+              "type": "pc_status",
+              "status": "allies_fled"
+            },
+            "telegraph_text": "DeSouza's voice is steady. Two of the others are not looking at the door."
+          }
+        ],
+        "macrostructure": {
+          "variable_name": "hours_until_dawn_assault",
+          "current": 12,
+          "threshold": 0,
+          "direction": "decrement",
+          "tick_triggers": [
+            "world_pulse",
+            "travel_segment",
+            "rest_action",
+            "scene_close"
+          ]
+        },
+        "success_condition": {
+          "type": "pc_status",
+          "status": "threat_repelled"
+        },
+        "resolution": {
+          "world_deltas_on_success": [
+            {
+              "op": "faction_standing_shift",
+              "faction_id": "iron_crown_newark",
+              "delta": 2
+            },
+            {
+              "op": "npc_trust_shift",
+              "npc_id": "npc_patrol_sgt_desouza",
+              "delta": 1
+            },
+            {
+              "op": "npc_trust_shift",
+              "npc_id": "npc_district_captain_morales",
+              "delta": 1
+            }
+          ],
+          "world_deltas_on_failure": {
+            "outpost_falls": [
+              {
+                "op": "faction_standing_shift",
+                "faction_id": "iron_crown_newark",
+                "delta": -2
+              }
+            ],
+            "squad_broken": [
+              {
+                "op": "npc_trust_shift",
+                "npc_id": "npc_patrol_sgt_desouza",
+                "delta": -1
+              },
+              {
+                "op": "faction_standing_shift",
+                "faction_id": "iron_crown_newark",
+                "delta": -1
+              }
+            ]
+          },
+          "narration_cue_on_success": "The band pulls back before full light. DeSouza counts the bodies and doesn't share the number.",
+          "narration_cue_on_failure": "The smoke from Caldwell Ridge is visible for two days. Morales reassigns the district boundary without a meeting."
+        },
+        "progress_track": {
+          "ticks_filled": 0,
+          "ticks_required": 4,
+          "source": "scene_close"
+        },
+        "scope": {
+          "expected_scenes": 4,
+          "expected_session_equivalents": 1.0
+        }
+      },
+      {
+        "id": "urgent_extract_desouza",
+        "archetype": "extraction",
+        "conflict_mode": "escape",
+        "physical_danger": {
+          "armed_opposition": true,
+          "expected_combat_scenes": 1
+        },
+        "goal": "Extract DeSouza from Crown holding before Lt. Chen files formal charges at Thursday's district report",
+        "hook_scene": {
+          "established_on_turn": 1,
+          "inciting_event": "DeSouza is at Shake's door at 0500 \u2014 except DeSouza isn't. A runner is. DeSouza was picked up at 0300 on a weapons-violation charge Shake has never heard of, and Chen signed the detention order."
+        },
+        "central_conflict": {
+          "nature": "Chen has manufactured a pretext to hold DeSouza until Thursday's district report, when the formal charge becomes Crown record and Morales is forced to act. Shake has 60 hours to either get DeSouza out legally or not legally.",
+          "proxy_antagonist_id": "threat_ic_patrol_lt_named_rival_human_0"
+        },
+        "hook_npcs": [
+          "npc_patrol_sgt_desouza",
+          "npc_rival_lt_chen",
+          "npc_district_captain_morales"
+        ],
+        "bright_lines": [
+          {
+            "id": "charges_filed",
+            "description": "Thursday arrives with DeSouza still held; formal charges enter Crown record and Morales moves to dismiss him.",
+            "check_condition": {
+              "type": "macrostructure",
+              "op": "<=",
+              "value": 0
+            },
+            "telegraph_text": "Thursday is two days out. Chen has been seen at the district clerk's office twice this week."
+          },
+          {
+            "id": "shake_flagged",
+            "description": "Crown intelligence opens an inquiry into Shake's conduct in DeSouza's extraction.",
+            "check_condition": {
+              "type": "pc_status",
+              "status": "exposed"
+            },
+            "telegraph_text": "Intelligence Officer Brett has been watching the holding facility roster. He hasn't asked Shake anything yet."
+          }
+        ],
+        "macrostructure": {
+          "variable_name": "hours_until_thursday_report",
+          "current": 60,
+          "threshold": 0,
+          "direction": "decrement",
+          "tick_triggers": [
+            "world_pulse",
+            "scene_close",
+            "rest_action"
+          ]
+        },
+        "success_condition": {
+          "type": "npc_status",
+          "npc_id": "npc_patrol_sgt_desouza",
+          "status": "extracted"
+        },
+        "resolution": {
+          "world_deltas_on_success": [
+            {
+              "op": "npc_trust_shift",
+              "npc_id": "npc_patrol_sgt_desouza",
+              "delta": 1
+            },
+            {
+              "op": "npc_trust_shift",
+              "npc_id": "npc_rival_lt_chen",
+              "delta": -1
+            }
+          ],
+          "world_deltas_on_failure": {
+            "charges_filed": [
+              {
+                "op": "npc_trust_shift",
+                "npc_id": "npc_patrol_sgt_desouza",
+                "delta": -1
+              },
+              {
+                "op": "faction_standing_shift",
+                "faction_id": "iron_crown_newark",
+                "delta": -1
+              }
+            ],
+            "shake_flagged": [
+              {
+                "op": "faction_standing_shift",
+                "faction_id": "iron_crown_newark",
+                "delta": -2
+              }
+            ]
+          },
+          "narration_cue_on_success": "DeSouza walks out of the holding facility on Wednesday afternoon. He doesn't ask how. You don't tell him.",
+          "narration_cue_on_failure": "The charge becomes record on Thursday at 0800. Morales calls Shake in at 0900. The conversation is short."
+        },
+        "progress_track": {
+          "ticks_filled": 0,
+          "ticks_required": 3,
+          "source": "scene_close"
+        },
+        "scope": {
+          "expected_scenes": 3,
+          "expected_session_equivalents": 1.0
+        }
+      },
+      {
+        "id": "urgent_hunt_captain",
+        "archetype": "hunt",
+        "conflict_mode": "combat",
+        "physical_danger": {
+          "armed_opposition": true,
+          "expected_combat_scenes": 2
+        },
+        "goal": "Hunt the Reaper captain before he leads the next raid out of the Caldwell hills",
+        "hook_scene": {
+          "established_on_turn": 1,
+          "inciting_event": "DeSouza is at Shake's door at 0500 with the route card and a look that means someone on the ridge road didn't go home \u2014 and the survivor says she saw the one who gives orders, close enough to describe him."
+        },
+        "central_conflict": {
+          "nature": "The Reaper band has a leader who has survived three encounters, knows Crown patrol patterns, and is moving deeper into the hills after each probe. He has two days before the snow closes the high trails and makes pursuit impossible until spring.",
+          "proxy_antagonist_id": "threat_ic_patrol_lt_raider_band_reaper_1"
+        },
+        "hook_npcs": [
+          "npc_patrol_sgt_desouza",
+          "npc_contact_kearny_village_elder"
+        ],
+        "bright_lines": [
+          {
+            "id": "captain_vanishes",
+            "description": "Snow closes the high trails; the captain retreats to the hills for winter and the threat continues into spring.",
+            "check_condition": {
+              "type": "macrostructure",
+              "op": "<=",
+              "value": 0
+            },
+            "telegraph_text": "The sky over Caldwell has the grey-green color DeSouza says means snow in two days. Maybe one."
+          },
+          {
+            "id": "ambush_reversed",
+            "description": "The captain lures Shake's patrol into a prepared position; the patrol takes serious casualties.",
+            "check_condition": {
+              "type": "pc_status",
+              "status": "ambushed"
+            },
+            "telegraph_text": "The survivor's description is too clean \u2014 detail no one notices under pressure. DeSouza reads it the same way."
+          }
+        ],
+        "macrostructure": {
+          "variable_name": "hours_before_snowfall",
+          "current": 48,
+          "threshold": 0,
+          "direction": "decrement",
+          "tick_triggers": [
+            "world_pulse",
+            "travel_segment",
+            "rest_action",
+            "scene_close"
+          ]
+        },
+        "success_condition": {
+          "type": "npc_status",
+          "npc_id": "threat_ic_patrol_lt_raider_band_reaper_1",
+          "status": "captured_or_dead"
+        },
+        "resolution": {
+          "world_deltas_on_success": [
+            {
+              "op": "faction_standing_shift",
+              "faction_id": "iron_crown_newark",
+              "delta": 2
+            },
+            {
+              "op": "npc_trust_shift",
+              "npc_id": "npc_patrol_sgt_desouza",
+              "delta": 1
+            },
+            {
+              "op": "npc_trust_shift",
+              "npc_id": "npc_district_captain_morales",
+              "delta": 1
+            },
+            {
+              "op": "npc_trust_shift",
+              "npc_id": "npc_contact_kearny_village_elder",
+              "delta": 1
+            }
+          ],
+          "world_deltas_on_failure": {
+            "captain_vanishes": [
+              {
+                "op": "faction_standing_shift",
+                "faction_id": "iron_crown_newark",
+                "delta": -1
+              }
+            ],
+            "ambush_reversed": [
+              {
+                "op": "npc_trust_shift",
+                "npc_id": "npc_patrol_sgt_desouza",
+                "delta": -1
+              },
+              {
+                "op": "faction_standing_shift",
+                "faction_id": "iron_crown_newark",
+                "delta": -1
+              }
+            ]
+          },
+          "narration_cue_on_success": "The band fragments without him. Some scatter south. Some give up the road entirely. The hills are quiet through March.",
+          "narration_cue_on_failure": "The first snow falls on Tuesday. By Wednesday the trails are closed. The band will come back in spring \u2014 better prepared."
+        },
+        "progress_track": {
+          "ticks_filled": 0,
+          "ticks_required": 3,
+          "source": "scene_close"
+        },
+        "scope": {
+          "expected_scenes": 3,
+          "expected_session_equivalents": 1.0
+        }
+      }
+    ],
+    "quest_backstory_ids": [
+      "bs_leak_hunt",
+      "bs_transit_gambit",
+      "bs_first_blood",
+      "bs_village_accord"
+    ],
+    "quest_urgent_offer": [
+      {
+        "id": "urgent_intercept_scouts",
+        "archetype": "hunt",
+        "conflict_mode": "combat",
+        "physical_danger": {
+          "armed_opposition": true,
+          "expected_combat_scenes": 2
+        },
+        "goal": "Intercept the Reaper's forward scouts before they map the Kearny causeway for a full assault",
+        "hook_scene": {
+          "established_on_turn": 1,
+          "inciting_event": "DeSouza is at Shake's door at 0500 with the route card and a look that means someone on the ridge road didn't go home \u2014 and this time it wasn't one of the raiders."
+        },
+        "central_conflict": {
+          "nature": "A three-person Reaper scout team is mapping the causeway's blind spots; they have a day's lead and local knowledge. If they complete the map, the main band moves within 48 hours.",
+          "proxy_antagonist_id": "threat_ic_patrol_lt_raider_band_reaper_1"
+        },
+        "hook_npcs": [
+          "npc_patrol_sgt_desouza",
+          "npc_contact_kearny_village_elder"
+        ],
+        "bright_lines": [
+          {
+            "id": "map_completed",
+            "description": "Scouts complete and transmit the causeway map; the main band mobilizes.",
+            "check_condition": {
+              "type": "macrostructure",
+              "op": "<=",
+              "value": 0
+            },
+            "telegraph_text": "The ridge road is quiet in a way DeSouza says it wasn't before the last probe \u2014 like something has stopped moving."
+          },
+          {
+            "id": "pc_ambushed",
+            "description": "Shake's patrol walks into the scouts' prepared position and takes casualties.",
+            "check_condition": {
+              "type": "pc_status",
+              "status": "ambushed"
+            },
+            "telegraph_text": "The trail splits where it shouldn't. DeSouza crouches and reads it. He doesn't like what he reads."
+          }
+        ],
+        "macrostructure": {
+          "variable_name": "hours_until_map_complete",
+          "current": 24,
+          "threshold": 0,
+          "direction": "decrement",
+          "tick_triggers": [
+            "world_pulse",
+            "travel_segment",
+            "scene_close"
+          ]
+        },
+        "success_condition": {
+          "type": "pc_status",
+          "status": "threat_repelled"
+        },
+        "resolution": {
+          "world_deltas_on_success": [
+            {
+              "op": "faction_standing_shift",
+              "faction_id": "iron_crown_newark",
+              "delta": 1
+            },
+            {
+              "op": "npc_trust_shift",
+              "npc_id": "npc_patrol_sgt_desouza",
+              "delta": 1
+            },
+            {
+              "op": "npc_trust_shift",
+              "npc_id": "npc_contact_kearny_village_elder",
+              "delta": 1
+            }
+          ],
+          "world_deltas_on_failure": {
+            "map_completed": [
+              {
+                "op": "faction_standing_shift",
+                "faction_id": "iron_crown_newark",
+                "delta": -1
+              }
+            ],
+            "pc_ambushed": [
+              {
+                "op": "npc_trust_shift",
+                "npc_id": "npc_patrol_sgt_desouza",
+                "delta": -1
+              }
+            ]
+          },
+          "narration_cue_on_success": "Three scouts, no map, no signal. The main band waits two days and then moves somewhere else.",
+          "narration_cue_on_failure": "The main band hits the causeway on a Thursday morning. Vasquez doesn't send a runner this time."
+        },
+        "progress_track": {
+          "ticks_filled": 0,
+          "ticks_required": 3,
+          "source": "scene_close"
+        },
+        "scope": {
+          "expected_scenes": 3,
+          "expected_session_equivalents": 1.0
+        }
+      },
+      {
+        "id": "urgent_repel_assault",
+        "archetype": "counter_assault",
+        "conflict_mode": "combat",
+        "physical_danger": {
+          "armed_opposition": true,
+          "expected_combat_scenes": 3
+        },
+        "goal": "Repel the Reaper band's full assault on Caldwell Ridge before the outpost is overrun at dawn",
+        "hook_scene": {
+          "established_on_turn": 1,
+          "inciting_event": "DeSouza is at Shake's door at 0500 with the route card and a look that means someone on the ridge road didn't go home \u2014 and the runner from Caldwell came in on foot, without a horse."
+        },
+        "central_conflict": {
+          "nature": "The full Reaper band \u2014 twenty or more, coordinated, with someone who understands the Crown's defensive posture \u2014 is hitting Caldwell at first light. Shake has six people and twelve hours to reinforce or the outpost falls.",
+          "proxy_antagonist_id": "threat_ic_patrol_lt_raider_band_reaper_1"
+        },
+        "hook_npcs": [
+          "npc_patrol_sgt_desouza",
+          "npc_district_captain_morales"
+        ],
+        "bright_lines": [
+          {
+            "id": "outpost_falls",
+            "description": "Caldwell Ridge outpost is overrun; the Crown loses its northern checkpoint.",
+            "check_condition": {
+              "type": "macrostructure",
+              "op": "<=",
+              "value": 0
+            },
+            "telegraph_text": "The runner's eyes are wrong \u2014 the kind of wrong that means he didn't stop running from the moment the first wave hit."
+          },
+          {
+            "id": "squad_broken",
+            "description": "Shake's squad breaks under pressure; he faces the assault alone.",
+            "check_condition": {
+              "type": "pc_status",
+              "status": "allies_fled"
+            },
+            "telegraph_text": "DeSouza's voice is steady. Two of the others are not looking at the door."
+          }
+        ],
+        "macrostructure": {
+          "variable_name": "hours_until_dawn_assault",
+          "current": 12,
+          "threshold": 0,
+          "direction": "decrement",
+          "tick_triggers": [
+            "world_pulse",
+            "travel_segment",
+            "rest_action",
+            "scene_close"
+          ]
+        },
+        "success_condition": {
+          "type": "pc_status",
+          "status": "threat_repelled"
+        },
+        "resolution": {
+          "world_deltas_on_success": [
+            {
+              "op": "faction_standing_shift",
+              "faction_id": "iron_crown_newark",
+              "delta": 2
+            },
+            {
+              "op": "npc_trust_shift",
+              "npc_id": "npc_patrol_sgt_desouza",
+              "delta": 1
+            },
+            {
+              "op": "npc_trust_shift",
+              "npc_id": "npc_district_captain_morales",
+              "delta": 1
+            }
+          ],
+          "world_deltas_on_failure": {
+            "outpost_falls": [
+              {
+                "op": "faction_standing_shift",
+                "faction_id": "iron_crown_newark",
+                "delta": -2
+              }
+            ],
+            "squad_broken": [
+              {
+                "op": "npc_trust_shift",
+                "npc_id": "npc_patrol_sgt_desouza",
+                "delta": -1
+              },
+              {
+                "op": "faction_standing_shift",
+                "faction_id": "iron_crown_newark",
+                "delta": -1
+              }
+            ]
+          },
+          "narration_cue_on_success": "The band pulls back before full light. DeSouza counts the bodies and doesn't share the number.",
+          "narration_cue_on_failure": "The smoke from Caldwell Ridge is visible for two days. Morales reassigns the district boundary without a meeting."
+        },
+        "progress_track": {
+          "ticks_filled": 0,
+          "ticks_required": 4,
+          "source": "scene_close"
+        },
+        "scope": {
+          "expected_scenes": 4,
+          "expected_session_equivalents": 1.0
+        }
+      },
+      {
+        "id": "urgent_extract_desouza",
+        "archetype": "extraction",
+        "conflict_mode": "escape",
+        "physical_danger": {
+          "armed_opposition": true,
+          "expected_combat_scenes": 1
+        },
+        "goal": "Extract DeSouza from Crown holding before Lt. Chen files formal charges at Thursday's district report",
+        "hook_scene": {
+          "established_on_turn": 1,
+          "inciting_event": "DeSouza is at Shake's door at 0500 \u2014 except DeSouza isn't. A runner is. DeSouza was picked up at 0300 on a weapons-violation charge Shake has never heard of, and Chen signed the detention order."
+        },
+        "central_conflict": {
+          "nature": "Chen has manufactured a pretext to hold DeSouza until Thursday's district report, when the formal charge becomes Crown record and Morales is forced to act. Shake has 60 hours to either get DeSouza out legally or not legally.",
+          "proxy_antagonist_id": "threat_ic_patrol_lt_named_rival_human_0"
+        },
+        "hook_npcs": [
+          "npc_patrol_sgt_desouza",
+          "npc_rival_lt_chen",
+          "npc_district_captain_morales"
+        ],
+        "bright_lines": [
+          {
+            "id": "charges_filed",
+            "description": "Thursday arrives with DeSouza still held; formal charges enter Crown record and Morales moves to dismiss him.",
+            "check_condition": {
+              "type": "macrostructure",
+              "op": "<=",
+              "value": 0
+            },
+            "telegraph_text": "Thursday is two days out. Chen has been seen at the district clerk's office twice this week."
+          },
+          {
+            "id": "shake_flagged",
+            "description": "Crown intelligence opens an inquiry into Shake's conduct in DeSouza's extraction.",
+            "check_condition": {
+              "type": "pc_status",
+              "status": "exposed"
+            },
+            "telegraph_text": "Intelligence Officer Brett has been watching the holding facility roster. He hasn't asked Shake anything yet."
+          }
+        ],
+        "macrostructure": {
+          "variable_name": "hours_until_thursday_report",
+          "current": 60,
+          "threshold": 0,
+          "direction": "decrement",
+          "tick_triggers": [
+            "world_pulse",
+            "scene_close",
+            "rest_action"
+          ]
+        },
+        "success_condition": {
+          "type": "npc_status",
+          "npc_id": "npc_patrol_sgt_desouza",
+          "status": "extracted"
+        },
+        "resolution": {
+          "world_deltas_on_success": [
+            {
+              "op": "npc_trust_shift",
+              "npc_id": "npc_patrol_sgt_desouza",
+              "delta": 1
+            },
+            {
+              "op": "npc_trust_shift",
+              "npc_id": "npc_rival_lt_chen",
+              "delta": -1
+            }
+          ],
+          "world_deltas_on_failure": {
+            "charges_filed": [
+              {
+                "op": "npc_trust_shift",
+                "npc_id": "npc_patrol_sgt_desouza",
+                "delta": -1
+              },
+              {
+                "op": "faction_standing_shift",
+                "faction_id": "iron_crown_newark",
+                "delta": -1
+              }
+            ],
+            "shake_flagged": [
+              {
+                "op": "faction_standing_shift",
+                "faction_id": "iron_crown_newark",
+                "delta": -2
+              }
+            ]
+          },
+          "narration_cue_on_success": "DeSouza walks out of the holding facility on Wednesday afternoon. He doesn't ask how. You don't tell him.",
+          "narration_cue_on_failure": "The charge becomes record on Thursday at 0800. Morales calls Shake in at 0900. The conversation is short."
+        },
+        "progress_track": {
+          "ticks_filled": 0,
+          "ticks_required": 3,
+          "source": "scene_close"
+        },
+        "scope": {
+          "expected_scenes": 3,
+          "expected_session_equivalents": 1.0
+        }
+      },
+      {
+        "id": "urgent_hunt_captain",
+        "archetype": "hunt",
+        "conflict_mode": "combat",
+        "physical_danger": {
+          "armed_opposition": true,
+          "expected_combat_scenes": 2
+        },
+        "goal": "Hunt the Reaper captain before he leads the next raid out of the Caldwell hills",
+        "hook_scene": {
+          "established_on_turn": 1,
+          "inciting_event": "DeSouza is at Shake's door at 0500 with the route card and a look that means someone on the ridge road didn't go home \u2014 and the survivor says she saw the one who gives orders, close enough to describe him."
+        },
+        "central_conflict": {
+          "nature": "The Reaper band has a leader who has survived three encounters, knows Crown patrol patterns, and is moving deeper into the hills after each probe. He has two days before the snow closes the high trails and makes pursuit impossible until spring.",
+          "proxy_antagonist_id": "threat_ic_patrol_lt_raider_band_reaper_1"
+        },
+        "hook_npcs": [
+          "npc_patrol_sgt_desouza",
+          "npc_contact_kearny_village_elder"
+        ],
+        "bright_lines": [
+          {
+            "id": "captain_vanishes",
+            "description": "Snow closes the high trails; the captain retreats to the hills for winter and the threat continues into spring.",
+            "check_condition": {
+              "type": "macrostructure",
+              "op": "<=",
+              "value": 0
+            },
+            "telegraph_text": "The sky over Caldwell has the grey-green color DeSouza says means snow in two days. Maybe one."
+          },
+          {
+            "id": "ambush_reversed",
+            "description": "The captain lures Shake's patrol into a prepared position; the patrol takes serious casualties.",
+            "check_condition": {
+              "type": "pc_status",
+              "status": "ambushed"
+            },
+            "telegraph_text": "The survivor's description is too clean \u2014 detail no one notices under pressure. DeSouza reads it the same way."
+          }
+        ],
+        "macrostructure": {
+          "variable_name": "hours_before_snowfall",
+          "current": 48,
+          "threshold": 0,
+          "direction": "decrement",
+          "tick_triggers": [
+            "world_pulse",
+            "travel_segment",
+            "rest_action",
+            "scene_close"
+          ]
+        },
+        "success_condition": {
+          "type": "npc_status",
+          "npc_id": "threat_ic_patrol_lt_raider_band_reaper_1",
+          "status": "captured_or_dead"
+        },
+        "resolution": {
+          "world_deltas_on_success": [
+            {
+              "op": "faction_standing_shift",
+              "faction_id": "iron_crown_newark",
+              "delta": 2
+            },
+            {
+              "op": "npc_trust_shift",
+              "npc_id": "npc_patrol_sgt_desouza",
+              "delta": 1
+            },
+            {
+              "op": "npc_trust_shift",
+              "npc_id": "npc_district_captain_morales",
+              "delta": 1
+            },
+            {
+              "op": "npc_trust_shift",
+              "npc_id": "npc_contact_kearny_village_elder",
+              "delta": 1
+            }
+          ],
+          "world_deltas_on_failure": {
+            "captain_vanishes": [
+              {
+                "op": "faction_standing_shift",
+                "faction_id": "iron_crown_newark",
+                "delta": -1
+              }
+            ],
+            "ambush_reversed": [
+              {
+                "op": "npc_trust_shift",
+                "npc_id": "npc_patrol_sgt_desouza",
+                "delta": -1
+              },
+              {
+                "op": "faction_standing_shift",
+                "faction_id": "iron_crown_newark",
+                "delta": -1
+              }
+            ]
+          },
+          "narration_cue_on_success": "The band fragments without him. Some scatter south. Some give up the road entirely. The hills are quiet through March.",
+          "narration_cue_on_failure": "The first snow falls on Tuesday. By Wednesday the trails are closed. The band will come back in spring \u2014 better prepared."
+        },
+        "progress_track": {
+          "ticks_filled": 0,
+          "ticks_required": 3,
+          "source": "scene_close"
+        },
+        "scope": {
+          "expected_scenes": 3,
+          "expected_session_equivalents": 1.0
+        }
+      }
+    ],
+    "backstory_prose": "The day the Onset happens you are scrubbed in at Tisch, fourth case of the afternoon, the patient's femoral artery open on the table in front of you when the lights go out. Not a flicker. Not a warning. The overheads die, the monitors flatline their tones, the ventilator exhales once and stops. A second of dark. Then the emergency generators come on at half-power and you finish the case in yellow half-light, your hands steady, your attending's voice steady beside you, both of you pretending that what happened outside the OR isn't happening.\n\nIt is happening.\n\nThe city comes apart slowly, then all at once. You spend the first seventy-two hours at the hospital \u2014 everyone does. Rounds without monitors. Improvised ventilation with bag-mask and rotating medical students. The intern Gordon, who you've barely spoken to, turns out to be very good at keeping calm in a collapsing system. You note that. You file it away. Then on the third day the administration sends everyone home who can go, and you go, and you discover that going home means getting in a line at the Holland Tunnel checkpoint that isn't moving.\n\nYou are trying to get to Delaware.\n\nYour parents are in Newark, Delaware \u2014 your father's vascular practice, your mother's retirement, a house you haven't slept in for four years. Your brother Akhil is at Mount Sinai, which is eleven blocks north. You go there first. You find the hospital functioning, barely, and Akhil at a workstation running on backup battery, calm in the way that means he's pushed everything else down until later. You tell him you're heading south. He says he'll follow when he can. You write your parents' address on a piece of paper and give it to him as if he doesn't know it.\n\nThen you go south.\n\nYou don't make it.\n\nThe checkpoint at Elizabethtown is Iron Crown. You don't know that at first \u2014 you know only that the gate is closed and the man explaining why has a uniform you don't recognize and a patience that says he's explained this many times today. Newark, Delaware is two hundred miles from Newark, New Jersey. Between them: a patchwork of jurisdictions, some of them functional, some of them contested, most of the roads unverified. The Iron Crown is not stopping you because it's hostile. It's stopping you because the road south requires documentation it doesn't currently issue, and the documentation office isn't open, and it won't be open until the district captain authorizes it, and the district captain is in the middle of a reorganization.\n\nSix weeks later you are still there. You have a cot in a building that used to be a community center. You've started doing medical assessments at the Crown's request because there is a shortage of anyone who knows what they're doing and you are, apparently, the kind of person who can't watch someone go without care and not do something about it. District Captain Elena Morales finds you setting a dislocated shoulder in the intake yard. She watches you finish. She asks if you've done field work before. You say residency is field work. She gives you a look that means she's going to make use of you.\n\nThree months after the Onset, you are a patrol lieutenant with a six-person squad and a route card you didn't ask for.\n\nDeSouza you trust within the first week. He is ten years older than you, pre-Onset construction foreman, built like someone who has moved concrete his whole life, and utterly uninterested in impressing anyone. He runs the squad the way you ran a busy OR: everyone has a role, everyone knows it, and the people who don't do their role get a single quiet conversation before something changes. He calls you \"Doc\" for the first two weeks before you ask him not to. He switches to \"LT\" without ceremony. You like him.\n\nThe ridge road is where you first understand what this job means.\n\nIt happens in the fourth month. Two of your squad come back from the Caldwell rotation with cuts they didn't have when they left, and a story about tripping on a gully that doesn't match the cuts' geometry. DeSouza reads the cuts. You read the story. You agree without speaking about it and that night you ride out to the ridge yourself.\n\nWhat you find is not a gully. What you find is a position \u2014 watching angles, approach lines mapped in scrape marks on the limestone. Someone is studying your outpost. Someone who knows what they're looking at.\n\nYou spend six hours on the ridge with DeSouza and two of the others and when the probe comes at 0200 you are ready for it. It's not a fight. It's not supposed to be. It's a test. It's not X. It's a question: are you paying attention? You answer it. The probe pulls back. The ridge goes quiet.\n\nDeSouza doesn't say anything afterward. Neither do you. You both understand that the question is going to be asked again, differently.\n\nKearny village comes up in the fifth month. Elder Vasquez, who runs the causeway settlement, has been giving you eyes-forward cooperation since you arrived \u2014 polite, transactional, not warm. Then the Crown's district logistics team cuts Kearny's medical supply line in a routing decision that saves two days of transport but eliminates the village's access to anything beyond basic wound care.\n\nVasquez meets you at the gate with a list of names.\n\nYou can't override a logistics decision. You don't have that authority and you know it. What you have is discretion over checkpoint clearance logs, and a relationship with the Thursday roster clerk, and a knowledge of which supply manifests get audited and which don't. You spend a week engineering a solution that isn't technically a forgery but that you would not describe out loud in front of Morales. The medicines arrive in an unmarked crate. Vasquez sees the crate. He doesn't thank you. He stops looking past you when he talks, which is a different thing.\n\nThe sixth month is when you find the leak.\n\nSomeone has been feeding your patrol schedule to the ridge-road band \u2014 the Reapers, DeSouza starts calling them, for reasons he doesn't explain. The probe in the fourth month had targeted your lightest shift. That's not intuition. That's information. You spend three weeks running a quiet investigation while running your patrol rotation, which means you spend three weeks saying nothing to anyone except DeSouza, who you trust, and watching everyone else, which is a kind of loneliness you're used to from residency but don't like any better here.\n\nIt resolves. A district transport clerk with a debt and a cousin in the hills. You put the name in writing and slide it to Morales without comment. She reads it twice. She nods once. The clerk disappears from the rotation. You don't ask where.\n\nEight months in, you try the papers.\n\nYou have been asking about transit documentation since month one. The answer has been the same: the corridor south is unsettled, the documentation process is under review, the captain will authorize when authorization is appropriate. You have stopped asking out loud. Internally you have never stopped.\n\nDeSouza knows a clerk. The clerk owes DeSouza something from before the Onset, the kind of debt that travels. You find a blank waiver form in the records room on a Thursday afternoon when the records room is empty, and you write in the details with your left hand, and you get it into a southbound courier bag through a channel that doesn't touch your name.\n\nYou don't know if it arrives. You've heard nothing. You've sent nothing. Your parents are two hundred miles away and you have not spoken to them in eight months and your brother Akhil texted you on the day of the Onset and nothing after because texting stopped working. You don't know if he got out of Manhattan. You don't know if he made it south. You don't know if your mother is still practicing her tai chi in the back garden at six in the morning or if the garden still exists.\n\nYou do the job. You run the rotation. You report to Morales on Thursdays. You eat in the barracks canteen and read on the evenings you have nothing assigned and count the days without quite counting them, which is a skill you learned in residency for managing call weeks that never seemed to end.\n\nThen, this morning: DeSouza isn't at your door at 0500.\n\nSomeone else is.\n",
+    "quest_urgent_id": "urgent_intercept_scouts",
+    "opening_scene": "0500. The door at eye level. DeSouza's knock \u2014 three, a pause, one more. You are already awake. The barracks stove is down to coals and the room smells of cold iron and yesterday's lamp oil. You pull the door open on the first bar of grey light from the corridor.\n\nDeSouza doesn't come in. He says the route card name \u2014 **Caldwell Rotation** \u2014 and then the number. *\"One of ours. Neto. Ridge road, the spur past the second marker. Found at 0330.\"*\n\nYou wait for the rest.\n\n*\"It wasn't the band,\"* he says. *\"It was three of them. Working light. Mapping.\"*\n\n**Mapping.**\n\nHe lays the route card on the table in the corridor \u2014 the causeway, the switchbacks, the blind at the Kearny gatehouse \u2014 and you see the scrape marks he's traced in pencil. Three positions. One more and they have the whole causeway timed. It's not a raid working its way toward you. It's a raid measuring you, for later.\n\n*\"Vasquez doesn't know yet. I came here first.\"*\n\nThe sky outside is the color of wet slate. You can see your breath in the corridor. The arithmetic is simple: twenty-four hours, give or take, before the map is complete and the main band moves \u2014 and the first place they move is Kearny, where the names Vasquez gave you last spring are still folded inside your jacket.\n\nDeSouza waits. *\"The squad can be in the saddle in twenty minutes. Or we go to Morales, by the book, and we lose the morning.\"*\n\nThen, the faintest sound from the ridge road. Or imagined. Not weather.",
+    "opening_scene_meta": {
+      "primary_quest_id": "urgent_intercept_scouts",
+      "antagonist_id": "threat_ic_patrol_lt_raider_band_reaper_1",
+      "hook_npc_id": "npc_patrol_sgt_desouza",
+      "location_id": "patrol_barracks_ironbound_district_newark",
+      "telegraph_bright_line_id": "map_completed"
+    },
+    "hooked_npcs": [
+      {
+        "npc_id": "npc_patrol_sgt_desouza",
+        "relation": "coworker",
+        "introduced_in": "bridge_present_day"
+      },
+      {
+        "npc_id": "npc_contact_kearny_village_elder",
+        "relation": "contact",
+        "introduced_in": "backstory_q1"
+      }
+    ],
+    "mentioned_factions": [
+      "iron_crown_newark"
+    ]
+  },
+  "threats": [
+    {
+      "npc_id": "threat_ic_patrol_lt_named_rival_human_0",
+      "name": "Named Rival Human",
+      "standing": -2,
+      "source": "job_bundle:ic_patrol_lt",
+      "summary": "Lt. Chen has submitted a formal complaint about Shake's 'permissive checkpoint protocol'; Morales is sitting on it but won't forever."
+    },
+    {
+      "npc_id": "threat_ic_patrol_lt_raider_band_reaper_1",
+      "name": "Raider Band Reaper",
+      "standing": -2,
+      "source": "job_bundle:ic_patrol_lt",
+      "summary": "A scavenger band working the ridge road has been escalating \u2014 two of Shake's squad came back with cuts last Thursday, and DeSouza says they're getting organized."
+    }
+  ],
+  "current_location": "iron_crown_newark",
+  "home_region": "iron_crown_newark"
+}
